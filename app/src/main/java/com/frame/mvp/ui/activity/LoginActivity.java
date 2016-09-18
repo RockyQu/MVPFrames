@@ -1,4 +1,4 @@
-package com.frame.mvp;
+package com.frame.mvp.ui.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -28,6 +28,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.frame.mvp.R;
 
 import java.util.ArrayList;
 import java.util.List;
