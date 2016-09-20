@@ -40,7 +40,7 @@ import java.util.List;
 public class DeviceUtils {
 
     public DeviceUtils() {
-        throw new AssertionError();
+        throw new Error("Do not need instantiate!");
     }
 
     /**
