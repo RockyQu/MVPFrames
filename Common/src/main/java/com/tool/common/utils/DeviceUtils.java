@@ -1,46 +1,31 @@
 package com.tool.common.utils;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.ActivityNotFoundException;
-import android.content.ClipboardManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.graphics.Point;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
-import android.os.PowerManager;
 import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import java.io.File;
+import com.tool.common.utils.base.BaseUtils;
+
 import java.lang.reflect.Field;
-import java.text.NumberFormat;
-import java.util.List;
 
 /**
- * Device Utils
+ * 设备信息工具类
  */
-@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-public class DeviceUtils {
+public class DeviceUtils extends BaseUtils {
 
     public DeviceUtils() {
-        throw new Error("Do not need instantiate!");
+        super();
     }
 
     /**
@@ -127,48 +112,6 @@ public class DeviceUtils {
         DisplayMetrics displaymetrics = new DisplayMetrics();
         ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(displaymetrics);
         return displaymetrics;
-    }
-
-    /**
-     * 获取activity尺寸
-     *
-     * @param activity
-     * @return
-     */
-    public static int[] getRealScreenSize(Activity activity) {
-        int[] size = new int[2];
-        int screenWidth = 0, screenHeight = 0;
-        WindowManager w = activity.getWindowManager();
-        Display d = w.getDefaultDisplay();
-        DisplayMetrics metrics = new DisplayMetrics();
-        d.getMetrics(metrics);
-        // since SDK_INT = 1;
-        screenWidth = metrics.widthPixels;
-        screenHeight = metrics.heightPixels;
-        // includes window decorations (statusbar bar/menu bar)
-        if (Build.VERSION.SDK_INT >= 14 && Build.VERSION.SDK_INT < 17) {
-            try {
-                screenWidth = (Integer) Display.class.getMethod("getRawWidth")
-                        .invoke(d);
-                screenHeight = (Integer) Display.class
-                        .getMethod("getRawHeight").invoke(d);
-            } catch (Exception ignored) {
-            }
-        }
-        // includes window decorations (statusbar bar/menu bar)
-        if (Build.VERSION.SDK_INT >= 17) {
-            try {
-                Point realSize = new Point();
-                Display.class.getMethod("getRealSize", Point.class).invoke(d,
-                        realSize);
-                screenWidth = realSize.x;
-                screenHeight = realSize.y;
-            } catch (Exception ignored) {
-            }
-        }
-        size[0] = screenWidth;
-        size[1] = screenHeight;
-        return size;
     }
 
     /**
@@ -310,53 +253,12 @@ public class DeviceUtils {
     }
 
     /**
-     * 获取版本号
+     * 获取手机系统SDK版本
      *
-     * @param context
-     * @return
+     * @return 如API 17 则返回 17
      */
-    public static int getVersionCode(Context context) {
-        int versionCode = 0;
-        try {
-            versionCode = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode;
-        } catch (PackageManager.NameNotFoundException ex) {
-            versionCode = 0;
-        }
-        return versionCode;
-    }
-
-    /**
-     * 获取指定包名应用的版本号
-     *
-     * @param context
-     * @param packageName
-     * @return
-     */
-    public static int getVersionCode(Context context, String packageName) {
-        int versionCode = 0;
-        try {
-            versionCode = context.getPackageManager().getPackageInfo(packageName, 0).versionCode;
-        } catch (PackageManager.NameNotFoundException ex) {
-            versionCode = 0;
-        }
-        return versionCode;
-    }
-
-    /**
-     * 获取版本名
-     *
-     * @param context
-     * @return
-     */
-    public static String getVersionName(Context context) {
-        String name = "";
-        try {
-            name = context.getPackageManager().getPackageInfo(context.getPackageName(),
-                            0).versionName;
-        } catch (PackageManager.NameNotFoundException ex) {
-            name = "";
-        }
-        return name;
+    public static int getSDKVersion() {
+        return android.os.Build.VERSION.SDK_INT;
     }
 }
 

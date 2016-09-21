@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import com.frame.mvp.R;
 import com.frame.mvp.ui.common.CommonActivity;
+import com.tool.common.utils.AppUtils;
 
 /**
  * 登录页面
@@ -36,7 +37,7 @@ public class LoginActivity extends CommonActivity {
 
             @Override
             public void onClick(View view) {
-
+                AppUtils.call(LoginActivity.this, "18505126172");
             }
         });
     }

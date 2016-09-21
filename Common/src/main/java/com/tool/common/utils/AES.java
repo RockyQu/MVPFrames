@@ -2,6 +2,8 @@ package com.tool.common.utils;
 
 import android.util.Log;
 
+import com.tool.common.utils.base.BaseUtils;
+
 import java.io.ByteArrayOutputStream;
 
 import javax.crypto.Cipher;
@@ -11,7 +13,11 @@ import javax.crypto.spec.SecretKeySpec;
 /**
  * AES加密与解密
  */
-public class AES {
+public class AES extends BaseUtils {
+
+    public AES() {
+        super();
+    }
 
     /**
      * 加密

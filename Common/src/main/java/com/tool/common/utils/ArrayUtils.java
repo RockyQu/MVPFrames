@@ -1,94 +1,22 @@
-/*
- * Copyright (C) 2013 Peng fei Pan <sky@xiaopan.me>
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.tool.common.utils;
+
+import com.tool.common.utils.base.BaseUtils;
 
 import java.util.Stack;
 
 /**
- * <h2>数组工具类，提供一些有关数组的便捷方法</h2>
- *
- * <br><b>1、增删移动相关</b>
- * <br>&nbsp;&nbsp;&nbsp;&nbsp;(1.01)、以无损的方式，将数组objects的元素从索引headIndex处开始到endIndex索引处结束的元素，向后移动number位：static
- * void backwardByLossless(Object[] objects, int headIndex, int endIndex, int
- * number)
- * <br>&nbsp;&nbsp;&nbsp;&nbsp;(1.02)、以无损的方式，将数组objects的元素从索引headIndex处开始到endIndex索引处结束的元素，向前移动number位：static
- * void forwardByLossless(Object[] objects, int headIndex, int endIndex, int
- * number)
- * <br>&nbsp;&nbsp;&nbsp;&nbsp;(1.03)、以有损的方式，将数组objects的元素从索引headIndex处开始到endIndex索引处结束的元素，向后移动number位：static
- * void backwardLoss(Object[] objects, int headIndex, int endIndex, int number)
- * <br>&nbsp;&nbsp;&nbsp;&nbsp;(1.04)、以有损的方式，将数组objects的元素从索引headIndex处开始到endIndex索引处结束的元素，向前移动number位：static
- * void forwardLoss(Object[] objects, int headIndex, int endIndex, int number)
- * <br>&nbsp;&nbsp;&nbsp;&nbsp;(1.05)、以有损的方式在数组objects的索引insertToIndex处插入元素element：static
- * void insert(Object[] objects, int insertToIndex, Object element)
- * <br>&nbsp;&nbsp;&nbsp;&nbsp;(1.06)、将数组objects中索引removeIndex出的元素删除：static
- * Object remove(Object[] objects, int removeIndex)
- * <br>&nbsp;&nbsp;&nbsp;&nbsp;(1.07)、返回数组objects的字符串表示形式：static String
- * toString(Object[] objects)
- * <br>&nbsp;&nbsp;&nbsp;&nbsp;(1.08)、在数组哦objects中搜索元素element：static int
- * search(Object[] objects, Object element)
- * <br>&nbsp;&nbsp;&nbsp;&nbsp;(1.09)、将数组objects中索引setIndex出的元素用element替换：static
- * Object set(Object[] objects, Object element, int setIndex)
- * <br>
- * <br><b>2、Int数组排序相关</b>
- * <br>&nbsp;&nbsp;&nbsp;&nbsp;(2.01)、使用选择排序法，对数组intArray进行排序：static void
- * SortingByChoose(int[] intArray, int type)
- * <br>&nbsp;&nbsp;&nbsp;&nbsp;(2.02)、使用插入排序法，对数组intArray进行排序：static void
- * SortingByInsert(int[] intArray, int type)
- * <br>&nbsp;&nbsp;&nbsp;&nbsp;(2.03)、使用冒泡排序法，对数组intArray进行排序：static void
- * SortingByBubbling(int[] intArray, int type)
- * <br>&nbsp;&nbsp;&nbsp;&nbsp;(2.04)、使用递归快排法，对数组intArray进行排序：static void
- * SortingByFastRecursion(int[] intArray, int start, int end, int type)
- * <br>&nbsp;&nbsp;&nbsp;&nbsp;(2.05)、使用栈快排法，对数组intArray进行排序：static void
- * SortingByFastStack(int[] intArray, int type)
+ * 数组工具类
  */
-public class ArrayUtils {
+public class ArrayUtils extends BaseUtils {
 
-    /**
-     * (1.08)、在数组objects中搜索元素element
-     *
-     * @param objects 待操作的数组
-     * @param element 待匹配的元素
-     * @return 索引，如不存在，-1
-     */
-    public static int search(Object[] objects, Object element) {
-        int e = -1;
-        for (int w = 0; w < objects.length; w++) {
-            if (!element.equals(objects[w])) {
-                continue;
-            }
-            else {
-                e = w;
-                break;
-            }
-        }
-        return e;
+    public ArrayUtils() {
+        super();
     }
-	/* **************************************************************1、增删移动相关over************************************************************ */
-	
-	
-	
-	
-	/* **************************************************************2、Int数组排序相关start************************************************************ */
-
 
     /**
-     * (2.01)、使用选择排序法，对数组intArray进行排序
+     * 选择排序法，对数组intArray进行排序
      *
-     * @param intArray 待排序的数组
+     * @param intArray  待排序的数组
      * @param ascending 升序
      */
     public static void sortingByChoose(int[] intArray, boolean ascending) {
@@ -101,8 +29,7 @@ public class ArrayUtils {
                 boolean typee = true;
                 if (ascending) {
                     typee = zhongjian > intArray[zujian];
-                }
-                else {
+                } else {
                     typee = zhongjian < intArray[zujian];
                 }
                 if (typee) {
@@ -119,11 +46,10 @@ public class ArrayUtils {
         }
     }
 
-
     /**
-     * (2.02)、使用插入排序法，对数组intArray进行排序
+     * 插入排序法，对数组intArray进行排序
      *
-     * @param intArray 待排序的数组
+     * @param intArray  待排序的数组
      * @param ascending 升序
      */
     public static void sortingByInsert(int[] intArray, boolean ascending) {
@@ -134,8 +60,7 @@ public class ArrayUtils {
                 boolean typee = true;
                 if (ascending) {
                     typee = t < intArray[j];
-                }
-                else {
+                } else {
                     typee = t > intArray[j];
                 }
                 if (!typee) break;
@@ -147,11 +72,10 @@ public class ArrayUtils {
         }
     }
 
-
     /**
-     * (2.03)、使用冒泡排序法，对数组intArray进行排序
+     * 冒泡排序法，对数组intArray进行排序
      *
-     * @param intArray 待排序的数组
+     * @param intArray  待排序的数组
      * @param ascending 升序
      */
     public static void sortingByBubbling(int[] intArray, boolean ascending) {
@@ -160,8 +84,7 @@ public class ArrayUtils {
                 boolean typee = true;
                 if (ascending) {
                     typee = intArray[r] > intArray[r + 1];
-                }
-                else {
+                } else {
                     typee = intArray[r] < intArray[r + 1];
                 }
                 if (typee) {
@@ -173,11 +96,10 @@ public class ArrayUtils {
         }
     }
 
-
     /**
-     * (2.04)、使用递归快排法，对数组intArray进行排序
+     * 递归快排序法，对数组intArray进行排序
      *
-     * @param intArray 待排序的数组
+     * @param intArray  待排序的数组
      * @param ascending 排序的方式，用本类中的静态字段指定
      */
     public static void sortingByFastRecursion(int[] intArray, int start, int end, boolean ascending) {
@@ -201,8 +123,7 @@ public class ArrayUtils {
                     j--;
                 }
             }
-        }
-        else {
+        } else {
             for (int j = end; i < j; ) {
                 while (intArray[j] < tmp && i < j) {
                     j--;
@@ -230,11 +151,10 @@ public class ArrayUtils {
         }
     }
 
-
     /**
-     * (2.05)、使用栈快排法，对数组intArray进行排序
+     * 栈快排序法，对数组intArray进行排序
      *
-     * @param intArray 待排序的数组
+     * @param intArray  待排序的数组
      * @param ascending 升序
      */
     public static void sortingByFastStack(int[] intArray, boolean ascending) {
@@ -264,8 +184,7 @@ public class ArrayUtils {
                         j--;
                     }
                 }
-            }
-            else {
+            } else {
                 while (i < j) {
                     while (intArray[j] < tmp && i < j) {
                         j--;
@@ -295,8 +214,6 @@ public class ArrayUtils {
             }
         }
     }
-	/* **************************************************************2、Int数组排序相关over************************************************************ */
-
 
     /**
      * 将数组颠倒
