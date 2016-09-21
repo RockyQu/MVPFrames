@@ -15,7 +15,7 @@ public class PreferencesUtils extends BaseUtils {
      */
     private static String PREFERENCE_NAME = "SZLD_SMB";
 
-    private PreferencesUtils() {
+    public PreferencesUtils() {
         super();
     }
 

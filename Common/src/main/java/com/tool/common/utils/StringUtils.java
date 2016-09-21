@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  */
 public class StringUtils extends BaseUtils {
 
-    private StringUtils() {
+    public StringUtils() {
         super();
     }
 

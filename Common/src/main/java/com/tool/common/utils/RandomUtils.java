@@ -15,7 +15,7 @@ public class RandomUtils extends BaseUtils {
     public static final String CAPITAL_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     public static final String LOWER_CASE_LETTERS = "abcdefghijklmnopqrstuvwxyz";
 
-    private RandomUtils() {
+    public RandomUtils() {
         super();
     }
 
