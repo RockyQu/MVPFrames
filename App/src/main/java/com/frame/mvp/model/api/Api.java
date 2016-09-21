@@ -8,6 +8,6 @@ public interface Api {
     /**
      * Java Root Interface
      */
-    String URL_BASE_JAVA = "https://www.baidu.com";
+    String URL_BASE_JAVA = "http://www.xxx.com";
 
 }

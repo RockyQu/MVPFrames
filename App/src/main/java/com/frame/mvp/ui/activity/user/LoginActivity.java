@@ -37,9 +37,14 @@ public class LoginActivity extends CommonActivity {
 
             @Override
             public void onClick(View view) {
-                AppUtils.call(LoginActivity.this, "18505126172");
+
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
 

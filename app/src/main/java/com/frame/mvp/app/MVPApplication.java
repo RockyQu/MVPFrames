@@ -1,11 +1,11 @@
 package com.frame.mvp.app;
 
-import android.app.Application;
+import com.tool.common.base.BaseApplication;
 
 /**
  *
  */
-public class MVPApplication extends Application {
+public class MVPApplication extends BaseApplication {
 
 
     @Override
