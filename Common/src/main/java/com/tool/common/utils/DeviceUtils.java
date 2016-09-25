@@ -303,6 +303,28 @@ public class DeviceUtils extends BaseUtils {
     }
 
     /**
+     * 设置系统亮度（此方法只是更改了系统的亮度属性，并不能看到效果。要想看到效果可以使用setWindowBrightness()方法设置窗口的亮度），
+     * 需要WRITE_SETTINGS权限
+     *
+     * @param context          上下文
+     * @param screenBrightness 亮度，范围是0-255
+     * @return 设置是否成功
+     */
+    public static boolean setScreenBrightness(Context context, int screenBrightness) {
+        int brightness = screenBrightness;
+        if (screenBrightness < 1) {
+            brightness = 1;
+        } else if (screenBrightness > 255) {
+            brightness = screenBrightness % 255;
+            if (brightness == 0) {
+                brightness = 255;
+            }
+        }
+        boolean result = Settings.System.putInt(context.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, brightness);
+        return result;
+    }
+
+    /**
      * 设置系统屏幕亮度模式，需要WRITE_SETTINGS权限
      *
      * @param context 上下文
@@ -353,8 +375,7 @@ public class DeviceUtils extends BaseUtils {
      * @throws Exception 没有找到蓝牙设备
      */
     public static int getBluetoothState() throws Exception {
-        BluetoothAdapter bluetoothAdapter = BluetoothAdapter
-                .getDefaultAdapter();
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (bluetoothAdapter == null) {
             throw new Exception("bluetooth device not found!");
         } else {
