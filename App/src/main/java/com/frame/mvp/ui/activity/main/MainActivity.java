@@ -16,10 +16,12 @@ import com.tool.common.utils.AppUtils;
 public class MainActivity extends CommonActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public int getLayoutId() {
+        return R.layout.activity_main;
+    }
 
+    @Override
+    public void onCreate() {
 
     }
 }

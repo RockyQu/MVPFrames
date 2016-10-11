@@ -5,6 +5,6 @@ import com.tool.common.base.BaseActivity;
 /**
  *
  */
-public class CommonActivity extends BaseActivity {
+public abstract class CommonActivity extends BaseActivity {
 
 }
