@@ -15,7 +15,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(this.getLayoutId());
 
-        this.onCreate();
+        this.create(savedInstanceState);
     }
 
     @Override
@@ -47,5 +47,5 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public abstract int getLayoutId();
 
-    public abstract void onCreate();
+    public abstract void create(Bundle savedInstanceState);
 }

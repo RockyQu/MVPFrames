@@ -30,7 +30,7 @@ public class LoginActivity extends CommonActivity {
     }
 
     @Override
-    public void onCreate() {
+    public void create(Bundle savedInstanceState) {
         edtAccount = (EditText) findViewById(R.id.edt_account);
         edtPassword = (EditText) findViewById(R.id.edt_password);
 
