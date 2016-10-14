@@ -5,10 +5,12 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.tool.common.frame.BasePresenter;
+
 /**
  *
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -7,13 +7,14 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.frame.mvp.R;
+import com.frame.mvp.presenter.user.LoginPresenter;
 import com.frame.mvp.ui.common.CommonActivity;
 import com.tool.common.utils.AppUtils;
 
 /**
  * 登录页面
  */
-public class LoginActivity extends CommonActivity {
+public class LoginActivity extends CommonActivity<LoginPresenter> {
 
     /**
      * 账号

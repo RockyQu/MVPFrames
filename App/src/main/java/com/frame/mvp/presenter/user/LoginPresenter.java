@@ -1,11 +1,11 @@
 package com.frame.mvp.presenter.user;
 
+import com.tool.common.frame.BasePresenter;
+
 /**
  *
  */
-public interface LoginPresenter {
+public class LoginPresenter extends BasePresenter {
 
-    void start();
 
-    void stop();
 }
