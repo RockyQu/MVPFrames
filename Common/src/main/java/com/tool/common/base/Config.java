@@ -1,7 +1,7 @@
 package com.tool.common.base;
 
 /**
- *
+ * 项目相关参数配置
  */
 public class Config {
 

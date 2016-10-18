@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.tool.common.frame.BasePresenter;
 
 /**
- *
+ * Activity
  */
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
 

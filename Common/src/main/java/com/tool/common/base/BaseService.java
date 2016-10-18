@@ -6,9 +6,9 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 /**
- *
+ * Service
  */
-public class BaseService extends Service{
+public abstract class BaseService extends Service {
 
     public BaseService() {
 
@@ -19,4 +19,21 @@ public class BaseService extends Service{
     public IBinder onBind(Intent intent) {
         return null;
     }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        init();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    /**
+     * 子类实现初始化
+     */
+    abstract public void init();
 }
