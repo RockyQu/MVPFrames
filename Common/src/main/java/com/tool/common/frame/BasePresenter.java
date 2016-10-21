@@ -1,7 +1,7 @@
 package com.tool.common.frame;
 
 /**
- *
+ * Presenter
  */
 public class BasePresenter<M, V extends BaseView> {
 

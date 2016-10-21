@@ -3,7 +3,7 @@ package com.tool.common.frame;
 import android.content.Intent;
 
 /**
- * 常用基本View方法
+ * 常用基本View方法定义到BaseView中。
  */
 public interface BaseView {
 
