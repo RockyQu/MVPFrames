@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
- * BaseHolder
+ * Holder
  */
 public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -13,8 +13,8 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements V
 
     public BaseHolder(View itemView) {
         super(itemView);
-        itemView.setOnClickListener(this);//点击事件
 
+        itemView.setOnClickListener(this);//点击事件
     }
 
     /**

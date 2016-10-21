@@ -4,18 +4,18 @@ import android.app.Application;
 import android.content.Context;
 
 /**
- *
+ * Application
  */
-public class BaseApplication extends Application {
+public abstract class BaseApplication extends Application {
 
     // Context
-    private static Context context = null;
+    private static BaseApplication application = null;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        this.context = this;
+        this.application = this;
 
         if (Config.Debug) {// 日志记录
             //TODO
@@ -31,6 +31,13 @@ public class BaseApplication extends Application {
      * @return Context
      */
     public static Context getContext() {
-        return context;
+        return application;
     }
+
+    /**
+     * 获取Root API
+     *
+     * @return
+     */
+    protected abstract String getJavaUrl();
 }

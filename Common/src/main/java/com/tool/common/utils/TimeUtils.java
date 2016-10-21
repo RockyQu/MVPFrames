@@ -1,7 +1,5 @@
 package com.tool.common.utils;
 
-
-
 import com.tool.common.utils.base.BaseUtils;
 
 import java.text.ParseException;
@@ -74,21 +72,18 @@ public class TimeUtils extends BaseUtils {
     /**
      * 获取月的天数
      *
-     * @param year
-     *            Year
-     * @param month
-     *            Month
+     * @param year  Year
+     * @param month Month
      * @return Returns the maximum value of the given field for the current
-     *         date. For example, the maximum number of days in the current
-     *         month.
+     * date. For example, the maximum number of days in the current
+     * month.
      */
     public static int getMonthOfDayCount(String year, String month) {
         Calendar calendar = new GregorianCalendar();
         try {
             Date date = new SimpleDateFormat("yyyy-MM", Locale.getDefault()).parse(year + "-" + month);
             calendar.setTime(date);
-        }
-        catch (ParseException e) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
@@ -97,10 +92,8 @@ public class TimeUtils extends BaseUtils {
     /**
      * 格式化日期
      *
-     * @param rule
-     *            格式规则
-     * @param time
-     *            时间戳
+     * @param rule 格式规则
+     * @param time 时间戳
      * @return 格式化后的日期
      */
     public static String formatDate(String rule, long time) {
@@ -112,8 +105,7 @@ public class TimeUtils extends BaseUtils {
     /**
      * 格式化当前日期
      *
-     * @param rule
-     *            格式规则
+     * @param rule 格式规则
      * @return 格式化后的日期
      */
     public static String formatDate(String rule) {

@@ -1,7 +1,7 @@
 package com.frame.mvp.model.api;
 
 /**
- *
+ * Root API
  */
 public interface Api {
 

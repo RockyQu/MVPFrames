@@ -1,10 +1,11 @@
 package com.frame.mvp.ui.common;
 
-import android.support.v4.app.Fragment;
+import com.tool.common.base.BaseFragment;
+import com.tool.common.frame.BasePresenter;
 
 /**
  *
  */
-public class CommonFragment extends Fragment{
+public abstract class CommonFragment<P extends BasePresenter> extends BaseFragment {
 
 }

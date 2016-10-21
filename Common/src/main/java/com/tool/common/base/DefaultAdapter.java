@@ -36,6 +36,7 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
         View view = LayoutInflater.from(parent.getContext()).inflate(getLayoutId(), parent, false);
         holder = getHolder(view);
         holder.setOnItemClickListener(new BaseHolder.OnViewClickListener() {//设置Item点击事件
+
             @Override
             public void onViewClick(View view, int position) {
                 if (onItemClickListener != null) {
