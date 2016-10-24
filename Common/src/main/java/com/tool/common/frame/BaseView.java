@@ -3,7 +3,7 @@ package com.tool.common.frame;
 import android.content.Intent;
 
 /**
- * 常用基本View方法定义到BaseView中。
+ * 常用基本View方法定义到BaseView中
  */
 public interface BaseView {
 
@@ -28,9 +28,8 @@ public interface BaseView {
      * 跳转Activity
      *
      * @param intent   Intent
-     * @param flag     跳转类型索引（由业务逻辑的差异可能转到不同Activity）
      */
-    void startActivity(Intent intent, int flag);
+    void startActivity(Intent intent);
 
     /**
      * 关闭Activity

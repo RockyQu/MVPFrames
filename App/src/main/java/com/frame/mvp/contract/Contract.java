@@ -8,18 +8,13 @@ import com.tool.common.frame.BaseView;
  */
 public interface Contract {
 
-
+    // 常用基本View方法定义到BaseView中
     interface View extends BaseView {
-
-        void setAdapter(DefaultAdapter adapter);
-
-        void startLoadMore();
-
-        void endLoadMore();
+        //TODO
     }
 
-    //Model层定义接口,外部只需关心model返回的数据,无需关心内部细节,及是否使用缓存
+    //
     interface Model {
-
+        //TODO
     }
 }
