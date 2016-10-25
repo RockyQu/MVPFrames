@@ -1,4 +1,4 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,9 +7,19 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="MVP"
+        android:layout_centerInParent="true"
+        android:paddingBottom="280dp"
+        android:text="MVP Demo"
         android:textColor="@android:color/black"
-        android:textSize="30sp"/>
+        android:textSize="36sp"/>
 
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingBottom="280dp"
+        android:text="BY Desing"
+        android:textColor="@android:color/black"
+        android:textSize="36sp"/>
+
+</RelativeLayout>

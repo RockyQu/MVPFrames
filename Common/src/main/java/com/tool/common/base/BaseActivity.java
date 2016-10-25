@@ -2,15 +2,19 @@ package com.tool.common.base;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.tool.common.frame.BasePresenter;
 
 /**
- * Activity
+ * BaseActivity
  */
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
+
+    /**
+     * Presenter
+     */
+    protected P presenter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,18 +32,26 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+    }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        // 释放资源
+        if (presenter != null) {
+            presenter.onDestroy();
+        }
     }
 
     @Override
@@ -47,7 +59,13 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         super.onBackPressed();
     }
 
+    /**
+     * 获取布局文件，需要在子类中重写此方法
+     */
     public abstract int getLayoutId();
 
+    /**
+     * 相当于Activity onCreate方法，需要在子类中重写此方法
+     */
     public abstract void create(Bundle savedInstanceState);
 }

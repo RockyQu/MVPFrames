@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.frame.mvp.R;
+import com.frame.mvp.contract.Contract;
 import com.frame.mvp.presenter.user.LoginPresenter;
 import com.frame.mvp.ui.common.CommonActivity;
 import com.tool.common.utils.AppUtils;
@@ -14,24 +15,18 @@ import com.tool.common.utils.AppUtils;
 /**
  * 登录页面
  */
-public class LoginActivity extends CommonActivity<LoginPresenter> {
+public class LoginActivity extends CommonActivity<LoginPresenter> implements Contract.View {
 
-    /**
-     * 账号
-     */
+    // 账号
     private EditText edtAccount = null;
-    /**
-     * 密码
-     */
+    // 密码
     private EditText edtPassword = null;
 
     @Override
-    public int getLayoutId() {
-        return R.layout.activity_login;
-    }
-
-    @Override
     public void create(Bundle savedInstanceState) {
+
+//        presenter =
+
         edtAccount = (EditText) findViewById(R.id.edt_account);
         edtPassword = (EditText) findViewById(R.id.edt_password);
 
@@ -46,8 +41,38 @@ public class LoginActivity extends CommonActivity<LoginPresenter> {
     }
 
     @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showMessage(String message) {
+
+    }
+
+    @Override
+    public void finishActivity() {
+
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_login;
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
 

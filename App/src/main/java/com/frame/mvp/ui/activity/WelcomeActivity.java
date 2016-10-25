@@ -10,7 +10,7 @@ import com.frame.mvp.ui.activity.user.LoginActivity;
 import com.frame.mvp.ui.common.CommonActivity;
 
 /**
- *
+ * 欢迎页面
  */
 public class WelcomeActivity extends CommonActivity {
 
@@ -21,14 +21,15 @@ public class WelcomeActivity extends CommonActivity {
 
     @Override
     public void create(Bundle savedInstanceState) {
-//        new Handler(new Handler.Callback() {
-//            @Override
-//            public boolean handleMessage(Message msg) {
-//                Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
-//                startActivity(intent);
-//                return false;
-//            }
-//        }).sendEmptyMessageDelayed(0, 2000);
+        new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+                Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
+                WelcomeActivity.this.startActivity(intent);
+                WelcomeActivity.this.finish();
+                return false;
+            }
+        }).sendEmptyMessageDelayed(0, 5000);
     }
 
     @Override

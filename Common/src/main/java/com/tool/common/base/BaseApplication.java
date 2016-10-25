@@ -17,7 +17,7 @@ public abstract class BaseApplication extends Application {
 
         this.application = this;
 
-        if (Config.Debug) {// 日志记录
+        if (Config.Debug) {// 日志管理
             //TODO
         }
         if (Config.MemoryLeak) {// 内存泄露

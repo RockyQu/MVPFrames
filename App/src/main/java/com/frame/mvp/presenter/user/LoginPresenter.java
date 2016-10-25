@@ -11,6 +11,7 @@ public class LoginPresenter extends BasePresenter<Contract.Model, Contract.View>
 
     public LoginPresenter(Contract.Model model, Contract.View view) {
         super(model, view);
-       
+
+
     }
 }
