@@ -1,8 +1,11 @@
+// 声明为Android Library程序
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    // 编译SDK版本
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    // Build Tools版本
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
 
     defaultConfig {
         minSdkVersion 14
@@ -15,14 +18,18 @@ android {
     }
     buildTypes {
         release {
+            // 是否进行混淆
             minifyEnabled false
+            // 混淆文件位置
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
+    // 编译libs目录下的所有jar包
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })

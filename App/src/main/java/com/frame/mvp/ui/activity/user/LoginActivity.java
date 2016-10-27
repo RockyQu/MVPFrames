@@ -75,4 +75,3 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Con
         super.onBackPressed();
     }
 }
-
