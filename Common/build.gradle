@@ -12,14 +12,19 @@ android {
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // 最低支持SDK版本
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        // 目标SDK版本
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        // 版本
+        versionCode rootProject.ext.android["versionCode"]
+        // 版本号
+        versionName rootProject.ext.android["versionName"]
+        // 单元测试
+        testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
 
     }
+
     buildTypes {
         release {
             // 是否进行混淆

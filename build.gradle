@@ -20,10 +20,10 @@ allprojects {
     }
 }
 
-// 运行gradle clean时，执行此处定义的task
-// 该任务继承自Delete，删除根目录中的build目录
+// 声明一个任务，任务名叫clean，任务类型是Delete
+// 运行gradle clean时，删除根目录中的build目录
 // 相当于执行Delete.delete(rootProject.buildDir)
-// gradle使用groovy语言，调用method时可以不用加（）
+// 就会删除rootProject.buildDir下的文件
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
