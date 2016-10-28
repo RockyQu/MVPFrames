@@ -7,7 +7,7 @@ android {
     // Build Tools版本
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
 
-    // 解决Android SDK升级API23，原生SDK删除org.apache.http.*类的问题
+    // 解决Android SDK升级至API23，导致原生SDK删除org.apache.http.*类的问题
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
