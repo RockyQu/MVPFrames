@@ -1,8 +1,12 @@
 apply plugin: 'com.android.application'
 
+// 配置Android构建的所有参数
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    // 编译SDK版本
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    // Build Tools版本
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+
     defaultConfig {
         applicationId "com.frame.mvp"
         minSdkVersion 14
@@ -16,6 +20,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    // 移除lint检查的error，可以避免由于编译条件太过严格而编译不过的问题
+    lintOptions {
+        abortOnError false
     }
 }
 

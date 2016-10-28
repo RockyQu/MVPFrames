@@ -1,11 +1,15 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+// 说明：主要内容包含两个方面
+// 一、声明仓库的源，默认指明的jcenter(), 之前版本则是mavenCentral()，jcenter可以理解成是一个新的中央远程仓库，兼容maven中心仓库，且性能更优
+// 二、声明Android Gradle Plugin的版本，Android Studio 1.0正式版必须要求支持Gradle Plugin 1.0的版本
 apply from: "config.gradle"
 
 buildscript {
     repositories {
+        // Maven仓库地址通过方法jCenter()获取
         jcenter()
     }
     dependencies {
+        // 声明Android Gradle Plugin插件版本
         classpath 'com.android.tools.build:gradle:2.2.0'
     }
 }
@@ -13,10 +17,13 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven { url "https://jitpack.io" }
     }
 }
 
+// 运行gradle clean时，执行此处定义的task
+// 该任务继承自Delete，删除根目录中的build目录
+// 相当于执行Delete.delete(rootProject.buildDir)
+// gradle使用groovy语言，调用method时可以不用加（）
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

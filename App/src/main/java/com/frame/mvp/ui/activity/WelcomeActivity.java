@@ -29,7 +29,7 @@ public class WelcomeActivity extends CommonActivity {
                 WelcomeActivity.this.finish();
                 return false;
             }
-        }).sendEmptyMessageDelayed(0, 5000);
+        }).sendEmptyMessageDelayed(0, 2000);
     }
 
     @Override
