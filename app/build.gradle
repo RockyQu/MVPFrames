@@ -9,27 +9,44 @@ android {
 
     defaultConfig {
         applicationId "com.frame.mvp"
-        minSdkVersion 14
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // 最低支持SDK版本
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        // 目标SDK版本
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        // 版本
+        versionCode rootProject.ext.android["versionCode"]
+        // 版本号
+        versionName rootProject.ext.android["versionName"]
+        // 单元测试
+        testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
     }
+
     buildTypes {
         release {
+            // 是否进行混淆
             minifyEnabled false
+            // 混淆文件位置
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
     // 移除lint检查的error，可以避免由于编译条件太过严格而编译不过的问题
     lintOptions {
+        // InvalidPackage: Package not included in Android
+        disable 'InvalidPackage'
+        // Expected resource of type color [ResourceType] 资源类型错误
+        disable "ResourceType"
+        // "app_name" is not translated in "zh" (Chinese)
+        disable 'MissingTranslation'
+
         abortOnError false
     }
 }
 
 dependencies {
+    // 编译libs目录下的所有jar包
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
