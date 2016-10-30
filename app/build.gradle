@@ -17,14 +17,22 @@ android {
         versionCode rootProject.ext.android["versionCode"]
         // 版本号
         versionName rootProject.ext.android["versionName"]
+
         // 单元测试
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         release {
             // 是否进行混淆
             minifyEnabled false
+            // 移除无用资源 如发生Resources$NotFoundException: Resource ID #0x4 错误可关闭此功能
+            shrinkResources false
             // 混淆文件位置
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -43,16 +51,23 @@ android {
     }
 }
 
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    }
+}
+
 dependencies {
     // 编译libs目录下的所有jar包
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
-    testCompile 'junit:junit:4.12'
+    testCompile rootProject.ext.dependencies["junit"]
+
+    compile rootProject.ext.dependencies["appcompat-v7"]
 
     // 引入框架基础共通模块
     compile project(':Common')
