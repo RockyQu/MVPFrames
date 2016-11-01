@@ -1,4 +1,4 @@
-// 说明：主要内容包含两个方面
+// 说明
 // 一、声明仓库的源，默认指明的jcenter(), 之前版本则是mavenCentral()，jcenter可以理解成是一个新的中央远程仓库，兼容maven中心仓库，且性能更优
 // 二、声明Android Gradle Plugin的版本，Android Studio 1.0正式版必须要求支持Gradle Plugin 1.0的版本
 apply from: "config.gradle"

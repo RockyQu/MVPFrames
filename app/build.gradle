@@ -46,12 +46,10 @@ android {
         disable 'InvalidPackage'
         // Expected resource of type color [ResourceType] 资源类型错误
         disable "ResourceType"
-        // "app_name" is not translated in "zh" (Chinese)
+        // 忽略因MissingTranslation导致Build Failed错误 "app_name" is not translated in "zh" (Chinese)
         disable 'MissingTranslation'
 
         abortOnError false
-        // 忽略因MissingTranslation导致Build Failed错误
-        disable 'MissingTranslation'
     }
 
     // 多渠道打包

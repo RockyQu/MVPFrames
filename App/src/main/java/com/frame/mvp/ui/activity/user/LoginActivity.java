@@ -26,12 +26,15 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Con
     @BindView(R.id.edt_password)
     EditText edtPassword = null;
 
+    // 提交
+    @BindView(R.id.btn_submit)
+    Button btnSubmit = null;
+
     @Override
     public void create(Bundle savedInstanceState) {
 
 //        presenter =
 
-        Button btnSubmit = (Button) findViewById(R.id.btn_submit);
         btnSubmit.setOnClickListener(new OnClickListener() {
 
             @Override
