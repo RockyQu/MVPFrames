@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
-// 配置Android构建的所有参数
+// 配置Android构建参数
 android {
     // 编译SDK版本
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
@@ -8,6 +9,7 @@ android {
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
 
     defaultConfig {
+        // 包名
         applicationId "com.frame.mvp"
         // 最低支持SDK版本
         minSdkVersion rootProject.ext.android["minSdkVersion"]
@@ -48,14 +50,23 @@ android {
         disable 'MissingTranslation'
 
         abortOnError false
+        // 忽略因MissingTranslation导致Build Failed错误
+        disable 'MissingTranslation'
+    }
+
+    // 多渠道打包
+    productFlavors {
+
     }
 }
 
 buildscript {
+
     repositories {
         jcenter()
         mavenCentral()
     }
+
     dependencies {
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }

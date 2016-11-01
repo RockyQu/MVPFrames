@@ -6,14 +6,14 @@ ext {
                targetSdkVersion        : 23,
                versionCode             : 1,
                versionName             : "1.0.0",
-               androidSupportSdkVersion: "23.3.0",
-               espressoSdkVersion      : "2.2.2"
+               androidSupportSdkVersion: "23.3.0"
     ]
     dependencies = [
-            "androidJUnitRunner"       : "android.support.test.runner.AndroidJUnitRunner",
-            "junit"                    : "junit:junit:4.12",
-            "appcompat-v7"      : "com.android.support:appcompat-v7:${android["androidSupportSdkVersion"]}",
-            "design"                   : "com.android.support:design:${android["androidSupportSdkVersion"]}",
-            "butterknife"       : "com.jakewharton:butterknife:8.4.0"
+            "androidJUnitRunner"  : "android.support.test.runner.AndroidJUnitRunner",
+            "junit"               : "junit:junit:4.12",
+            "appcompat-v7"        : "com.android.support:appcompat-v7:${android["androidSupportSdkVersion"]}",
+            "design"              : "com.android.support:design:${android["androidSupportSdkVersion"]}",
+            "butterknife"         : "com.jakewharton:butterknife:8.4.0",
+            "butterknife-compiler": "com.jakewharton:butterknife-compiler:8.4.0"
     ]
 }

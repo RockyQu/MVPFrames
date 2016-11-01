@@ -1,5 +1,6 @@
 // 声明为Android Library程序
 apply plugin: 'com.android.library'
+apply plugin: 'com.neenbedankt.android-apt'
 
 // 配置Android构建参数
 android {
@@ -37,8 +38,10 @@ buildscript {
         jcenter()
         mavenCentral()
     }
+
     dependencies {
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.4.0'
     }
 }
 
@@ -46,8 +49,10 @@ dependencies {
     // 编译libs目录下的所有jar包
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
-    testCompile rootProject.ext.dependencies["junit"]
-
     compile rootProject.ext.dependencies["design"]
     compile rootProject.ext.dependencies["appcompat-v7"]
+    compile rootProject.ext.dependencies["butterknife"]
+    apt rootProject.ext.dependencies["butterknife-compiler"]
+
+    testCompile rootProject.ext.dependencies["junit"]
 }
