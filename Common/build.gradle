@@ -1,7 +1,7 @@
 // 声明为Android Library程序
 apply plugin: 'com.android.library'
 
-// 配置Android构建的所有参数
+// 配置Android构建参数
 android {
     // 编译SDK版本
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
