@@ -90,7 +90,7 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
     /**
      * 子类实现提供holder
      *
-     * @param v
+     * @param view
      * @return
      */
     public abstract BaseHolder<T> getHolder(View view);

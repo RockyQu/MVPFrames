@@ -13,6 +13,7 @@ import com.frame.mvp.ui.common.CommonActivity;
 import com.tool.common.utils.AppUtils;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * 登录页面
@@ -33,6 +34,7 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Con
     @Override
     public void create(Bundle savedInstanceState) {
 
+        ButterKnife.bind(this);
 //        presenter =
 
         btnSubmit.setOnClickListener(new OnClickListener() {
