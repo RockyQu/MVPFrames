@@ -34,7 +34,7 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Con
     @Override
     public void create(Bundle savedInstanceState) {
 
-        ButterKnife.bind(this);
+
 //        presenter =
 
         btnSubmit.setOnClickListener(new OnClickListener() {

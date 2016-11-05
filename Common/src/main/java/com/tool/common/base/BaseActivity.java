@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.tool.common.frame.BasePresenter;
 
+import butterknife.ButterKnife;
+
 /**
  * BaseActivity
  */
@@ -20,6 +22,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(this.getLayoutId());
+
+        // 绑定ButterKnife
+        ButterKnife.bind(this);
 
         this.create(savedInstanceState);
     }
@@ -68,4 +73,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
      * 相当于Activity onCreate方法，需要在子类中重写此方法
      */
     public abstract void create(Bundle savedInstanceState);
+
+    /**
+     * 依赖注入
+     */
+    protected abstract void componentInject();
 }

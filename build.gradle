@@ -8,9 +8,12 @@ buildscript {
         // Maven仓库地址通过方法jCenter()获取
         jcenter()
     }
+
     dependencies {
         // 声明Android Gradle Plugin插件版本
         classpath 'com.android.tools.build:gradle:2.2.0'
+
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
 }
 
