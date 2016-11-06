@@ -25,6 +25,18 @@ android {
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
     }
 
+    sourceSets {
+        main {
+            res.srcDirs =
+                [
+                    'src/main/res/layouts/activity',
+                    'src/main/res/layouts/dialog',
+                    'src/main/res/layouts',
+                    'src/main/res'
+                ]
+        }
+    }
+
     // 移除lint检查的error，可以避免由于编译条件太过严格而编译不过的问题
     lintOptions {
         // InvalidPackage: Package not included in Android

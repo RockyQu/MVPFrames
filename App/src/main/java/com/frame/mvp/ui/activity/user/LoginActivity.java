@@ -8,18 +8,16 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.frame.mvp.R;
-import com.frame.mvp.contract.Contract;
+import com.frame.mvp.contract.user.LoginContract;
 import com.frame.mvp.presenter.user.LoginPresenter;
 import com.frame.mvp.ui.common.CommonActivity;
-import com.tool.common.utils.AppUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 登录页面
  */
-public class LoginActivity extends CommonActivity<LoginPresenter> implements Contract.View {
+public class LoginActivity extends CommonActivity<LoginPresenter> implements LoginContract.View {
 
     // 账号
     @BindView(R.id.edt_account)
