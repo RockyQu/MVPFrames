@@ -9,15 +9,26 @@ import android.view.ViewGroup;
 
 import com.tool.common.frame.BasePresenter;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * Fragment
  */
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
 
+    // 解除绑定
+    private Unbinder unbinder = null;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(getLayoutId(), container, false);
+
+        // 绑定ButterKnife
+        unbinder = ButterKnife.bind(this, view);
+
+        return view;
     }
 
     @Override
@@ -43,6 +54,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        // 解除绑定
+        unbinder.unbind();
     }
 
     @Override

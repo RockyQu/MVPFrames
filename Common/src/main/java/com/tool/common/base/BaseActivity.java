@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.tool.common.frame.BasePresenter;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * BaseActivity
@@ -18,13 +19,16 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
      */
     protected P presenter = null;
 
+    // 解除绑定
+    private Unbinder unbinder = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(this.getLayoutId());
 
         // 绑定ButterKnife
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
 
         this.create(savedInstanceState);
     }
@@ -52,6 +56,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        // 解除绑定
+        unbinder.unbind();
 
         // 释放资源
         if (presenter != null) {
