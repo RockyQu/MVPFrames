@@ -29,7 +29,7 @@ public interface BaseView {
      *
      * @param intent   Intent
      */
-    void startActivity(Intent intent);
+    void launchActivity(Intent intent);
 
     /**
      * 关闭Activity
