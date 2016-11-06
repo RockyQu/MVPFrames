@@ -31,6 +31,8 @@ android {
                 [
                     'src/main/res/layouts/activity',
                     'src/main/res/layouts/dialog',
+                    'src/main/res/layouts/fragment',
+                    'src/main/res/layouts/item',
                     'src/main/res/layouts',
                     'src/main/res'
                 ]
