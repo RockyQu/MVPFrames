@@ -1,33 +1,23 @@
 apply plugin: 'com.android.library'
-
 apply plugin: 'com.neenbedankt.android-apt'
 
-// 配置Android构建参数
 android {
-    // 编译SDK版本
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
-    // Build Tools版本
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
 
     // 解决Android SDK升级至API23，导致原生SDK删除org.apache.http.*类的问题
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
-        // 最低支持SDK版本
         minSdkVersion rootProject.ext.android["minSdkVersion"]
-        // 目标SDK版本
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
-        // 版本
         versionCode rootProject.ext.android["versionCode"]
-        // 版本号
         versionName rootProject.ext.android["versionName"]
     }
 
     buildTypes {
         release {
-            // 是否进行混淆
             minifyEnabled false
-            // 混淆文件位置
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -41,13 +31,12 @@ buildscript {
 }
 
 dependencies {
-    // 编译libs目录下的所有jar包
     compile fileTree(include: ['*.jar'], dir: 'libs')
+
+    testCompile rootProject.ext.dependencies["junit"]
 
     compile rootProject.ext.dependencies["design"]
     compile rootProject.ext.dependencies["appcompat-v7"]
     compile rootProject.ext.dependencies["butterknife"]
     apt rootProject.ext.dependencies["butterknife-compiler"]
-
-    testCompile rootProject.ext.dependencies["junit"]
 }

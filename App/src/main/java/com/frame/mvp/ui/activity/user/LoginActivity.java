@@ -35,7 +35,7 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Con
     public void create(Bundle savedInstanceState) {
 
 
-//        presenter =
+        presenter = new LoginPresenter(this);
 
         btnSubmit.setOnClickListener(new OnClickListener() {
 

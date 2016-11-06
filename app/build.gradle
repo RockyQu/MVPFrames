@@ -25,6 +25,25 @@ android {
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
     }
 
+    // 移除lint检查的error，可以避免由于编译条件太过严格而编译不过的问题
+    lintOptions {
+        // InvalidPackage: Package not included in Android
+        disable 'InvalidPackage'
+        // Expected resource of type color [ResourceType] 资源类型错误
+        disable "ResourceType"
+        // 忽略因MissingTranslation导致Build Failed错误 "app_name" is not translated in "zh" (Chinese)
+        disable 'MissingTranslation'
+
+        abortOnError false
+    }
+
+    // 签名
+    signingConfigs {
+        release {
+
+        }
+    }
+
     buildTypes {
         debug {
             minifyEnabled false
@@ -36,21 +55,11 @@ android {
             minifyEnabled false
             // 移除无用资源 如发生Resources$NotFoundException: Resource ID #0x4 错误可关闭此功能
             shrinkResources false
-            // 混淆文件位置
+            // 混淆文件位置，其中proguard-android.txt为默认的混淆配置，proguard-rules.pro为模块额外的混淆配置
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 签名
+            signingConfig signingConfigs.release
         }
-    }
-
-    // 移除lint检查的error，可以避免由于编译条件太过严格而编译不过的问题
-    lintOptions {
-        // InvalidPackage: Package not included in Android
-        disable 'InvalidPackage'
-        // Expected resource of type color [ResourceType] 资源类型错误
-        disable "ResourceType"
-        // 忽略因MissingTranslation导致Build Failed错误 "app_name" is not translated in "zh" (Chinese)
-        disable 'MissingTranslation'
-
-        abortOnError false
     }
 
     // 多渠道打包
@@ -68,13 +77,12 @@ buildscript {
 }
 
 dependencies {
-    // 编译libs目录下的所有jar包
+    // 本地库依赖，包含app/libs目录下的所有jar文件。因此当module想引用某个jar时，只需将jar拷贝到<moduleName>/libs
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     testCompile rootProject.ext.dependencies["junit"]
 
     compile rootProject.ext.dependencies["appcompat-v7"]
-
     compile rootProject.ext.dependencies["butterknife"]
     apt rootProject.ext.dependencies["butterknife-compiler"]
 

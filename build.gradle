@@ -9,6 +9,7 @@ buildscript {
         jcenter()
     }
 
+    // 基础依赖
     dependencies {
         // 声明Android Gradle Plugin插件版本
         classpath 'com.android.tools.build:gradle:2.2.0'
