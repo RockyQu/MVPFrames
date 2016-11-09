@@ -9,8 +9,12 @@ import com.tool.common.frame.BasePresenter;
 public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginContract.View> {
 
 
-    public LoginPresenter(LoginContract.View view) {
-        super(view);
+    public LoginPresenter(LoginContract.Model model, LoginContract.View view) {
+        super(model, view);
+    }
+
+    public void login(String name, String password) {
+
     }
 
 }

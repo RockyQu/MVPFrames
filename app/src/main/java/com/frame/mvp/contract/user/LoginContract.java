@@ -9,7 +9,8 @@ public interface LoginContract {
 
     // 常用基本View方法定义到BaseView中
     interface View extends BaseView {
-        //TODO
+
+        void loginSuccess();
     }
 
     //

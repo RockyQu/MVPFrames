@@ -34,7 +34,7 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Log
     public void create(Bundle savedInstanceState) {
 
 
-        presenter = new LoginPresenter(this);
+//        presenter = new LoginPresenter(this);
 
         btnSubmit.setOnClickListener(new OnClickListener() {
 
@@ -57,6 +57,11 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Log
 
     @Override
     public void showMessage(String message) {
+
+    }
+
+    @Override
+    public void loginSuccess() {
 
     }
 
