@@ -7,20 +7,20 @@ import android.content.Context;
  * 项目介绍及使用
  * <p>
  * 项目涉及框架
- * 一、ButterKnife http://jakewharton.github.io/butterknife/
- * 二、
- * 三、
- * 四、
- * 五、
- * 六、
+ * 1、ButterKnife 注解框架 http://jakewharton.github.io/butterknife/
+ * 2、
+ * 3、
+ * 4、
+ * 5、
+ * 6、
  * <p>
  * 使用方法
- * 一、配置自定义Application必须继承BaseApplication，BaseApplication完成Http框架、图片框架、日志管理框架等初始化工作。
- * 二、
- * 三、
- * 四、
- * 五、
- * 六、
+ * 1、配置自定义Application必须继承BaseApplication，BaseApplication完成Http框架、图片框架、日志管理框架等初始化工作。
+ * 2、
+ * 3、
+ * 4、
+ * 5、
+ * 6、
  */
 public abstract class BaseApplication extends Application {
 
