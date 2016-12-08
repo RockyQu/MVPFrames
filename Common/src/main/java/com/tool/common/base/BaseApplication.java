@@ -16,7 +16,7 @@ import android.content.Context;
  * <p>
  * 使用方法
  * 1、配置自定义Application必须继承BaseApplication，BaseApplication完成Http框架、图片框架、日志管理框架等初始化工作。
- * 2、
+ * 2、使用Activity、Fragment、ViewHolder、Service、Adapter必须继承BaseActivity、BaseFragment、BaseViewHolder、BaseService、BaseAdapter来初始化MVP架构。
  * 3、
  * 4、
  * 5、
