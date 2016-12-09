@@ -8,7 +8,7 @@ import android.support.design.widget.Snackbar;
  */
 public class ToastBar {
 
-    public static void show(Activity context,String message){
-        Snackbar.make(context.getWindow().getDecorView(),message, Snackbar.LENGTH_LONG).show();
+    public static void show(Activity context, String message) {
+        Snackbar.make(context.getWindow().getDecorView(), message, Snackbar.LENGTH_LONG).show();
     }
 }

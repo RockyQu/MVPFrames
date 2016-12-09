@@ -1,4 +1,4 @@
-package com.frame.mvp.api.cache;
+package com.frame.mvp.app.api.cache;
 
 import com.tool.common.http.BaseCacheManager;
 

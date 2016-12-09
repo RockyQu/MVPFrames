@@ -1,4 +1,4 @@
-package com.frame.mvp.api.service;
+package com.frame.mvp.app.api.service;
 
 /**
  *

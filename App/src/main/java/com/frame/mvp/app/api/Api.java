@@ -1,4 +1,4 @@
-package com.frame.mvp.api;
+package com.frame.mvp.app.api;
 
 /**
  * Root API

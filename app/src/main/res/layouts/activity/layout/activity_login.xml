@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/root"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center_horizontal"
@@ -17,18 +18,16 @@
             android:id="@+id/edt_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Account"
-            android:maxLines="1"
-            android:text="text"/>
+            android:hint="账号"
+            android:maxLines="1"/>
 
         <EditText
             android:id="@+id/edt_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="密码"
             android:inputType="textPassword"
-            android:maxLines="1"
-            android:text="text"/>
+            android:maxLines="1"/>
 
         <Button
             android:id="@+id/btn_submit"

@@ -1,7 +1,7 @@
 package com.frame.mvp.mvp.login;
 
-import com.frame.mvp.api.cache.CacheManager;
-import com.frame.mvp.api.service.ServiceManager;
+import com.frame.mvp.app.api.cache.CacheManager;
+import com.frame.mvp.app.api.service.ServiceManager;
 import com.tool.common.frame.BaseModel;
 
 /**
