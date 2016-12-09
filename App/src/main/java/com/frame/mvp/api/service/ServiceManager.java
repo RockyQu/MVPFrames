@@ -1,4 +1,4 @@
-package com.frame.mvp.model.api.service;
+package com.frame.mvp.api.service;
 
 import com.tool.common.http.BaseServiceManager;
 
