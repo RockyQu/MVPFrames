@@ -34,7 +34,7 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Log
     public void create(Bundle savedInstanceState) {
 
 
-//        presenter = new LoginPresenter(this);
+        presenter = new LoginPresenter(new LoginModel(),this);
 
         btnSubmit.setOnClickListener(new OnClickListener() {
 

@@ -1,5 +1,7 @@
 package com.frame.mvp.mvp.login;
 
+import com.tool.common.frame.BaseModel;
+import com.tool.common.frame.BasePresenter;
 import com.tool.common.frame.BaseView;
 
 /**
@@ -7,14 +9,17 @@ import com.tool.common.frame.BaseView;
  */
 public interface LoginContract {
 
-    // 常用基本View方法定义到BaseView中
+    interface Model extends BaseModel {
+
+    }
+
     interface View extends BaseView {
 
         void loginSuccess();
     }
 
-    //
-    interface Model {
-        //TODO
+    abstract class Presenter extends BasePresenter<Model, View> {
+
+        public abstract void login(String account, String password);
     }
 }

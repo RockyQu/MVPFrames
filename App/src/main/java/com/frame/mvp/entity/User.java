@@ -1,9 +1,11 @@
 package com.frame.mvp.entity;
 
+import com.frame.mvp.entity.base.BaseEntity;
+
 /**
  * 用户信息
  */
-public class User {
+public class User extends BaseEntity.Bean{
 
     //ID
     private int id;

@@ -1,6 +1,6 @@
 package com.frame.mvp.app;
 
-import com.frame.mvp.api.Api;
+import com.frame.mvp.app.api.Api;
 import com.tool.common.base.BaseApplication;
 
 /**
