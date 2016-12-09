@@ -13,11 +13,9 @@ public class ClassUtils extends BaseUtils {
         super();
     }
 
-    public static <T> T getT(Object o, int i) {
+    public static <T> T getT(Object o) {
         try {
-            return ((Class<T>) ((ParameterizedType) (o.getClass()
-                    .getGenericSuperclass())).getActualTypeArguments()[i])
-                    .newInstance();
+            return ((Class<T>) ((ParameterizedType) (o.getClass().getGenericSuperclass())).getActualTypeArguments()[0]).newInstance();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

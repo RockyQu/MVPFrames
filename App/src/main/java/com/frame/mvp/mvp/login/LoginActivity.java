@@ -33,9 +33,6 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Log
     @Override
     public void create(Bundle savedInstanceState) {
 
-
-        presenter = new LoginPresenter(new LoginModel(),this);
-
         btnSubmit.setOnClickListener(new OnClickListener() {
 
             @Override

@@ -5,6 +5,7 @@ import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 
 import com.tool.common.frame.BasePresenter;
+import com.tool.common.utils.ClassUtils;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -30,7 +31,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         // 绑定ButterKnife
         unbinder = ButterKnife.bind(this);
 
-
+        presenter = ClassUtils.getT(this);
+//        if (this instanceof BaseView) presenter.setVM(this, mModel);
 
         this.create(savedInstanceState);
     }
