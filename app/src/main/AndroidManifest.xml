@@ -29,7 +29,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.WelcomeActivity"
+            android:name=".mvp.other.WelcomeActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -38,10 +38,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.main.MainActivity"
+            android:name=".mvp.main.MainActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".ui.activity.user.LoginActivity"
+            android:name=".mvp.login.LoginActivity"
             android:screenOrientation="portrait">
         </activity>
     </application>

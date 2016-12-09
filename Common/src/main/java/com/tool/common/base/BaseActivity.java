@@ -30,6 +30,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         // 绑定ButterKnife
         unbinder = ButterKnife.bind(this);
 
+
+
         this.create(savedInstanceState);
     }
 

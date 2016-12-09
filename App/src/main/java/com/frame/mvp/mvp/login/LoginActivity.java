@@ -9,6 +9,8 @@ import android.widget.EditText;
 
 import com.frame.mvp.R;
 import com.frame.mvp.ui.common.CommonActivity;
+import com.frame.mvp.ui.widget.ToastBar;
+import com.tool.common.utils.StringUtils;
 
 import butterknife.BindView;
 
@@ -38,9 +40,37 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Log
 
             @Override
             public void onClick(View view) {
+                if (inputCheck(R.id.btn_submit)) {
+                    // 登录
+                    presenter.login(edtAccount.getText().toString().trim(), edtPassword.getText().toString().trim());
+                }
 
             }
         });
+    }
+
+    /**
+     * 输入项合法性检查
+     *
+     * @param flag Flag
+     * @return
+     */
+    private boolean inputCheck(int flag) {
+        switch (flag) {
+            case R.id.btn_submit:// 登录
+                if (StringUtils.isEmpty(edtAccount.getText().toString().trim())) {
+                    ToastBar.show(this, "账号不能为空");
+                    return false;
+                }
+                if (StringUtils.isEmpty(edtPassword.getText().toString().trim())) {
+                    ToastBar.show(this, "密码不能为空");
+                    return false;
+                }
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 
     @Override
