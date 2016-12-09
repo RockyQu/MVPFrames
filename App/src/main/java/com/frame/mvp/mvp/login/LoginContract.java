@@ -1,4 +1,4 @@
-package com.frame.mvp.contract.user;
+package com.frame.mvp.mvp.login;
 
 import com.tool.common.frame.BaseView;
 

@@ -1,6 +1,6 @@
-package com.frame.mvp.presenter.user;
+package com.frame.mvp.mvp.login;
 
-import com.frame.mvp.contract.user.LoginContract;
+import com.frame.mvp.mvp.login.LoginContract;
 import com.tool.common.frame.BasePresenter;
 
 /**

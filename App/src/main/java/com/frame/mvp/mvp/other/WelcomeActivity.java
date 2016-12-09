@@ -1,4 +1,4 @@
-package com.frame.mvp.ui.activity;
+package com.frame.mvp.mvp.other;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.frame.mvp.R;
-import com.frame.mvp.ui.activity.user.LoginActivity;
+import com.frame.mvp.mvp.login.LoginActivity;
 import com.frame.mvp.ui.common.CommonActivity;
 
 /**

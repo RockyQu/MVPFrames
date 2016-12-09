@@ -1,4 +1,4 @@
-package com.frame.mvp.model.entity;
+package com.frame.mvp.entity;
 
 /**
  * 用户信息

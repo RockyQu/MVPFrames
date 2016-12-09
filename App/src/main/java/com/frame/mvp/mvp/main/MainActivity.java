@@ -1,4 +1,4 @@
-package com.frame.mvp.ui.activity.main;
+package com.frame.mvp.mvp.main;
 
 import android.os.Bundle;
 

@@ -1,4 +1,4 @@
-package com.frame.mvp.ui.activity.user;
+package com.frame.mvp.mvp.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.frame.mvp.R;
-import com.frame.mvp.contract.user.LoginContract;
-import com.frame.mvp.presenter.user.LoginPresenter;
 import com.frame.mvp.ui.common.CommonActivity;
 
 import butterknife.BindView;

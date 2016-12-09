@@ -1,4 +1,4 @@
-package com.frame.mvp.model;
+package com.frame.mvp.mvp.login;
 
 import com.frame.mvp.api.cache.CacheManager;
 import com.frame.mvp.api.service.ServiceManager;
