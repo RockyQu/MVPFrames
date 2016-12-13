@@ -1,4 +1,4 @@
-package com.frame.mvp.di;
+package com.frame.mvp.di.component;
 
 /**
  *

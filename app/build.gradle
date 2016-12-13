@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'com.neenbedankt.android-apt'
 
 // 配置Android构建参数
@@ -83,10 +82,13 @@ android {
 }
 
 buildscript {
-
     repositories {
         jcenter()
         mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
 }
 
@@ -99,6 +101,10 @@ dependencies {
     compile rootProject.ext.dependencies["appcompat-v7"]
     compile rootProject.ext.dependencies["butterknife"]
     apt rootProject.ext.dependencies["butterknife-compiler"]
+
+    provided rootProject.ext.dependencies["javax.annotation"]
+
+    apt rootProject.ext.dependencies["dagger2-apt-compiler"]
 
     // 引入框架基础共通模块
     compile project(':Common')

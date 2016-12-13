@@ -17,9 +17,4 @@ public interface LoginContract {
 
         void loginSuccess();
     }
-
-    abstract class Presenter extends BasePresenter<Model, View> {
-
-        public abstract void login(String account, String password);
-    }
 }

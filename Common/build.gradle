@@ -28,6 +28,10 @@ buildscript {
         jcenter()
         mavenCentral()
     }
+
+    dependencies {
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    }
 }
 
 dependencies {
@@ -39,4 +43,9 @@ dependencies {
     compile rootProject.ext.dependencies["appcompat-v7"]
     compile rootProject.ext.dependencies["butterknife"]
     apt rootProject.ext.dependencies["butterknife-compiler"]
+
+    provided rootProject.ext.dependencies["javax.annotation"]
+
+    compile rootProject.ext.dependencies["dagger2"]
+    apt rootProject.ext.dependencies["dagger2-apt-compiler"]
 }
