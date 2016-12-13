@@ -3,25 +3,15 @@ package com.tool.common.frame;
 /**
  * Presenter
  */
-public class BasePresenter<M extends BaseModel, V extends BaseView> {
+public class BasePresenter<M, V> {
 
     protected M model;
     protected V view;
 
-    public BasePresenter(M model, V view) {
+    public void setMV(M model, V view) {
         this.model = model;
         this.view = view;
 
-        this.onStart();
-    }
-
-    public BasePresenter(V view) {
-        this.view = view;
-
-        this.onStart();
-    }
-
-    public BasePresenter() {
         this.onStart();
     }
 

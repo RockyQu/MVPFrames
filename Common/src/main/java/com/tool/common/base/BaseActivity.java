@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 
+import com.tool.common.frame.BaseModel;
 import com.tool.common.frame.BasePresenter;
+import com.tool.common.frame.BaseView;
 import com.tool.common.utils.ClassUtils;
 
 import javax.inject.Inject;
@@ -15,12 +17,11 @@ import butterknife.Unbinder;
 /**
  * BaseActivity
  */
-public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
+public abstract class BaseActivity<P extends BasePresenter, M extends BaseModel> extends AppCompatActivity {
 
     /**
      * Presenter
      */
-    @Inject
     protected P presenter = null;
 
     // 解除绑定
@@ -34,8 +35,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         // 绑定ButterKnife
         unbinder = ButterKnife.bind(this);
 
-//        presenter = ClassUtils.getT(this);
-//        if (this instanceof BaseView) presenter.setVM(this, mModel);
+        presenter = ClassUtils.getT(this);
+
+        if (this instanceof BaseView) presenter.setMV(ClassUtils.getT(this, 1), this);
+
 
         this.create(savedInstanceState);
     }

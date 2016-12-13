@@ -13,9 +13,13 @@ public class ClassUtils extends BaseUtils {
         super();
     }
 
-    public static <T> T getT(Object o) {
+    public static <T> T getT(Object object) {
+        return getT(object, 0);
+    }
+
+    public static <T> T getT(Object object, int index) {
         try {
-            return ((Class<T>) ((ParameterizedType) (o.getClass().getGenericSuperclass())).getActualTypeArguments()[0]).newInstance();
+            return ((Class<T>) ((ParameterizedType) (object.getClass().getGenericSuperclass())).getActualTypeArguments()[index]).newInstance();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

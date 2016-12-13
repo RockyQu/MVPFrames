@@ -2,6 +2,7 @@ package com.frame.mvp.mvp.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -17,7 +18,7 @@ import butterknife.BindView;
 /**
  * 登录页面
  */
-public class LoginActivity extends CommonActivity<LoginPresenter> implements LoginContract.View {
+public class LoginActivity extends CommonActivity<LoginPresenter, LoginModel> implements LoginContract.View {
 
     // 账号
     @BindView(R.id.edt_account)
@@ -32,6 +33,9 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Log
 
     @Override
     public void create(Bundle savedInstanceState) {
+
+        edtAccount.setText("test");
+        edtPassword.setText("test");
 
         btnSubmit.setOnClickListener(new OnClickListener() {
 
@@ -87,7 +91,7 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Log
 
     @Override
     public void loginSuccess() {
-
+        Log.e("", "loginSuccess");
     }
 
     @Override
