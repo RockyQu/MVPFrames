@@ -1,6 +1,5 @@
 package com.frame.mvp.app;
 
-import com.frame.mvp.app.api.Api;
 import com.tool.common.base.BaseApplication;
 
 /**
@@ -13,10 +12,5 @@ public class MVPApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
 
-    }
-
-    @Override
-    public String getJavaUrl() {
-        return Api.URL_BASE_JAVA;
     }
 }

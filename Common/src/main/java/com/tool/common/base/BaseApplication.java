@@ -6,21 +6,14 @@ import android.content.Context;
 /**
  * 项目介绍及使用
  * <p>
- * 项目涉及框架
- * 1、ButterKnife 注解框架 http://jakewharton.github.io/butterknife/
- * 2、
- * 3、
- * 4、
- * 5、
- * 6、
+ * 项目用到的主要框架
+ * 1、ButterKnife http://jakewharton.github.io/butterknife/
+ * 2、Retrofit2 https://github.com/square/retrofit
  * <p>
  * 使用方法
- * 1、配置自定义Application必须继承BaseApplication，BaseApplication完成Http框架、图片框架、日志管理框架等初始化工作。
- * 2、使用Activity、Fragment、ViewHolder、Service、Adapter必须继承BaseActivity、BaseFragment、BaseViewHolder、BaseService、BaseAdapter来初始化MVP架构。
- * 3、
- * 4、
- * 5、
- * 6、
+ * 1、配置自定义Application必须继承BaseApplication，BaseApplication完成Http框架、图片框架、日志管理框架等初始化工作
+ * 2、使用Activity、Fragment、ViewHolder、Service、Adapter请继承BaseActivity、BaseFragment、BaseViewHolder、BaseService、BaseAdapter来初始化MVP架构
+ * 3、简单功能及页面无需引入MVP
  */
 public abstract class BaseApplication extends Application {
 
@@ -49,11 +42,4 @@ public abstract class BaseApplication extends Application {
     public static Context getContext() {
         return application;
     }
-
-    /**
-     * 获取Root API
-     *
-     * @return
-     */
-    protected abstract String getJavaUrl();
 }
