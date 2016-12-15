@@ -23,6 +23,7 @@ ext {
             "retrofit"                   : "com.squareup.retrofit2:retrofit:${android["retrofitSdkVersion"]}",
             "retrofit-converter-gson"    : "com.squareup.retrofit2:converter-gson:${android["retrofitSdkVersion"]}",
             "retrofit-adapter-rxjava"    : "com.squareup.retrofit2:adapter-rxjava:${android["retrofitSdkVersion"]}",
-            "okhttp3-logging-interceptor": "com.squareup.okhttp3:logging-interceptor:3.1.2"
+            "okhttp3-logging-interceptor": "com.squareup.okhttp3:logging-interceptor:3.1.2",
+            "gson"                       : "com.google.code.gson:gson:2.6.2"
     ]
 }
