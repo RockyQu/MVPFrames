@@ -1,13 +1,13 @@
 package com.frame.mvp.app.api;
 
 /**
- * Root API
+ *
  */
 public interface Api {
 
     /**
-     * Java Root Interface
+     * Java
      */
-    String URL_BASE_JAVA = "http://www.xxx.com";
+    String URL_BASE_JAVA = "https://api.github.com";
 
 }
