@@ -78,26 +78,26 @@ android {
     // 多渠道打包
     productFlavors {
 
-        // 阿里应用分发平台
-        alibaba {
-
-        }
-        // 应用宝
-        yingyongbao {
-
-        }
-        // 360
-        qihoo360 {
-
-        }
-        // 小米
-        xiaomi {
-
-        }
-        // 华为
-        huawei {
-
-        }
+//        // 阿里应用分发平台
+//        alibaba {
+//
+//        }
+//        // 应用宝
+//        yingyongbao {
+//
+//        }
+//        // 360
+//        qihoo360 {
+//
+//        }
+//        // 小米
+//        xiaomi {
+//
+//        }
+//        // 华为
+//        huawei {
+//
+//        }
     }
 
     buildTypes {
@@ -121,16 +121,16 @@ android {
             signingConfig signingConfigs.release
 
             // 批量打包
-            applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    def outputFile = output.outputFile
-                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                        // 输出名称为：渠道名_版本号.apk
-                        def fileName = "App_${variant.productFlavors[0].name}_v${defaultConfig.versionName}.apk"
-                        output.outputFile = new File(outputFile.parent, fileName)
-                    }
-                }
-            }
+//            applicationVariants.all { variant ->
+//                variant.outputs.each { output ->
+//                    def outputFile = output.outputFile
+//                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+//                        // 输出名称为：渠道名_版本号.apk
+//                        def fileName = "App_${variant.productFlavors[0].name}_v${defaultConfig.versionName}.apk"
+//                        output.outputFile = new File(outputFile.parent, fileName)
+//                    }
+//                }
+//            }
         }
     }
 }

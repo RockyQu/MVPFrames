@@ -60,7 +60,7 @@ public abstract class BaseApplication extends Application {
 
         // 内存泄露
         if (appConfiguration.isDebug()) {
-            LeakCanary.install(this);
+//            LeakCanary.install(this);
         }
     }
 

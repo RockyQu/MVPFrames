@@ -273,4 +273,46 @@ public class StringUtils extends BaseUtils {
         }
         return new String(source);
     }
+
+    /**
+     * 手机号码合法性检查
+     *
+     * @param value 字符串
+     * @return 手机号码是否合法
+     */
+    public static boolean isPhone(String value) {
+        return !Pattern.compile("^1[3|4|5|7|8]\\d{9}$").matcher(value).matches();
+    }
+
+    /**
+     * 字符串位数范围检查
+     *
+     * @param value 字符串
+     * @return 是否属于所给范围内
+     */
+    public static Boolean isCount(String value, int min, int max) {
+        if (value == null) {
+            return true;
+        }
+        if (value.length() < min) {
+            return true;
+        }
+
+        if (value.length() > max) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 邮箱地址合法性检查
+     *
+     * @param value 字符串
+     * @return 邮箱地址是否合法
+     */
+    public static boolean isEmail(String value) {
+        return Pattern
+                .compile("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$",
+                        Pattern.CASE_INSENSITIVE).matcher(value).matches();
+    }
 }

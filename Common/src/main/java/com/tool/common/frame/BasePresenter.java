@@ -3,12 +3,23 @@ package com.tool.common.frame;
 /**
  * Presenter
  */
-public class BasePresenter<M, V> {
+public class BasePresenter<M, V extends BaseView> {
 
     protected M model;
     protected V view;
 
-    public void setMV(M model, V view) {
+    public BasePresenter(){
+
+        this.onStart();
+    }
+
+    public BasePresenter(V view){
+        this.view = view;
+
+        this.onStart();
+    }
+
+    public BasePresenter(M model, V view){
         this.model = model;
         this.view = view;
 
@@ -16,17 +27,17 @@ public class BasePresenter<M, V> {
     }
 
     /**
-     *
+     * Start
      */
     public void onStart() {
 
     }
 
     /**
-     *
+     * Destroy
      */
     public void onDestroy() {
-        this.view = null;
+        this.model = null;
         this.view = null;
     }
 }

@@ -1,42 +1,61 @@
 package com.frame.mvp.entity;
 
 import com.frame.mvp.entity.base.BaseEntity;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * 用户信息
  */
-public class User extends BaseEntity.Bean{
+public class User extends BaseEntity.Bean {
 
     //ID
-    private int id;
+    @SerializedName("userid")
+    private String id;
     //账号
     private String account;
     //密码
     private String password;
     //名字
+    @SerializedName("realname")
     private String name;
     //性别
+    @SerializedName("gender")
     private String gender;
     //昵称
+    @SerializedName("nickname")
     private String nickname;
-    //邮箱
-    private String email;
     //移动电话
+    @SerializedName("mobile")
     private String mobilePhone;
+    //生日
+    @SerializedName("birth")
+    private String birth;
     //头像
+    @SerializedName("avatar")
     private String avatarUrl;
-    //身份证号码
-    private String idNumber;
+    //地区、地址
+    @SerializedName("area")
+    private String area;
+    //积分
+    @SerializedName("point")
+    private String point;
+    //签名
+    @SerializedName("signature")
+    private String signature;
+
+    //Token
+    @SerializedName("access_token")
+    private String token;
 
     public User() {
 
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -80,20 +99,20 @@ public class User extends BaseEntity.Bean{
         this.nickname = nickname;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getMobilePhone() {
         return mobilePhone;
     }
 
     public void setMobilePhone(String mobilePhone) {
         this.mobilePhone = mobilePhone;
+    }
+
+    public String getBirth() {
+        return birth;
+    }
+
+    public void setBirth(String birth) {
+        this.birth = birth;
     }
 
     public String getAvatarUrl() {
@@ -104,11 +123,35 @@ public class User extends BaseEntity.Bean{
         this.avatarUrl = avatarUrl;
     }
 
-    public String getIdNumber() {
-        return idNumber;
+    public String getArea() {
+        return area;
     }
 
-    public void setIdNumber(String idNumber) {
-        this.idNumber = idNumber;
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getPoint() {
+        return point;
+    }
+
+    public void setPoint(String point) {
+        this.point = point;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

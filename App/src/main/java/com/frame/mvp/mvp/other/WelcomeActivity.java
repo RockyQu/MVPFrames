@@ -14,7 +14,6 @@ import com.frame.mvp.ui.common.CommonActivity;
  */
 public class WelcomeActivity extends CommonActivity {
 
-
     @Override
     public void create(Bundle savedInstanceState) {
         new Handler(new Handler.Callback() {
@@ -31,11 +30,6 @@ public class WelcomeActivity extends CommonActivity {
     @Override
     public int getLayoutId() {
         return R.layout.activity_welcome;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     @Override

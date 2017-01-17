@@ -1,13 +1,17 @@
 package com.frame.mvp.app.api;
 
 /**
- *
+ * Base Api
  */
 public interface Api {
 
     /**
+     * PHP
+     */
+    String PHP = "https://api.shaimobao.com/";
+
+    /**
      * Java
      */
-    String URL_BASE_JAVA = "https://api.github.com";
-
+    String JAVA = "";
 }

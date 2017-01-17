@@ -8,13 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 
-import com.tool.common.frame.BaseModel;
 import com.tool.common.frame.BasePresenter;
-import com.tool.common.frame.BaseView;
-import com.tool.common.utils.ClassUtils;
 import com.tool.common.widget.ToastBar;
-
-import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
