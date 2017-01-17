@@ -1,20 +1,23 @@
 ext {
 
-    android = [compileSdkVersion       : 23,
-               buildToolsVersion       : "23.0.3",
+    android = [compileSdkVersion       : 24,
+               buildToolsVersion       : "24",
                minSdkVersion           : 14,
-               targetSdkVersion        : 23,
+               targetSdkVersion        : 24,
                versionCode             : 1,
-               versionName             : "1.0.1",
-               androidSupportSdkVersion: "23.3.0",
+               versionName             : "1.0.0",
+               androidSupportSdkVersion: "25.0.0",
                dagger2SdkVersion       : "2.6",
                retrofitSdkVersion      : "2.1.0"
     ]
     dependencies = [
             "androidJUnitRunner"         : "android.support.test.runner.AndroidJUnitRunner",
             "junit"                      : "junit:junit:4.12",
-            "javax.annotation"           : 'javax.annotation:jsr250-api:1.0',
+            "javax.annotation"           : "javax.annotation:jsr250-api:1.0",
+            "support-v4"                 : "com.android.support:support-v4:19.1.0",
             "appcompat-v7"               : "com.android.support:appcompat-v7:${android["androidSupportSdkVersion"]}",
+            "recyclerview-v7"            : "com.android.support:recyclerview-v7:${android["androidSupportSdkVersion"]}",
+            "cardview-v7"                : "com.android.support:cardview-v7:${android["androidSupportSdkVersion"]}",
             "design"                     : "com.android.support:design:${android["androidSupportSdkVersion"]}",
             "butterknife"                : "com.jakewharton:butterknife:8.4.0",
             "butterknife-compiler"       : "com.jakewharton:butterknife-compiler:8.4.0",
@@ -23,7 +26,14 @@ ext {
             "retrofit"                   : "com.squareup.retrofit2:retrofit:${android["retrofitSdkVersion"]}",
             "retrofit-converter-gson"    : "com.squareup.retrofit2:converter-gson:${android["retrofitSdkVersion"]}",
             "retrofit-adapter-rxjava"    : "com.squareup.retrofit2:adapter-rxjava:${android["retrofitSdkVersion"]}",
-            "okhttp3-logging-interceptor": "com.squareup.okhttp3:logging-interceptor:3.1.2",
-            "gson"                       : "com.google.code.gson:gson:2.6.2"
+            "okhttp3"                    : "com.squareup.okhttp3:okhttp:3.2.0",
+            "okhttp3-logging-interceptor": "com.squareup.okhttp3:logging-interceptor:3.4.1",
+            "okhttp-urlconnection"       : "com.squareup.okhttp:okhttp-urlconnection:2.2.0",
+            "okio"                       : "com.squareup.okio:okio:1.8.0",
+            "gson"                       : "com.google.code.gson:gson:2.7",
+            "fastjson"                   : "com.alibaba:fastjson:1.2.21",
+            "glide"                      : "com.github.bumptech.glide:glide:3.7.0",
+            "canary-debug"               : "com.squareup.leakcanary:leakcanary-android:1.5",
+            "canary-release"             : "com.squareup.leakcanary:leakcanary-android-no-op:1.5"
     ]
 }

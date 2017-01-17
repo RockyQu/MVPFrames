@@ -1,7 +1,7 @@
 package com.tool.common.http;
 
 /**
- * 缓存管理类，管理本地或内存缓存
+ * BaseCacheManager
  */
 public abstract class BaseCacheManager {
 

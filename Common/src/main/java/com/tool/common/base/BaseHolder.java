@@ -3,8 +3,10 @@ package com.tool.common.base;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.tool.common.utils.KnifeUtils;
+
 /**
- * Holder
+ * BaseHolder
  */
 public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -14,7 +16,10 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements V
     public BaseHolder(View itemView) {
         super(itemView);
 
-        itemView.setOnClickListener(this);//点击事件
+        itemView.setOnClickListener(this);
+
+        // 绑定
+        KnifeUtils.bindTarget(this, itemView);
     }
 
     /**
@@ -27,7 +32,7 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements V
     @Override
     public void onClick(View view) {
         if (onViewClickListener != null) {
-            onViewClickListener.onViewClick(view, this.getPosition());
+            onViewClickListener.onViewClick(view, this.getLayoutPosition());
         }
     }
 

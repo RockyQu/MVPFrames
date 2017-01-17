@@ -27,15 +27,20 @@ android {
     sourceSets {
         main {
             res.srcDirs =
-                [
-                    'src/main/res/layouts/activity',
-                    'src/main/res/layouts/dialog',
-                    'src/main/res/layouts/fragment',
-                    'src/main/res/layouts/item',
-                    'src/main/res/layouts',
-                    'src/main/res'
-                ]
+                    [
+                            'src/main/res/layouts/activity',
+                            'src/main/res/layouts/dialog',
+                            'src/main/res/layouts/fragment',
+                            'src/main/res/layouts/item',
+                            'src/main/res/layouts',
+                            'src/main/res'
+                    ]
         }
+    }
+
+    // Java版本配置
+    compileOptions {
+
     }
 
     // 移除lint检查的error，可以避免由于编译条件太过严格而编译不过的问题
@@ -50,20 +55,62 @@ android {
         abortOnError false
     }
 
+    dexOptions {
+        // 优化编译效率
+        incremental true
+    }
+
     // 签名
     signingConfigs {
+        debug {
+            v2SigningEnabled false
+        }
         release {
+            // storeFile file("../Project-Frame-MVP/APP/keystore/mvp.keystore")
+            // storePassword ""
+            // keyAlias ""
+            // keyPassword ""
+            // 禁用v2签名增强模式
+            v2SigningEnabled false
+        }
+    }
+
+    // 多渠道打包
+    productFlavors {
+
+        // 阿里应用分发平台
+        alibaba {
+
+        }
+        // 应用宝
+        yingyongbao {
+
+        }
+        // 360
+        qihoo360 {
+
+        }
+        // 小米
+        xiaomi {
+
+        }
+        // 华为
+        huawei {
 
         }
     }
 
     buildTypes {
         debug {
-            minifyEnabled false
-            shrinkResources false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
         }
         release {
+            // 是否支持ZIP
+            zipAlignEnabled true
+            // 是否支持调试
+            debuggable false
+            // 是否支持jni调试
+            jniDebuggable false
             // 是否进行混淆
             minifyEnabled false
             // 移除无用资源 如发生Resources$NotFoundException: Resource ID #0x4 错误可关闭此功能
@@ -72,12 +119,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             // 签名
             signingConfig signingConfigs.release
+
+            // 批量打包
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        // 输出名称为：渠道名_版本号.apk
+                        def fileName = "App_${variant.productFlavors[0].name}_v${defaultConfig.versionName}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
         }
-    }
-
-    // 多渠道打包
-    productFlavors {
-
     }
 }
 

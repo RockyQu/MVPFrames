@@ -1,7 +1,7 @@
 package com.tool.common.http;
 
 /**
- * 服务管理类
+ * BaseServiceManager
  */
 public abstract class BaseServiceManager {
 
