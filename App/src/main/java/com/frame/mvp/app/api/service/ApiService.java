@@ -15,6 +15,6 @@ public interface ApiService {
 
     // 登录
     @FormUrlEncoded
-    @POST("index.php?m=member&c=api&a=do_login")
+    @POST("")
     Call<ResponseEntity<User>> login(@Field("username") String username, @Field("password") String password);
 }
