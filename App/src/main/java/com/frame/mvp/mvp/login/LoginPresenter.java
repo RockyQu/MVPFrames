@@ -22,7 +22,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
     // Login User
     private Call<ResponseEntity<User>> user;
 
-    public LoginPresenter(LoginContract.Model model, LoginContract.View view, MVPApplication application) {
+    public LoginPresenter(MVPApplication application, LoginContract.Model model, LoginContract.View view) {
         super(model, view);
         this.application = application;
     }
