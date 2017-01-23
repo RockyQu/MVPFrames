@@ -3,7 +3,7 @@ package com.tool.common.frame;
 /**
  * Presenter
  */
-public class BasePresenter<M, V extends BaseView> {
+public class BasePresenter<M, V extends BaseView> implements Presenter{
 
     protected M model;
     protected V view;
@@ -29,6 +29,7 @@ public class BasePresenter<M, V extends BaseView> {
     /**
      * Start
      */
+    @Override
     public void onStart() {
 
     }
@@ -36,6 +37,7 @@ public class BasePresenter<M, V extends BaseView> {
     /**
      * Destroy
      */
+    @Override
     public void onDestroy() {
         this.model = null;
         this.view = null;

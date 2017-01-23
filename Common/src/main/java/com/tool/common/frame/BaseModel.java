@@ -6,7 +6,7 @@ import com.tool.common.http.BaseServiceManager;
 /**
  * BaseModel
  */
-public class BaseModel<S extends BaseServiceManager, C extends BaseCacheManager> {
+public class BaseModel<S extends BaseServiceManager, C extends BaseCacheManager> implements Model{
 
     // 通信接口管理类
     protected S serviceManager;
@@ -22,6 +22,7 @@ public class BaseModel<S extends BaseServiceManager, C extends BaseCacheManager>
         this.cacheManager = cacheManager;
     }
 
+    @Override
     public void onDestory() {
         serviceManager = null;
         cacheManager = null;
