@@ -63,4 +63,13 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
             }
         });
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (user != null) {
+            user.cancel();
+        }
+    }
 }
