@@ -3,6 +3,6 @@ package com.tool.common.http;
 /**
  * BaseCacheManager
  */
-public abstract class BaseCacheManager {
-
+public interface BaseCacheManager {
+    void onDestory();
 }

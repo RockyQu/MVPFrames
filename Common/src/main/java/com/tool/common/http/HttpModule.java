@@ -1,6 +1,7 @@
 package com.tool.common.http;
 
 import com.tool.common.http.converter.GsonConverterBodyFactory;
+import com.tool.common.http.cookie.CookieManager;
 import com.tool.common.http.interceptor.NetworkInterceptor;
 
 import java.io.File;
@@ -76,7 +77,8 @@ public class HttpModule {
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(true)// 设置出现错误进行重新连接
                 .cache(new Cache(buidler.cacheFile, CACHE_MAX_SIZE))//设置缓存路径和大小
-                .addNetworkInterceptor(interceptor);// 网络拦截器，在Request和Resposne是分别被调用一次
+                .addNetworkInterceptor(interceptor)// 网络拦截器，在Request和Resposne是分别被调用一次
+                .cookieJar(new CookieManager());// Cookie
         if (buidler.interceptors != null && buidler.interceptors.length > 0) {// Interceptors，只在Response被调用一次
             for (Interceptor item : buidler.interceptors) {
                 builder.addInterceptor(item);
