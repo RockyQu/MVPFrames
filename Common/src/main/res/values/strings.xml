@@ -1,3 +1,9 @@
 <resources>
-
+    <string name="errorCode404">无法找到指定位置的资源</string>
+    <string name="errorCode500">内部服务器错误</string>
+    <string name="errorCode502">网关错误</string>
+    <string name="errorCodeDefault">服务器未知错误</string>
+    <string name="errorSocketTimeout">服务器响应超时</string>
+    <string name="errorConnect">服务器请求超时</string>
+    <string name="errorDefault">网络错误</string>
 </resources>

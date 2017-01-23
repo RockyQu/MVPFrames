@@ -30,7 +30,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
     public void login(final String account, final String password) {
         view.showLoading();
         user = model.login(account, password);
-        user.enqueue(new ResponseCallback<ResponseEntity<User>>() {
+        user.enqueue(new ResponseCallback<ResponseEntity<User>>(application) {
 
             @Override
             protected void onResponse(ResponseEntity<User> body) {
@@ -53,8 +53,8 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
             }
 
             @Override
-            protected void onFailure(Response<ResponseEntity<User>> response) {
-
+            protected void onFailure(String message) {
+                view.showMessage(message);
             }
 
             @Override
