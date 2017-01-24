@@ -41,8 +41,22 @@ public class LoggingInterceptor implements Interceptor {
         BODY
     }
 
-    public LoggingInterceptor() {
+    private final Logger logger;
 
+    public LoggingInterceptor() {
+        this(Logger.DEFAULT);
+    }
+
+    public LoggingInterceptor(Logger logger) {
+        this.logger = logger;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
     }
 
     @Override
@@ -65,15 +79,15 @@ public class LoggingInterceptor implements Interceptor {
         if (hasRequestBody) {
             requestStartMessage += " (" + requestBody.contentLength() + "-byte body)";
         }
-        QLog.e(requestStartMessage);
+        logger.log(requestStartMessage);
 
         // Content-Type
         if (hasRequestBody) {
             if (requestBody.contentType() != null) {
-                QLog.e("Content-Type: " + requestBody.contentType());
+                logger.log("Content-Type: " + requestBody.contentType());
             }
             if (requestBody.contentLength() != -1) {
-                QLog.e("Content-Length: " + requestBody.contentLength());
+                logger.log("Content-Length: " + requestBody.contentLength());
             }
         }
 
@@ -82,15 +96,15 @@ public class LoggingInterceptor implements Interceptor {
         for (int i = 0, count = headers.size(); i < count; i++) {
             String name = headers.name(i);
             if (!"Content-Type".equalsIgnoreCase(name) && !"Content-Length".equalsIgnoreCase(name)) {
-                QLog.e(name + ": " + headers.value(i));
+                logger.log(name + ": " + headers.value(i));
             }
         }
 
         // Request结束
         if (!hasRequestBody) {
-            QLog.e("--> END " + request.method());
+            logger.log("--> END " + request.method());
         } else if (bodyEncoded(request.headers())) {
-            QLog.e("--> END " + request.method() + " (encoded body omitted)");
+            logger.log("--> END " + request.method() + " (encoded body omitted)");
         } else {
             Buffer buffer = new Buffer();
             requestBody.writeTo(buffer);
@@ -102,11 +116,11 @@ public class LoggingInterceptor implements Interceptor {
             }
 
             if (isPlaintext(buffer)) {
-                QLog.e(buffer.readString(charset));
-                QLog.e("--> END " + request.method()
+                logger.log(buffer.readString(charset));
+                logger.log("--> END " + request.method()
                         + " (" + requestBody.contentLength() + "-byte body)");
             } else {
-                QLog.e("--> END " + request.method() + " (binary "
+                logger.log("--> END " + request.method() + " (binary "
                         + requestBody.contentLength() + "-byte body omitted)");
             }
         }
@@ -117,7 +131,7 @@ public class LoggingInterceptor implements Interceptor {
         try {
             response = chain.proceed(request);
         } catch (Exception e) {
-            QLog.e("<-- HTTP FAILED: " + e);
+            logger.log("<-- HTTP FAILED: " + e);
             throw e;
         }
         long tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
@@ -125,18 +139,18 @@ public class LoggingInterceptor implements Interceptor {
         ResponseBody responseBody = response.body();
         long contentLength = responseBody.contentLength();
         String bodySize = contentLength != -1 ? contentLength + "-byte" : "unknown-length";
-        QLog.e("<-- " + response.code() + ' ' + response.message() + ' '
+        logger.log("<-- " + response.code() + ' ' + response.message() + ' '
                 + response.request().url() + " (" + tookMs + "ms" + (", " + bodySize + " body") + ')');
 
         headers = response.headers();
         for (int i = 0, count = headers.size(); i < count; i++) {
-            QLog.e(headers.name(i) + ": " + headers.value(i));
+            logger.log(headers.name(i) + ": " + headers.value(i));
         }
 
         if (!HttpHeaders.hasBody(response)) {
-            QLog.e("<-- END HTTP");
+            logger.log("<-- END HTTP");
         } else if (bodyEncoded(response.headers())) {
-            QLog.e("<-- END HTTP (encoded body omitted)");
+            logger.log("<-- END HTTP (encoded body omitted)");
         } else {
             BufferedSource source = responseBody.source();
             source.request(Long.MAX_VALUE); // Buffer the entire body.
@@ -148,22 +162,22 @@ public class LoggingInterceptor implements Interceptor {
                 try {
                     charset = contentType.charset(UTF8);
                 } catch (UnsupportedCharsetException e) {
-                    QLog.e("Couldn't decode the response body; charset is likely malformed.");
-                    QLog.e("<-- END HTTP");
+                    logger.log("Couldn't decode the response body; charset is likely malformed.");
+                    logger.log("<-- END HTTP");
                     return response;
                 }
             }
 
             if (!isPlaintext(buffer)) {
-                QLog.e("<-- END HTTP (binary " + buffer.size() + "-byte body omitted)");
+                logger.log("<-- END HTTP (binary " + buffer.size() + "-byte body omitted)");
                 return response;
             }
 
             if (contentLength != 0) {
-                QLog.e(buffer.clone().readString(charset));
+                logger.log(buffer.clone().readString(charset));
             }
 
-            QLog.e("<-- END HTTP (" + buffer.size() + "-byte body)");
+            logger.log("<-- END HTTP (" + buffer.size() + "-byte body)");
         }
         // Response结束
 
@@ -197,5 +211,17 @@ public class LoggingInterceptor implements Interceptor {
     private boolean bodyEncoded(Headers headers) {
         String contentEncoding = headers.get("Content-Encoding");
         return contentEncoding != null && !contentEncoding.equalsIgnoreCase("identity");
+    }
+
+    public interface Logger {
+        void log(String message);
+
+        Logger DEFAULT = new Logger() {
+
+            @Override
+            public void log(String message) {
+                QLog.e(message);
+            }
+        };
     }
 }

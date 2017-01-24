@@ -4,7 +4,6 @@ import com.tool.common.base.BaseApplication;
 import com.tool.common.utils.NetWorkUtils;
 import com.tool.common.utils.ZipUtils;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
@@ -37,7 +36,6 @@ public class NetworkInterceptor implements Interceptor {
         if (handler != null) {
             request = handler.onHttpRequest(chain, request);
         }
-
 
         if (!NetWorkUtils.isNetworkAvailable(BaseApplication.getContext())) {
             request = request.newBuilder()
@@ -78,18 +76,10 @@ public class NetworkInterceptor implements Interceptor {
 
         //解析response content
         if (encoding != null && encoding.equalsIgnoreCase("gzip")) {// content使用gzip压缩
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            clone.writeTo(outputStream);
-            byte[] bytes = outputStream.toByteArray();
-            bodyString = ZipUtils.decompressForGzip(bytes);//解压
-            outputStream.close();
+            bodyString = ZipUtils.decompressForGzip(clone.readByteArray());
         } else if (encoding != null && encoding.equalsIgnoreCase("zlib")) {// content使用zlib压缩
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            clone.writeTo(outputStream);
-            byte[] bytes = outputStream.toByteArray();
-            bodyString = ZipUtils.decompressToStringForZlib(bytes);//解压
-            outputStream.close();
-        } else {//content没有被压缩
+            bodyString = ZipUtils.decompressToStringForZlib(clone.readByteArray());
+        } else {// content没有被压缩
             Charset charset = Charset.forName("UTF-8");
             MediaType contentType = responseBody.contentType();
             if (contentType != null) {
@@ -100,7 +90,7 @@ public class NetworkInterceptor implements Interceptor {
 
         // 这里可以提前一步拿到服务器返回的结果,外部实现此接口可以做一些操作，比如Token超时，重新获取
         if (handler != null) {
-            handler.onHttpResponse(bodyString, chain, originalResponse);
+            return handler.onHttpResponse(bodyString, chain, originalResponse);
         }
 
         return originalResponse;
@@ -118,7 +108,7 @@ public class NetworkInterceptor implements Interceptor {
          * @param request
          * @return Request
          */
-        Request onHttpRequest(Interceptor.Chain chain, Request request);
+        Request onHttpRequest(Chain chain, Request request);
 
         /**
          * Http响应，这里提前拿到http响应结果,可以用来判断Token是否过期
@@ -128,6 +118,6 @@ public class NetworkInterceptor implements Interceptor {
          * @param response
          * @return Response
          */
-        Response onHttpResponse(String result, Interceptor.Chain chain, Response response);
+        Response onHttpResponse(String result, Chain chain, Response response);
     }
 }
