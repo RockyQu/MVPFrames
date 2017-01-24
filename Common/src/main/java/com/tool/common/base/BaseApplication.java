@@ -24,10 +24,10 @@ import com.tool.common.widget.imageloader.ImageModule;
 public abstract class BaseApplication extends Application {
 
     // Context
-    public static Context context;
+    private static Context context;
 
     // App Config
-    public AppConfiguration appConfiguration;
+    protected AppConfiguration appConfiguration;
 
     // Http模块
     private HttpModule httpModule;

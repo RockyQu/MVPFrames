@@ -61,7 +61,12 @@ dependencies {
 
     compile rootProject.ext.dependencies["glide"]
 
+    compile rootProject.ext.dependencies["eventbus"]
+
     debugCompile rootProject.ext.dependencies["canary-debug"]
     releaseCompile rootProject.ext.dependencies["canary-release"]
     testCompile rootProject.ext.dependencies["canary-release"]
+
+    // Log
+    compile rootProject.ext.dependencies["q-log"]
 }
