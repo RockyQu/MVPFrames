@@ -1,7 +1,6 @@
 package com.tool.common.http.interceptor;
 
 import com.tool.common.base.BaseApplication;
-import com.tool.common.http.NetworkHandler;
 import com.tool.common.utils.NetWorkUtils;
 import com.tool.common.utils.ZipUtils;
 
