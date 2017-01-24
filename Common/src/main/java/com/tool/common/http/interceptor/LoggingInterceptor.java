@@ -1,6 +1,6 @@
 package com.tool.common.http.interceptor;
 
-import android.util.Log;
+import com.tool.common.log.QLog;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -18,11 +18,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.internal.http.HttpHeaders;
-import okhttp3.internal.platform.Platform;
 import okio.Buffer;
 import okio.BufferedSource;
-
-import static okhttp3.internal.platform.Platform.INFO;
 
 /**
  * Http日志拦截器
@@ -31,106 +28,26 @@ public class LoggingInterceptor implements Interceptor {
 
     private static final Charset UTF8 = Charset.forName("UTF-8");
 
+    private volatile Level level = Level.BODY;
+
     public enum Level {
         /**
          * No logs.
          */
         NONE,
         /**
-         * Logs request and response lines.
-         * <p>
-         * <p>Example:
-         * <pre>{@code
-         * --> POST /greeting http/1.1 (3-byte body)
-         *
-         * <-- 200 OK (22ms, 6-byte body)
-         * }</pre>
-         */
-        BASIC,
-        /**
-         * Logs request and response lines and their respective headers.
-         * <p>
-         * <p>Example:
-         * <pre>{@code
-         * --> POST /greeting http/1.1
-         * Host: example.com
-         * Content-Type: plain/text
-         * Content-Length: 3
-         * --> END POST
-         *
-         * <-- 200 OK (22ms)
-         * Content-Type: plain/text
-         * Content-Length: 6
-         * <-- END HTTP
-         * }</pre>
-         */
-        HEADERS,
-        /**
          * Logs request and response lines and their respective headers and bodies (if present).
-         * <p>
-         * <p>Example:
-         * <pre>{@code
-         * --> POST /greeting http/1.1
-         * Host: example.com
-         * Content-Type: plain/text
-         * Content-Length: 3
-         *
-         * Hi?
-         * --> END POST
-         *
-         * <-- 200 OK (22ms)
-         * Content-Type: plain/text
-         * Content-Length: 6
-         *
-         * Hello!
-         * <-- END HTTP
-         * }</pre>
          */
         BODY
     }
 
-    public interface Logger {
-        void log(String message);
-
-        /**
-         * A {@link Logger} defaults output appropriate for the current platform.
-         */
-        Logger DEFAULT = new Logger() {
-            @Override
-            public void log(String message) {
-                Platform.get().log(INFO, message, null);
-            }
-        };
-    }
-
     public LoggingInterceptor() {
-        this(Logger.DEFAULT);
-    }
 
-    public LoggingInterceptor(Logger logger) {
-        this.logger = logger;
-    }
-
-    private final Logger logger;
-
-    private volatile Level level = Level.BODY;
-
-    /**
-     * Change the level at which this interceptor logs.
-     */
-    public LoggingInterceptor setLevel(Level level) {
-        if (level == null) throw new NullPointerException("level == null. Use Level.NONE instead.");
-        this.level = level;
-        return this;
-    }
-
-    public Level getLevel() {
-        return level;
     }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Log.e("intercept","intercept");
+
         Level level = this.level;
 
         Request request = chain.request();
@@ -138,85 +55,69 @@ public class LoggingInterceptor implements Interceptor {
             return chain.proceed(request);
         }
 
-        boolean logBody = level == Level.BODY;
-        boolean logHeaders = logBody || level == Level.HEADERS;
-
         RequestBody requestBody = request.body();
         boolean hasRequestBody = requestBody != null;
 
+        // 请求地址
         Connection connection = chain.connection();
         Protocol protocol = connection != null ? connection.protocol() : Protocol.HTTP_1_1;
         String requestStartMessage = "--> " + request.method() + ' ' + request.url() + ' ' + protocol;
-        if (!logHeaders && hasRequestBody) {
+        if (hasRequestBody) {
             requestStartMessage += " (" + requestBody.contentLength() + "-byte body)";
         }
+        QLog.e(requestStartMessage);
 
-        Log.e("Log",requestStartMessage);
-        logger.log(requestStartMessage);
-
-        if (logHeaders) {
-            if (hasRequestBody) {
-                if (requestBody.contentType() != null) {
-                    Log.e("Log","Content-Type: " + requestBody.contentType());
-                    logger.log("Content-Type: " + requestBody.contentType());
-                }
-                if (requestBody.contentLength() != -1) {
-                    Log.e("Log","Content-Length: " + requestBody.contentLength());
-                    logger.log("Content-Length: " + requestBody.contentLength());
-                }
+        // Content-Type
+        if (hasRequestBody) {
+            if (requestBody.contentType() != null) {
+                QLog.e("Content-Type: " + requestBody.contentType());
             }
-
-            Headers headers = request.headers();
-            for (int i = 0, count = headers.size(); i < count; i++) {
-                String name = headers.name(i);
-                // Skip headers from the request body as they are explicitly logged above.
-                if (!"Content-Type".equalsIgnoreCase(name) && !"Content-Length".equalsIgnoreCase(name)) {
-                    Log.e("Log",name + ": " + headers.value(i));
-                    logger.log(name + ": " + headers.value(i));
-                }
-            }
-
-            if (!logBody || !hasRequestBody) {
-                Log.e("Log","--> END " + request.method());
-                logger.log("--> END " + request.method());
-            } else if (bodyEncoded(request.headers())) {
-                Log.e("Log","--> END " + request.method() + " (encoded body omitted)");
-                logger.log("--> END " + request.method() + " (encoded body omitted)");
-            } else {
-                Buffer buffer = new Buffer();
-                requestBody.writeTo(buffer);
-
-                Charset charset = UTF8;
-                MediaType contentType = requestBody.contentType();
-                if (contentType != null) {
-                    charset = contentType.charset(UTF8);
-                }
-
-                Log.e("Log","");
-                logger.log("");
-                if (isPlaintext(buffer)) {
-                    Log.e("Log",buffer.readString(charset));
-                    logger.log(buffer.readString(charset));
-                    Log.e("Log","--> END " + request.method()
-                            + " (" + requestBody.contentLength() + "-byte body)");
-                    logger.log("--> END " + request.method()
-                            + " (" + requestBody.contentLength() + "-byte body)");
-                } else {
-                    Log.e("Log","--> END " + request.method() + " (binary "
-                            + requestBody.contentLength() + "-byte body omitted)");
-                    logger.log("--> END " + request.method() + " (binary "
-                            + requestBody.contentLength() + "-byte body omitted)");
-                }
+            if (requestBody.contentLength() != -1) {
+                QLog.e("Content-Length: " + requestBody.contentLength());
             }
         }
 
+        // 拼装请求参数
+        Headers headers = request.headers();
+        for (int i = 0, count = headers.size(); i < count; i++) {
+            String name = headers.name(i);
+            if (!"Content-Type".equalsIgnoreCase(name) && !"Content-Length".equalsIgnoreCase(name)) {
+                QLog.e(name + ": " + headers.value(i));
+            }
+        }
+
+        // Request结束
+        if (!hasRequestBody) {
+            QLog.e("--> END " + request.method());
+        } else if (bodyEncoded(request.headers())) {
+            QLog.e("--> END " + request.method() + " (encoded body omitted)");
+        } else {
+            Buffer buffer = new Buffer();
+            requestBody.writeTo(buffer);
+
+            Charset charset = UTF8;
+            MediaType contentType = requestBody.contentType();
+            if (contentType != null) {
+                charset = contentType.charset(UTF8);
+            }
+
+            if (isPlaintext(buffer)) {
+                QLog.e(buffer.readString(charset));
+                QLog.e("--> END " + request.method()
+                        + " (" + requestBody.contentLength() + "-byte body)");
+            } else {
+                QLog.e("--> END " + request.method() + " (binary "
+                        + requestBody.contentLength() + "-byte body omitted)");
+            }
+        }
+
+        // Response开始
         long startNs = System.nanoTime();
         Response response;
         try {
             response = chain.proceed(request);
         } catch (Exception e) {
-            Log.e("Log","<-- HTTP FAILED: " + e);
-            logger.log("<-- HTTP FAILED: " + e);
+            QLog.e("<-- HTTP FAILED: " + e);
             throw e;
         }
         long tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
@@ -224,67 +125,47 @@ public class LoggingInterceptor implements Interceptor {
         ResponseBody responseBody = response.body();
         long contentLength = responseBody.contentLength();
         String bodySize = contentLength != -1 ? contentLength + "-byte" : "unknown-length";
-        Log.e("Log","<-- " + response.code() + ' ' + response.message() + ' '
-                + response.request().url() + " (" + tookMs + "ms" + (!logHeaders ? ", "
-                + bodySize + " body" : "") + ')');
-        logger.log("<-- " + response.code() + ' ' + response.message() + ' '
-                + response.request().url() + " (" + tookMs + "ms" + (!logHeaders ? ", "
-                + bodySize + " body" : "") + ')');
+        QLog.e("<-- " + response.code() + ' ' + response.message() + ' '
+                + response.request().url() + " (" + tookMs + "ms" + (", " + bodySize + " body") + ')');
 
-        if (logHeaders) {
-            Headers headers = response.headers();
-            for (int i = 0, count = headers.size(); i < count; i++) {
-                Log.e("Log",headers.name(i) + ": " + headers.value(i));
-                logger.log(headers.name(i) + ": " + headers.value(i));
-            }
+        headers = response.headers();
+        for (int i = 0, count = headers.size(); i < count; i++) {
+            QLog.e(headers.name(i) + ": " + headers.value(i));
+        }
 
-            if (!logBody || !HttpHeaders.hasBody(response)) {
-                Log.e("Log","<-- END HTTP");
-                logger.log("<-- END HTTP");
-            } else if (bodyEncoded(response.headers())) {
-                Log.e("Log","<-- END HTTP (encoded body omitted)");
-                logger.log("<-- END HTTP (encoded body omitted)");
-            } else {
-                BufferedSource source = responseBody.source();
-                source.request(Long.MAX_VALUE); // Buffer the entire body.
-                Buffer buffer = source.buffer();
+        if (!HttpHeaders.hasBody(response)) {
+            QLog.e("<-- END HTTP");
+        } else if (bodyEncoded(response.headers())) {
+            QLog.e("<-- END HTTP (encoded body omitted)");
+        } else {
+            BufferedSource source = responseBody.source();
+            source.request(Long.MAX_VALUE); // Buffer the entire body.
+            Buffer buffer = source.buffer();
 
-                Charset charset = UTF8;
-                MediaType contentType = responseBody.contentType();
-                if (contentType != null) {
-                    try {
-                        charset = contentType.charset(UTF8);
-                    } catch (UnsupportedCharsetException e) {
-                        Log.e("Log","");
-                        logger.log("");
-                        Log.e("Log","Couldn't decode the response body; charset is likely malformed.");
-                        logger.log("Couldn't decode the response body; charset is likely malformed.");
-                        Log.e("Log","<-- END HTTP");
-                        logger.log("<-- END HTTP");
-
-                        return response;
-                    }
-                }
-
-                if (!isPlaintext(buffer)) {
-                    Log.e("Log","");
-                    logger.log("");
-                    Log.e("Log","<-- END HTTP (binary " + buffer.size() + "-byte body omitted)");
-                    logger.log("<-- END HTTP (binary " + buffer.size() + "-byte body omitted)");
+            Charset charset = UTF8;
+            MediaType contentType = responseBody.contentType();
+            if (contentType != null) {
+                try {
+                    charset = contentType.charset(UTF8);
+                } catch (UnsupportedCharsetException e) {
+                    QLog.e("Couldn't decode the response body; charset is likely malformed.");
+                    QLog.e("<-- END HTTP");
                     return response;
                 }
-
-                if (contentLength != 0) {
-                    Log.e("Log","");
-                    logger.log("");
-                    Log.e("Log",buffer.clone().readString(charset));
-                    logger.log(buffer.clone().readString(charset));
-                }
-
-                Log.e("Log","<-- END HTTP (" + buffer.size() + "-byte body)");
-                logger.log("<-- END HTTP (" + buffer.size() + "-byte body)");
             }
+
+            if (!isPlaintext(buffer)) {
+                QLog.e("<-- END HTTP (binary " + buffer.size() + "-byte body omitted)");
+                return response;
+            }
+
+            if (contentLength != 0) {
+                QLog.e(buffer.clone().readString(charset));
+            }
+
+            QLog.e("<-- END HTTP (" + buffer.size() + "-byte body)");
         }
+        // Response结束
 
         return response;
     }

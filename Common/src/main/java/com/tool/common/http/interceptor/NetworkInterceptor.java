@@ -1,7 +1,7 @@
 package com.tool.common.http.interceptor;
 
 import com.tool.common.base.BaseApplication;
-import com.tool.common.http.HttpCommunicationHandler;
+import com.tool.common.http.NetworkHandler;
 import com.tool.common.utils.NetWorkUtils;
 import com.tool.common.utils.ZipUtils;
 
@@ -23,9 +23,9 @@ import okio.BufferedSource;
  */
 public class NetworkInterceptor implements Interceptor {
 
-    private HttpCommunicationHandler handler;
+    private NetworkHandler handler;
 
-    public NetworkInterceptor(HttpCommunicationHandler handler) {
+    public NetworkInterceptor(NetworkHandler handler) {
         this.handler = handler;
     }
 

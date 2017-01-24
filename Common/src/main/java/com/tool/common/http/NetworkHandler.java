@@ -7,7 +7,7 @@ import okhttp3.Response;
 /**
  * Http通信拦截器
  */
-public interface HttpCommunicationHandler {
+public interface NetworkHandler {
 
     /**
      * Http请求
