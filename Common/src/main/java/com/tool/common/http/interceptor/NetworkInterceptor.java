@@ -22,9 +22,9 @@ import okio.BufferedSource;
  */
 public class NetworkInterceptor implements Interceptor {
 
-    private NetworkHandler handler;
+    private NetworkCallback handler;
 
-    public NetworkInterceptor(NetworkHandler handler) {
+    public NetworkInterceptor(NetworkCallback handler) {
         this.handler = handler;
     }
 
@@ -109,7 +109,7 @@ public class NetworkInterceptor implements Interceptor {
     /**
      * Http通信拦截器
      */
-    public interface NetworkHandler {
+    public interface NetworkCallback {
 
         /**
          * Http请求
