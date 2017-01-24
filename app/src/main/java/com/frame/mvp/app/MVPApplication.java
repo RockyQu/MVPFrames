@@ -8,6 +8,7 @@ import com.tool.common.base.AppConfiguration;
 import com.tool.common.base.BaseApplication;
 import com.tool.common.http.interceptor.LoggingInterceptor;
 import com.tool.common.http.interceptor.NetworkInterceptor;
+import com.tool.common.http.interceptor.ParameterInterceptor;
 import com.tool.common.log.common.Setting;
 import com.tool.common.utils.GsonUtils;
 import com.tool.common.utils.PreferencesUtils;
@@ -84,7 +85,11 @@ public class MVPApplication extends BaseApplication {
                         return response;
                     }
                 }))
-                .interceptors(new Interceptor[]{new LoggingInterceptor()})
+                .interceptors(new Interceptor[]
+                        {
+                                new LoggingInterceptor(),
+                                new ParameterInterceptor()
+                        })
                 .imageLoader(new ImageLoader(new GlideImageLoader()))
                 .build();
     }
