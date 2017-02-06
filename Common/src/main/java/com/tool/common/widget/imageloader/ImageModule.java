@@ -41,11 +41,11 @@ public class ImageModule {
             ;
         }
 
-        public static ImageModule.Buidler buidler() {
-            return new ImageModule.Buidler();
+        public static Buidler buidler() {
+            return new Buidler();
         }
 
-        public ImageModule.Buidler imageLoader(ImageLoader imageLoader) {
+        public Buidler imageLoader(ImageLoader imageLoader) {
             this.imageLoader = imageLoader;
             return this;
         }
