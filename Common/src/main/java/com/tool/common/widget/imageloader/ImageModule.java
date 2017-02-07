@@ -10,11 +10,11 @@ public class ImageModule {
     // ImageLoader
     private ImageLoader imageLoader;
 
-    public ImageModule(ImageModule.Buidler buidler) {
+    public ImageModule(Buidler buidler) {
         this.imageLoader = buidler.imageLoader;
     }
 
-    public static ImageModule getInstance(ImageModule.Buidler buidler) {
+    public static ImageModule getInstance(Buidler buidler) {
         if (imageManager == null) {
             synchronized (ImageModule.class) {
                 if (imageManager == null) {

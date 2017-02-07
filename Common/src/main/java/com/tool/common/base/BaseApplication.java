@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.tool.common.http.HttpModule;
+import com.tool.common.log.log.LogConfig;
 import com.tool.common.widget.imageloader.ImageModule;
 
 /**
@@ -34,6 +35,9 @@ public abstract class BaseApplication extends Application {
     // 图片模块
     private ImageModule imageModule;
 
+    // Log配置
+    private LogConfig logConfig;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -58,6 +62,13 @@ public abstract class BaseApplication extends Application {
                 .imageLoader(appConfiguration.getImageLoader())
                 .build();
 
+        // Log配置
+        this.logConfig = LogConfig.Buidler
+                .buidler()
+                .setContext(this)
+                .setOpen(true)
+                .build();
+
         // 内存泄露
         if (appConfiguration.isDebug()) {
 //            LeakCanary.install(this);
@@ -78,6 +89,9 @@ public abstract class BaseApplication extends Application {
         }
         if (context != null) {
             context = null;
+        }
+        if (logConfig != null) {
+            logConfig = null;
         }
     }
 

@@ -9,7 +9,6 @@ import com.tool.common.base.BaseApplication;
 import com.tool.common.http.interceptor.LoggingInterceptor;
 import com.tool.common.http.interceptor.NetworkInterceptor;
 import com.tool.common.http.interceptor.ParameterInterceptor;
-import com.tool.common.log.common.Setting;
 import com.tool.common.utils.GsonUtils;
 import com.tool.common.utils.PreferencesUtils;
 import com.tool.common.utils.ProjectUtils;
@@ -31,11 +30,6 @@ public class MVPApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        Setting.getInstance()
-                .setContext(getApplicationContext())
-                .setTag(null)// 设置LogTag
-                .setDebug(appConfiguration.isDebug());// 开启Log输出
 
         if (!ProjectUtils.init()) {
 

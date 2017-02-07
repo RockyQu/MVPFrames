@@ -36,6 +36,6 @@ ext {
             "eventbus"                   : "org.greenrobot:eventbus:3.0.0",
             "canary-debug"               : "com.squareup.leakcanary:leakcanary-android:1.5",
             "canary-release"             : "com.squareup.leakcanary:leakcanary-android-no-op:1.5",
-            "q-log"                      : "com.tool.common.log:Q-Log:0.1.0"
+            "q-log"                      : "com.tool.common.log:Q-Log:0.2.0"
     ]
 }
