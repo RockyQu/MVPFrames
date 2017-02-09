@@ -66,7 +66,7 @@ public abstract class BaseApplication extends Application {
         this.logConfig = LogConfig.Buidler
                 .buidler()
                 .setContext(this)
-                .setOpen(true)
+                .setOpen(appConfiguration.isDebug())
                 .build();
 
         // 内存泄露
