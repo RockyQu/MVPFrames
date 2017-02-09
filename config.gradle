@@ -1,5 +1,4 @@
 ext {
-
     android = [compileSdkVersion       : 24,
                buildToolsVersion       : "24",
                minSdkVersion           : 14,
@@ -10,6 +9,7 @@ ext {
                dagger2SdkVersion       : "2.6",
                retrofitSdkVersion      : "2.1.0"
     ]
+    
     dependencies = [
             "androidJUnitRunner"         : "android.support.test.runner.AndroidJUnitRunner",
             "junit"                      : "junit:junit:4.12",

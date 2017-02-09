@@ -9,6 +9,8 @@ import com.tool.common.base.BaseApplication;
 import com.tool.common.http.interceptor.LoggingInterceptor;
 import com.tool.common.http.interceptor.NetworkInterceptor;
 import com.tool.common.http.interceptor.ParameterInterceptor;
+import com.tool.common.log.QLog;
+import com.tool.common.log.crash.ThreadCatchInterceptor;
 import com.tool.common.utils.GsonUtils;
 import com.tool.common.utils.PreferencesUtils;
 import com.tool.common.utils.ProjectUtils;
@@ -40,6 +42,21 @@ public class MVPApplication extends BaseApplication {
         if (value != null) {
             user = GsonUtils.getEntity(value, User.class);
         }
+
+        // ANR
+        ThreadCatchInterceptor.getInstance().install(new ThreadCatchInterceptor.CallBack() {
+
+            @Override
+            public void error(Throwable throwable) {
+                ;
+            }
+
+            @Override
+            public void finish(String path) {
+                QLog.i(path);
+            }
+        });
+
     }
 
     public void setUser(User user) {

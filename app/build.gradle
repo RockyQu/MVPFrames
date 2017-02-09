@@ -24,19 +24,19 @@ android {
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
     }
 
-    sourceSets {
-        main {
-            res.srcDirs =
-                    [
-                            'src/main/res/layouts/activity',
-                            'src/main/res/layouts/dialog',
-                            'src/main/res/layouts/fragment',
-                            'src/main/res/layouts/item',
-                            'src/main/res/layouts',
-                            'src/main/res'
-                    ]
-        }
-    }
+//    sourceSets {
+//        main {
+//            res.srcDirs =
+//                    [
+//                            'src/main/res/layouts/activity',
+//                            'src/main/res/layouts/dialog',
+//                            'src/main/res/layouts/fragment',
+//                            'src/main/res/layouts/item',
+//                            'src/main/res/layouts',
+//                            'src/main/res'
+//                    ]
+//        }
+//    }
 
     // Java版本配置
     compileOptions {
