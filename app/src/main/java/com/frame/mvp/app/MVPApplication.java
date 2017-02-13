@@ -33,17 +33,7 @@ public class MVPApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
 
-        if (!ProjectUtils.init()) {
-
-        }
-
-        // 读取当前登录用户信息
-        String value = PreferencesUtils.getString(this, LoginActivity.FLAG_USER, null);
-        if (value != null) {
-            user = GsonUtils.getEntity(value, User.class);
-        }
-
-        // ANR
+        // 设置反馈崩溃信息，不需要可以不设置
         ThreadCatchInterceptor.getInstance().install(new ThreadCatchInterceptor.CallBack() {
 
             @Override
@@ -57,6 +47,17 @@ public class MVPApplication extends BaseApplication {
             }
         });
 
+        if (ProjectUtils.init()) {
+
+        } else {
+            // 初始化失败
+        }
+
+        // 读取当前登录用户信息
+        String value = PreferencesUtils.getString(this, LoginActivity.FLAG_USER, null);
+        if (value != null) {
+            user = GsonUtils.getEntity(value, User.class);
+        }
     }
 
     public void setUser(User user) {
