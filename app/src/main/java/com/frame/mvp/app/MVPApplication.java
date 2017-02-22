@@ -1,9 +1,15 @@
 package com.frame.mvp.app;
 
+import android.content.Context;
+
 import com.frame.mvp.BuildConfig;
 import com.frame.mvp.app.api.Api;
+import com.frame.mvp.di.AppComponent;
+import com.frame.mvp.di.DaggerAppComponent;
 import com.frame.mvp.entity.User;
 import com.frame.mvp.mvp.login.LoginActivity;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 import com.tool.common.base.AppConfiguration;
 import com.tool.common.base.BaseApplication;
 import com.tool.common.http.interceptor.LoggingInterceptor;
@@ -14,8 +20,6 @@ import com.tool.common.log.crash.ThreadCatchInterceptor;
 import com.tool.common.utils.GsonUtils;
 import com.tool.common.utils.PreferencesUtils;
 import com.tool.common.utils.ProjectUtils;
-import com.tool.common.widget.imageloader.ImageLoader;
-import com.tool.common.widget.imageloader.glide.GlideImageLoader;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -26,12 +30,23 @@ import okhttp3.Response;
  */
 public class MVPApplication extends BaseApplication {
 
+    // AppComponent
+    private AppComponent appComponent;
+
+    // LeakCanary观察器
+    private RefWatcher watcher;
+
     // 当前登录用户信息
     private User user;
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        appComponent = DaggerAppComponent
+                .builder()
+                .imageModule(getImageModule())
+                .build();
 
         // 设置反馈崩溃信息，不需要可以不设置
         ThreadCatchInterceptor.getInstance().install(new ThreadCatchInterceptor.CallBack() {
@@ -58,6 +73,9 @@ public class MVPApplication extends BaseApplication {
         if (value != null) {
             user = GsonUtils.getEntity(value, User.class);
         }
+
+        // LeakCanary内存泄露检查
+        this.installLeakCanary();
     }
 
     public void setUser(User user) {
@@ -66,6 +84,35 @@ public class MVPApplication extends BaseApplication {
 
     public User getUser() {
         return user;
+    }
+
+    /**
+     * 安装leakCanary检测内存泄露
+     */
+    protected void installLeakCanary() {
+        this.watcher = BuildConfig.DEBUG ? LeakCanary.install(this) : RefWatcher.DISABLED;
+    }
+
+    /**
+     * 获得leakCanary观察器
+     *
+     * @param context
+     * @return
+     */
+    public static RefWatcher getRefWatcher(Context context) {
+        MVPApplication application = (MVPApplication) context.getApplicationContext();
+        return application.watcher;
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        if (appComponent != null) {
+            this.appComponent = null;
+        }
+        if (watcher != null) {
+            this.watcher = null;
+        }
     }
 
     @Override
@@ -102,7 +149,15 @@ public class MVPApplication extends BaseApplication {
                                 new LoggingInterceptor(),
                                 new ParameterInterceptor()
                         })
-                .imageLoader(new ImageLoader(new GlideImageLoader()))
                 .build();
+    }
+
+    /**
+     * 返回AppComponent提供统一出口，AppComponent里拿到对象后都可以直接使用。
+     *
+     * @return
+     */
+    public AppComponent getAppComponent() {
+        return appComponent;
     }
 }

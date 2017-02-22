@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.frame.mvp.R;
 import com.frame.mvp.app.api.service.ServiceManager;
+import com.frame.mvp.di.AppComponent;
 import com.frame.mvp.entity.User;
 import com.frame.mvp.ui.common.CommonActivity;
 import com.tool.common.utils.StringUtils;
@@ -65,7 +66,8 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Log
     }
 
     @Override
-    protected LoginPresenter setupActivityComponent() {
+    protected LoginPresenter setupActivityComponent(AppComponent appComponent) {
+        appComponent
         return new LoginPresenter(application, new LoginModel(ServiceManager.getInstance(application.getHttpModule().retrofit)), this);
     }
 
