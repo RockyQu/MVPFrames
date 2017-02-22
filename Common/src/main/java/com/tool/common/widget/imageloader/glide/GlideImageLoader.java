@@ -9,11 +9,16 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tool.common.widget.imageloader.BaseImageLoader;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * GlideImageLoader
  */
+@Singleton
 public class GlideImageLoader implements BaseImageLoader<GlideImageConfig> {
 
+    @Inject
     public GlideImageLoader() {
         ;
     }

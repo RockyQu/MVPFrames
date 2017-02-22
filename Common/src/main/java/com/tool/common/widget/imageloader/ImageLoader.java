@@ -2,13 +2,18 @@ package com.tool.common.widget.imageloader;
 
 import android.content.Context;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * ImageLoader
  */
+@Singleton
 public class ImageLoader {
 
     private BaseImageLoader imageLoader;
 
+    @Inject
     public ImageLoader(BaseImageLoader imageLoader) {
         setImageLoader(imageLoader);
     }

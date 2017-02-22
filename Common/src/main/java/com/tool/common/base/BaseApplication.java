@@ -5,7 +5,7 @@ import android.content.Context;
 
 import com.tool.common.http.HttpModule;
 import com.tool.common.log.log.LogConfig;
-import com.tool.common.widget.imageloader.ImageModule;
+import com.tool.common.di.module.ImageModule;
 
 /**
  * 项目介绍及使用
@@ -57,10 +57,7 @@ public abstract class BaseApplication extends Application {
                 .build();
 
         // 图片模块
-        this.imageModule = ImageModule.Buidler
-                .buidler()
-                .imageLoader(appConfiguration.getImageLoader())
-                .build();
+        this.imageModule = new ImageModule();
 
         // Log配置
         this.logConfig = LogConfig.Buidler
@@ -95,11 +92,6 @@ public abstract class BaseApplication extends Application {
         }
     }
 
-    /**
-     * 返回上下文
-     *
-     * @return Context
-     */
     public static Context getContext() {
         return context;
     }

@@ -28,16 +28,12 @@ public class AppConfiguration {
     // 其他拦截器
     private Interceptor[] interceptors;
 
-    // ImageLoader
-    private ImageLoader imageLoader;
-
     public AppConfiguration(Buidler buidler) {
         this.debug = buidler.debug;
         this.httpUrl = buidler.httpUrl;
         this.httpCacheFile = buidler.httpCacheFile;
         this.networkInterceptor = buidler.networkInterceptor;
         this.interceptors = buidler.interceptors;
-        this.imageLoader = buidler.imageLoader;
     }
 
     public static AppConfiguration getInstance(Buidler buidler) {
@@ -71,10 +67,6 @@ public class AppConfiguration {
         return interceptors;
     }
 
-    public ImageLoader getImageLoader() {
-        return imageLoader;
-    }
-
     /**
      * App全局配置，采用Buidler模式
      */
@@ -91,9 +83,6 @@ public class AppConfiguration {
         private NetworkInterceptor networkInterceptor;
         // 其他拦截器
         private Interceptor[] interceptors;
-
-        // ImageLoader
-        private ImageLoader imageLoader;
 
         private Buidler() {
             ;
@@ -134,11 +123,6 @@ public class AppConfiguration {
 
         public Buidler interceptors(Interceptor[] interceptors) {
             this.interceptors = interceptors;
-            return this;
-        }
-
-        public Buidler imageLoader(ImageLoader imageLoader) {
-            this.imageLoader = imageLoader;
             return this;
         }
 
