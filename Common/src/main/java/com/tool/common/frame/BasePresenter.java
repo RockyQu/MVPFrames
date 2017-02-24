@@ -3,7 +3,7 @@ package com.tool.common.frame;
 /**
  * Presenter
  */
-public class BasePresenter<M, V extends BaseView> implements Presenter{
+public class BasePresenter<M extends IModel , V extends BaseView> implements Presenter{
 
     protected M model;
     protected V view;

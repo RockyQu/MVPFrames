@@ -6,7 +6,7 @@ import com.tool.common.http.BaseServiceManager;
 /**
  * BaseModel
  */
-public class BaseModel<S extends BaseServiceManager, C extends BaseCacheManager> implements Model {
+public class BaseModel<S extends BaseServiceManager, C extends BaseCacheManager> implements IModel {
 
     // 通信接口管理类
     protected S serviceManager;

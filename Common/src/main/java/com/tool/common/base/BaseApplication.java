@@ -65,11 +65,6 @@ public abstract class BaseApplication extends Application {
                 .setContext(this)
                 .setOpen(appConfiguration.isDebug())
                 .build();
-
-        // 内存泄露
-        if (appConfiguration.isDebug()) {
-//            LeakCanary.install(this);
-        }
     }
 
     @Override
