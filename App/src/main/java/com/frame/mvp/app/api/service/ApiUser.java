@@ -9,9 +9,9 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 /**
- * ApiService
+ * 用户相关API
  */
-public interface ApiService {
+public interface ApiUser {
 
     // 登录
     @FormUrlEncoded

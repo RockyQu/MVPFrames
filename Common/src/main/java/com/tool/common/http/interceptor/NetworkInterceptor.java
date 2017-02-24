@@ -1,11 +1,15 @@
 package com.tool.common.http.interceptor;
 
 import com.tool.common.base.BaseApplication;
+import com.tool.common.http.NetworkHandler;
 import com.tool.common.utils.NetWorkUtils;
 import com.tool.common.utils.ZipUtils;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
@@ -19,11 +23,13 @@ import okio.BufferedSource;
 /**
  * Http拦截器
  */
+@Singleton
 public class NetworkInterceptor implements Interceptor {
 
-    private NetworkCallback handler;
+    private NetworkHandler handler;
 
-    public NetworkInterceptor(NetworkCallback handler) {
+    @Inject
+    public NetworkInterceptor(NetworkHandler handler) {
         this.handler = handler;
     }
 
@@ -94,30 +100,5 @@ public class NetworkInterceptor implements Interceptor {
         }
 
         return originalResponse;
-    }
-
-    /**
-     * Http通信拦截器
-     */
-    public interface NetworkCallback {
-
-        /**
-         * Http请求
-         *
-         * @param chain
-         * @param request
-         * @return Request
-         */
-        Request onHttpRequest(Chain chain, Request request);
-
-        /**
-         * Http响应，这里提前拿到http响应结果,可以用来判断Token是否过期
-         *
-         * @param result
-         * @param chain
-         * @param response
-         * @return Response
-         */
-        Response onHttpResponse(String result, Chain chain, Response response);
     }
 }

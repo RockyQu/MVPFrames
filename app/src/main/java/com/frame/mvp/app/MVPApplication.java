@@ -12,6 +12,7 @@ import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.tool.common.base.AppConfiguration;
 import com.tool.common.base.BaseApplication;
+import com.tool.common.http.NetworkHandler;
 import com.tool.common.http.interceptor.LoggingInterceptor;
 import com.tool.common.http.interceptor.NetworkInterceptor;
 import com.tool.common.http.interceptor.ParameterInterceptor;
@@ -45,7 +46,9 @@ public class MVPApplication extends BaseApplication {
 
         appComponent = DaggerAppComponent
                 .builder()
+                .appConfiguration(getAppConfiguration())
                 .appModule(getAppModule())
+                .httpModule(getHttpModule())
                 .imageModule(getImageModule())
                 .build();
 
@@ -119,10 +122,9 @@ public class MVPApplication extends BaseApplication {
     @Override
     protected AppConfiguration getAppConfiguration() {
         return AppConfiguration.Buidler.buidler()
-                .debug(BuildConfig.DEBUG)
                 .httpUrl(Api.PHP)
                 .httpCacheFile(this.getCacheDir())
-                .networkInterceptor(new NetworkInterceptor(new NetworkInterceptor.NetworkCallback() { // Http全局响应结果的处理类
+                .networkHandler(new NetworkHandler() { // Http全局响应结果的处理类
 
                     @Override
                     public Request onHttpRequest(Interceptor.Chain chain, Request request) {
@@ -144,12 +146,12 @@ public class MVPApplication extends BaseApplication {
                         // 如果使用OkHttp将新的请求,请求成功后,将返回的Response  Return即可，如果不需要返回新的结果,则直接把response参数返回出去
                         return response;
                     }
-                }))
-                .interceptors(new Interceptor[]
-                        {
-                                new LoggingInterceptor(),
-                                new ParameterInterceptor()
-                        })
+                })
+//                .interceptors(new Interceptor[]
+//                        {
+//                                new LoggingInterceptor(),
+//                                new ParameterInterceptor()
+//                        })
                 .build();
     }
 

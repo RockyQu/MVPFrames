@@ -3,6 +3,7 @@ package com.tool.common.base;
 import android.app.Application;
 import android.content.Context;
 
+import com.tool.common.BuildConfig;
 import com.tool.common.di.module.AppModule;
 import com.tool.common.di.module.HttpModule;
 import com.tool.common.log.log.LogConfig;
@@ -47,50 +48,28 @@ public abstract class BaseApplication extends Application {
 
         this.context = this;
 
-        // App Config
-        this.appConfiguration = getAppConfiguration();
-
         // 提供Application、Gson
         this.appModule = new AppModule(this);
-
         // Http模块
-        this.httpModule = HttpModule.Buidler
-                .buidler()
-                .url(appConfiguration.getHttpUrl())
-                .cacheFile(appConfiguration.getHttpCacheFile())
-                .networkInterceptor(appConfiguration.getNetworkInterceptor())
-                .interceptors(appConfiguration.getInterceptors())
-                .build();
-
+        this.httpModule = new HttpModule();
         // 图片模块
         this.imageModule = new ImageModule();
+
+        // App Config
+        this.appConfiguration = getAppConfiguration();
 
         // Log配置
         this.logConfig = LogConfig.Buidler
                 .buidler()
                 .setContext(this)
-                .setOpen(appConfiguration.isDebug())
+                .setOpen(BuildConfig.DEBUG)
                 .build();
     }
 
     @Override
     public void onTerminate() {
         super.onTerminate();
-        if (httpModule != null) {
-            httpModule = null;
-        }
-        if (imageModule != null) {
-            imageModule = null;
-        }
-        if (appConfiguration != null) {
-            appConfiguration = null;
-        }
-        if (context != null) {
-            context = null;
-        }
-        if (logConfig != null) {
-            logConfig = null;
-        }
+
     }
 
     public static Context getContext() {

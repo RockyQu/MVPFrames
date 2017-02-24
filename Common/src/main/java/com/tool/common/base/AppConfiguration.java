@@ -2,87 +2,74 @@ package com.tool.common.base;
 
 import android.text.TextUtils;
 
-import com.tool.common.http.interceptor.NetworkInterceptor;
-import com.tool.common.widget.imageloader.ImageLoader;
+import com.tool.common.http.NetworkHandler;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.inject.Singleton;
+
+import dagger.Module;
+import dagger.Provides;
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 
 /**
  * App全局配置信息
  */
+@Module
 public class AppConfiguration {
 
-    private volatile static AppConfiguration appConfiguration;
-
-    // 调试模式
-    private boolean debug;
-
-    // Http通信Base接口
-    private String httpUrl;
-    // Http缓存路径
+    private HttpUrl httpUrl;
     private File httpCacheFile;
-    // 网络通信拦截器
-    private NetworkInterceptor networkInterceptor;
-    // 其他拦截器
-    private Interceptor[] interceptors;
+    private NetworkHandler networkHandler;
+    private List<Interceptor> interceptors;
 
     public AppConfiguration(Buidler buidler) {
-        this.debug = buidler.debug;
         this.httpUrl = buidler.httpUrl;
         this.httpCacheFile = buidler.httpCacheFile;
-        this.networkInterceptor = buidler.networkInterceptor;
+        this.networkHandler = buidler.networkHandler;
         this.interceptors = buidler.interceptors;
     }
 
-    public static AppConfiguration getInstance(Buidler buidler) {
-        if (appConfiguration == null) {
-            synchronized (AppConfiguration.class) {
-                if (appConfiguration == null) {
-                    appConfiguration = new AppConfiguration(buidler);
-                }
-            }
-        }
-        return appConfiguration;
-    }
-
-    public boolean isDebug() {
-        return debug;
-    }
-
-    public String getHttpUrl() {
+    @Singleton
+    @Provides
+    HttpUrl provideBaseUrl() {
         return httpUrl;
     }
 
-    public File getHttpCacheFile() {
+    @Singleton
+    @Provides
+    File providehttpCacheFile() {
         return httpCacheFile;
     }
 
-    public NetworkInterceptor getNetworkInterceptor() {
-        return networkInterceptor;
+    @Singleton
+    @Provides
+    NetworkHandler provideNetworkHandler() {
+        return networkHandler;
     }
 
-    public Interceptor[] getInterceptors() {
+    @Singleton
+    @Provides
+    List<Interceptor> provideInterceptors() {
         return interceptors;
     }
 
     /**
-     * App全局配置，采用Buidler模式
+     * App全局配置
      */
     public static class Buidler {
 
-        // 调试模式
-        private boolean debug = false;
-
         // Http通信Base接口
-        private String httpUrl;
+        private HttpUrl httpUrl;
         // Http缓存路径
         private File httpCacheFile;
         // 网络通信拦截器
-        private NetworkInterceptor networkInterceptor;
+        private NetworkHandler networkHandler;
         // 其他拦截器
-        private Interceptor[] interceptors;
+        private List<Interceptor> interceptors = new ArrayList<>();
 
         private Buidler() {
             ;
@@ -92,42 +79,31 @@ public class AppConfiguration {
             return new Buidler();
         }
 
-        public Buidler debug(boolean debug) {
-            this.debug = debug;
-            return this;
-        }
-
         public Buidler httpUrl(String httpUrl) {
             if (TextUtils.isEmpty(httpUrl)) {
-                throw new IllegalArgumentException("Http url can not be empty!");
+                throw new IllegalArgumentException("httpUrl can not be empty!");
             }
-            this.httpUrl = httpUrl;
+            this.httpUrl = HttpUrl.parse(httpUrl);
             return this;
         }
 
         public Buidler httpCacheFile(File httpCacheFile) {
-            if (httpCacheFile == null) {
-                throw new IllegalArgumentException("Http CacheFile can not be empty!");
-            }
             this.httpCacheFile = httpCacheFile;
             return this;
         }
 
-        public Buidler networkInterceptor(NetworkInterceptor networkInterceptor) {
-            if (networkInterceptor == null) {
-                throw new IllegalArgumentException("NetworkInterceptor can not be empty!");
-            }
-            this.networkInterceptor = networkInterceptor;
+        public Buidler networkHandler(NetworkHandler networkHandler) {
+            this.networkHandler = networkHandler;
             return this;
         }
 
-        public Buidler interceptors(Interceptor[] interceptors) {
+        public Buidler interceptors(List<Interceptor> interceptors) {
             this.interceptors = interceptors;
             return this;
         }
 
         public AppConfiguration build() {
-            return AppConfiguration.getInstance(this);
+            return new AppConfiguration(this);
         }
     }
 }

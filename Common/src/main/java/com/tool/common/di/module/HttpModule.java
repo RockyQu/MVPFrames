@@ -5,133 +5,84 @@ import com.tool.common.http.cookie.CookieManager;
 import com.tool.common.http.interceptor.NetworkInterceptor;
 
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
+import dagger.Provides;
 import okhttp3.Cache;
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * 管理Http各种参数配置
+ * HTTP参数配置
  */
+@Module
 public class HttpModule {
-
-    private volatile static HttpModule httpModule;
 
     // 连接、读取、写入超时时间
     private static final int TIME_OUT = 60;
     // 缓存文件最大值100MB
     private static final int CACHE_MAX_SIZE = 1024 * 1024 * 10 * 100;
 
-    // Buidler
-    private Buidler buidler;
-
-    // Retrofit
-    public Retrofit retrofit;
-
-    public HttpModule(Buidler buidler) {
-        this.buidler = buidler;
-
-        OkHttpClient client = configureClient(new OkHttpClient.Builder(), buidler.interceptor);
-        retrofit = configureRetrofit(new Retrofit.Builder(), client, buidler.url);
+    public HttpModule() {
+        ;
     }
 
-    public static HttpModule getInstance(Buidler buidler) {
-        if (httpModule == null) {
-            synchronized (HttpModule.class) {
-                if (httpModule == null) {
-                    httpModule = new HttpModule(buidler);
-                }
-            }
-        }
-        return httpModule;
-    }
-
-    /**
-     * 配置Retrofit
-     *
-     * @param builder
-     * @param client
-     * @param baseUrl
-     * @return Retrofit
-     */
-    private Retrofit configureRetrofit(Retrofit.Builder builder, OkHttpClient client, String baseUrl) {
+    @Singleton
+    @Provides
+    Retrofit provideRetrofit(Retrofit.Builder builder, OkHttpClient client, HttpUrl httpUrl) {
         return builder
-                .baseUrl(baseUrl)// 域名
+                .baseUrl(httpUrl)// 域名
                 .client(client)// 设置OkHttpClient
                 .addConverterFactory(GsonConverterBodyFactory.create())// 使用Gson
                 .build();
     }
 
-    /**
-     * 配置OkHttpClient
-     *
-     * @param okHttpClient
-     * @param interceptor
-     * @return OkHttpClient
-     */
-    private OkHttpClient configureClient(OkHttpClient.Builder okHttpClient, Interceptor interceptor) {
+    @Singleton
+    @Provides
+    OkHttpClient provideClient(OkHttpClient.Builder okHttpClient, Interceptor interceptor, List<Interceptor> interceptors) {
         OkHttpClient.Builder builder = okHttpClient
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(true)// 设置出现错误进行重新连接
-                .cache(new Cache(buidler.cacheFile, CACHE_MAX_SIZE))//设置缓存路径和大小
+//                .cache(new Cache(buidler.cacheFile, CACHE_MAX_SIZE))// 设置缓存路径和大小
                 .addNetworkInterceptor(interceptor)// 网络拦截器，在Request和Resposne是分别被调用一次
                 .cookieJar(new CookieManager());// Cookie
-        if (buidler.interceptors != null && buidler.interceptors.length > 0) {// Interceptors，只在Response被调用一次
-            for (Interceptor item : buidler.interceptors) {
+        if (interceptors != null && interceptors.size() > 0) {// Interceptors，只在Response被调用一次
+            for (Interceptor item : interceptors) {
                 builder.addInterceptor(item);
             }
         }
         return builder.build();
     }
 
+    @Singleton
+    @Provides
+    Retrofit.Builder provideRetrofitBuilder() {
+        return new Retrofit.Builder();
+    }
+
+
+    @Singleton
+    @Provides
+    OkHttpClient.Builder provideClientBuilder() {
+        return new OkHttpClient.Builder();
+    }
+
+
     /**
-     * Retrofit配置，采用Buidler模式
+     * Http拦截器
      */
-    public static class Buidler {
-
-        // BaseUrl
-        private String url;
-        // 缓存目录
-        private File cacheFile;
-        // 网络拦截器
-        private NetworkInterceptor interceptor;
-        // 拦截器
-        private Interceptor[] interceptors;
-
-        private Buidler() {
-            ;
-        }
-
-        public static Buidler buidler() {
-            return new Buidler();
-        }
-
-        public Buidler url(String url) {
-            this.url = url;
-            return this;
-        }
-
-        public Buidler cacheFile(File cacheFile) {
-            this.cacheFile = cacheFile;
-            return this;
-        }
-
-        public Buidler networkInterceptor(NetworkInterceptor interceptor) {
-            this.interceptor = interceptor;
-            return this;
-        }
-
-        public Buidler interceptors(Interceptor[] interceptors) {
-            this.interceptors = interceptors;
-            return this;
-        }
-
-        public HttpModule build() {
-            return HttpModule.getInstance(this);
-        }
+    @Singleton
+    @Provides
+    Interceptor provideNetworkInterceptor(NetworkInterceptor interceptor) {
+        return interceptor;
     }
 }

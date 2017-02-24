@@ -67,7 +67,8 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Log
 
     @Override
     protected LoginPresenter setupActivityComponent(AppComponent appComponent) {
-        return new LoginPresenter(application, new LoginModel(ServiceManager.getInstance(application.getHttpModule().retrofit)), this);
+        return null;
+//        return new LoginPresenter(application, new LoginModel(ServiceManager.getInstance(application.getHttpModule().retrofit)), this);
     }
 
     /**
