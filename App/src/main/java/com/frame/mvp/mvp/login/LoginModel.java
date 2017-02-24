@@ -1,7 +1,7 @@
 package com.frame.mvp.mvp.login;
 
 import com.frame.mvp.app.api.cache.CacheManager;
-import com.frame.mvp.app.api.service.ApiService;
+import com.frame.mvp.app.api.service.ApiUser;
 import com.frame.mvp.app.api.service.ServiceManager;
 import com.frame.mvp.entity.User;
 import com.tool.common.frame.BaseModel;
@@ -14,7 +14,7 @@ import retrofit2.Call;
  */
 public class LoginModel extends BaseModel<ServiceManager, CacheManager> implements LoginContract.Model {
 
-    private ApiService apiService;
+    private ApiUser apiService;
 
     public LoginModel(ServiceManager serviceManager) {
         super(serviceManager);

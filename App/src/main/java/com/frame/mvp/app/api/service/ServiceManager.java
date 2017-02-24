@@ -12,10 +12,10 @@ public class ServiceManager implements BaseServiceManager {
     private volatile static ServiceManager serviceManager;
 
     // 网络通信接口管理类
-    private ApiService apiService;
+    private ApiUser apiService;
 
     public ServiceManager(Retrofit retrofit) {
-        this.apiService = retrofit.create(ApiService.class);
+        this.apiService = retrofit.create(ApiUser.class);
     }
 
     public static ServiceManager getInstance(Retrofit retrofit) {
@@ -29,7 +29,7 @@ public class ServiceManager implements BaseServiceManager {
         return serviceManager;
     }
 
-    public ApiService getApiService() {
+    public ApiUser getApiService() {
         return apiService;
     }
 

@@ -3,6 +3,7 @@ package com.tool.common.base;
 import android.app.Application;
 import android.content.Context;
 
+import com.tool.common.di.module.AppModule;
 import com.tool.common.di.module.HttpModule;
 import com.tool.common.log.log.LogConfig;
 import com.tool.common.di.module.ImageModule;
@@ -30,6 +31,8 @@ public abstract class BaseApplication extends Application {
     // App Config
     protected AppConfiguration appConfiguration;
 
+    // AppModule
+    private AppModule appModule;
     // Http模块
     private HttpModule httpModule;
     // 图片模块
@@ -46,6 +49,9 @@ public abstract class BaseApplication extends Application {
 
         // App Config
         this.appConfiguration = getAppConfiguration();
+
+        // 提供Application、Gson
+        this.appModule = new AppModule(this);
 
         // Http模块
         this.httpModule = HttpModule.Buidler
@@ -89,6 +95,10 @@ public abstract class BaseApplication extends Application {
 
     public static Context getContext() {
         return context;
+    }
+
+    public AppModule getAppModule() {
+        return appModule;
     }
 
     public HttpModule getHttpModule() {

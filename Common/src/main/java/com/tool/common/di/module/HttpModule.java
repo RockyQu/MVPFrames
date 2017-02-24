@@ -7,6 +7,7 @@ import com.tool.common.http.interceptor.NetworkInterceptor;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+import dagger.Module;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;

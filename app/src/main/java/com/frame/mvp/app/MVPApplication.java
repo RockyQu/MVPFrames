@@ -45,6 +45,7 @@ public class MVPApplication extends BaseApplication {
 
         appComponent = DaggerAppComponent
                 .builder()
+                .appModule(getAppModule())
                 .imageModule(getImageModule())
                 .build();
 
