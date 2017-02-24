@@ -10,8 +10,6 @@ import com.tool.common.log.log.LogConfig;
 import com.tool.common.di.module.ImageModule;
 
 /**
- * 项目介绍及使用
- * <p>
  * 项目涉及的主要框架
  * 1、Dagger2 https://google.github.io/dagger
  * 2、ButterKnife http://jakewharton.github.io/butterknife
@@ -19,10 +17,11 @@ import com.tool.common.di.module.ImageModule;
  * 4、Glide https://github.com/bumptech/glide
  * 5、Gson https://github.com/google/gson
  * <p>
- * 使用方法
+ * 基本使用方法
  * 1、配置自定义Application必须继承BaseApplication，BaseApplication完成Http框架、图片框架、日志管理框架等初始化工作
  * 2、使用Activity、Fragment、ViewHolder、Service、Adapter请继承CommonActivity、CommonFragment、BaseViewHolder、BaseService、BaseAdapter来初始化MVP架构
- * 3、简单功能及页面无需引入MVP
+ * 3、通过Application获取AppComponent里面的对象可直接使用
+ * 4、简单功能及页面无需引入MVP
  */
 public abstract class BaseApplication extends Application {
 

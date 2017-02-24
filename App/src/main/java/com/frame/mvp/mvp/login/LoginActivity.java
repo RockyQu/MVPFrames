@@ -16,11 +16,12 @@ import com.tool.common.utils.StringUtils;
 import com.tool.common.widget.ToastBar;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 登录页面
  */
-public class LoginActivity extends CommonActivity<LoginPresenter> implements LoginContract.View, OnClickListener {
+public class LoginActivity extends CommonActivity<LoginPresenter> implements LoginContract.View {
 
     // 账号
     @BindView(R.id.edt_account)
@@ -47,21 +48,13 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Log
             edtAccount.setText(user.getAccount());
             edtPassword.setText(user.getPassword());
         }
-
-        btnSubmit.setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_submit:
-                if (inputCheck(R.id.btn_submit)) {
-                    // 登录
-                    presenter.login(edtAccount.getText().toString().trim(), edtPassword.getText().toString().trim());
-                }
-                break;
-            default:
-                break;
+    @OnClick(R.id.btn_submit)
+    public void login() {
+        if (inputCheck(R.id.btn_submit)) {
+            // 登录
+            presenter.login(edtAccount.getText().toString().trim(), edtPassword.getText().toString().trim());
         }
     }
 
