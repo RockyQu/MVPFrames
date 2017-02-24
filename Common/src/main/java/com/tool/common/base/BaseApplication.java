@@ -3,7 +3,7 @@ package com.tool.common.base;
 import android.app.Application;
 import android.content.Context;
 
-import com.tool.common.http.HttpModule;
+import com.tool.common.di.module.HttpModule;
 import com.tool.common.log.log.LogConfig;
 import com.tool.common.di.module.ImageModule;
 
