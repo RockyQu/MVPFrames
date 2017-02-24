@@ -69,7 +69,21 @@ public abstract class BaseApplication extends Application {
     @Override
     public void onTerminate() {
         super.onTerminate();
-
+        if (context != null) {
+            this.context = this;
+        }
+        if (appModule != null) {
+            this.appModule = null;
+        }
+        if (httpModule != null) {
+            this.httpModule = null;
+        }
+        if (imageModule != null) {
+            this.imageModule = null;
+        }
+        if (appConfiguration != null) {
+            this.appConfiguration = null;
+        }
     }
 
     public static Context getContext() {
