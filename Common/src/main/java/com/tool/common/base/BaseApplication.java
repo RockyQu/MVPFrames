@@ -52,6 +52,7 @@ public abstract class BaseApplication extends Application {
         this.logConfig = LogConfig.Buidler
                 .buidler()
                 .setContext(this)
+                .setOpen(BuildConfig.DEBUG)
                 .build();
 
         // 提供Application、Gson
@@ -82,6 +83,9 @@ public abstract class BaseApplication extends Application {
         }
         if (appConfiguration != null) {
             this.appConfiguration = null;
+        }
+        if (logConfig != null) {
+            this.logConfig = null;
         }
     }
 
