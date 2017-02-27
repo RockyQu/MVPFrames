@@ -1,8 +1,8 @@
 package com.tool.common.http;
 
 /**
- * BaseServiceManager
+ * BaseApiManager
  */
-public interface BaseServiceManager {
+public interface BaseApiManager {
     void onDestory();
 }

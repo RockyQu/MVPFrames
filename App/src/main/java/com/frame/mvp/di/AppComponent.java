@@ -2,6 +2,7 @@ package com.frame.mvp.di;
 
 import android.app.Application;
 
+import com.frame.mvp.di.module.ApiModule;
 import com.google.gson.Gson;
 import com.tool.common.base.AppConfiguration;
 import com.tool.common.di.module.AppModule;
@@ -19,7 +20,7 @@ import retrofit2.Retrofit;
  * AppComponent
  */
 @Singleton
-@Component(modules = {AppModule.class, HttpModule.class, ImageModule.class, AppConfiguration.class,})
+@Component(modules = {AppModule.class, HttpModule.class, ImageModule.class, AppConfiguration.class, ApiModule.class})
 public interface AppComponent {
 
     // Application
@@ -36,4 +37,6 @@ public interface AppComponent {
 
     // 图片框架
     ImageLoader getImageLoader();
+
+
 }

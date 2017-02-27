@@ -1,36 +1,38 @@
 package com.frame.mvp.app.api.service;
 
-import com.tool.common.http.BaseServiceManager;
+import com.tool.common.http.BaseApiManager;
 
-import retrofit2.Retrofit;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * 网络通信接口管理
  */
-public class ServiceManager implements BaseServiceManager {
+@Singleton
+public class ServiceManager implements BaseApiManager {
 
-    private volatile static ServiceManager serviceManager;
+    private ApiCommon apiCommon;
+    private ApiUser apiUser;
 
-    // 网络通信接口管理类
-    private ApiUser apiService;
-
-    public ServiceManager(Retrofit retrofit) {
-        this.apiService = retrofit.create(ApiUser.class);
+    /**
+     * 如果需要添加service只需在构造方法中添加对应的service,在提供get方法返回出去,只要在ServiceModule提供了该service
+     * Dagger2会自行注入
+     *
+     * @param apiCommon
+     * @param apiCommon
+     */
+    @Inject
+    public ServiceManager(ApiCommon apiCommon, ApiUser apiUser) {
+        this.apiCommon = apiCommon;
+        this.apiUser = apiUser;
     }
 
-    public static ServiceManager getInstance(Retrofit retrofit) {
-        if (serviceManager == null) {
-            synchronized (ServiceManager.class) {
-                if (serviceManager == null) {
-                    serviceManager = new ServiceManager(retrofit);
-                }
-            }
-        }
-        return serviceManager;
+    public ApiCommon getApiCommon() {
+        return apiCommon;
     }
 
-    public ApiUser getApiService() {
-        return apiService;
+    public ApiUser getApiUser() {
+        return apiUser;
     }
 
     /**
