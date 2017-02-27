@@ -4,17 +4,17 @@ import android.content.Context;
 
 import com.frame.mvp.BuildConfig;
 import com.frame.mvp.app.api.Api;
-import com.frame.mvp.di.AppComponent;
-import com.frame.mvp.di.DaggerAppComponent;
+import com.frame.mvp.di.component.AppComponent;
+import com.frame.mvp.di.component.DaggerAppComponent;
+import com.frame.mvp.di.module.ApiModule;
 import com.frame.mvp.entity.User;
 import com.frame.mvp.mvp.login.LoginActivity;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
-import com.tool.common.base.AppConfiguration;
+import com.tool.common.di.module.AppConfigModule;
 import com.tool.common.base.BaseApplication;
 import com.tool.common.http.NetworkHandler;
 import com.tool.common.http.interceptor.LoggingInterceptor;
-import com.tool.common.http.interceptor.NetworkInterceptor;
 import com.tool.common.http.interceptor.ParameterInterceptor;
 import com.tool.common.log.QLog;
 import com.tool.common.log.crash.ThreadCatchInterceptor;
@@ -46,10 +46,11 @@ public class MVPApplication extends BaseApplication {
 
         appComponent = DaggerAppComponent
                 .builder()
-                .appConfiguration(getAppConfiguration())
                 .appModule(getAppModule())
                 .httpModule(getHttpModule())
                 .imageModule(getImageModule())
+                .appConfigModule(getAppConfiguration())
+                .apiModule(new ApiModule())
                 .build();
 
         // 设置反馈崩溃信息，不需要可以不设置
@@ -120,8 +121,8 @@ public class MVPApplication extends BaseApplication {
     }
 
     @Override
-    protected AppConfiguration getAppConfiguration() {
-        return AppConfiguration.Buidler.buidler()
+    protected AppConfigModule getAppConfiguration() {
+        return AppConfigModule.buidler()
                 .httpUrl(Api.PHP)
                 .httpCacheFile(this.getCacheDir())
                 .networkHandler(new NetworkHandler() { // Http全局响应结果的处理类
@@ -147,11 +148,11 @@ public class MVPApplication extends BaseApplication {
                         return response;
                     }
                 })
-//                .interceptors(new Interceptor[]
-//                        {
-//                                new LoggingInterceptor(),
-//                                new ParameterInterceptor()
-//                        })
+                .interceptors(new Interceptor[]
+                        {
+                                new LoggingInterceptor(),
+                                new ParameterInterceptor()
+                        })
                 .build();
     }
 

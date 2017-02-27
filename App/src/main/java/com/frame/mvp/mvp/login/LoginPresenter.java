@@ -2,11 +2,14 @@ package com.frame.mvp.mvp.login;
 
 import com.frame.mvp.app.MVPApplication;
 import com.frame.mvp.entity.User;
+import com.tool.common.di.scope.ActivityScope;
 import com.tool.common.frame.BasePresenter;
 import com.tool.common.http.ResponseCallback;
 import com.tool.common.http.ResponseEntity;
 import com.tool.common.utils.GsonUtils;
 import com.tool.common.utils.PreferencesUtils;
+
+import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -14,23 +17,25 @@ import retrofit2.Response;
 /**
  * LoginPresenter
  */
+@ActivityScope
 public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginContract.View> {
 
     // Application
-    private MVPApplication application;
+//    private MVPApplication application;
 
     // Login User
     private Call<ResponseEntity<User>> user;
 
-    public LoginPresenter(MVPApplication application, LoginContract.Model model, LoginContract.View view) {
+    @Inject
+    public LoginPresenter(LoginContract.Model model, LoginContract.View view) {
         super(model, view);
-        this.application = application;
+//        this.application = application;
     }
 
     public void login(final String account, final String password) {
         view.showLoading();
         user = model.login(account, password);
-        user.enqueue(new ResponseCallback<ResponseEntity<User>>(application) {
+        user.enqueue(new ResponseCallback<ResponseEntity<User>>() {
 
             @Override
             protected void onResponse(ResponseEntity<User> body) {
@@ -47,8 +52,8 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
                         view.showMessage(body.getMessage());
                     }
 
-                    application.setUser(user);
-                    view.finishActivity();
+//                    application.setUser(user);
+//                    view.finishActivity();
                 }
             }
 

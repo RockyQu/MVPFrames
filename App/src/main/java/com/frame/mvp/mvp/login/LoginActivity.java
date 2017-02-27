@@ -2,14 +2,13 @@ package com.frame.mvp.mvp.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.frame.mvp.R;
-import com.frame.mvp.app.api.service.ServiceManager;
-import com.frame.mvp.di.AppComponent;
+import com.frame.mvp.di.component.AppComponent;
+import com.frame.mvp.di.login.DaggerLoginComponent;
+import com.frame.mvp.di.login.LoginModule;
 import com.frame.mvp.entity.User;
 import com.frame.mvp.ui.common.CommonActivity;
 import com.tool.common.utils.StringUtils;
@@ -59,9 +58,13 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Log
     }
 
     @Override
-    protected LoginPresenter setupActivityComponent(AppComponent appComponent) {
-        return null;
-//        return new LoginPresenter(application, new LoginModel(ServiceManager.getInstance(application.getHttpModule().retrofit)), this);
+    protected void setupActivityComponent(AppComponent appComponent) {
+        DaggerLoginComponent
+                .builder()
+                .appComponent(appComponent)
+                .loginModule(new LoginModule(this))
+                .build()
+                .inject(this);
     }
 
     /**

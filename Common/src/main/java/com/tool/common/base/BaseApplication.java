@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.tool.common.BuildConfig;
+import com.tool.common.di.module.AppConfigModule;
 import com.tool.common.di.module.AppModule;
 import com.tool.common.di.module.HttpModule;
 import com.tool.common.log.log.LogConfig;
@@ -29,7 +30,7 @@ public abstract class BaseApplication extends Application {
     private static Context context;
 
     // App Config
-    protected AppConfiguration appConfiguration;
+    protected AppConfigModule appConfiguration;
 
     // AppModule
     private AppModule appModule;
@@ -47,6 +48,12 @@ public abstract class BaseApplication extends Application {
 
         this.context = this;
 
+        // Log配置
+        this.logConfig = LogConfig.Buidler
+                .buidler()
+                .setContext(this)
+                .build();
+
         // 提供Application、Gson
         this.appModule = new AppModule(this);
         // Http模块
@@ -56,13 +63,6 @@ public abstract class BaseApplication extends Application {
 
         // App Config
         this.appConfiguration = getAppConfiguration();
-
-        // Log配置
-        this.logConfig = LogConfig.Buidler
-                .buidler()
-                .setContext(this)
-                .setOpen(BuildConfig.DEBUG)
-                .build();
     }
 
     @Override
@@ -106,5 +106,5 @@ public abstract class BaseApplication extends Application {
      *
      * @return AppConfiguration
      */
-    protected abstract AppConfiguration getAppConfiguration();
+    protected abstract AppConfigModule getAppConfiguration();
 }

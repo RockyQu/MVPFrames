@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import com.tool.common.frame.BasePresenter;
 import com.tool.common.widget.ToastBar;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -22,10 +24,11 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     /**
      * Presenter
      */
-    protected P presenter = null;
+    @Inject
+    protected P presenter;
 
     // 解除绑定
-    private Unbinder unbinder = null;
+    private Unbinder unbinder;
 
     // BroadcastReceiver
     private BroadcastReceiver broadcastReceiver;

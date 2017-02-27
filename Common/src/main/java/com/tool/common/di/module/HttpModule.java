@@ -3,6 +3,7 @@ package com.tool.common.di.module;
 import com.tool.common.http.converter.GsonConverterBodyFactory;
 import com.tool.common.http.cookie.CookieManager;
 import com.tool.common.http.interceptor.NetworkInterceptor;
+import com.tool.common.log.QLog;
 
 import java.io.File;
 import java.util.List;
@@ -72,7 +73,7 @@ public class HttpModule {
 
     @Singleton
     @Provides
-    OkHttpClient.Builder provideClientBuilder() {
+    OkHttpClient.Builder provideOkHttpClientBuilder() {
         return new OkHttpClient.Builder();
     }
 

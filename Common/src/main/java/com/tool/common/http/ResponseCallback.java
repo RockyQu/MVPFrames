@@ -17,11 +17,8 @@ import retrofit2.Response;
  */
 public abstract class ResponseCallback<T extends ResponseEntity> implements Callback<T> {
 
-    // Application
-    private BaseApplication application;
+    public ResponseCallback() {
 
-    public ResponseCallback(BaseApplication application) {
-        this.application = application;
     }
 
     @Override
@@ -32,7 +29,7 @@ public abstract class ResponseCallback<T extends ResponseEntity> implements Call
         if (statusCode == 200) {
             onResponse(response.body());
         } else {
-            onFailure(formatError(application.getContext(), statusCode));
+            onFailure(formatError(BaseApplication.getContext(), statusCode));
         }
 
         onFinish();
@@ -40,7 +37,7 @@ public abstract class ResponseCallback<T extends ResponseEntity> implements Call
 
     @Override
     public void onFailure(Call<T> call, Throwable throwable) {
-        onFailure(formatError(application.getContext(), throwable));
+        onFailure(formatError(BaseApplication.getContext(), throwable));
         onFinish();
     }
 

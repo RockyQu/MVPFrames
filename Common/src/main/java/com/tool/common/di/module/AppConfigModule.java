@@ -1,4 +1,4 @@
-package com.tool.common.base;
+package com.tool.common.di.module;
 
 import android.text.TextUtils;
 
@@ -6,6 +6,7 @@ import com.tool.common.http.NetworkHandler;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Singleton;
@@ -19,18 +20,22 @@ import okhttp3.Interceptor;
  * App全局配置信息
  */
 @Module
-public class AppConfiguration {
+public class AppConfigModule {
 
     private HttpUrl httpUrl;
     private File httpCacheFile;
     private NetworkHandler networkHandler;
     private List<Interceptor> interceptors;
 
-    public AppConfiguration(Buidler buidler) {
+    public AppConfigModule(Buidler buidler) {
         this.httpUrl = buidler.httpUrl;
         this.httpCacheFile = buidler.httpCacheFile;
         this.networkHandler = buidler.networkHandler;
         this.interceptors = buidler.interceptors;
+    }
+
+    public static Buidler buidler() {
+        return new Buidler();
     }
 
     @Singleton
@@ -75,10 +80,6 @@ public class AppConfiguration {
             ;
         }
 
-        public static Buidler buidler() {
-            return new Buidler();
-        }
-
         public Buidler httpUrl(String httpUrl) {
             if (TextUtils.isEmpty(httpUrl)) {
                 throw new IllegalArgumentException("httpUrl can not be empty!");
@@ -97,13 +98,13 @@ public class AppConfiguration {
             return this;
         }
 
-        public Buidler interceptors(List<Interceptor> interceptors) {
-            this.interceptors = interceptors;
+        public Buidler interceptors(Interceptor[] interceptors) {
+            this.interceptors = Arrays.asList(interceptors);
             return this;
         }
 
-        public AppConfiguration build() {
-            return new AppConfiguration(this);
+        public AppConfigModule build() {
+            return new AppConfigModule(this);
         }
     }
 }
