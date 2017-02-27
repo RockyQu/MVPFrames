@@ -1,5 +1,7 @@
 package com.frame.mvp.mvp.login;
 
+import android.app.Application;
+
 import com.frame.mvp.app.MVPApplication;
 import com.frame.mvp.entity.User;
 import com.tool.common.di.scope.ActivityScope;
@@ -21,15 +23,15 @@ import retrofit2.Response;
 public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginContract.View> {
 
     // Application
-//    private MVPApplication application;
+    private MVPApplication application;
 
     // Login User
     private Call<ResponseEntity<User>> user;
 
     @Inject
-    public LoginPresenter(LoginContract.Model model, LoginContract.View view) {
+    public LoginPresenter(Application application, LoginContract.Model model, LoginContract.View view) {
         super(model, view);
-//        this.application = application;
+        this.application = (MVPApplication) application;
     }
 
     public void login(final String account, final String password) {
@@ -52,8 +54,8 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
                         view.showMessage(body.getMessage());
                     }
 
-//                    application.setUser(user);
-//                    view.finishActivity();
+                    application.setUser(user);
+                    view.finishActivity();
                 }
             }
 
