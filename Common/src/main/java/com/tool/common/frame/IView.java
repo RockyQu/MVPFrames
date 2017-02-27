@@ -5,7 +5,7 @@ import android.content.Intent;
 /**
  * 常用基本View方法定义到BaseView中
  */
-public interface BaseView {
+public interface IView {
 
     /**
      * 显示加载

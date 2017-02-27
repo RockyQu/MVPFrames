@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/App/App.iml" filepath="$PROJECT_DIR$/App/App.iml" />
+      <module fileurl="file://$PROJECT_DIR$/App/App.iml" filepath="$PROJECT_DIR$/App/App.iml" />
       <module fileurl="file://$PROJECT_DIR$/Common/Common.iml" filepath="$PROJECT_DIR$/Common/Common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Common/Common.iml" filepath="$PROJECT_DIR$/Common/Common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MVPFrames.iml" filepath="$PROJECT_DIR$/MVPFrames.iml" />
       <module fileurl="file://$PROJECT_DIR$/Project-Frame-MVP.iml" filepath="$PROJECT_DIR$/Project-Frame-MVP.iml" />
     </modules>
   </component>

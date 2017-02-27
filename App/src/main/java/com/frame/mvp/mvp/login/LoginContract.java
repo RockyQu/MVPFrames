@@ -1,7 +1,7 @@
 package com.frame.mvp.mvp.login;
 
 import com.frame.mvp.entity.User;
-import com.tool.common.frame.BaseView;
+import com.tool.common.frame.IView;
 import com.tool.common.frame.IModel;
 import com.tool.common.http.ResponseEntity;
 
@@ -16,7 +16,7 @@ public interface LoginContract {
         Call<ResponseEntity<User>> login(String name, String password);
     }
 
-    interface View extends BaseView {
+    interface View extends IView {
 
     }
 }
