@@ -10,7 +10,7 @@ public class User extends BaseEntity.Bean {
 
     //ID
     @SerializedName("userid")
-    private String id;
+    private String userId;
     //账号
     private String account;
     //密码
@@ -51,12 +51,12 @@ public class User extends BaseEntity.Bean {
 
     }
 
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getAccount() {

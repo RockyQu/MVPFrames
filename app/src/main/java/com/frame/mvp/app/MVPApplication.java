@@ -53,22 +53,20 @@ public class MVPApplication extends BaseApplication {
                 .apiModule(new ApiModule())
                 .build();
 
-        // 设置反馈崩溃信息，不需要可以不设置
-        ThreadCatchInterceptor.getInstance().install(new ThreadCatchInterceptor.CallBack() {
-
-            @Override
-            public void error(Throwable throwable) {
-                ;
-            }
-
-            @Override
-            public void finish(String path) {
-                QLog.i(path);
-            }
-        });
-
         if (ProjectUtils.init()) {
+            // 设置反馈崩溃信息，不需要可以不设置
+            ThreadCatchInterceptor.getInstance().install(new ThreadCatchInterceptor.CallBack() {
 
+                @Override
+                public void error(Throwable throwable) {
+                    ;
+                }
+
+                @Override
+                public void finish(String path) {
+                    QLog.i(path);
+                }
+            });
         } else {
             // 初始化失败
         }
@@ -144,7 +142,7 @@ public class MVPApplication extends BaseApplication {
                         // 注意：在这个回调之前已经调用过Proceed,所以这里必须自己去建立网络请求,如使用OkHttp使用新的Request去请求
                         // Request newRequest = chain.request().newBuilder().header("token", newToken).build();
                         // response.body().close();
-                        // 如果使用OkHttp将新的请求,请求成功后,将返回的Response  Return即可，如果不需要返回新的结果,则直接把response参数返回出去
+                        // 如果使用OkHttp将新的请求,请求成功后,将返回的Response  Return即可，如果不需要返回新的结果,则直接把Response参数返回出去
                         return response;
                     }
                 })
