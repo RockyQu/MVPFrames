@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 数据适配器
+ * 更新数据使用notifyDataSetChanged()
  */
 public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<T>> {
 
