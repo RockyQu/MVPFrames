@@ -96,6 +96,21 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
     public abstract BaseHolder<T> getHolder(View view);
 
     /**
+     * 遍历所有hodler,释放他们需要释放的资源
+     *
+     * @param recyclerView
+     */
+    public static void releaseAllHolder(RecyclerView recyclerView) {
+        for (int i = recyclerView.getChildCount() - 1; i >= 0; i--) {
+            final View view = recyclerView.getChildAt(i);
+            RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
+            if (viewHolder != null && viewHolder instanceof BaseHolder) {
+                ((BaseHolder) viewHolder).onRelease();
+            }
+        }
+    }
+
+    /**
      * 子类实现提供Item的布局
      *
      * @return
