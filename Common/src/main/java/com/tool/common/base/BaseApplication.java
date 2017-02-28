@@ -2,8 +2,6 @@ package com.tool.common.base;
 
 import android.app.Application;
 import android.content.Context;
-
-import com.tool.common.BuildConfig;
 import com.tool.common.di.module.AppConfigModule;
 import com.tool.common.di.module.AppModule;
 import com.tool.common.di.module.HttpModule;
@@ -52,7 +50,7 @@ public abstract class BaseApplication extends Application {
         this.logConfig = LogConfig.Buidler
                 .buidler()
                 .setContext(this)
-                .setOpen(BuildConfig.DEBUG)
+                .setOpen(logSwitch())
                 .build();
 
         // 提供Application、Gson
@@ -104,6 +102,13 @@ public abstract class BaseApplication extends Application {
     public ImageModule getImageModule() {
         return imageModule;
     }
+
+    /**
+     * 日志开关
+     *
+     * @return AppConfiguration
+     */
+    protected abstract boolean logSwitch();
 
     /**
      * App全局配置信息
