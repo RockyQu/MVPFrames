@@ -154,6 +154,11 @@ public class MVPApplication extends BaseApplication {
                 .build();
     }
 
+    @Override
+    protected boolean logSwitch() {
+        return BuildConfig.DEBUG;
+    }
+
     /**
      * 返回AppComponent提供统一出口，AppComponent里拿到对象后都可以直接使用。
      *
