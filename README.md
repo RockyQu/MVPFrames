@@ -1,5 +1,5 @@
 # MVPFrames
-借鉴[MVPArms](https://github.com/JessYanCoding/MVPArms)框架思想，集成目前主流开源框架，适合Android以MVP为结构的中大型项目，涉及Dagger2、ButterKnife、Retrofit2、Glide、Gson等第三方库
+集成目前主流开源框架，适合Android以MVP为结构的中大型项目，涉及Dagger2、ButterKnife、Retrofit2、Glide、Gson等第三方库
 
 ##Features
 •  
