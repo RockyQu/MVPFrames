@@ -6,7 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.frame.mvp.R;
-import com.frame.mvp.di.component.AppComponent;
+import com.frame.mvp.di.di.component.AppComponent;
 import com.frame.mvp.di.login.DaggerLoginComponent;
 import com.frame.mvp.di.login.LoginModule;
 import com.frame.mvp.entity.User;

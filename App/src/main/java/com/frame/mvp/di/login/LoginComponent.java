@@ -1,6 +1,6 @@
 package com.frame.mvp.di.login;
 
-import com.frame.mvp.di.component.AppComponent;
+import com.frame.mvp.di.di.component.AppComponent;
 import com.frame.mvp.mvp.login.LoginActivity;
 import com.tool.common.di.scope.ActivityScope;
 

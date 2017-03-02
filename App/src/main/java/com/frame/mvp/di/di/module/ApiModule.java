@@ -1,4 +1,4 @@
-package com.frame.mvp.di.module;
+package com.frame.mvp.di.di.module;
 
 import com.frame.mvp.app.api.service.ApiCommon;
 import com.frame.mvp.app.api.service.ApiUser;

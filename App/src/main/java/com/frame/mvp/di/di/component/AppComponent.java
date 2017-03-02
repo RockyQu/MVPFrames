@@ -1,15 +1,15 @@
-package com.frame.mvp.di.component;
+package com.frame.mvp.di.di.component;
 
 import android.app.Application;
 
 import com.frame.mvp.app.api.service.ServiceManager;
-import com.frame.mvp.di.module.ApiModule;
+import com.frame.mvp.di.di.module.ApiModule;
 import com.google.gson.Gson;
 import com.tool.common.di.module.AppConfigModule;
 import com.tool.common.di.module.AppModule;
 import com.tool.common.di.module.HttpModule;
-import com.tool.common.widget.imageloader.ImageLoader;
 import com.tool.common.di.module.ImageModule;
+import com.tool.common.widget.imageloader.ImageLoader;
 
 import javax.inject.Singleton;
 
