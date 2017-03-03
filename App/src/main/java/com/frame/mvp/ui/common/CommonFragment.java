@@ -1,7 +1,7 @@
 package com.frame.mvp.ui.common;
 
 import com.frame.mvp.app.MVPApplication;
-import com.frame.mvp.di.di.component.AppComponent;
+import com.frame.mvp.di.common.component.AppComponent;
 import com.squareup.leakcanary.RefWatcher;
 import com.tool.common.base.BaseFragment;
 import com.tool.common.frame.BasePresenter;

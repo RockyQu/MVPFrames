@@ -1,4 +1,4 @@
-package com.frame.mvp.di.di.module;
+package com.frame.mvp.di.common.module;
 
 import com.frame.mvp.app.api.cache.ApiCache;
 

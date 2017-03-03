@@ -1,9 +1,9 @@
-package com.frame.mvp.di.di.component;
+package com.frame.mvp.di.common.component;
 
 import android.app.Application;
 
 import com.frame.mvp.app.api.service.ServiceManager;
-import com.frame.mvp.di.di.module.ApiModule;
+import com.frame.mvp.di.common.module.ApiModule;
 import com.google.gson.Gson;
 import com.tool.common.di.module.AppConfigModule;
 import com.tool.common.di.module.AppModule;
