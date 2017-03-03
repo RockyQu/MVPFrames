@@ -1,6 +1,7 @@
 package com.tool.common.di.module;
 
 import com.tool.common.http.converter.GsonConverterBodyFactory;
+import com.tool.common.http.converter.JsonConverterFactory;
 import com.tool.common.http.cookie.CookieManager;
 import com.tool.common.http.interceptor.NetworkInterceptor;
 import com.tool.common.log.QLog;
@@ -42,7 +43,8 @@ public class HttpModule {
         return builder
                 .baseUrl(httpUrl)// 域名
                 .client(client)// 设置OkHttpClient
-                .addConverterFactory(GsonConverterBodyFactory.create())// 使用Gson
+                .addConverterFactory(GsonConverterBodyFactory.create())// 支持Gson
+                .addConverterFactory(JsonConverterFactory.create())// 支持Json
                 .build();
     }
 
