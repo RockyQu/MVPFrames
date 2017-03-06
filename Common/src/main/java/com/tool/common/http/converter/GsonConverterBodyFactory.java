@@ -1,8 +1,10 @@
 package com.tool.common.http.converter;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
+import com.tool.common.http.ResponseEntity;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -18,18 +20,20 @@ import retrofit2.Retrofit;
 public class GsonConverterBodyFactory extends Converter.Factory {
 
     public static GsonConverterBodyFactory create() {
-        return create(new Gson());
+        GsonBuilder builder = new GsonBuilder().
+                registerTypeAdapter(ResponseEntity.class, new GsonResponseDeserializer());
+        return create(builder);
     }
 
-    public static GsonConverterBodyFactory create(Gson gson) {
-        return new GsonConverterBodyFactory(gson);
+    public static GsonConverterBodyFactory create(GsonBuilder builder) {
+        return new GsonConverterBodyFactory(builder);
     }
 
     private final Gson gson;
 
-    private GsonConverterBodyFactory(Gson gson) {
-        if (gson == null) throw new NullPointerException("gson == null");
-        this.gson = gson;
+    private GsonConverterBodyFactory(GsonBuilder builder) {
+        if (builder == null) throw new NullPointerException("GsonBuilder == null");
+        this.gson = builder.create();
     }
 
     @Override

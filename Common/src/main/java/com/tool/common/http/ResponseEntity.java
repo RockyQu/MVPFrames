@@ -14,6 +14,11 @@ public class ResponseEntity<T> {
     @SerializedName("result")
     private T data;
 
+    public ResponseEntity(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
     public ResponseEntity(int code, String message, T data) {
         this.code = code;
         this.message = message;
