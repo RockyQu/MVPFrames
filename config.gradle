@@ -34,6 +34,7 @@ ext {
             "fastjson"                   : "com.alibaba:fastjson:1.2.21",
             "glide"                      : "com.github.bumptech.glide:glide:3.7.0",
             "eventbus"                   : "org.greenrobot:eventbus:3.0.0",
+            "greendao"                   : "org.greenrobot:greendao:3.2.0",
             "canary-debug"               : "com.squareup.leakcanary:leakcanary-android:1.5",
             "canary-release"             : "com.squareup.leakcanary:leakcanary-android-no-op:1.5",
             "q-log"                      : "com.tool.common.log:Q-Log:0.2.0"

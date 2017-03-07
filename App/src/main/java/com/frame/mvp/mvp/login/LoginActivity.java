@@ -7,7 +7,7 @@ import android.widget.EditText;
 
 import com.frame.mvp.R;
 import com.frame.mvp.di.common.component.AppComponent;
-import com.frame.mvp.di.login.DaggerLoginComponent;
+import com.frame.mvp.di.di.login.DaggerLoginComponent;
 import com.frame.mvp.di.di.login.LoginModule;
 import com.frame.mvp.entity.User;
 import com.frame.mvp.ui.common.CommonActivity;

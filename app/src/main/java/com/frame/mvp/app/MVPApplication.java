@@ -5,7 +5,7 @@ import android.content.Context;
 import com.frame.mvp.BuildConfig;
 import com.frame.mvp.app.api.Api;
 import com.frame.mvp.di.common.component.AppComponent;
-import com.frame.mvp.di.di.component.DaggerAppComponent;
+import com.frame.mvp.di.common.component.DaggerAppComponent;
 import com.frame.mvp.di.common.module.ApiModule;
 import com.frame.mvp.entity.User;
 import com.frame.mvp.mvp.login.LoginActivity;
