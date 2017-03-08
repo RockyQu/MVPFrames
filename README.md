@@ -13,7 +13,7 @@
 * **数据库模块：**在以前的开发过程中，你一定会接触到SQLite，但是在使用时，需要做许多额外的工作，比如编写各种SQL语句，所以这里选用适用于Android的GreenDAO框架。为什么使用GreenDAO，最重要一点是它性能最大化、内存开销最小化并对Android进行高度优化，性能高于同类的ORMLite  
 
 ##Feedback
-•  Project  [Submit Bug or Idea](https://github.com/DesignQu/MVPFrames/issues)   
+* Project  [Submit Bug or Idea](https://github.com/DesignQu/MVPFrames/issues)   
 
 ##Thanks
 [MVPArms](https://github.com/JessYanCoding/MVPArms)
