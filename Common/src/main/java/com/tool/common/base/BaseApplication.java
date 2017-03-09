@@ -2,9 +2,13 @@ package com.tool.common.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+
 import com.tool.common.di.module.AppConfigModule;
 import com.tool.common.di.module.AppModule;
 import com.tool.common.di.module.HttpModule;
+import com.tool.common.http.receiver.NetworkStatusReceiver;
 import com.tool.common.log.log.LogConfig;
 import com.tool.common.di.module.ImageModule;
 

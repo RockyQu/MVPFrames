@@ -4,13 +4,15 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.view.View;
 
+import com.tool.common.utils.base.BaseUtils;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
  * KnifeUtils
  */
-public class KnifeUtils {
+public class KnifeUtils extends BaseUtils {
 
     public KnifeUtils() {
         super();

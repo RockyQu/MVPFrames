@@ -2,6 +2,7 @@ package com.tool.common.http.interceptor;
 
 import com.tool.common.base.BaseApplication;
 import com.tool.common.http.NetworkHandler;
+import com.tool.common.http.receiver.NetworkStatusReceiver;
 import com.tool.common.utils.NetWorkUtils;
 import com.tool.common.utils.ZipUtils;
 
@@ -43,14 +44,16 @@ public class NetworkInterceptor implements Interceptor {
             request = handler.onHttpRequest(chain, request);
         }
 
-        if (!NetWorkUtils.isNetworkAvailable(BaseApplication.getContext())) {
+        NetworkStatusReceiver.Type type = NetworkStatusReceiver.getType();
+
+        if (type == NetworkStatusReceiver.Type.NONE) {
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)
                     .build();
         }
 
         Response originalResponse = chain.proceed(request);
-        if (NetWorkUtils.isNetworkAvailable(BaseApplication.getContext())) {
+        if (type == NetworkStatusReceiver.Type.MOBILE || type == NetworkStatusReceiver.Type.WIFI) {
             int maxAge = 0;
             originalResponse = originalResponse.newBuilder()
                     .removeHeader("Pragma")
