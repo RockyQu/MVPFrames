@@ -45,7 +45,7 @@ public class NetworkStatusReceiver extends BroadcastReceiver {
         }
     }
 
-    private static NetworkStatusReceiver.Type type;
+    private static NetworkStatusReceiver.Type type = Type.NONE;
 
     public NetworkStatusReceiver() {
         super();
@@ -66,7 +66,16 @@ public class NetworkStatusReceiver extends BroadcastReceiver {
         }
     }
 
-    public static NetworkStatusReceiver.Type getType() {
+    public static NetworkStatusReceiver.Type getType(Context context) {
+        if (type == Type.NONE) {
+            if (NetWorkUtils.isWifiConnected(context)) {
+                type = Type.WIFI;
+            } else if (NetWorkUtils.isMobileConnected(context)) {
+                type = Type.MOBILE;
+            } else {
+                type = Type.NONE;
+            }
+        }
         return type;
     }
 }

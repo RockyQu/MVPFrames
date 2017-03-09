@@ -16,6 +16,7 @@ import com.tool.common.base.BaseApplication;
 import com.tool.common.http.NetworkHandler;
 import com.tool.common.http.interceptor.LoggingInterceptor;
 import com.tool.common.http.interceptor.ParameterInterceptor;
+import com.tool.common.http.receiver.NetworkStatusReceiver;
 import com.tool.common.log.QLog;
 import com.tool.common.log.crash.ThreadCatchInterceptor;
 import com.tool.common.utils.GsonUtils;
@@ -106,6 +107,18 @@ public class MVPApplication extends BaseApplication {
         MVPApplication application = (MVPApplication) context.getApplicationContext();
         return application.watcher;
     }
+
+    /**
+     * 获得当前网络状态观察器
+     * <p>
+     * NONE(1) 无网络，MOBILE(2)移动网络，WIFI(4)无线网络
+     *
+     * @return
+     */
+    public static NetworkStatusReceiver.Type getNetworkType() {
+        return NetworkStatusReceiver.getType(getContext());
+    }
+
 
     @Override
     public void onTerminate() {

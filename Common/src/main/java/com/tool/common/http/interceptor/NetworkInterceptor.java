@@ -44,8 +44,7 @@ public class NetworkInterceptor implements Interceptor {
             request = handler.onHttpRequest(chain, request);
         }
 
-        NetworkStatusReceiver.Type type = NetworkStatusReceiver.getType();
-
+        NetworkStatusReceiver.Type type = NetworkStatusReceiver.getType(BaseApplication.getContext());
         if (type == NetworkStatusReceiver.Type.NONE) {
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)
