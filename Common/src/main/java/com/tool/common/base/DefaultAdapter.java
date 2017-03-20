@@ -56,7 +56,7 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
      */
     @Override
     public void onBindViewHolder(BaseHolder<T> holder, int position) {
-        holder.setData(data.get(position));
+        holder.setData(position, data.get(position));
     }
 
     /**
