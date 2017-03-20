@@ -3,9 +3,13 @@ package com.frame.mvp.entity;
 import com.frame.mvp.entity.base.BaseEntity;
 import com.google.gson.annotations.SerializedName;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
+
 /**
  * 用户信息
  */
+@Entity
 public class User extends BaseEntity.Bean {
 
     //ID
@@ -47,9 +51,33 @@ public class User extends BaseEntity.Bean {
     @SerializedName("access_token")
     private String token;
 
-    public User() {
 
+
+    @Generated(hash = 944177353)
+    public User(String userId, String account, String password, String name,
+            String gender, String nickname, String mobilePhone, String birth,
+            String avatarUrl, String area, String point, String signature,
+            String token) {
+        this.userId = userId;
+        this.account = account;
+        this.password = password;
+        this.name = name;
+        this.gender = gender;
+        this.nickname = nickname;
+        this.mobilePhone = mobilePhone;
+        this.birth = birth;
+        this.avatarUrl = avatarUrl;
+        this.area = area;
+        this.point = point;
+        this.signature = signature;
+        this.token = token;
     }
+
+    @Generated(hash = 586692638)
+    public User() {
+    }
+
+
 
     public String getUserId() {
         return userId;

@@ -19,6 +19,7 @@ import com.tool.common.di.module.ImageModule;
  * 3、Retrofit2 https://github.com/square/retrofit
  * 4、Glide https://github.com/bumptech/glide
  * 5、Gson https://github.com/google/gson
+ * 6、GreenDAO https://github.com/greenrobot/greenDAO
  * <p>
  * 二、基本使用方法
  * 1、配置自定义Application必须继承BaseApplication，BaseApplication完成Http框架、图片框架、日志管理框架等初始化工作

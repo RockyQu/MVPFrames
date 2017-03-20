@@ -164,23 +164,6 @@ public class DeviceUtils extends BaseUtils {
     }
 
     /**
-     * 当前是否有网络
-     *
-     * @param context
-     * @return
-     */
-    public static boolean hasInternet(Context context) {
-        boolean flag;
-        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (manager != null && manager.getActiveNetworkInfo() != null) {
-            flag = true;
-        } else {
-            flag = false;
-        }
-        return flag;
-    }
-
-    /**
      * 判断包是否存在
      *
      * @param context

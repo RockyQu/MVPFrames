@@ -109,7 +109,7 @@ public class MVPApplication extends BaseApplication {
     }
 
     /**
-     * 获得当前网络状态观察器
+     * 获得当前网络状态
      * <p>
      * NONE(1) 无网络，MOBILE(2)移动网络，WIFI(4)无线网络
      *
