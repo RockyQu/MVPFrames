@@ -3,13 +3,19 @@ package com.tool.common.utils;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
+import android.view.animation.Interpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 
 import com.tool.common.utils.base.BaseUtils;
 
 /**
  * 动画工具类
+ * 1、Alpha 淡入淡出
+ * 2、Scale 缩放效果
+ * 3、Rotate 旋转效果
+ * 4、Translate 移动效果
  */
 public final class AnimationUtils extends BaseUtils {
 
@@ -258,7 +264,7 @@ public final class AnimationUtils extends BaseUtils {
      * @param animationListener 监听
      * @return 返回一个放大的效果
      */
-    public static ScaleAnimation getAmplificationAnimation(long durationMillis, AnimationListener animationListener) {
+    public static ScaleAnimation getScaleAnimation(long durationMillis, AnimationListener animationListener) {
         ScaleAnimation scaleAnimation = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f, ScaleAnimation.RELATIVE_TO_SELF, ScaleAnimation.RELATIVE_TO_SELF);
         scaleAnimation.setDuration(durationMillis);
         scaleAnimation.setAnimationListener(animationListener);
@@ -271,8 +277,8 @@ public final class AnimationUtils extends BaseUtils {
      * @param durationMillis 时间
      * @return 返回一个放大的效果
      */
-    public static ScaleAnimation getAmplificationAnimation(long durationMillis) {
-        return getAmplificationAnimation(durationMillis, null);
+    public static ScaleAnimation getScaleAnimation(long durationMillis) {
+        return getScaleAnimation(durationMillis, null);
     }
 
     /**
@@ -281,7 +287,36 @@ public final class AnimationUtils extends BaseUtils {
      * @param animationListener 监听
      * @return 返回一个放大的效果
      */
-    public static ScaleAnimation getAmplificationAnimation(AnimationListener animationListener) {
-        return getAmplificationAnimation(DEFAULT_ANIMATION_DURATION, animationListener);
+    public static ScaleAnimation getScaleAnimation(AnimationListener animationListener) {
+        return getScaleAnimation(DEFAULT_ANIMATION_DURATION, animationListener);
+    }
+
+    /**
+     * 获取一个移动动画
+     *
+     * @param fromXDelta        动画起始时 X坐标上的移动位置
+     * @param toXDelta          动画结束时 X坐标上的移动位置
+     * @param fromYDelta        动画起始时 Y坐标上的移动位置
+     * @param toYDelta          动画结束时 Y坐标上的移动位置
+     * @param durationMillis    时间
+     * @param interpolator      插值器
+     *                          AccelerateDecelerateInterpolator 在动画开始与结束的地方速率改变比较慢，在中间的时候加速
+     *                          AccelerateInterpolator 在动画开始的地方速率改变比较慢，然后开始加速
+     *                          AnticipateInterpolator 开始的时候向后然后向前甩
+     *                          AnticipateOvershootInterpolator 开始的时候向后然后向前甩一定值后返回最后的值
+     *                          BounceInterpolator 动画结束的时候弹起
+     *                          CycleInterpolator 动画循环播放特定的次数，速率改变沿着正弦曲线
+     *                          DecelerateInterpolator 在动画开始的地方快然后慢
+     *                          LinearInterpolator 以常量速率改变
+     *                          OvershootInterpolator  向前甩一定值后再回到原来位置
+     * @param animationListener 监听
+     * @return 返回一个移动动画
+     */
+    public static TranslateAnimation getTranslateAnimation(float fromXDelta, float toXDelta, float fromYDelta, float toYDelta, long durationMillis, Interpolator interpolator, AnimationListener animationListener) {
+        TranslateAnimation translateAnimation = new TranslateAnimation(fromXDelta, toXDelta, fromYDelta, toYDelta);
+        translateAnimation.setInterpolator(interpolator);
+        translateAnimation.setDuration(durationMillis);
+        translateAnimation.setAnimationListener(animationListener);
+        return translateAnimation;
     }
 }
