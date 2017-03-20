@@ -25,9 +25,10 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements V
     /**
      * 设置数据
      *
+     * @param position
      * @param data
      */
-    public abstract void setData(T data);
+    public abstract void setData(int position, T data);
 
     /**
      * 释放资源
