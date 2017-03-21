@@ -46,7 +46,7 @@ public class DeviceUtils extends BaseUtils {
      * @param context
      * @return
      */
-    public static float getScreenHeight(Context context) {
+    public static int getScreenHeight(Context context) {
         return getDisplayMetrics(context).heightPixels;
     }
 
@@ -56,7 +56,7 @@ public class DeviceUtils extends BaseUtils {
      * @param context
      * @return
      */
-    public static float getScreenWidth(Context context) {
+    public static int getScreenWidth(Context context) {
         return getDisplayMetrics(context).widthPixels;
     }
 
@@ -67,19 +67,19 @@ public class DeviceUtils extends BaseUtils {
      * @param dp
      * @return
      */
-    public static float dpToPixel(Context context, float dp) {
-        return dp * (getDisplayMetrics(context).densityDpi / 160F);
+    public static int dpToPixel(Context context, float dp) {
+        return (int) (dp * (getDisplayMetrics(context).densityDpi / 160F));
     }
 
     /**
      * px转dp
      *
      * @param context
-     * @param f
+     * @param px
      * @return
      */
-    public static float pixelsToDp(Context context, float f) {
-        return f / (getDisplayMetrics(context).densityDpi / 160F);
+    public static int pixelsToDp(Context context, float px) {
+        return (int) (px / (getDisplayMetrics(context).densityDpi / 160F));
     }
 
     /**
@@ -401,8 +401,5 @@ public class DeviceUtils extends BaseUtils {
                 BluetoothAdapter.getDefaultAdapter().disable();
             }
         }
-
     }
 }
-
-
