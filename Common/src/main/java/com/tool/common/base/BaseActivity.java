@@ -65,13 +65,18 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected void onDestroy() {
         super.onDestroy();
 
-        // 解除绑定
-        unbinder.unbind();
-
         // 释放资源
         if (presenter != null) {
             presenter.onDestroy();
         }
+
+        // 解除绑定
+        if (unbinder != Unbinder.EMPTY) {
+            unbinder.unbind();
+        }
+
+        this.presenter = null;
+        this.unbinder = null;
     }
 
     @Override

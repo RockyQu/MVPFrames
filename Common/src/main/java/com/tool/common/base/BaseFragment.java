@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import com.tool.common.frame.BasePresenter;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -21,7 +23,11 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
     /**
      * Presenter
      */
+    @Inject
     protected P presenter = null;
+
+    // View
+    private View view = null;
 
     // 解除绑定
     private Unbinder unbinder = null;
@@ -48,14 +54,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayoutId(), container, false);
+        view = inflater.inflate(getLayoutId(), container, false);
 
         // 绑定ButterKnife
         unbinder = ButterKnife.bind(this, view);
-
-        this.componentInject();
-
-        this.create(savedInstanceState, view);
 
         return view;
     }
@@ -74,6 +76,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        this.componentInject();
+
+        this.create(savedInstanceState, view);
     }
 
     /**
@@ -116,7 +122,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
         super.onDestroyView();
 
         // 解除绑定
-        unbinder.unbind();
+        if (unbinder != Unbinder.EMPTY) {
+            unbinder.unbind();
+        }
     }
 
     /**
@@ -124,12 +132,15 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
      */
     @Override
     public void onDestroy() {
+        super.onDestroy();
         // 释放资源
         if (presenter != null) {
             presenter.onDestroy();
         }
 
-        super.onDestroy();
+        this.presenter = null;
+        this.view = null;
+        this.unbinder = null;
     }
 
     /**

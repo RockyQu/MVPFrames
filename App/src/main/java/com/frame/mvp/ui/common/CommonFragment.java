@@ -32,10 +32,6 @@ public abstract class CommonFragment<P extends BasePresenter> extends BaseFragme
     @Override
     public void onDestroy() {
         super.onDestroy();
-        RefWatcher watcher = MVPApplication.getRefWatcher(getActivity());
-        if (watcher != null) {
-            watcher.watch(this);
-        }
         this.application = null;
     }
 }
