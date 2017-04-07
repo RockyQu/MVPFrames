@@ -1,6 +1,5 @@
 package com.frame.mvp.mvp;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,7 +9,6 @@ import android.support.annotation.NonNull;
 import com.frame.mvp.R;
 import com.frame.mvp.mvp.login.LoginActivity;
 import com.frame.mvp.ui.common.CommonActivity;
-import com.tool.common.log.QLog;
 import com.tool.common.utils.PermissionUtils;
 
 import java.util.List;
