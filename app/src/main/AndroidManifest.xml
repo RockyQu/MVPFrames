@@ -2,27 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.frame.mvp">
 
-    <!-- 允许访问网络连接，可能产生GPRS流量 -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <!-- 允许程序写入外部存储,如SD卡上写文件 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!-- 程序可以读取设备外部存储空间（内置SDcard和外置SDCard）的文件 -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <!-- 允许程序访问有关GSM网络信息 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- 允许程序访问Wi-Fi网络状态信息 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!-- 允许程序改变Wi-Fi连接状态 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <!-- 允许一个程序初始化一个电话拨号不需通过拨号用户界面需要用户确认 -->
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-    <!-- 允许程序连接到已配对的蓝牙设备 -->
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <!-- 允许程序发现和配对蓝牙设备 -->
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <!-- 允许程序访问电话状态 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-
     <application
         android:name=".app.MVPApplication"
         android:allowBackup="true"
@@ -31,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".mvp.other.WelcomeActivity"
+            android:name=".mvp.WelcomeActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

@@ -1,4 +1,8 @@
 <resources>
+    <string name="PermissionsMessage">应用程序需要访问您的SDCard、相机、位置信息、联系人，以便您使用该应用</string>
+    <string name="PermissionsErrorTitle">存在没有请求的权限</string>
+    <string name="PermissionsErrorMessage">因此应用程序可能无法正常工作。\n请打开应用设置修改应用权限。</string>
+
     <string name="errorCode404">无法找到指定位置的资源</string>
     <string name="errorCode500">内部服务器错误</string>
     <string name="errorCode502">网关错误</string>
