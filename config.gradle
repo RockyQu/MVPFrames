@@ -11,6 +11,7 @@ ext {
     ]
     
     dependencies = [
+            // UT
             "androidJUnitRunner"         : "android.support.test.runner.AndroidJUnitRunner",
             "junit"                      : "junit:junit:4.12",
             "javax.annotation"           : "javax.annotation:jsr250-api:1.0",
@@ -21,8 +22,10 @@ ext {
             "design"                     : "com.android.support:design:${android["androidSupportSdkVersion"]}",
             "butterknife"                : "com.jakewharton:butterknife:8.4.0",
             "butterknife-compiler"       : "com.jakewharton:butterknife-compiler:8.4.0",
+            // 注入框架
             "dagger2"                    : "com.google.dagger:dagger:${android["dagger2SdkVersion"]}",
             "dagger2-apt-compiler"       : "com.google.dagger:dagger-compiler:${android["dagger2SdkVersion"]}",
+            // 网络框架
             "retrofit"                   : "com.squareup.retrofit2:retrofit:${android["retrofitSdkVersion"]}",
             "retrofit-converter-gson"    : "com.squareup.retrofit2:converter-gson:${android["retrofitSdkVersion"]}",
             "retrofit-adapter-rxjava"    : "com.squareup.retrofit2:adapter-rxjava:${android["retrofitSdkVersion"]}",
@@ -30,13 +33,20 @@ ext {
             "okhttp3-logging-interceptor": "com.squareup.okhttp3:logging-interceptor:3.4.1",
             "okhttp-urlconnection"       : "com.squareup.okhttp:okhttp-urlconnection:2.2.0",
             "okio"                       : "com.squareup.okio:okio:1.8.0",
+            // 数据解析
             "gson"                       : "com.google.code.gson:gson:2.7",
             "fastjson"                   : "com.alibaba:fastjson:1.2.21",
+            // 图片框架
             "glide"                      : "com.github.bumptech.glide:glide:3.7.0",
+            // 通信框架
             "eventbus"                   : "org.greenrobot:eventbus:3.0.0",
+            // 数据库框架
             "greendao"                   : "org.greenrobot:greendao:3.2.0",
             "canary-debug"               : "com.squareup.leakcanary:leakcanary-android:1.5",
             "canary-release"             : "com.squareup.leakcanary:leakcanary-android-no-op:1.5",
+            // 权限管理
+            "easypermissions"             : "pub.devrel:easypermissions:0.3.0",
+            // 日志
             "q-log"                      : "com.tool.common.log:Q-Log:0.2.0"
     ]
 }

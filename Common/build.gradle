@@ -75,6 +75,8 @@ dependencies {
     releaseCompile rootProject.ext.dependencies["canary-release"]
     testCompile rootProject.ext.dependencies["canary-release"]
 
+    // 权限管理
+    compile rootProject.ext.dependencies["easypermissions"]
     // Log
     compile rootProject.ext.dependencies["q-log"]
 }
