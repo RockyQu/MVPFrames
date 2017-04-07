@@ -49,16 +49,12 @@ public class WelcomeActivity extends CommonActivity implements EasyPermissions.P
         }).sendEmptyMessageDelayed(0, 2000);
     }
 
-    /**
-     * 欢迎页面
-     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
-
-
+    
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
         if (perms.size() == PermissionUtils.PERMISSIONS.length) {
