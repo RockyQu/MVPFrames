@@ -46,7 +46,7 @@ public class WelcomeActivity extends CommonActivity implements EasyPermissions.P
                 WelcomeActivity.this.finish();
                 return false;
             }
-        }).sendEmptyMessageDelayed(0, 2000);
+        }).sendEmptyMessageDelayed(0, 1000);
     }
 
     @Override

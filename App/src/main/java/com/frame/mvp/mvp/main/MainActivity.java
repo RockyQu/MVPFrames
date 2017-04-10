@@ -10,14 +10,15 @@ import com.frame.mvp.ui.common.CommonActivity;
  */
 public class MainActivity extends CommonActivity {
 
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_main;
-    }
+
 
     @Override
     public void create(Bundle savedInstanceState) {
 
     }
-}
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_main;
+    }
+}
