@@ -54,7 +54,7 @@ public class WelcomeActivity extends CommonActivity implements EasyPermissions.P
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
-    
+
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
         if (perms.size() == PermissionUtils.PERMISSIONS.length) {
