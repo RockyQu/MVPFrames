@@ -80,6 +80,7 @@ public class MVPApplication extends BaseApplication {
 
         // LeakCanary内存泄露检查
         this.installLeakCanary();
+
     }
 
     public void setUser(User user) {

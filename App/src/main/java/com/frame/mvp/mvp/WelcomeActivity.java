@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 
 import com.frame.mvp.R;
 import com.frame.mvp.mvp.login.LoginActivity;
+import com.frame.mvp.mvp.main.MainActivity;
 import com.frame.mvp.ui.common.CommonActivity;
 import com.tool.common.utils.PermissionUtils;
 
@@ -41,7 +42,7 @@ public class WelcomeActivity extends CommonActivity implements EasyPermissions.P
         new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(Message msg) {
-                Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
+                Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
                 WelcomeActivity.this.startActivity(intent);
                 WelcomeActivity.this.finish();
                 return false;

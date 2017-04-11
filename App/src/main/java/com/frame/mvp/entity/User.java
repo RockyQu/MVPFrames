@@ -5,13 +5,17 @@ import com.google.gson.annotations.SerializedName;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 
 /**
  * 用户信息
  */
-@Entity
+@Entity(nameInDb = "User")
 public class User extends BaseEntity.Bean {
 
+    // 自增长ID
+    @Id(autoincrement = true)
+    private Long id;
     //ID
     @SerializedName("userid")
     private String userId;
@@ -51,13 +55,12 @@ public class User extends BaseEntity.Bean {
     @SerializedName("access_token")
     private String token;
 
-
-
-    @Generated(hash = 944177353)
-    public User(String userId, String account, String password, String name,
-            String gender, String nickname, String mobilePhone, String birth,
-            String avatarUrl, String area, String point, String signature,
-            String token) {
+    @Generated(hash = 837043814)
+    public User(Long id, String userId, String account, String password,
+            String name, String gender, String nickname, String mobilePhone,
+            String birth, String avatarUrl, String area, String point,
+            String signature, String token) {
+        this.id = id;
         this.userId = userId;
         this.account = account;
         this.password = password;
@@ -77,7 +80,13 @@ public class User extends BaseEntity.Bean {
     public User() {
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getUserId() {
         return userId;

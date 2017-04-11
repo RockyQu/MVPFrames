@@ -20,6 +20,7 @@ import com.tool.common.di.module.ImageModule;
  * 4、Glide https://github.com/bumptech/glide
  * 5、Gson https://github.com/google/gson
  * 6、GreenDAO https://github.com/greenrobot/greenDAO
+ * 7、EasyPermissions https://github.com/googlesamples/easypermissions
  * <p>
  * 二、基本使用方法
  * 1、配置自定义Application必须继承BaseApplication，BaseApplication完成Http框架、图片框架、日志管理框架等初始化工作
@@ -32,8 +33,7 @@ import com.tool.common.di.module.ImageModule;
  * 2、用户行为分析日志模块
  * 3、优化MVP缺点（类、接口过多的问题）
  * 4、重构蓝牙定位模块
- * 5、数据库模块
- * 6、混淆
+ * 5、混淆
  */
 public abstract class BaseApplication extends Application {
 
