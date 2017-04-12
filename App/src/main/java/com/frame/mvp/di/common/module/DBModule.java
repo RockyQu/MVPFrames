@@ -4,11 +4,13 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.frame.mvp.app.MVPApplication;
 import com.frame.mvp.entity.DaoMaster;
 import com.frame.mvp.entity.DaoSession;
 import com.frame.mvp.entity.UserDao;
 import com.tool.common.db.DBContextWrapper;
 import com.tool.common.db.MigrationHelper;
+import com.tool.common.utils.DeviceUtils;
 import com.tool.common.utils.ProjectUtils;
 
 import javax.inject.Singleton;
@@ -24,8 +26,12 @@ public class DBModule {
 
     // 是否加密
     public static final boolean ENCRYPTED = true;
-    // 加密密钥，客户端可以自己生成一个动态Key,也可服务器配合传过来一个Key
-    public static final String KEY = "";
+    // 加密密钥，客户端可以自己生成一个特征性动态Key,也可服务器配合传过来一个Key
+    public static String KEY;
+
+    public DBModule() {
+        KEY = DeviceUtils.getIMEI(MVPApplication.getContext());
+    }
 
     @Singleton
     @Provides
