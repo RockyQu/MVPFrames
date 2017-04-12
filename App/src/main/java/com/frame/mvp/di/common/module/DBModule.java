@@ -11,8 +11,6 @@ import com.tool.common.db.DBContextWrapper;
 import com.tool.common.db.MigrationHelper;
 import com.tool.common.utils.ProjectUtils;
 
-import org.greenrobot.greendao.query.QueryBuilder;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -24,6 +22,11 @@ import dagger.Provides;
 @Module
 public class DBModule {
 
+    // 是否加密
+    public static final boolean ENCRYPTED = true;
+    // 加密密钥，客户端可以自己生成一个动态Key,也可服务器配合传过来一个Key
+    public static final String KEY = "";
+
     @Singleton
     @Provides
     public DBOpenHelper provideDevOpenHelper() {
@@ -32,8 +35,8 @@ public class DBModule {
 
     @Singleton
     @Provides
-    public DaoMaster provideDaoMaster(DBOpenHelper devOpenHelper) {
-        return new DaoMaster(devOpenHelper.getWritableDb());
+    public DaoMaster provideDaoMaster(DBOpenHelper helper) {
+        return new DaoMaster(ENCRYPTED ? helper.getEncryptedWritableDb(KEY) : helper.getWritableDb());
     }
 
     @Singleton
@@ -64,10 +67,6 @@ public class DBModule {
 //        QueryBuilder.LOG_VALUES = true;
 //    }
 //
-//    public void close() {
-//        closeHelper();
-//        closeSession();
-//    }
 //    public void closeHelper() {
 //        if (helper != null) {
 //            helper.close();

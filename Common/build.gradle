@@ -62,6 +62,7 @@ dependencies {
     compile rootProject.ext.dependencies["eventbus"]
 
     compile rootProject.ext.dependencies["greendao"]
+    compile rootProject.ext.dependencies["sqlcipher"]
 
     debugCompile rootProject.ext.dependencies["canary-debug"]
     releaseCompile rootProject.ext.dependencies["canary-release"]

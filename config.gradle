@@ -9,7 +9,7 @@ ext {
                dagger2SdkVersion       : "2.6",
                retrofitSdkVersion      : "2.1.0"
     ]
-    
+
     dependencies = [
             // UT
             "androidJUnitRunner"         : "android.support.test.runner.AndroidJUnitRunner",
@@ -41,11 +41,12 @@ ext {
             "eventbus"                   : "org.greenrobot:eventbus:3.0.0",
             // 数据库框架
             "greendao"                   : "org.greenrobot:greendao:3.2.2",
+            "sqlcipher"                  : "net.zetetic:android-database-sqlcipher:3.5.7",
             // 内存泄露
             "canary-debug"               : "com.squareup.leakcanary:leakcanary-android:1.5",
             "canary-release"             : "com.squareup.leakcanary:leakcanary-android-no-op:1.5",
             // 权限管理
-            "easypermissions"             : "pub.devrel:easypermissions:0.3.0",
+            "easypermissions"            : "pub.devrel:easypermissions:0.3.0",
             // 日志
             "q-log"                      : "com.tool.common.log:Q-Log:0.2.0"
     ]

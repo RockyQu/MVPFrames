@@ -167,6 +167,7 @@ dependencies {
     apt rootProject.ext.dependencies["dagger2-apt-compiler"]
 
     compile rootProject.ext.dependencies["greendao"]
+    compile rootProject.ext.dependencies["sqlcipher"]
 
     // 引入框架基础共通模块
     compile project(':Common')
