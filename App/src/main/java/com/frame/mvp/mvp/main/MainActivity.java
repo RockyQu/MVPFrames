@@ -14,9 +14,7 @@ public class MainActivity extends CommonActivity {
     @Override
     public void create(Bundle savedInstanceState) {
         User user = new User();
-        user.setName("测试fg");
-//        DB.getInstance().getDaoSession().getUserDao().insert(user);
-
+        user.setName("测试fGGGGGGGGG");
         application.getAppComponent().getDaoSession().getUserDao().insert(user);
     }
 

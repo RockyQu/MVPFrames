@@ -40,7 +40,8 @@ ext {
             // 通信框架
             "eventbus"                   : "org.greenrobot:eventbus:3.0.0",
             // 数据库框架
-            "greendao"                   : "org.greenrobot:greendao:3.2.0",
+            "greendao"                   : "org.greenrobot:greendao:3.2.2",
+            // 内存泄露
             "canary-debug"               : "com.squareup.leakcanary:leakcanary-android:1.5",
             "canary-release"             : "com.squareup.leakcanary:leakcanary-android-no-op:1.5",
             // 权限管理
