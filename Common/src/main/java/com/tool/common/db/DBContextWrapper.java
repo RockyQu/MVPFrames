@@ -38,12 +38,11 @@ public class DBContextWrapper extends ContextWrapper {
         StringBuffer buffer = new StringBuffer();
         buffer.append(TextUtils.isEmpty(path) ? ProjectUtils.DB : path);
         buffer.append(dbName);
-        QLog.e(buffer.toString());
         return new File(buffer.toString());
     }
 
     /**
-     * 打开SD卡上的数据库，Android2.3及以下会调用这个方法。
+     * Android2.3及以下会调用这个方法
      *
      * @param name
      * @param mode
@@ -55,7 +54,7 @@ public class DBContextWrapper extends ContextWrapper {
     }
 
     /**
-     * Android 4.0会调用此方法获取数据库。
+     * Android 4.0会调用此方法获取数据库
      *
      * @param name
      * @param mode

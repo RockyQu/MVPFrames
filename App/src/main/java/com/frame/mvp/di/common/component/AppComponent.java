@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.frame.mvp.app.api.service.ServiceManager;
 import com.frame.mvp.di.common.module.ApiModule;
+import com.frame.mvp.di.common.module.DBModule;
+import com.frame.mvp.entity.DaoSession;
 import com.google.gson.Gson;
 import com.tool.common.di.module.AppConfigModule;
 import com.tool.common.di.module.AppModule;
@@ -21,7 +23,7 @@ import retrofit2.Retrofit;
  * AppComponent
  */
 @Singleton
-@Component(modules = {AppModule.class, HttpModule.class, ApiModule.class, ImageModule.class, AppConfigModule.class})
+@Component(modules = {AppModule.class, HttpModule.class, ImageModule.class, DBModule.class, AppConfigModule.class, ApiModule.class})
 public interface AppComponent {
 
     // Application
@@ -41,4 +43,7 @@ public interface AppComponent {
 
     // Api管理器
     ServiceManager getServiceManager();
+
+    // 数据库
+    DaoSession getDaoSession();
 }
