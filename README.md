@@ -14,14 +14,14 @@
 
 ## Libraries
 * [Dagger2](https://google.github.io/dagger)  
-[ButterKnife](http://jakewharton.github.io/butterknife)  
-[Retrofit2](https://github.com/square/retrofit)  
-[Okhttp](https://github.com/square/okhttp)  
-[Glide](https://github.com/bumptech/glide)  
-[Gson](https://github.com/google/gson)  
-[GreenDAO](https://github.com/greenrobot/greenDAO)  
-[EasyPermissions](https://github.com/googlesamples/easypermissions)  
-[Q-Log](https://github.com/googlesamples/easypermissions)  
+* [ButterKnife](http://jakewharton.github.io/butterknife)  
+* [Retrofit2](https://github.com/square/retrofit)  
+* [Okhttp](https://github.com/square/okhttp)  
+* [Glide](https://github.com/bumptech/glide)  
+* [Gson](https://github.com/google/gson)  
+* [GreenDAO](https://github.com/greenrobot/greenDAO)  
+* [EasyPermissions](https://github.com/googlesamples/easypermissions)  
+* [Q-Log](https://github.com/googlesamples/easypermissions)  
 
 ## Feedback
 * Project  [Submit Bug or Idea](https://github.com/DesignQu/MVPFrames/issues)   
