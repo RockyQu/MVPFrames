@@ -12,11 +12,22 @@
 * **图片模块** 使用策略者模式，使用者只需替换三个类，就可以更换图片框架，默认使用Glide，通过AppComponent获取ImageLoader实例  
 * **数据库模块** 选择适用于Android的GreenDAO框架，通过AppComponent获取DaoSession实例
 
+## Libraries
+[Dagger2](https://google.github.io/dagger)  
+[ButterKnife](http://jakewharton.github.io/butterknife)  
+[Retrofit2](https://github.com/square/retrofit)  
+[Okhttp](https://github.com/square/okhttp)  
+[Glide](https://github.com/bumptech/glide)  
+[Gson](https://github.com/google/gson)  
+[GreenDAO](https://github.com/greenrobot/greenDAO)  
+[EasyPermissions](https://github.com/googlesamples/easypermissions)  
+[Q-Log](https://github.com/googlesamples/easypermissions)  
+
 ## Feedback
 * Project  [Submit Bug or Idea](https://github.com/DesignQu/MVPFrames/issues)   
 
 ## Thanks
-[MVPArms](https://github.com/JessYanCoding/MVPArms)
+[MVPArms](https://github.com/JessYanCoding/MVPArms)  
 [TODO-MVP](https://github.com/googlesamples/android-architecture/tree/todo-mvp)
 
 ## License
