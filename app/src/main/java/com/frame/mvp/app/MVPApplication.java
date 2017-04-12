@@ -7,6 +7,7 @@ import com.frame.mvp.app.api.Api;
 import com.frame.mvp.di.common.component.AppComponent;
 import com.frame.mvp.di.common.component.DaggerAppComponent;
 import com.frame.mvp.di.common.module.ApiModule;
+import com.frame.mvp.di.common.module.DBModule;
 import com.frame.mvp.entity.User;
 import com.frame.mvp.mvp.login.LoginActivity;
 import com.squareup.leakcanary.LeakCanary;
@@ -52,6 +53,7 @@ public class MVPApplication extends BaseApplication {
                 .imageModule(getImageModule())
                 .appConfigModule(getAppConfiguration())
                 .apiModule(new ApiModule())
+                .dBModule(new DBModule())
                 .build();
 
         if (ProjectUtils.init()) {

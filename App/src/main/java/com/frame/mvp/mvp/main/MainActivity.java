@@ -3,10 +3,8 @@ package com.frame.mvp.mvp.main;
 import android.os.Bundle;
 
 import com.frame.mvp.R;
-import com.frame.mvp.db.DB;
 import com.frame.mvp.entity.User;
 import com.frame.mvp.ui.common.CommonActivity;
-import com.tool.common.log.QLog;
 
 /**
  * 主页面
