@@ -16,12 +16,7 @@ public class MainActivity extends CommonActivity {
 
     @Override
     public void create(Bundle savedInstanceState) {
-        User user = new User();
-        user.setName("测试fGGGGGGGGG");
-        application.getAppComponent().getDaoSession().getUserDao().insert(user);
 
-        List<User>  str = application.getAppComponent().getDaoSession().getUserDao().loadAll();
-        QLog.e("AAAA"+str.get(0).getName());
     }
 
     @Override

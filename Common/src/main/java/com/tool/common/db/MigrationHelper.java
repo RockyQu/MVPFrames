@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.tool.common.log.QLog;
+
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.database.StandardDatabase;
@@ -21,37 +23,73 @@ import java.util.List;
 /**
  * 数据库迁移工具类，当数据库升级时原有数据不丢失
  */
-public final class MigrationHelper {
+public class MigrationHelper {
 
-    public static boolean DEBUG = false;
-    private static String TAG = "MigrationHelper";
+    private volatile static MigrationHelper helper;
+
+    private final Logger logger;
+
     private static final String SQLITE_MASTER = "sqlite_master";
     private static final String SQLITE_TEMP_MASTER = "sqlite_temp_master";
 
-    public static void migrate(SQLiteDatabase db, Class<? extends AbstractDao<?, ?>>... daoClasses) {
+    public MigrationHelper() {
+        this(Logger.DEFAULT);
+    }
+
+    public MigrationHelper(Logger logger) {
+        this.logger = logger;
+    }
+
+    /**
+     * 获取实例
+     */
+    public static MigrationHelper getInstance() {
+        if (helper == null) {
+            synchronized (MigrationHelper.class) {
+                if (helper == null) {
+                    helper = new MigrationHelper();
+                }
+            }
+        }
+        return helper;
+    }
+
+    /**
+     * 数据迁移
+     *
+     * @param db
+     * @param daoClasses
+     */
+    public void migrate(SQLiteDatabase db, Class<? extends AbstractDao<?, ?>>... daoClasses) {
         Database database = new StandardDatabase(db);
 
-        printLog("【The Old Database Version】" + db.getVersion());
-        printLog("【Generate temp table】start");
+        logger.log("The Old Database Version " + db.getVersion());
+        logger.log("Generate temp table start.");
         generateTempTables(database, daoClasses);
-        printLog("【Generate temp table】complete");
+        logger.log("Generate temp table complete.");
 
         dropAllTables(database, true, daoClasses);
         createAllTables(database, false, daoClasses);
 
-        printLog("【Restore data】start");
+        logger.log("Restore data start.");
         restoreData(database, daoClasses);
-        printLog("【Restore data】complete");
+        logger.log("Restore data complete.");
     }
 
-    private static void generateTempTables(Database db, Class<? extends AbstractDao<?, ?>>... daoClasses) {
+    /**
+     * 创建临时表
+     *
+     * @param db
+     * @param daoClasses
+     */
+    private void generateTempTables(Database db, Class<? extends AbstractDao<?, ?>>... daoClasses) {
         for (int i = 0; i < daoClasses.length; i++) {
             String tempTableName = null;
 
             DaoConfig daoConfig = new DaoConfig(db, daoClasses[i]);
             String tableName = daoConfig.tablename;
             if (!isTableExists(db, false, tableName)) {
-                printLog("【New Table】" + tableName);
+                logger.log("New Table " + tableName);
                 continue;
             }
             try {
@@ -64,15 +102,22 @@ public final class MigrationHelper {
                 insertTableStringBuilder.append("CREATE TEMPORARY TABLE ").append(tempTableName);
                 insertTableStringBuilder.append(" AS SELECT * FROM ").append(tableName).append(";");
                 db.execSQL(insertTableStringBuilder.toString());
-                printLog("【Table】" + tableName + "\n ---Columns-->" + getColumnsStr(daoConfig));
-                printLog("【Generate temp table】" + tempTableName);
+                logger.log("Table " + tableName + "\n --Columns-->" + getColumnsStr(daoConfig));
+                logger.log("Generate temp table " + tempTableName);
             } catch (SQLException e) {
-                Log.e(TAG, "【Failed to generate temp table】" + tempTableName, e);
+                logger.log("Failed to generate temp table " + tempTableName + "\n" + e);
             }
         }
     }
 
-    private static boolean isTableExists(Database db, boolean isTemp, String tableName) {
+    /**
+     * 是否存在表X
+     *
+     * @param db
+     * @param isTemp
+     * @param tableName
+     */
+    private boolean isTableExists(Database db, boolean isTemp, String tableName) {
         if (db == null || TextUtils.isEmpty(tableName)) {
             return false;
         }
@@ -95,8 +140,12 @@ public final class MigrationHelper {
         return count > 0;
     }
 
-
-    private static String getColumnsStr(DaoConfig daoConfig) {
+    /**
+     * 获取列名
+     *
+     * @param daoConfig
+     */
+    private String getColumnsStr(DaoConfig daoConfig) {
         if (daoConfig == null) {
             return "no columns";
         }
@@ -111,21 +160,34 @@ public final class MigrationHelper {
         return builder.toString();
     }
 
-
-    private static void dropAllTables(Database db, boolean ifExists, @NonNull Class<? extends AbstractDao<?, ?>>... daoClasses) {
+    /**
+     * 删除所有表
+     *
+     * @param db
+     * @param ifExists
+     * @param daoClasses
+     */
+    private void dropAllTables(Database db, boolean ifExists, @NonNull Class<? extends AbstractDao<?, ?>>... daoClasses) {
         reflectMethod(db, "dropTable", ifExists, daoClasses);
-        printLog("【Drop all table】");
+        logger.log("Drop all table");
     }
 
-    private static void createAllTables(Database db, boolean ifNotExists, @NonNull Class<? extends AbstractDao<?, ?>>... daoClasses) {
+    /**
+     * 创建所有表
+     *
+     * @param db
+     * @param ifNotExists
+     * @param daoClasses
+     */
+    private void createAllTables(Database db, boolean ifNotExists, @NonNull Class<? extends AbstractDao<?, ?>>... daoClasses) {
         reflectMethod(db, "createTable", ifNotExists, daoClasses);
-        printLog("【Create all table】");
+        logger.log("Create all table");
     }
 
     /**
      * dao class already define the sql exec method, so just invoke it
      */
-    private static void reflectMethod(Database db, String methodName, boolean isExists, @NonNull Class<? extends AbstractDao<?, ?>>... daoClasses) {
+    private void reflectMethod(Database db, String methodName, boolean isExists, @NonNull Class<? extends AbstractDao<?, ?>>... daoClasses) {
         if (daoClasses.length < 1) {
             return;
         }
@@ -143,7 +205,13 @@ public final class MigrationHelper {
         }
     }
 
-    private static void restoreData(Database db, Class<? extends AbstractDao<?, ?>>... daoClasses) {
+    /**
+     * 恢复所有表
+     *
+     * @param db
+     * @param daoClasses
+     */
+    private void restoreData(Database db, Class<? extends AbstractDao<?, ?>>... daoClasses) {
         for (int i = 0; i < daoClasses.length; i++) {
             DaoConfig daoConfig = new DaoConfig(db, daoClasses[i]);
             String tableName = daoConfig.tablename;
@@ -173,18 +241,24 @@ public final class MigrationHelper {
                     insertTableStringBuilder.append(columnSQL);
                     insertTableStringBuilder.append(" FROM ").append(tempTableName).append(";");
                     db.execSQL(insertTableStringBuilder.toString());
-                    printLog("【Restore data】 to " + tableName);
+                    logger.log("Restore data to " + tableName);
                 }
                 StringBuilder dropTableStringBuilder = new StringBuilder();
                 dropTableStringBuilder.append("DROP TABLE ").append(tempTableName);
                 db.execSQL(dropTableStringBuilder.toString());
-                printLog("【Drop temp table】" + tempTableName);
+                logger.log("Drop temp table " + tempTableName);
             } catch (SQLException e) {
-                Log.e(TAG, "【Failed to restore data from temp table 】" + tempTableName, e);
+                logger.log("Failed to restore data from temp table " + tempTableName + "\n" + e);
             }
         }
     }
 
+    /**
+     * 获取一张表的列名
+     *
+     * @param db
+     * @param tableName
+     */
     private static List<String> getColumns(Database db, String tableName) {
         List<String> columns = null;
         Cursor cursor = null;
@@ -204,9 +278,15 @@ public final class MigrationHelper {
         return columns;
     }
 
-    private static void printLog(String info) {
-        if (DEBUG) {
-            Log.d(TAG, info);
-        }
+    public interface Logger {
+        void log(String message);
+
+        Logger DEFAULT = new Logger() {
+
+            @Override
+            public void log(String message) {
+                QLog.e(message);
+            }
+        };
     }
 }

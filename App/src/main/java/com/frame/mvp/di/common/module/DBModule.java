@@ -63,7 +63,7 @@ public class DBModule {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             Log.i("greenDAO", "Upgrading schema from version " + oldVersion + " to " + newVersion + " by dropping all tables");
-            MigrationHelper.migrate(db, UserDao.class);
+            MigrationHelper.getInstance().migrate(db, UserDao.class);
         }
     }
 
