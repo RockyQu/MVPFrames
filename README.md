@@ -28,7 +28,8 @@
 
 ## Thanks
 [MVPArms](https://github.com/JessYanCoding/MVPArms)  
-[TODO-MVP](https://github.com/googlesamples/android-architecture/tree/todo-mvp)
+[TODO-MVP](https://github.com/googlesamples/android-architecture/tree/todo-mvp)  
+[Nucleus](https://github.com/konmik/nucleus)  
 
 ## License
 ```
