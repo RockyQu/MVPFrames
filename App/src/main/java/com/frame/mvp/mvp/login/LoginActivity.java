@@ -78,22 +78,22 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Log
             case R.id.btn_submit:// 登录
                 // 手机号码
                 if (StringUtils.isEmpty(edtAccount.getText().toString().trim())) {
-                    ToastBar.show(this, "输入手机号码");
+                    ToastBar.create(this, "输入手机号码").show();
                     return false;
                 }
                 // 手机号码
                 if (StringUtils.isPhone(edtAccount.getText().toString().trim())) {
-                    ToastBar.show(this, "手机号码不正确");
+                    ToastBar.create(this, "手机号码不正确").show();
                     return false;
                 }
                 // 密码
                 if (StringUtils.isEmpty(edtPassword.getText().toString().trim())) {
-                    ToastBar.show(this, "输入密码");
+                    ToastBar.create(this, "输入密码").show();
                     return false;
                 }
                 // 密码位数
                 if (StringUtils.isCount(edtPassword.getText().toString().trim(), 6, 20)) {
-                    ToastBar.show(this, "密码为6-20位");
+                    ToastBar.create(this, "密码为6-20位").show();
                     return false;
                 }
 
@@ -128,7 +128,7 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Log
 
     @Override
     public void showMessage(String message) {
-        ToastBar.show(LoginActivity.this, message);
+        ToastBar.create(LoginActivity.this, message).show();
     }
 
     @Override
