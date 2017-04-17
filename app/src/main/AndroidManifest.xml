@@ -36,6 +36,11 @@
             android:name="com.tool.common.widget.imageloader.glide.GlideConfiguration"
             android:value="GlideModule"/>
 
+        <!-- 框架配置 -->
+        <meta-data
+            android:name="com.frame.mvp.app.AppConfiguration"
+            android:value="ConfigModule"/>
+
         <!-- 网络状态变化接收器 --> 
         <receiver android:name="com.tool.common.http.receiver.NetworkStatusReceiver">
             <intent-filter>

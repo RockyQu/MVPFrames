@@ -97,7 +97,7 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
     public abstract BaseHolder<T> getHolder(View view);
 
     /**
-     * 遍历所有hodler,释放他们需要释放的资源
+     * 遍历所有hodler,释放他们需要释放的资源，需要在super.onDestroy()之前调用
      *
      * @param recyclerView
      */

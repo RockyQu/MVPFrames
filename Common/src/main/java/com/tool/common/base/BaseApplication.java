@@ -2,15 +2,12 @@ package com.tool.common.base;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 
-import com.tool.common.di.module.AppConfigModule;
 import com.tool.common.di.module.AppModule;
 import com.tool.common.di.module.HttpModule;
-import com.tool.common.http.receiver.NetworkStatusReceiver;
 import com.tool.common.log.log.LogConfig;
 import com.tool.common.di.module.ImageModule;
+
 
 /**
  * 一、项目涉及的主要框架
@@ -42,8 +39,7 @@ public abstract class BaseApplication extends Application {
     // Context
     private static Context context;
 
-    // App Config
-    protected AppConfigModule appConfiguration;
+
 
     // AppModule
     private AppModule appModule;
@@ -68,15 +64,14 @@ public abstract class BaseApplication extends Application {
                 .setOpen(logSwitch())
                 .build();
 
-        // 提供Application、Gson
-        this.appModule = new AppModule(this);
-        // Http模块
-        this.httpModule = new HttpModule();
-        // 图片模块
-        this.imageModule = new ImageModule();
+//        // 提供Application、Gson
+//        this.appModule = new AppModule(this);
+//        // Http模块
+//        this.httpModule = new HttpModule();
+//        // 图片模块
+//        this.imageModule = new ImageModule();
 
-        // App Config
-        this.appConfiguration = getAppConfiguration();
+
     }
 
     @Override
@@ -93,9 +88,6 @@ public abstract class BaseApplication extends Application {
         }
         if (imageModule != null) {
             this.imageModule = null;
-        }
-        if (appConfiguration != null) {
-            this.appConfiguration = null;
         }
         if (logConfig != null) {
             this.logConfig = null;
@@ -125,10 +117,7 @@ public abstract class BaseApplication extends Application {
      */
     protected abstract boolean logSwitch();
 
-    /**
-     * App全局配置信息
-     *
-     * @return AppConfiguration
-     */
-    protected abstract AppConfigModule getAppConfiguration();
+
+
+
 }

@@ -3,6 +3,8 @@ package com.tool.common.di.module;
 import android.app.Application;
 
 import com.google.gson.Gson;
+import com.tool.common.integration.IRepositoryManager;
+import com.tool.common.integration.RepositoryManager;
 
 import javax.inject.Singleton;
 
@@ -31,5 +33,11 @@ public class AppModule {
     @Provides
     public Gson provideGson() {
         return new Gson();
+    }
+
+    @Singleton
+    @Provides
+    public IRepositoryManager provideRepositoryManager(RepositoryManager repositoryManager) {
+        return repositoryManager;
     }
 }

@@ -6,8 +6,8 @@ ext {
                versionCode             : 1,
                versionName             : "1.0.0",
                androidSupportSdkVersion: "25.0.0",
-               dagger2SdkVersion       : "2.6",
-               retrofitSdkVersion      : "2.1.0"
+               dagger2SdkVersion       : "2.10",
+               retrofitSdkVersion      : "2.2.0"
     ]
 
     dependencies = [

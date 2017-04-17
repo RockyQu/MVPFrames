@@ -12,8 +12,7 @@ buildscript {
     // 基础依赖
     dependencies {
         // 声明Android Gradle Plugin插件版本
-        classpath 'com.android.tools.build:gradle:2.3.0'
-
+        classpath 'com.android.tools.build:gradle:2.3.1'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
     }

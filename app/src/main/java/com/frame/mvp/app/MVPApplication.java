@@ -1,12 +1,12 @@
 package com.frame.mvp.app;
 
+import android.app.Application;
 import android.content.Context;
 
 import com.frame.mvp.BuildConfig;
 import com.frame.mvp.app.api.Api;
 import com.frame.mvp.di.common.component.AppComponent;
 import com.frame.mvp.di.common.component.DaggerAppComponent;
-import com.frame.mvp.di.common.module.ApiModule;
 import com.frame.mvp.di.common.module.DBModule;
 import com.frame.mvp.entity.User;
 import com.frame.mvp.mvp.login.LoginActivity;
@@ -14,19 +14,19 @@ import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.tool.common.di.module.AppConfigModule;
 import com.tool.common.base.BaseApplication;
-import com.tool.common.http.NetworkHandler;
-import com.tool.common.http.interceptor.LoggingInterceptor;
-import com.tool.common.http.interceptor.ParameterInterceptor;
+import com.tool.common.di.module.AppModule;
+import com.tool.common.di.module.HttpModule;
+import com.tool.common.di.module.ImageModule;
 import com.tool.common.http.receiver.NetworkStatusReceiver;
+import com.tool.common.integration.ConfigModule;
+import com.tool.common.integration.ManifestParser;
 import com.tool.common.log.QLog;
 import com.tool.common.log.crash.ThreadCatchInterceptor;
 import com.tool.common.utils.GsonUtils;
 import com.tool.common.utils.PreferencesUtils;
 import com.tool.common.utils.ProjectUtils;
 
-import okhttp3.Interceptor;
-import okhttp3.Request;
-import okhttp3.Response;
+import java.util.List;
 
 /**
  * Application
@@ -46,15 +46,22 @@ public class MVPApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
 
+        List<ConfigModule> modules = new ManifestParser(this).parse();
+
         appComponent = DaggerAppComponent
                 .builder()
-                .appModule(getAppModule())
-                .httpModule(getHttpModule())
-                .imageModule(getImageModule())
-                .appConfigModule(getAppConfiguration())
-                .apiModule(new ApiModule())
+                .appModule(new AppModule(this))
+                .httpModule(new HttpModule())
+                .imageModule(new ImageModule())
+                .appConfigModule(getAppConfigModule(this, modules))
                 .dBModule(new DBModule())
                 .build();
+
+        appComponent.inject(this);
+
+        for (ConfigModule module : modules) {
+            module.registerComponents(this, appComponent.getRepositoryManager());
+        }
 
         if (ProjectUtils.init()) {
             // 设置反馈崩溃信息，不需要可以不设置
@@ -82,7 +89,6 @@ public class MVPApplication extends BaseApplication {
 
         // LeakCanary内存泄露检查
         this.installLeakCanary();
-
     }
 
     public void setUser(User user) {
@@ -122,52 +128,22 @@ public class MVPApplication extends BaseApplication {
         return NetworkStatusReceiver.getType(getContext());
     }
 
+    /**
+     * 将app的全局配置信息封装进module(使用Dagger注入到需要配置信息的地方)
+     * 需要在AndroidManifest中声明{@link ConfigModule}的实现类,和Glide的配置方式相似
+     *
+     * @return
+     */
+    private AppConfigModule getAppConfigModule(Application context, List<ConfigModule> modules) {
+        AppConfigModule.Builder builder = AppConfigModule
+                .builder()
+                .httpUrl(Api.PHP);// 防止用户没有通过GlobeConfigModule配置，而导致报错，所以提前配置默认的BaseUrl
 
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-        if (appComponent != null) {
-            this.appComponent = null;
+        for (ConfigModule module : modules) {
+            module.applyOptions(context, builder);
         }
-        if (watcher != null) {
-            this.watcher = null;
-        }
-    }
 
-    @Override
-    protected AppConfigModule getAppConfiguration() {
-        return AppConfigModule.buidler()
-                .httpUrl(Api.PHP)
-                .httpCacheFile(this.getCacheDir())
-                .networkHandler(new NetworkHandler() { // Http全局响应结果的处理类
-
-                    @Override
-                    public Request onHttpRequest(Interceptor.Chain chain, Request request) {
-                        // 请求服务器之前可以拿到Request,做一些操作比如给Request统一添加Token或者Header，不做任务操作则直接返回Request
-                        // return chain.request().newBuilder().header("token", tokenId).build();
-                        return request;
-                    }
-
-                    @Override
-                    public Response onHttpResponse(String result, Interceptor.Chain chain, Response response) {
-                        // 这里提前拿到Http请求结果,可以用来检测，如Token是否过期
-                        // if (!TextUtils.isEmpty(result)) {
-                        //     ResponseEntity entity = GsonUtils.getEntity(result, ResponseEntity.class);
-                        // }
-                        // 如Token已过期，重新请求Token，然后拿新的Token放入Request重新继续完成上一次的请求
-                        // 注意：在这个回调之前已经调用过Proceed,所以这里必须自己去建立网络请求,如使用OkHttp使用新的Request去请求
-                        // Request newRequest = chain.request().newBuilder().header("token", newToken).build();
-                        // response.body().close();
-                        // 如果使用OkHttp将新的请求,请求成功后,将返回的Response  Return即可，如果不需要返回新的结果,则直接把Response参数返回出去
-                        return response;
-                    }
-                })
-                .interceptors(new Interceptor[]
-                        {
-                                new LoggingInterceptor(),
-                                new ParameterInterceptor()
-                        })
-                .build();
+        return builder.build();
     }
 
     @Override
@@ -182,5 +158,16 @@ public class MVPApplication extends BaseApplication {
      */
     public AppComponent getAppComponent() {
         return appComponent;
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        if (appComponent != null) {
+            this.appComponent = null;
+        }
+        if (watcher != null) {
+            this.watcher = null;
+        }
     }
 }

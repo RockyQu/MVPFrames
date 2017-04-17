@@ -1,34 +1,21 @@
 package com.tool.common.frame;
 
-import com.tool.common.http.BaseCacheManager;
-import com.tool.common.http.BaseApiManager;
+import com.tool.common.integration.IRepositoryManager;
 
 /**
  * BaseModel
  */
-public class BaseModel<S extends BaseApiManager, C extends BaseCacheManager> implements IModel {
+public class BaseModel implements IModel {
 
-    // 通信接口管理类
-    protected S apiManager;
-    // 通信接口缓存管理类
-    protected C cacheManager;
+    // 用于管理通信接口、缓存数据
+    protected IRepositoryManager repositoryManager;
 
-    public BaseModel(S apiManager) {
-        this.apiManager = apiManager;
-    }
-
-    public BaseModel(S apiManager, C cacheManager) {
-        this.apiManager = apiManager;
-        this.cacheManager = cacheManager;
+    public BaseModel(IRepositoryManager repositoryManager) {
+        this.repositoryManager = repositoryManager;
     }
 
     @Override
-    public void onDestory() {
-        if (apiManager != null) {
-            apiManager = null;
-        }
-        if (cacheManager != null) {
-            cacheManager = null;
-        }
+    public void onDestroy() {
+        repositoryManager = null;
     }
 }
