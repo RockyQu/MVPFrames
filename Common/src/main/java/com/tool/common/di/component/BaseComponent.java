@@ -1,15 +1,17 @@
-package com.frame.mvp.di.common.component;
+package com.tool.common.di.component;
 
 import android.app.Application;
 
-import com.frame.mvp.app.MVPApplication;
-import com.frame.mvp.di.common.module.DBModule;
-import com.frame.mvp.entity.DaoSession;
 import com.google.gson.Gson;
-import com.tool.common.di.component.BaseComponent;
-import com.tool.common.di.scope.ApplicationScope;
+import com.tool.common.base.BaseApplication;
+import com.tool.common.di.module.AppConfigModule;
+import com.tool.common.di.module.AppModule;
+import com.tool.common.di.module.HttpModule;
+import com.tool.common.di.module.ImageModule;
 import com.tool.common.integration.IRepositoryManager;
 import com.tool.common.widget.imageloader.ImageLoader;
+
+import javax.inject.Singleton;
 
 import dagger.Component;
 import okhttp3.OkHttpClient;
@@ -17,9 +19,9 @@ import okhttp3.OkHttpClient;
 /**
  * BaseComponent
  */
-@ApplicationScope
-@Component(modules = {DBModule.class},dependencies = BaseComponent.class)
-public interface AppComponent {
+@Singleton
+@Component(modules = {AppModule.class, HttpModule.class, ImageModule.class, AppConfigModule.class})
+public interface BaseComponent {
 
     // Application
     Application getApplication();
@@ -36,8 +38,5 @@ public interface AppComponent {
     // 图片框架
     ImageLoader getImageLoader();
 
-    // 数据库
-    DaoSession getDaoSession();
-
-    void inject(MVPApplication application);
+    void inject(BaseApplication application);
 }

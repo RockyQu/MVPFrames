@@ -10,6 +10,7 @@ import com.frame.mvp.entity.DaoSession;
 import com.frame.mvp.entity.UserDao;
 import com.tool.common.db.DBContextWrapper;
 import com.tool.common.db.MigrationHelper;
+import com.tool.common.di.scope.ApplicationScope;
 import com.tool.common.utils.DeviceUtils;
 import com.tool.common.utils.ProjectUtils;
 
@@ -33,19 +34,19 @@ public class DBModule {
         KEY = DeviceUtils.getIMEI(MVPApplication.getContext());
     }
 
-    @Singleton
+    @ApplicationScope
     @Provides
     public DBOpenHelper provideDevOpenHelper() {
         return new DBOpenHelper(new DBContextWrapper(), ProjectUtils.PROJECT_NAME + ".db", null);
     }
 
-    @Singleton
+    @ApplicationScope
     @Provides
     public DaoMaster provideDaoMaster(DBOpenHelper helper) {
         return new DaoMaster(ENCRYPTED ? helper.getEncryptedWritableDb(KEY) : helper.getWritableDb());
     }
 
-    @Singleton
+    @ApplicationScope
     @Provides
     public DaoSession provideDaoSession(DaoMaster daoMaster) {
         return daoMaster.newSession();

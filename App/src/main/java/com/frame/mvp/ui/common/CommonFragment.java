@@ -1,8 +1,8 @@
 package com.frame.mvp.ui.common;
 
 import com.frame.mvp.app.MVPApplication;
-import com.frame.mvp.di.common.component.AppComponent;
 import com.tool.common.base.BaseFragment;
+import com.tool.common.di.component.BaseComponent;
 import com.tool.common.frame.BasePresenter;
 
 /**
@@ -18,13 +18,13 @@ public abstract class CommonFragment<P extends BasePresenter> extends BaseFragme
         application = (MVPApplication) getActivity().getApplication();
 
         // init presenter
-        setupFragmentComponent(application.getAppComponent());
+        setupFragmentComponent(application.getBaseComponent());
     }
 
     /**
      * 如使用MVP结构，子类需实现此方法初始化Presenter
      */
-    protected void setupFragmentComponent(AppComponent appComponent) {
+    protected void setupFragmentComponent(BaseComponent baseComponent) {
 
     }
 

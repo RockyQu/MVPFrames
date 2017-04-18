@@ -3,10 +3,17 @@ package com.tool.common.base;
 import android.app.Application;
 import android.content.Context;
 
+import com.tool.common.di.component.BaseComponent;
+import com.tool.common.di.component.DaggerBaseComponent;
+import com.tool.common.di.module.AppConfigModule;
 import com.tool.common.di.module.AppModule;
 import com.tool.common.di.module.HttpModule;
+import com.tool.common.integration.ConfigModule;
+import com.tool.common.integration.ManifestParser;
 import com.tool.common.log.log.LogConfig;
 import com.tool.common.di.module.ImageModule;
+
+import java.util.List;
 
 
 /**
@@ -39,14 +46,8 @@ public abstract class BaseApplication extends Application {
     // Context
     private static Context context;
 
-
-
-    // AppModule
-    private AppModule appModule;
-    // Http模块
-    private HttpModule httpModule;
-    // 图片模块
-    private ImageModule imageModule;
+    // BaseComponent
+    private BaseComponent baseComponent;
 
     // Log配置
     private LogConfig logConfig;
@@ -64,14 +65,20 @@ public abstract class BaseApplication extends Application {
                 .setOpen(logSwitch())
                 .build();
 
-//        // 提供Application、Gson
-//        this.appModule = new AppModule(this);
-//        // Http模块
-//        this.httpModule = new HttpModule();
-//        // 图片模块
-//        this.imageModule = new ImageModule();
+        List<ConfigModule> modules = new ManifestParser(this).parse();
 
+        baseComponent = DaggerBaseComponent
+                .builder()
+                .appModule(new AppModule(this))
+                .httpModule(new HttpModule())// Http模块
+                .imageModule(new ImageModule())// 图片模块
+                .appConfigModule(getAppConfigModule(this, modules))// 全局配置
+                .build();
+        baseComponent.inject(this);
 
+        for (ConfigModule module : modules) {
+            module.registerComponents(this, baseComponent.getRepositoryManager());
+        }
     }
 
     @Override
@@ -80,17 +87,11 @@ public abstract class BaseApplication extends Application {
         if (context != null) {
             this.context = this;
         }
-        if (appModule != null) {
-            this.appModule = null;
-        }
-        if (httpModule != null) {
-            this.httpModule = null;
-        }
-        if (imageModule != null) {
-            this.imageModule = null;
-        }
         if (logConfig != null) {
             this.logConfig = null;
+        }
+        if (baseComponent != null) {
+            this.baseComponent = null;
         }
     }
 
@@ -98,26 +99,44 @@ public abstract class BaseApplication extends Application {
         return context;
     }
 
-    public AppModule getAppModule() {
-        return appModule;
-    }
-
-    public HttpModule getHttpModule() {
-        return httpModule;
-    }
-
-    public ImageModule getImageModule() {
-        return imageModule;
-    }
-
     /**
      * 日志开关
      *
-     * @return AppConfiguration
+     * @return
      */
     protected abstract boolean logSwitch();
 
+    /**
+     * BaseUrl
+     *
+     * @return
+     */
+    protected abstract String getBaseUrl();
 
+    /**
+     * 将app的全局配置信息封装进module(使用Dagger注入到需要配置信息的地方)
+     * 需要在AndroidManifest中声明{@link ConfigModule}的实现类,和Glide的配置方式相似
+     *
+     * @return
+     */
+    private AppConfigModule getAppConfigModule(Application context, List<ConfigModule> modules) {
+        AppConfigModule.Builder builder = AppConfigModule
+                .builder()
+                .httpUrl(getBaseUrl());// 防止用户没有通过GlobeConfigModule配置，而导致报错，所以提前配置默认的BaseUrl
 
+        for (ConfigModule module : modules) {
+            module.applyOptions(context, builder);
+        }
 
+        return builder.build();
+    }
+
+    /**
+     * 返回AppComponent提供统一出口，AppComponent里拿到对象后都可以直接使用。
+     *
+     * @return
+     */
+    public BaseComponent getBaseComponent() {
+        return baseComponent;
+    }
 }
