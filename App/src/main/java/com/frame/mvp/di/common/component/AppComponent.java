@@ -15,7 +15,7 @@ import dagger.Component;
 import okhttp3.OkHttpClient;
 
 /**
- * BaseComponent
+ * AppComponent
  */
 @ApplicationScope
 @Component(modules = {DBModule.class},dependencies = BaseComponent.class)
