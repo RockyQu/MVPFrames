@@ -12,6 +12,7 @@ import com.frame.mvp.mvp.login.LoginActivity;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.tool.common.base.BaseApplication;
+import com.tool.common.di.component.BaseComponent;
 import com.tool.common.http.receiver.NetworkStatusReceiver;
 import com.tool.common.log.QLog;
 import com.tool.common.log.crash.ThreadCatchInterceptor;
@@ -117,6 +118,15 @@ public class MVPApplication extends BaseApplication {
     @Override
     protected String getBaseUrl() {
         return Api.PHP;
+    }
+
+    /**
+     * 返回AppComponent提供统一出口，AppComponent里拿到对象后都可以直接使用。
+     *
+     * @return
+     */
+    public AppComponent getAppComponent() {
+        return appComponent;
     }
 
     @Override
