@@ -1,8 +1,8 @@
 package com.frame.mvp.ui.common;
 
 import com.frame.mvp.app.MVPApplication;
+import com.frame.mvp.di.common.component.AppComponent;
 import com.tool.common.base.BaseActivity;
-import com.tool.common.di.component.BaseComponent;
 import com.tool.common.frame.BasePresenter;
 
 /**
@@ -18,13 +18,13 @@ public abstract class CommonActivity<P extends BasePresenter> extends BaseActivi
         application = (MVPApplication) getApplication();
 
         // init presenter
-        setupActivityComponent(application.getBaseComponent());
+        setupActivityComponent(application.getAppComponent());
     }
 
     /**
      * 如使用MVP结构，子类需实现此方法初始化Presenter
      */
-    protected void setupActivityComponent(BaseComponent baseComponent) {
+    protected void setupActivityComponent(AppComponent appComponent) {
 
     }
 

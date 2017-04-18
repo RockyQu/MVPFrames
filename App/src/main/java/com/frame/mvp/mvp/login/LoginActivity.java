@@ -6,11 +6,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.frame.mvp.R;
+import com.frame.mvp.di.common.component.AppComponent;
 import com.frame.mvp.di.di.login.DaggerLoginComponent;
 import com.frame.mvp.di.di.login.LoginModule;
 import com.frame.mvp.entity.User;
 import com.frame.mvp.ui.common.CommonActivity;
-import com.tool.common.di.component.BaseComponent;
 import com.tool.common.utils.StringUtils;
 import com.tool.common.widget.ToastBar;
 
@@ -58,10 +58,10 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Log
     }
 
     @Override
-    protected void setupActivityComponent(BaseComponent baseComponent) {
+    protected void setupActivityComponent(AppComponent appComponent) {
         DaggerLoginComponent
                 .builder()
-                .baseComponent(baseComponent)
+                .appComponent(appComponent)
                 .loginModule(new LoginModule(this))
                 .build()
                 .inject(this);
