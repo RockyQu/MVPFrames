@@ -12,7 +12,6 @@ import com.frame.mvp.mvp.login.LoginActivity;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.tool.common.base.BaseApplication;
-import com.tool.common.di.component.BaseComponent;
 import com.tool.common.http.receiver.NetworkStatusReceiver;
 import com.tool.common.log.QLog;
 import com.tool.common.log.crash.ThreadCatchInterceptor;

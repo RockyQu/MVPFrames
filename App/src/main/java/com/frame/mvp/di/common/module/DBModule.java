@@ -31,7 +31,9 @@ public class DBModule {
     public static String KEY;
 
     public DBModule() {
-        KEY = DeviceUtils.getIMEI(MVPApplication.getContext());
+        if (ENCRYPTED) {
+            KEY = DeviceUtils.getIMEI(MVPApplication.getContext());
+        }
     }
 
     @ApplicationScope

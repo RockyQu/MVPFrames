@@ -1,5 +1,6 @@
 package com.frame.mvp.ui.common;
 
+
 import com.frame.mvp.app.MVPApplication;
 import com.frame.mvp.di.common.component.AppComponent;
 import com.tool.common.base.BaseActivity;
