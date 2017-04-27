@@ -30,12 +30,16 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         super.onCreate(savedInstanceState);
         this.setContentView(this.getLayoutId());
 
-        // 绑定ButterKnife
-        unbinder = ButterKnife.bind(this);
-
         this.componentInject();
 
         this.create(savedInstanceState);
+    }
+
+    @Override
+    public void onContentChanged() {
+        super.onContentChanged();
+        // 绑定ButterKnife
+        unbinder = ButterKnife.bind(this);
     }
 
     @Override
