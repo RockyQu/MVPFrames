@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.Buffer;
 
 /**
  * 接口共通参数
@@ -27,24 +30,62 @@ public class ParameterInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Request originalRequest = chain.request();
+        Request request = chain.request();
 
-        HttpUrl.Builder modifiedUrl = originalRequest.url().newBuilder()
-                .scheme(originalRequest.url().scheme())
-                .host(originalRequest.url().host());
+        HashMap<String, String> parameters = callback.parameters(request);
+        if (request.method().equals("GET")) {// 为GET方式统一添加请求参数
+            HttpUrl.Builder modifiedUrl = request.url().newBuilder()
+                    .scheme(request.url().scheme())
+                    .host(request.url().host());
 
-        HashMap<String, String> parameters = callback.parameters();
-        if (parameters != null && parameters.size() != 0) {
-            for (Map.Entry<String, String> entry : parameters.entrySet()) {
-                modifiedUrl.addQueryParameter(entry.getKey(), entry.getValue());
+            if (parameters != null && parameters.size() != 0) {
+                for (Map.Entry<String, String> entry : parameters.entrySet()) {
+                    modifiedUrl.addQueryParameter(entry.getKey(), entry.getValue());
+                }
             }
+
+            request = request.newBuilder()
+                    .method(request.method(), request.body())
+                    .url(modifiedUrl.build())
+                    .build();
+
+        } else if (request.method().equals("POST")) {// 为POST方式统一添加请求参数
+            FormBody.Builder body = new FormBody.Builder();
+            if (parameters != null && parameters.size() != 0) {
+                for (Map.Entry<String, String> entry : parameters.entrySet()) {
+                    body.addEncoded(entry.getKey(), entry.getValue());
+                }
+            }
+
+            body.build();
+
+            FormBody oldBody = (FormBody) request.body();
+            if (oldBody != null && oldBody.size() != 0) {
+                for (int i = 0; i < oldBody.size(); i++) {
+                    body.addEncoded(oldBody.encodedName(i), oldBody.encodedValue(i));
+                }
+            }
+
+            request = request.newBuilder()
+                    .post(body.build())
+                    .build();
         }
 
-        Request request = originalRequest.newBuilder()
-                .method(originalRequest.method(), originalRequest.body())
-                .url(modifiedUrl.build())
-                .build();
         return chain.proceed(request);
+    }
+
+    private static String bodyToString(final RequestBody request) {
+        try {
+            final RequestBody copy = request;
+            final Buffer buffer = new Buffer();
+            if (copy != null)
+                copy.writeTo(buffer);
+            else
+                return "";
+            return buffer.readUtf8();
+        } catch (final IOException e) {
+            return "did not work";
+        }
     }
 
     /**
@@ -52,12 +93,12 @@ public class ParameterInterceptor implements Interceptor {
      */
     public interface ParameterCallback {
 
-        HashMap<String, String> parameters();
+        HashMap<String, String> parameters(Request request);
 
         ParameterCallback DEFAULT = new ParameterCallback() {
 
             @Override
-            public HashMap<String, String> parameters() {
+            public HashMap<String, String> parameters(Request request) {
                 return null;
             }
         };
