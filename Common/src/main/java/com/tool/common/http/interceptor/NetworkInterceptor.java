@@ -3,7 +3,6 @@ package com.tool.common.http.interceptor;
 import com.tool.common.base.BaseApplication;
 import com.tool.common.http.NetworkHandler;
 import com.tool.common.http.receiver.NetworkStatusReceiver;
-import com.tool.common.utils.NetWorkUtils;
 import com.tool.common.utils.ZipUtils;
 
 import java.io.IOException;
@@ -45,7 +44,7 @@ public class NetworkInterceptor implements Interceptor {
         }
 
         NetworkStatusReceiver.Type type = NetworkStatusReceiver.getType(BaseApplication.getContext());
-        if (type == NetworkStatusReceiver.Type.NONE) {
+        if (type == NetworkStatusReceiver.Type.NONE) {// 无网络时强制从缓存读取(必须得写，不然断网状态下，退出应用，或者等待一分钟后，会获取不到缓存）
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)
                     .build();
@@ -53,19 +52,18 @@ public class NetworkInterceptor implements Interceptor {
 
         Response originalResponse = chain.proceed(request);
         if (type == NetworkStatusReceiver.Type.MOBILE || type == NetworkStatusReceiver.Type.WIFI) {
-            int maxAge = 0;
+            int maxAge = 5;// 10秒
             originalResponse = originalResponse.newBuilder()
                     .removeHeader("Pragma")
                     .removeHeader("Cache-Control")
-                    .header("Cache-Control", "max-age=" + maxAge)
+                    .header("Cache-Control", "public, max-age=" + maxAge)
                     .build();
         } else {
-            int maxTime = 60;
+            int maxTime = 60 * 60; // 1小时
             originalResponse = originalResponse.newBuilder()
-                    // 设置没有网络情况的缓存时间 
                     .removeHeader("Pragma")
                     .removeHeader("Cache-Control")
-                    .header("Cache-Control", "public, only-if-cached, max-stale=" + maxTime)
+                    .header("Cache-Control", "public, only-if-cached, max-stale=" + maxTime)
                     .build();
         }
 

@@ -44,7 +44,7 @@ public class AppDelegateManager implements App {
         baseComponent = DaggerBaseComponent
                 .builder()
                 .appModule(new AppModule(application))
-                .httpModule(new HttpModule())// Http模块
+                .httpModule(new HttpModule(application))// Http模块
                 .imageModule(new ImageModule())// 图片模块
                 .appConfigModule(getAppConfigModule(application, modules))// 全局配置
                 .build();
