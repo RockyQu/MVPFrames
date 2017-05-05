@@ -3,17 +3,9 @@ package com.tool.common.base;
 import android.app.Application;
 import android.content.Context;
 
+import com.tool.common.base.delegate.AppDelegateManager;
 import com.tool.common.di.component.BaseComponent;
-import com.tool.common.di.component.DaggerBaseComponent;
-import com.tool.common.di.module.AppConfigModule;
-import com.tool.common.di.module.AppModule;
-import com.tool.common.di.module.HttpModule;
-import com.tool.common.integration.ConfigModule;
-import com.tool.common.integration.ManifestParser;
 import com.tool.common.log.log.LogConfig;
-import com.tool.common.di.module.ImageModule;
-
-import java.util.List;
 
 
 /**
@@ -41,16 +33,16 @@ import java.util.List;
  * 4、重构蓝牙定位模块
  * 5、混淆
  */
-public abstract class BaseApplication extends Application {
+public abstract class BaseApplication extends Application implements App {
 
     // Context
     private static Context context;
 
-    // BaseComponent
-    private BaseComponent baseComponent;
-
     // Log配置
     private LogConfig logConfig;
+
+    // AppDelegateManager
+    private AppDelegateManager delegate;
 
     @Override
     public void onCreate() {
@@ -65,20 +57,8 @@ public abstract class BaseApplication extends Application {
                 .setOpen(logSwitch())
                 .build();
 
-        List<ConfigModule> modules = new ManifestParser(this).parse();
-
-        baseComponent = DaggerBaseComponent
-                .builder()
-                .appModule(new AppModule(this))
-                .httpModule(new HttpModule())// Http模块
-                .imageModule(new ImageModule())// 图片模块
-                .appConfigModule(getAppConfigModule(this, modules))// 全局配置
-                .build();
-        baseComponent.inject(this);
-
-        for (ConfigModule module : modules) {
-            module.registerComponents(this, baseComponent.getRepositoryManager());
-        }
+        this.delegate = new AppDelegateManager(this);
+        this.delegate.onCreate();
     }
 
     @Override
@@ -90,9 +70,8 @@ public abstract class BaseApplication extends Application {
         if (logConfig != null) {
             this.logConfig = null;
         }
-        if (baseComponent != null) {
-            this.baseComponent = null;
-        }
+
+        this.delegate.onTerminate();
     }
 
     public static Context getContext() {
@@ -107,36 +86,12 @@ public abstract class BaseApplication extends Application {
     protected abstract boolean logSwitch();
 
     /**
-     * BaseUrl
+     * 返回AppComponent提供统一出口，AppComponent里拿到对象后都可以直接使用
      *
      * @return
      */
-    protected abstract String getBaseUrl();
-
-    /**
-     * 将app的全局配置信息封装进module(使用Dagger注入到需要配置信息的地方)
-     * 需要在AndroidManifest中声明{@link ConfigModule}的实现类,和Glide的配置方式相似
-     *
-     * @return
-     */
-    private AppConfigModule getAppConfigModule(Application context, List<ConfigModule> modules) {
-        AppConfigModule.Builder builder = AppConfigModule
-                .builder()
-                .httpUrl(getBaseUrl());// 防止用户没有通过GlobeConfigModule配置，而导致报错，所以提前配置默认的BaseUrl
-
-        for (ConfigModule module : modules) {
-            module.applyOptions(context, builder);
-        }
-
-        return builder.build();
-    }
-
-    /**
-     * 返回AppComponent提供统一出口，AppComponent里拿到对象后都可以直接使用。
-     *
-     * @return
-     */
+    @Override
     public BaseComponent getBaseComponent() {
-        return baseComponent;
+        return delegate.getBaseComponent();
     }
 }

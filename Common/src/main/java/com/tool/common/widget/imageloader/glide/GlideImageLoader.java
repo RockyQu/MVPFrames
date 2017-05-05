@@ -24,17 +24,21 @@ public class GlideImageLoader implements BaseImageLoader<GlideImageConfig> {
     }
 
     @Override
-    public void load(Context ctx, GlideImageConfig config) {
+    public void load(Context context, GlideImageConfig config) {
+        this.check(context, config);
+
         RequestManager manager = null;
-        if (ctx instanceof Activity)//如果是activity则可以使用Activity的生命周期
-            manager = Glide.with((Activity) ctx);
-        else
-            manager = Glide.with(ctx);
+        if (context instanceof Activity) {
+            manager = Glide.with((Activity) context);
+        } else {
+            manager = Glide.with(context);
+        }
 
         DrawableRequestBuilder<String> requestBuilder = manager.load(config.getUrl())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .crossFade()
-                .centerCrop();
+//                .dontAnimate()
+                .crossFade()// 默认显示淡入淡出动画
+                ;
 //        if (config.getPlaceholder() != 0)//设置占位符
 //            requestBuilder.placeholder(config.getPlaceholder());
 //
@@ -42,5 +46,22 @@ public class GlideImageLoader implements BaseImageLoader<GlideImageConfig> {
 //            requestBuilder.error(config.getErrorPic());
 
         requestBuilder.into(config.getImageView());
+    }
+
+    @Override
+    public void clear(Context context, GlideImageConfig config) {
+        this.check(context, config);
+    }
+
+    /**
+     * 合法性检查
+     */
+    private void check(Context context, GlideImageConfig config) {
+        if (context == null) {
+            throw new IllegalStateException("Context is required");
+        }
+        if (config == null) {
+            throw new IllegalStateException("GlideImageConfig is required");
+        }
     }
 }

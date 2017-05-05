@@ -1,10 +1,15 @@
 package com.frame.mvp.app;
 
+import android.app.Application;
 import android.content.Context;
 
 import com.frame.mvp.app.api.Api;
 import com.frame.mvp.app.api.service.ApiCommon;
 import com.frame.mvp.app.api.service.ApiUser;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
+import com.tool.common.BuildConfig;
+import com.tool.common.base.delegate.AppDelegateManager;
 import com.tool.common.di.module.AppConfigModule;
 import com.tool.common.http.NetworkHandler;
 import com.tool.common.http.interceptor.LoggingInterceptor;
@@ -14,6 +19,7 @@ import com.tool.common.integration.IRepositoryManager;
 import com.tool.common.utils.ProjectUtils;
 
 import java.io.File;
+import java.util.List;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -62,5 +68,25 @@ public class AppConfiguration implements ConfigModule {
     @Override
     public void registerComponents(Context context, IRepositoryManager repositoryManager) {
         repositoryManager.injectApiService(ApiCommon.class, ApiUser.class);
+    }
+
+    @Override
+    public void injectAppLifecycle(Context context, List<AppDelegateManager.Lifecycle> lifecycleManager) {
+        // AppDelegateManager.Lifecycle的所有方法都会在基类Application对应的生命周期中被调用,所以在对应的方法中可以扩展一些自己需要的逻辑
+        lifecycleManager.add(new AppDelegateManager.Lifecycle() {
+
+            // LeakCanary观察器
+            private RefWatcher watcher;
+
+            @Override
+            public void onCreate(Application application) {
+                this.watcher = BuildConfig.DEBUG ? LeakCanary.install(application) : RefWatcher.DISABLED;
+            }
+
+            @Override
+            public void onTerminate(Application application) {
+                this.watcher = null;
+            }
+        });
     }
 }

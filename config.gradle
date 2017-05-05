@@ -1,13 +1,15 @@
 ext {
-    android = [compileSdkVersion       : 24,
-               buildToolsVersion       : "25.0.0",
-               minSdkVersion           : 14,
-               targetSdkVersion        : 24,
-               versionCode             : 1,
-               versionName             : "1.0.0",
-               androidSupportSdkVersion: "25.0.0",
-               dagger2SdkVersion       : "2.10",
-               retrofitSdkVersion      : "2.2.0"
+    android = [compileSdkVersion             : 25,
+               buildToolsVersion             : "25.0.2",
+               minSdkVersion                 : 14,
+               targetSdkVersion              : 24,
+               versionCode                   : 1,
+               versionName                   : "1.0.0",
+               androidSupportSdkVersion      : "25.0.0",
+               dagger2SdkVersion             : "2.6",
+               retrofitSdkVersion            : "2.1.0",
+               renderscriptTargetApi         : 22,
+               renderscriptSupportModeEnabled: true
     ]
 
     dependencies = [

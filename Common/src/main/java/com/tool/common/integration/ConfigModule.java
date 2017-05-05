@@ -2,7 +2,10 @@ package com.tool.common.integration;
 
 import android.content.Context;
 
+import com.tool.common.base.delegate.AppDelegateManager;
 import com.tool.common.di.module.AppConfigModule;
+
+import java.util.List;
 
 /**
  * 框架配置参数配置，实现此接口后，在AndroidManifest中声明该实现类
@@ -24,4 +27,11 @@ public interface ConfigModule {
      * @param repositoryManager
      */
     void registerComponents(Context context, IRepositoryManager repositoryManager);
+
+    /**
+     * 使用{@link AppDelegateManager.Lifecycle}在Application的声明周期中注入一些操作
+     *
+     * @return
+     */
+    void injectAppLifecycle(Context context, List<AppDelegateManager.Lifecycle> lifecycleManager);
 }

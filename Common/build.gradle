@@ -11,6 +11,9 @@ android {
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
         versionCode rootProject.ext.android["versionCode"]
         versionName rootProject.ext.android["versionName"]
+
+        renderscriptTargetApi rootProject.ext.android["renderscriptTargetApi"]
+        renderscriptSupportModeEnabled rootProject.ext.android["renderscriptSupportModeEnabled"]
     }
 
     buildTypes {

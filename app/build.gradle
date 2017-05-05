@@ -21,6 +21,10 @@ android {
         // 版本号
         versionName rootProject.ext.android["versionName"]
 
+        // 开启RenderScript
+        renderscriptTargetApi rootProject.ext.android["renderscriptTargetApi"]
+        renderscriptSupportModeEnabled rootProject.ext.android["renderscriptSupportModeEnabled"]
+
         // 单元测试
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
     }

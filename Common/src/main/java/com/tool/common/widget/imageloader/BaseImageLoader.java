@@ -7,5 +7,7 @@ import android.content.Context;
  */
 public interface BaseImageLoader<T extends ImageConfig> {
 
-    void load(Context ctx, T config);
+    void load(Context context, T config);
+
+    void clear(Context context, T config);
 }

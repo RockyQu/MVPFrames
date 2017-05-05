@@ -27,9 +27,6 @@ public class MVPApplication extends BaseApplication {
     // AppComponent
     private AppComponent appComponent;
 
-    // LeakCanary观察器
-    private RefWatcher watcher;
-
     // 当前登录用户信息
     private User user;
 
@@ -67,9 +64,6 @@ public class MVPApplication extends BaseApplication {
         if (value != null) {
             user = GsonUtils.getEntity(value, User.class);
         }
-
-        // LeakCanary内存泄露检查
-        this.installLeakCanary();
     }
 
     public void setUser(User user) {
@@ -78,24 +72,6 @@ public class MVPApplication extends BaseApplication {
 
     public User getUser() {
         return user;
-    }
-
-    /**
-     * 安装leakCanary检测内存泄露
-     */
-    protected void installLeakCanary() {
-        this.watcher = BuildConfig.DEBUG ? LeakCanary.install(this) : RefWatcher.DISABLED;
-    }
-
-    /**
-     * 获得leakCanary观察器
-     *
-     * @param context
-     * @return
-     */
-    public static RefWatcher getRefWatcher(Context context) {
-        MVPApplication application = (MVPApplication) context.getApplicationContext();
-        return application.watcher;
     }
 
     /**
@@ -114,11 +90,6 @@ public class MVPApplication extends BaseApplication {
         return BuildConfig.DEBUG;
     }
 
-    @Override
-    protected String getBaseUrl() {
-        return Api.PHP;
-    }
-
     /**
      * 返回AppComponent提供统一出口，AppComponent里拿到对象后都可以直接使用。
      *
@@ -131,8 +102,5 @@ public class MVPApplication extends BaseApplication {
     @Override
     public void onTerminate() {
         super.onTerminate();
-        if (watcher != null) {
-            this.watcher = null;
-        }
     }
 }

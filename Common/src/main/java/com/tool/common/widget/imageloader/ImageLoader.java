@@ -22,6 +22,10 @@ public class ImageLoader {
         this.imageLoader.load(context, config);
     }
 
+    public <T extends ImageConfig> void clear(Context context, T config) {
+        this.imageLoader.clear(context, config);
+    }
+
     public void setImageLoader(BaseImageLoader imageLoader) {
         this.imageLoader = imageLoader;
     }

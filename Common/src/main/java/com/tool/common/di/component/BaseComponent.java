@@ -3,7 +3,7 @@ package com.tool.common.di.component;
 import android.app.Application;
 
 import com.google.gson.Gson;
-import com.tool.common.base.BaseApplication;
+import com.tool.common.base.delegate.AppDelegateManager;
 import com.tool.common.di.module.AppConfigModule;
 import com.tool.common.di.module.AppModule;
 import com.tool.common.di.module.HttpModule;
@@ -38,5 +38,5 @@ public interface BaseComponent {
     // 图片框架
     ImageLoader getImageLoader();
 
-    void inject(BaseApplication application);
+    void inject(AppDelegateManager delegate);
 }
