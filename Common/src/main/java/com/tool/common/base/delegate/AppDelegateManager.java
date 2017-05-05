@@ -9,11 +9,14 @@ import com.tool.common.di.module.AppConfigModule;
 import com.tool.common.di.module.AppModule;
 import com.tool.common.di.module.HttpModule;
 import com.tool.common.di.module.ImageModule;
+import com.tool.common.integration.ActivityLifecycle;
 import com.tool.common.integration.ConfigModule;
 import com.tool.common.integration.ManifestParser;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * AppDelegateManager用来代理Application以及其他应用组件的生命周期管理
@@ -30,6 +33,9 @@ public class AppDelegateManager implements App {
 
     // Lifecycles
     private List<Lifecycle> lifecycleManager = new ArrayList<>();
+
+    @Inject
+    protected ActivityLifecycle activityLifecycle = null;
 
     public AppDelegateManager(Application application) {
         this.application = application;
@@ -57,12 +63,18 @@ public class AppDelegateManager implements App {
         for (Lifecycle lifecycle : lifecycleManager) {
             lifecycle.onCreate(application);
         }
+
+        application.registerActivityLifecycleCallbacks(activityLifecycle);
     }
 
     public void onTerminate() {
+        if (activityLifecycle != null) {
+            application.unregisterActivityLifecycleCallbacks(activityLifecycle);
+        }
 
         this.baseComponent = null;
         this.application = null;
+        this.activityLifecycle = null;
 
         for (Lifecycle lifecycle : lifecycleManager) {
             lifecycle.onTerminate(application);
