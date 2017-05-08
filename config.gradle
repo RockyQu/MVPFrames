@@ -5,51 +5,49 @@ ext {
                targetSdkVersion              : 24,
                versionCode                   : 1,
                versionName                   : "1.0.0",
-               androidSupportSdkVersion      : "25.0.0",
-               dagger2SdkVersion             : "2.6",
-               retrofitSdkVersion            : "2.1.0",
                renderscriptTargetApi         : 22,
                renderscriptSupportModeEnabled: true
     ]
 
+    version = [
+            androidSupportSdkVersion: "25.3.1",
+            retrofitSdkVersion      : "2.2.0",
+            dagger2SdkVersion       : "2.10",
+            butterknifeSdkVersion   : "8.5.1"
+    ]
+
     dependencies = [
-            // UT
-            "androidJUnitRunner"         : "android.support.test.runner.AndroidJUnitRunner",
-            "junit"                      : "junit:junit:4.12",
-            "javax.annotation"           : "javax.annotation:jsr250-api:1.0",
-            "support-v4"                 : "com.android.support:support-v4:19.1.0",
-            "appcompat-v7"               : "com.android.support:appcompat-v7:${android["androidSupportSdkVersion"]}",
-            "recyclerview-v7"            : "com.android.support:recyclerview-v7:${android["androidSupportSdkVersion"]}",
-            "cardview-v7"                : "com.android.support:cardview-v7:${android["androidSupportSdkVersion"]}",
-            "design"                     : "com.android.support:design:${android["androidSupportSdkVersion"]}",
-            "butterknife"                : "com.jakewharton:butterknife:8.4.0",
-            "butterknife-compiler"       : "com.jakewharton:butterknife-compiler:8.4.0",
-            // 注入框架
-            "dagger2"                    : "com.google.dagger:dagger:${android["dagger2SdkVersion"]}",
-            "dagger2-apt-compiler"       : "com.google.dagger:dagger-compiler:${android["dagger2SdkVersion"]}",
-            // 网络框架
-            "retrofit"                   : "com.squareup.retrofit2:retrofit:${android["retrofitSdkVersion"]}",
-            "retrofit-converter-gson"    : "com.squareup.retrofit2:converter-gson:${android["retrofitSdkVersion"]}",
-            "retrofit-adapter-rxjava"    : "com.squareup.retrofit2:adapter-rxjava:${android["retrofitSdkVersion"]}",
+            // Support
+            "support-v4"                 : "com.android.support:support-v4:${version["androidSupportSdkVersion"]}",
+            "appcompat-v7"               : "com.android.support:appcompat-v7:${version["androidSupportSdkVersion"]}",
+            "recyclerview-v7"            : "com.android.support:recyclerview-v7:${version["androidSupportSdkVersion"]}",
+            "cardview-v7"                : "com.android.support:cardview-v7:${version["androidSupportSdkVersion"]}",
+            "design"                     : "com.android.support:design:${version["androidSupportSdkVersion"]}",
+            "annotations"                : "com.android.support:support-annotations:${version["androidSupportSdkVersion"]}",
+            // Network
+            "retrofit"                   : "com.squareup.retrofit2:retrofit:${version["retrofitSdkVersion"]}",
+            "retrofit-converter-gson"    : "com.squareup.retrofit2:converter-gson:${version["retrofitSdkVersion"]}",
             "okhttp3"                    : "com.squareup.okhttp3:okhttp:3.2.0",
             "okhttp3-logging-interceptor": "com.squareup.okhttp3:logging-interceptor:3.4.1",
             "okhttp-urlconnection"       : "com.squareup.okhttp:okhttp-urlconnection:2.2.0",
             "okio"                       : "com.squareup.okio:okio:1.8.0",
-            // 数据解析
-            "gson"                       : "com.google.code.gson:gson:2.7",
-            // 图片框架
+            // Image
             "glide"                      : "com.github.bumptech.glide:glide:3.7.0",
-            // 通信框架
-            "eventbus"                   : "org.greenrobot:eventbus:3.0.0",
-            // 数据库框架
+            // Tools
+            "butterknife"                : "com.jakewharton:butterknife:${version["butterknifeSdkVersion"]}",
+            "butterknife-compiler"       : "com.jakewharton:butterknife-compiler:${version["butterknifeSdkVersion"]}",
+            "dagger2"                    : "com.google.dagger:dagger:${version["dagger2SdkVersion"]}",
+            "dagger2-apt-compiler"       : "com.google.dagger:dagger-compiler:${version["dagger2SdkVersion"]}",
+            "javax.annotation"           : "javax.annotation:jsr250-api:1.0",
+            "gson"                       : "com.google.code.gson:gson:2.7",
+            "easypermissions"            : "pub.devrel:easypermissions:0.3.0",
+            // DB
             "greendao"                   : "org.greenrobot:greendao:3.2.2",
             "sqlcipher"                  : "net.zetetic:android-database-sqlcipher:3.5.7",
-            // 内存泄露
+            // Log
+            "q-log"                      : "com.tool.common.log:Q-Log:0.2.0",
+            // Test
             "canary-debug"               : "com.squareup.leakcanary:leakcanary-android:1.5",
-            "canary-release"             : "com.squareup.leakcanary:leakcanary-android-no-op:1.5",
-            // 权限管理
-            "easypermissions"            : "pub.devrel:easypermissions:0.3.0",
-            // 日志
-            "q-log"                      : "com.tool.common.log:Q-Log:0.2.0"
+            "canary-release"             : "com.squareup.leakcanary:leakcanary-android-no-op:1.5"
     ]
 }

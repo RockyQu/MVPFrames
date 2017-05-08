@@ -35,44 +35,50 @@ buildscript {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
-    testCompile rootProject.ext.dependencies["junit"]
+    // Support
+    compile (rootProject.ext.dependencies["support-v4"]){
+        exclude module: 'support-annotations'
+    }
+    compile (rootProject.ext.dependencies["appcompat-v7"]){
+        exclude module: 'support-annotations'
+        exclude module: 'support-v4'
+    }
+    compile (rootProject.ext.dependencies["cardview-v7"]){
+        exclude module: 'support-annotations'
+    }
+    compile (rootProject.ext.dependencies["design"]){
+        exclude module: 'support-annotations'
+    }
+    compile rootProject.ext.dependencies["annotations"]
 
-    compile rootProject.ext.dependencies["design"]
-    compile rootProject.ext.dependencies["support-v4"]
-    compile rootProject.ext.dependencies["appcompat-v7"]
-    compile rootProject.ext.dependencies["recyclerview-v7"]
-    compile rootProject.ext.dependencies["cardview-v7"]
-    compile rootProject.ext.dependencies["butterknife"]
-    apt rootProject.ext.dependencies["butterknife-compiler"]
-
-    provided rootProject.ext.dependencies["javax.annotation"]
-
-    compile rootProject.ext.dependencies["dagger2"]
-    apt rootProject.ext.dependencies["dagger2-apt-compiler"]
-
-    compile rootProject.ext.dependencies["retrofit"]
-    compile rootProject.ext.dependencies["retrofit-converter-gson"]
-    compile rootProject.ext.dependencies["retrofit-adapter-rxjava"]
-    compile rootProject.ext.dependencies["okhttp3-logging-interceptor"]
+    // Network
+    compile (rootProject.ext.dependencies["retrofit"]){
+        exclude module: 'okhttp'
+    }
+    compile (rootProject.ext.dependencies["retrofit-converter-gson"]){
+        exclude module: 'gson'
+    }
     compile rootProject.ext.dependencies["okhttp3"]
+    compile rootProject.ext.dependencies["okhttp3-logging-interceptor"]
     compile rootProject.ext.dependencies["okhttp-urlconnection"]
     compile rootProject.ext.dependencies["okio"]
-
-    compile rootProject.ext.dependencies["gson"]
-
+    // Image
     compile rootProject.ext.dependencies["glide"]
-
-    compile rootProject.ext.dependencies["eventbus"]
-
+    // Tools
+    compile rootProject.ext.dependencies["butterknife"]
+    apt rootProject.ext.dependencies["butterknife-compiler"]
+    compile rootProject.ext.dependencies["dagger2"]
+    apt rootProject.ext.dependencies["dagger2-apt-compiler"]
+    provided rootProject.ext.dependencies["javax.annotation"]
+    compile rootProject.ext.dependencies["gson"]
+    compile rootProject.ext.dependencies["easypermissions"]
+    // DB
     compile rootProject.ext.dependencies["greendao"]
     compile rootProject.ext.dependencies["sqlcipher"]
-
+    // Log
+    compile rootProject.ext.dependencies["q-log"]
+    // Test
     debugCompile rootProject.ext.dependencies["canary-debug"]
     releaseCompile rootProject.ext.dependencies["canary-release"]
     testCompile rootProject.ext.dependencies["canary-release"]
-
-    // 权限管理
-    compile rootProject.ext.dependencies["easypermissions"]
-    // Log
-    compile rootProject.ext.dependencies["q-log"]
 }
