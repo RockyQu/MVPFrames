@@ -13,7 +13,6 @@ import com.bumptech.glide.load.engine.cache.MemorySizeCalculator;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.module.GlideModule;
 import com.tool.common.base.App;
-import com.tool.common.base.BaseApplication;
 import com.tool.common.di.component.BaseComponent;
 import com.tool.common.http.OkHttpUrlLoader;
 import com.tool.common.utils.FileUtils;
@@ -25,18 +24,19 @@ import java.io.InputStream;
  */
 public class GlideConfiguration implements GlideModule {
 
-    // 图片缓存文件最大值为100MB
+    // 缓存文件最大值为100MB
     private static final int DISK_SIZE = 1024 * 1024 * 100;
 
     @Override
-    public void applyOptions(Context context, GlideBuilder builder) {
+    public void applyOptions(final Context context, GlideBuilder builder) {
 
-        // 自定义缓存目录
+        // 缓存目录
         builder.setDiskCache(new DiskCache.Factory() {
 
             @Override
             public DiskCache build() {
-                return DiskLruCacheWrapper.get(FileUtils.getCacheFile(BaseApplication.getContext()), DISK_SIZE);
+                BaseComponent component = ((App) context.getApplicationContext()).getBaseComponent();
+                return DiskLruCacheWrapper.get(FileUtils.getCacheFile(component.getApplication()), DISK_SIZE);
             }
         });
 

@@ -160,8 +160,6 @@ dependencies {
     // 本地库依赖，包含app/libs目录下的所有jar文件。因此当module想引用某个jar时，只需将jar拷贝到<moduleName>/libs
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    testCompile rootProject.ext.dependencies["junit"]
-
     compile rootProject.ext.dependencies["appcompat-v7"]
     compile rootProject.ext.dependencies["butterknife"]
     apt rootProject.ext.dependencies["butterknife-compiler"]

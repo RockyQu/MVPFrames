@@ -2,7 +2,11 @@ package com.tool.common.integration;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.view.View;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
