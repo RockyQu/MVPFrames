@@ -1,6 +1,5 @@
 package com.tool.common.widget.imageloader.glide;
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.bumptech.glide.DrawableRequestBuilder;
@@ -27,23 +26,43 @@ public class GlideImageLoader implements BaseImageLoader<GlideImageConfig> {
     public void load(Context context, GlideImageConfig config) {
         this.check(context, config);
 
-        RequestManager manager = null;
-        if (context instanceof Activity) {
-            manager = Glide.with((Activity) context);
-        } else {
-            manager = Glide.with(context);
-        }
+        RequestManager manager = Glide.with(context);
 
         DrawableRequestBuilder<String> requestBuilder = manager.load(config.getUrl())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                .dontAnimate()
                 .crossFade()// 默认显示淡入淡出动画
                 ;
-//        if (config.getPlaceholder() != 0)//设置占位符
-//            requestBuilder.placeholder(config.getPlaceholder());
-//
-//        if (config.getErrorPic() != 0)//设置错误的图片
-//            requestBuilder.error(config.getErrorPic());
+
+        // 缓存策略
+        switch (config.getCacheStrategy()) {
+            case 0:
+                requestBuilder.diskCacheStrategy(DiskCacheStrategy.ALL);
+                break;
+            case 1:
+                requestBuilder.diskCacheStrategy(DiskCacheStrategy.NONE);
+                break;
+            case 2:
+                requestBuilder.diskCacheStrategy(DiskCacheStrategy.SOURCE);
+                break;
+            case 3:
+                requestBuilder.diskCacheStrategy(DiskCacheStrategy.RESULT);
+                break;
+        }
+
+        // 改变图形的形状
+        if (config.getTransformation() != null) {
+            requestBuilder.transform(config.getTransformation());
+        }
+
+        // 设置占位符
+        if (config.getPlaceholder() != 0) {
+            requestBuilder.placeholder(config.getPlaceholder());
+        }
+
+        // 设置错误的图片
+        if (config.getError() != 0) {
+            requestBuilder.error(config.getError());
+        }
 
         requestBuilder.into(config.getImageView());
     }
