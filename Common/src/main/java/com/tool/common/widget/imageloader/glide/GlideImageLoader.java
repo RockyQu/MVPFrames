@@ -70,6 +70,16 @@ public class GlideImageLoader implements BaseImageLoader<GlideImageConfig> {
     @Override
     public void clear(Context context, GlideImageConfig config) {
         this.check(context, config);
+
+        // 清除本地缓存
+        if (config.isClearDiskCache()) {
+            Glide.get(context).clearDiskCache();
+        }
+
+        // 清除内存缓存
+        if (config.isClearMemory()) {
+            Glide.get(context).clearMemory();
+        }
     }
 
     /**
