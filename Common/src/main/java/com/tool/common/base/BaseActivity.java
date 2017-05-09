@@ -1,9 +1,9 @@
 package com.tool.common.base;
 
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 
+import com.tool.common.di.component.AppComponent;
 import com.tool.common.frame.BasePresenter;
 
 import javax.inject.Inject;
@@ -14,7 +14,10 @@ import butterknife.Unbinder;
 /**
  * BaseActivity
  */
-public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
+public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity{
+
+    // AppComponent
+    protected AppComponent component = null;
 
     /**
      * Presenter
@@ -30,7 +33,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         super.onCreate(savedInstanceState);
         this.setContentView(this.getLayoutId());
 
-        this.componentInject();
+        component = ((App) getApplicationContext()).getAppComponent();
+
+        this.setupActivityComponent(component);
 
         this.create(savedInstanceState);
     }
@@ -42,14 +47,11 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         unbinder = ButterKnife.bind(this);
     }
 
-    @Override
-    public void setContentView(@LayoutRes int layoutResID) {
-        super.setContentView(layoutResID);
-    }
+    /**
+     * 如使用MVP结构，子类需实现此方法初始化Presenter
+     */
+    protected void setupActivityComponent(AppComponent component) {
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
     }
 
     @Override
@@ -70,11 +72,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         this.unbinder = null;
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
     /**
      * 获取布局文件，需要在子类中重写此方法
      */
@@ -84,19 +81,4 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
      * 相当于Activity onCreate方法，需要在子类中重写此方法
      */
     public abstract void create(Bundle savedInstanceState);
-
-    /**
-     * 依赖注入
-     */
-    protected abstract void componentInject();
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
 }

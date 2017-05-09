@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.tool.common.di.component.AppComponent;
 import com.tool.common.frame.BasePresenter;
 
 import javax.inject.Inject;
@@ -19,6 +20,9 @@ import butterknife.Unbinder;
  * Fragment
  */
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
+
+    // AppComponent
+    protected AppComponent component = null;
 
     /**
      * Presenter
@@ -38,14 +42,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-    }
 
-    /**
-     * 在onAttach执行完后会立刻调用此方法，通常被用于读取保存的状态值，获取或者初始化一些数据
-     */
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        component = ((App) getContext().getApplicationContext()).getAppComponent();
+
+        this.setupFragmentComponent(component);
     }
 
     /**
@@ -63,55 +63,20 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
     }
 
     /**
-     * 继上面后就会调用此方法
-     */
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    /**
      * 在Activity.onCreate方法调用后会立刻调用此方法，表示窗口已经初始化完毕，此时可以调用控件了
      */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        this.componentInject();
-
         this.create(savedInstanceState, view);
     }
 
     /**
-     * 开始执行与控件相关的逻辑代码，如按键点击
+     * 如使用MVP结构，子类需实现此方法初始化Presenter
      */
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
+    protected void setupFragmentComponent(AppComponent component) {
 
-    /**
-     * 这是Fragment从创建到显示的最后一个回调的方法
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    /**
-     * 当发生界面跳转时，临时暂停
-     */
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    /**
-     * 当该方法返回时，Fragment将从屏幕上消失
-     */
-    @Override
-    public void onStop() {
-        super.onStop();
     }
 
     /**
@@ -143,20 +108,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
         this.unbinder = null;
     }
 
-    /**
-     * Fragment生命周期的最后一个方法，执行完后将不再与Activity关联，将释放所有fragment对象和资源
-     */
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
     public abstract int getLayoutId();
 
     public abstract void create(Bundle savedInstanceState, View view);
-
-    /**
-     * 依赖注入
-     */
-    protected abstract void componentInject();
 }

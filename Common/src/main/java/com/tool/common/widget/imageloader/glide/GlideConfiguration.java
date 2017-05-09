@@ -13,10 +13,11 @@ import com.bumptech.glide.load.engine.cache.MemorySizeCalculator;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.module.GlideModule;
 import com.tool.common.base.App;
-import com.tool.common.di.component.BaseComponent;
+import com.tool.common.di.component.AppComponent;
 import com.tool.common.http.OkHttpUrlLoader;
 import com.tool.common.utils.FileUtils;
 
+import java.io.File;
 import java.io.InputStream;
 
 /**
@@ -35,8 +36,8 @@ public class GlideConfiguration implements GlideModule {
 
             @Override
             public DiskCache build() {
-                BaseComponent component = ((App) context.getApplicationContext()).getBaseComponent();
-                return DiskLruCacheWrapper.get(FileUtils.getCacheFile(component.getApplication()), DISK_SIZE);
+                AppComponent component = ((App) context.getApplicationContext()).getAppComponent();
+                return DiskLruCacheWrapper.get(FileUtils.makeDirs(new File(component.cacheFile(), "Glide")), DISK_SIZE);
             }
         });
 
@@ -52,7 +53,7 @@ public class GlideConfiguration implements GlideModule {
     @Override
     public void registerComponents(Context context, Glide glide) {
         // 将Glide默认使用HttpURLConnection的网络请求切换成okhttp请求
-        BaseComponent component = ((App) context.getApplicationContext()).getBaseComponent();
+        AppComponent component = ((App) context.getApplicationContext()).getAppComponent();
         glide.register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(component.getOkHttpClient()));
     }
 }

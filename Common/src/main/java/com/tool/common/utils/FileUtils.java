@@ -474,6 +474,18 @@ public class FileUtils extends BaseUtils {
     }
 
     /**
+     * 创建未存在的文件夹
+     * @param file
+     * @return
+     */
+    public static File makeDirs(File file){
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        return file;
+    }
+
+    /**
      * @param filePath
      * @return
      * @see #makeDirs(String)

@@ -41,7 +41,6 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
 
             @Override
             protected void onResponse(ResponseEntity<User> body) {
-
                 User user = body.getData();
                 if (user != null) {
                     user.setAccount(account);
@@ -49,12 +48,12 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
 
                     String value = GsonUtils.getString(user);
                     if (value != null) {
-                        PreferencesUtils.putString(MVPApplication.getContext(), LoginActivity.FLAG_USER, value);
+                        PreferencesUtils.putString(application, LoginActivity.class.getName(), value);
 
                         view.showMessage(body.getMessage());
                     }
 
-                    application.setUser(user);
+                    application.getAppComponent().extras().put(LoginActivity.class.getName(), user);
                     view.finishActivity();
                 }
             }

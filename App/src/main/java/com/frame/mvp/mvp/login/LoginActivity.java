@@ -6,11 +6,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.frame.mvp.R;
-import com.frame.mvp.di.common.component.AppComponent;
-import com.frame.mvp.di.di.login.DaggerLoginComponent;
-import com.frame.mvp.di.di.login.LoginModule;
+import com.frame.mvp.di.login.DaggerLoginComponent;
+import com.frame.mvp.di.login.LoginModule;
 import com.frame.mvp.entity.User;
-import com.frame.mvp.ui.common.CommonActivity;
+import com.tool.common.base.BaseActivity;
+import com.tool.common.di.component.AppComponent;
 import com.tool.common.utils.StringUtils;
 import com.tool.common.widget.ToastBar;
 
@@ -20,7 +20,7 @@ import butterknife.OnClick;
 /**
  * 登录页面
  */
-public class LoginActivity extends CommonActivity<LoginPresenter> implements LoginContract.View {
+public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
 
     // 账号
     @BindView(R.id.edt_account)
@@ -36,13 +36,10 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Log
     // 当前登录用户信息
     private User user;
 
-    public static final String FLAG_USER = "user";
-    public static final String FLAG_LOGIN = "user_login";
-
     @Override
     public void create(Bundle savedInstanceState) {
 
-        user = application.getUser();
+        user = (User) component.extras().get(LoginActivity.class.getName());
         if (user != null) {
             edtAccount.setText(user.getAccount());
             edtPassword.setText(user.getPassword());
@@ -58,10 +55,10 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Log
     }
 
     @Override
-    protected void setupActivityComponent(AppComponent appComponent) {
+    protected void setupActivityComponent(AppComponent component) {
         DaggerLoginComponent
                 .builder()
-                .appComponent(appComponent)
+                .appComponent(component)
                 .loginModule(new LoginModule(this))
                 .build()
                 .inject(this);
@@ -133,19 +130,13 @@ public class LoginActivity extends CommonActivity<LoginPresenter> implements Log
 
     @Override
     public void launchActivity(Intent intent) {
-
+        setResult(0, intent);
+        finish();
     }
 
     @Override
     public void finishActivity() {
-        Intent intent = new Intent();
-        if (application.getUser() != null) {
-            intent.putExtra(FLAG_LOGIN, true);
-        } else {
-            intent.putExtra(FLAG_LOGIN, false);
-        }
-        setResult(0, intent);
-        finish();
+
     }
 
     @Override

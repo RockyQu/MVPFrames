@@ -5,6 +5,8 @@ import android.text.TextUtils;
 
 import com.tool.common.http.NetworkHandler;
 import com.tool.common.utils.FileUtils;
+import com.tool.common.widget.imageloader.BaseImageLoader;
+import com.tool.common.widget.imageloader.glide.GlideImageLoader;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -29,11 +31,25 @@ public class AppConfigModule {
     private NetworkHandler networkHandler;
     private List<Interceptor> interceptors;
 
+    private BaseImageLoader imageLoader;
+
+    private HttpModule.RetrofitConfiguration retrofitConfiguration;
+    private HttpModule.OkHttpConfiguration okHttpConfiguration;
+
+    private AppModule.GsonConfiguration gsonConfiguration;
+
     public AppConfigModule(Builder buidler) {
         this.httpUrl = buidler.httpUrl;
         this.cacheFile = buidler.cacheFile;
         this.networkHandler = buidler.networkHandler;
         this.interceptors = buidler.interceptors;
+
+        this.imageLoader = buidler.imageLoader;
+
+        this.retrofitConfiguration = buidler.retrofitConfiguration;
+        this.okHttpConfiguration = buidler.okHttpConfiguration;
+
+        this.gsonConfiguration = buidler.gsonConfiguration;
     }
 
     public static Builder builder() {
@@ -64,6 +80,30 @@ public class AppConfigModule {
         return interceptors;
     }
 
+    @Singleton
+    @Provides
+    BaseImageLoader provideBaseImageLoader() {
+        return imageLoader == null ? new GlideImageLoader() : imageLoader;
+    }
+
+    @Singleton
+    @Provides
+    HttpModule.RetrofitConfiguration provideRetrofitConfiguration() {
+        return retrofitConfiguration == null ? HttpModule.RetrofitConfiguration.EMPTY : retrofitConfiguration;
+    }
+
+    @Singleton
+    @Provides
+    HttpModule.OkHttpConfiguration provideOkHttpConfiguration() {
+        return okHttpConfiguration == null ? HttpModule.OkHttpConfiguration.EMPTY : okHttpConfiguration;
+    }
+
+    @Singleton
+    @Provides
+    AppModule.GsonConfiguration provideGsonConfiguration() {
+        return gsonConfiguration == null ? AppModule.GsonConfiguration.EMPTY : gsonConfiguration;
+    }
+
     /**
      * App全局配置
      */
@@ -77,6 +117,17 @@ public class AppConfigModule {
         private NetworkHandler networkHandler;
         // 其他拦截器
         private List<Interceptor> interceptors = new ArrayList<>();
+
+        // 图片框架，默认为Glide
+        private BaseImageLoader imageLoader;
+
+        // 提供一个Retrofit配置接口，用于对Retrofit进行格外的参数配置
+        private HttpModule.RetrofitConfiguration retrofitConfiguration;
+        // 提供一个OkHttp配置接口，用于对OkHttp进行格外的参数配置
+        private HttpModule.OkHttpConfiguration okHttpConfiguration;
+
+        // 提供一个Gson配置接口，用于对Gson进行格外的参数配置
+        private AppModule.GsonConfiguration gsonConfiguration;
 
         private Builder() {
             ;
@@ -102,6 +153,26 @@ public class AppConfigModule {
 
         public Builder interceptors(Interceptor[] interceptors) {
             this.interceptors = Arrays.asList(interceptors);
+            return this;
+        }
+
+        public Builder imageLoader(BaseImageLoader imageLoader) {
+            this.imageLoader = imageLoader;
+            return this;
+        }
+
+        public Builder retrofitConfiguration(HttpModule.RetrofitConfiguration retrofitConfiguration) {
+            this.retrofitConfiguration = retrofitConfiguration;
+            return this;
+        }
+
+        public Builder okHttpConfiguration(HttpModule.OkHttpConfiguration okHttpConfiguration) {
+            this.okHttpConfiguration = okHttpConfiguration;
+            return this;
+        }
+
+        public Builder gsonConfiguration(AppModule.GsonConfiguration gsonConfiguration) {
+            this.gsonConfiguration = gsonConfiguration;
             return this;
         }
 

@@ -1,4 +1,4 @@
-package com.frame.mvp.di.di.login;
+package com.frame.mvp.di.login;
 
 import com.frame.mvp.mvp.login.LoginContract;
 import com.frame.mvp.mvp.login.LoginModel;

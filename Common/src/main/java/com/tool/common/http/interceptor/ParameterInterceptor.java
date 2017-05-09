@@ -7,6 +7,7 @@ import java.util.Map;
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -32,7 +33,7 @@ public class ParameterInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
 
-        HashMap<String, String> parameters = callback.parameters(request);
+        HashMap<String, String> parameters = callback.parameters();
         if (request.method().equals("GET")) {// 为GET方式统一添加请求参数
             HttpUrl.Builder modifiedUrl = request.url().newBuilder()
                     .scheme(request.url().scheme())
@@ -93,12 +94,12 @@ public class ParameterInterceptor implements Interceptor {
      */
     public interface ParameterCallback {
 
-        HashMap<String, String> parameters(Request request);
+        HashMap<String, String> parameters();
 
         ParameterCallback DEFAULT = new ParameterCallback() {
 
             @Override
-            public HashMap<String, String> parameters(Request request) {
+            public HashMap<String, String> parameters() {
                 return null;
             }
         };

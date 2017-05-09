@@ -1,7 +1,7 @@
-package com.frame.mvp.di.di.login;
+package com.frame.mvp.di.login;
 
-import com.frame.mvp.di.common.component.AppComponent;
 import com.frame.mvp.mvp.login.LoginActivity;
+import com.tool.common.di.component.AppComponent;
 import com.tool.common.di.scope.ActivityScope;
 
 import dagger.Component;

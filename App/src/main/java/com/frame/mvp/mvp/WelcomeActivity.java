@@ -7,9 +7,8 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 
 import com.frame.mvp.R;
-import com.frame.mvp.mvp.login.LoginActivity;
 import com.frame.mvp.mvp.main.MainActivity;
-import com.frame.mvp.ui.common.CommonActivity;
+import com.tool.common.base.BaseActivity;
 import com.tool.common.utils.PermissionUtils;
 
 import java.util.List;
@@ -21,7 +20,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 /**
  * 欢迎页面
  */
-public class WelcomeActivity extends CommonActivity implements EasyPermissions.PermissionCallbacks {
+public class WelcomeActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
 
     @Override
     public void create(Bundle savedInstanceState) {

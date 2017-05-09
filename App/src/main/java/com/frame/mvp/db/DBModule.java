@@ -1,4 +1,4 @@
-package com.frame.mvp.di.common.module;
+package com.frame.mvp.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,8 +14,6 @@ import com.tool.common.di.scope.ApplicationScope;
 import com.tool.common.utils.DeviceUtils;
 import com.tool.common.utils.ProjectUtils;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 
@@ -26,7 +24,7 @@ import dagger.Provides;
 public class DBModule {
 
     // 是否加密
-    public static final boolean ENCRYPTED = true;
+    public static final boolean ENCRYPTED = false;
     // 加密密钥，客户端可以自己生成一个特征性动态Key,也可服务器配合传过来一个Key
     public static String KEY;
 

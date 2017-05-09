@@ -3,12 +3,11 @@ package com.tool.common.base.delegate;
 import android.app.Application;
 
 import com.tool.common.base.App;
-import com.tool.common.di.component.BaseComponent;
-import com.tool.common.di.component.DaggerBaseComponent;
+import com.tool.common.di.component.AppComponent;
+import com.tool.common.di.component.DaggerAppComponent;
 import com.tool.common.di.module.AppConfigModule;
 import com.tool.common.di.module.AppModule;
 import com.tool.common.di.module.HttpModule;
-import com.tool.common.di.module.ImageModule;
 import com.tool.common.integration.ActivityLifecycle;
 import com.tool.common.integration.ConfigModule;
 import com.tool.common.integration.ManifestParser;
@@ -21,64 +20,81 @@ import javax.inject.Inject;
 /**
  * AppDelegateManager用来代理Application以及其他应用组件的生命周期管理
  */
-public class AppDelegateManager implements App {
+public class AppDelegate implements App {
 
     // Application
     private Application application = null;
 
     // BaseComponent
-    private BaseComponent baseComponent = null;
-    // ConfigModules
-    private List<ConfigModule> modules = null;
-
-    // Lifecycles
-    private List<Lifecycle> lifecycleManager = new ArrayList<>();
+    private AppComponent component = null;
 
     @Inject
     protected ActivityLifecycle activityLifecycle = null;
 
-    public AppDelegateManager(Application application) {
+    // ConfigModules
+    private List<ConfigModule> modules = null;
+
+    // Lifecycles
+    private List<Lifecycle> applicationLifecycles = new ArrayList<>();
+    // Activity Lifecycles
+    private List<Application.ActivityLifecycleCallbacks> activityLifecycles = new ArrayList<>();
+
+
+    public AppDelegate(Application application) {
         this.application = application;
 
         modules = new ManifestParser(application).parse();
         for (ConfigModule module : modules) {
-            module.injectAppLifecycle(application, lifecycleManager);
+            module.injectAppLifecycle(application, applicationLifecycles);
+            module.injectActivityLifecycle(application, activityLifecycles);
         }
     }
 
     public void onCreate() {
-        baseComponent = DaggerBaseComponent
+        component = DaggerAppComponent
                 .builder()
                 .appModule(new AppModule(application))
-                .httpModule(new HttpModule(application))// Http模块
-                .imageModule(new ImageModule())// 图片模块
+                .httpModule(new HttpModule())// Http模块
                 .appConfigModule(getAppConfigModule(application, modules))// 全局配置
                 .build();
-        baseComponent.inject(this);
+        component.inject(this);
 
-        for (ConfigModule module : modules) {
-            module.registerComponents(application, baseComponent.getRepositoryManager());
+        // 注入Activity生命周期
+        application.registerActivityLifecycleCallbacks(activityLifecycle);
+        for (Application.ActivityLifecycleCallbacks lifecycle : activityLifecycles) {
+            application.registerActivityLifecycleCallbacks(lifecycle);
         }
 
-        for (Lifecycle lifecycle : lifecycleManager) {
+        // 注入API接口
+        for (ConfigModule module : modules) {
+            module.registerComponents(application, component.getRepositoryManager());
+        }
+
+        // 注入Application生命周期
+        for (Lifecycle lifecycle : applicationLifecycles) {
             lifecycle.onCreate(application);
         }
-
-        application.registerActivityLifecycleCallbacks(activityLifecycle);
     }
 
     public void onTerminate() {
         if (activityLifecycle != null) {
             application.unregisterActivityLifecycleCallbacks(activityLifecycle);
         }
+        if (activityLifecycles != null && activityLifecycles.size() > 0) {
+            for (Application.ActivityLifecycleCallbacks lifecycle : activityLifecycles) {
+                application.unregisterActivityLifecycleCallbacks(lifecycle);
+            }
+        }
 
-        this.baseComponent = null;
-        this.application = null;
-        this.activityLifecycle = null;
-
-        for (Lifecycle lifecycle : lifecycleManager) {
+        for (Lifecycle lifecycle : applicationLifecycles) {
             lifecycle.onTerminate(application);
         }
+
+        this.component = null;
+        this.activityLifecycle = null;
+        this.activityLifecycles = null;
+        this.applicationLifecycles = null;
+        this.application = null;
     }
 
 
@@ -106,8 +122,8 @@ public class AppDelegateManager implements App {
      */
 
     @Override
-    public BaseComponent getBaseComponent() {
-        return baseComponent;
+    public AppComponent getAppComponent() {
+        return component;
     }
 
     public interface Lifecycle {
