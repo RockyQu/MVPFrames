@@ -9,7 +9,6 @@ import com.tool.common.di.module.AppConfigModule;
 
 import java.util.List;
 
-
 /**
  * 框架配置参数配置，实现此接口后，在AndroidManifest中声明该实现类
  */
@@ -45,7 +44,6 @@ public interface ConfigModule {
      * @param lifecycles
      */
     void injectActivityLifecycle(Context context, List<Application.ActivityLifecycleCallbacks> lifecycles);
-
 
     /**
      * 使用{@link FragmentManager.FragmentLifecycleCallbacks}在Fragment的生命周期中注入一些操作

@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import com.frame.mvp.R;
 import com.frame.mvp.mvp.main.MainActivity;
 import com.tool.common.base.BaseActivity;
+import com.tool.common.di.component.AppComponent;
 import com.tool.common.utils.PermissionUtils;
 
 import java.util.List;
@@ -71,6 +72,11 @@ public class WelcomeActivity extends BaseActivity implements EasyPermissions.Per
                     .build()
                     .show();
         }
+    }
+
+    @Override
+    public void setupActivityComponent(AppComponent component) {
+
     }
 
     @Override

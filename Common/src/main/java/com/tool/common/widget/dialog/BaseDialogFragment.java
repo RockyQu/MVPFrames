@@ -72,19 +72,37 @@ public abstract class BaseDialogFragment extends DialogFragment implements Dialo
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        view = getActivity().getLayoutInflater().inflate(getLayoutId(), null);
+        if (isBuilder() && getLayoutId() != 0) {
+            view = getActivity().getLayoutInflater().inflate(getLayoutId(), null);
+        }
 
         // 绑定ButterKnife
         unbinder = ButterKnife.bind(this, view);
 
         // 创建AlertDialog
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity())
-                .setView(view);
+        AlertDialog.Builder dialog = builder();
+        if (isBuilder() && getLayoutId() != 0) {
+            dialog.setView(view);
+        }
 
         // 拆分系统onCreateDialog方法，提供一个create方法，基本初始化代码放到onCreateDialog执行，对于子类的初始化放到create方法执行
         this.create(savedInstanceState, view);
 
         return dialog.create();
+    }
+
+    /**
+     * 创建AlertDialog.Builder，如不需要自定义Dialog，可重写此方法，创建系统默认的AlertDialog
+     */
+    protected AlertDialog.Builder builder() {
+        return new AlertDialog.Builder(getActivity());
+    }
+
+    /**
+     * 是否使用系统默认的AlertDialog来创建Dialog，使用系统原生Dialog重写此方法，并将值改成false
+     */
+    protected boolean isBuilder() {
+        return true;
     }
 
     @Override
@@ -277,7 +295,9 @@ public abstract class BaseDialogFragment extends DialogFragment implements Dialo
     /**
      * 获取布局文件，需要在子类中重写此方法
      */
-    public abstract int getLayoutId();
+    protected int getLayoutId() {
+        return 0;
+    }
 
     /**
      * 拆分系统onCreateDialog方法，提供一个create方法，基本初始化代码放到onCreateDialog执行，对于子类的初始化放到create方法执行

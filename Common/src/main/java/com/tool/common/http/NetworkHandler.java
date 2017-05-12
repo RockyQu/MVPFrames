@@ -26,7 +26,7 @@ public interface NetworkHandler {
      * @param response
      * @return Response
      */
-    Response onHttpResponse(String result, Interceptor.Chain chain, Response response);
+    Response onHttpResponse(String result, Interceptor.Chain chain, Request request, Response response);
 
     NetworkHandler EMPTY = new NetworkHandler() {
 
@@ -36,7 +36,7 @@ public interface NetworkHandler {
         }
 
         @Override
-        public Response onHttpResponse(String result, Interceptor.Chain chain, Response response) {
+        public Response onHttpResponse(String result, Interceptor.Chain chain, Request request, Response response) {
             return response;
         }
     };

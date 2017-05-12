@@ -59,6 +59,9 @@ public class AppDelegate implements App {
                 .build();
         component.inject(this);
 
+        // 存放配置接口ConfigModule
+        component.extras().put(ConfigModule.class.getName(), modules);
+
         // 注入Activity生命周期
         application.registerActivityLifecycleCallbacks(activityLifecycle);
         for (Application.ActivityLifecycleCallbacks lifecycle : activityLifecycles) {

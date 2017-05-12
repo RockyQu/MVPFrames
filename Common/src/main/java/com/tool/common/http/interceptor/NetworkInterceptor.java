@@ -96,7 +96,7 @@ public class NetworkInterceptor implements Interceptor {
 
         // 这里可以提前一步拿到服务器返回的结果,外部实现此接口可以做一些操作，比如Token超时，重新获取
         if (handler != null) {
-            return handler.onHttpResponse(bodyString, chain, originalResponse);
+            return handler.onHttpResponse(bodyString, chain, request, originalResponse);
         }
 
         return originalResponse;

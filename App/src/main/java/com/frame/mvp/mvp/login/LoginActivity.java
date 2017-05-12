@@ -6,8 +6,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.frame.mvp.R;
-import com.frame.mvp.di.login.DaggerLoginComponent;
-import com.frame.mvp.di.login.LoginModule;
 import com.frame.mvp.entity.User;
 import com.tool.common.base.BaseActivity;
 import com.tool.common.di.component.AppComponent;
@@ -38,7 +36,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void create(Bundle savedInstanceState) {
-
         user = (User) component.extras().get(LoginActivity.class.getName());
         if (user != null) {
             edtAccount.setText(user.getAccount());
@@ -55,13 +52,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
     @Override
-    protected void setupActivityComponent(AppComponent component) {
-        DaggerLoginComponent
-                .builder()
-                .appComponent(component)
-                .loginModule(new LoginModule(this))
-                .build()
-                .inject(this);
+    public void setupActivityComponent(AppComponent component) {
+//        DaggerLoginComponent
+//                .builder()
+//                .appComponent(component)
+//                .loginModule(new LoginModule(this))
+//                .build()
+//                .inject(this);
     }
 
     /**
