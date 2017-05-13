@@ -1,17 +1,18 @@
-package com.tool.common.base;
+package com.tool.common.base.simple.base;
 
 import android.support.v7.app.AppCompatActivity;
 
 import com.tool.common.base.delegate.IActivity;
+import com.tool.common.base.simple.delegate.ISimpleActivity;
 import com.tool.common.di.component.AppComponent;
 import com.tool.common.frame.BasePresenter;
 
 import javax.inject.Inject;
 
 /**
- * BaseActivity
+ * BaseSimpleActivity
  */
-public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements IActivity {
+public abstract class BaseSimpleActivity<P extends BasePresenter> extends AppCompatActivity implements ISimpleActivity {
 
     // AppComponent
     protected AppComponent component = null;
