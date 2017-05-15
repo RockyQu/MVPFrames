@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.os.Parcel;
 
 import com.tool.common.base.App;
-import com.tool.common.log.QLog;
+import com.tool.common.base.simple.delegate.ISimpleActivity;
+import com.tool.common.di.component.AppComponent;
+import com.tool.common.frame.IPresenter;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -16,25 +18,50 @@ import butterknife.Unbinder;
 public class ActivityDelegateImpl implements ActivityDelegate {
 
     private Activity activity;
-    private IActivity iActivity;
     private Unbinder unbinder;
+
+    private IActivity iActivity;
+    private ISimpleActivity iSimpleActivity;
+
+    private IPresenter iPresenter;
 
     public ActivityDelegateImpl(Activity activity) {
         this.activity = activity;
-        this.iActivity = (IActivity) activity;
+        if (activity instanceof IActivity) {
+            this.iActivity = (IActivity) activity;
+        } else if (activity instanceof ISimpleActivity) {
+            this.iSimpleActivity = (ISimpleActivity) activity;
+        }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
+        AppComponent component = ((App) activity.getApplication()).getAppComponent();
         // 在Base基类实现些方法，为了能够方便的获取到AppComponent
-        iActivity.setComponent(((App) activity.getApplication()).getAppComponent());
+        if (iActivity != null) {
+            iActivity.setComponent(component);
+        } else if (iSimpleActivity != null) {
+            iSimpleActivity.setComponent(component);
+        }
 
         // 依赖注入
-        iActivity.setupActivityComponent(((App) activity.getApplication()).getAppComponent());
+        if (iActivity != null) {
+            iActivity.setupActivityComponent(component);
+        } else if (iSimpleActivity != null) {
+            this.iPresenter = iSimpleActivity.obtainPresenter();
+            iSimpleActivity.setPresenter(iPresenter);
+        }
 
         try {
-            int layoutResID = iActivity.getLayoutId();
+            int layoutResID;
+            if (iActivity != null) {
+                layoutResID = iActivity.getLayoutId();
+            } else if (iSimpleActivity != null) {
+                layoutResID = iSimpleActivity.getLayoutId();
+            } else {
+                layoutResID = 0;
+            }
+
             if (layoutResID != 0) {
                 activity.setContentView(layoutResID);
             }
@@ -46,7 +73,11 @@ public class ActivityDelegateImpl implements ActivityDelegate {
         unbinder = ButterKnife.bind(activity);
 
         // 初始化方法
-        iActivity.create(savedInstanceState);
+        if (iActivity != null) {
+            iActivity.create(savedInstanceState);
+        } else if (iSimpleActivity != null) {
+            iSimpleActivity.create(savedInstanceState);
+        }
     }
 
     @Override
@@ -82,8 +113,14 @@ public class ActivityDelegateImpl implements ActivityDelegate {
         }
 
         this.unbinder = null;
-        this.iActivity = null;
         this.activity = null;
+
+        if (iActivity != null) {
+            this.iActivity = null;
+        }
+        if (iSimpleActivity != null) {
+            this.iSimpleActivity = null;
+        }
     }
 
     @Override
@@ -108,8 +145,14 @@ public class ActivityDelegateImpl implements ActivityDelegate {
 
     protected ActivityDelegateImpl(Parcel in) {
         this.activity = in.readParcelable(Activity.class.getClassLoader());
-        this.iActivity = in.readParcelable(IActivity.class.getClassLoader());
         this.unbinder = in.readParcelable(Unbinder.class.getClassLoader());
+
+        if (iActivity != null) {
+            this.iActivity = in.readParcelable(IActivity.class.getClassLoader());
+        }
+        if (iSimpleActivity != null) {
+            this.iSimpleActivity = in.readParcelable(ISimpleActivity.class.getClassLoader());
+        }
     }
 
     public static final Creator<ActivityDelegateImpl> CREATOR = new Creator<ActivityDelegateImpl>() {

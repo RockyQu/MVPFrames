@@ -8,6 +8,10 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import com.tool.common.base.App;
+import com.tool.common.base.simple.delegate.ISimpleActivity;
+import com.tool.common.base.simple.delegate.ISimpleFragment;
+import com.tool.common.di.component.AppComponent;
+import com.tool.common.frame.IPresenter;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -19,19 +23,42 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     private FragmentManager fragmentManager;
     private Fragment fragment;
-    private IFragment iFragment;
     private Unbinder unbinder;
+
+    private IFragment iFragment;
+    private ISimpleFragment iSimpleFragment;
+
+    private IPresenter iPresenter;
 
     public FragmentDelegateImpl(FragmentManager fragmentManager, Fragment fragment) {
         this.fragmentManager = fragmentManager;
         this.fragment = fragment;
         this.iFragment = (IFragment) fragment;
+
+        if (fragment instanceof IFragment) {
+            this.iFragment = (IFragment) fragment;
+        } else if (fragment instanceof ISimpleFragment) {
+            this.iSimpleFragment = (ISimpleFragment) fragment;
+        }
     }
 
     @Override
     public void onAttach(Context context) {
-        iFragment.setComponent(((App) fragment.getActivity().getApplication()).getAppComponent());
-        iFragment.setupFragmentComponent(((App) fragment.getActivity().getApplication()).getAppComponent());
+        AppComponent component = ((App) fragment.getActivity().getApplication()).getAppComponent();
+        // 在Base基类实现些方法，为了能够方便的获取到AppComponent
+        if (iFragment != null) {
+            iFragment.setComponent(component);
+        } else if (iSimpleFragment != null) {
+            iSimpleFragment.setComponent(component);
+        }
+
+        // 依赖注入
+        if (iFragment != null) {
+            iFragment.setupFragmentComponent(component);
+        } else if (iSimpleFragment != null) {
+            this.iPresenter = iSimpleFragment.obtainPresenter();
+            iSimpleFragment.setPresenter(iPresenter);
+        }
     }
 
     @Override
@@ -50,7 +77,11 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        iFragment.create(savedInstanceState);
+        if (iFragment != null) {
+            iFragment.create(savedInstanceState);
+        } else if (iSimpleFragment != null) {
+            iSimpleFragment.create(savedInstanceState);
+        }
     }
 
     @Override
@@ -85,7 +116,13 @@ public class FragmentDelegateImpl implements FragmentDelegate {
         this.unbinder = null;
         this.fragmentManager = null;
         this.fragment = null;
-        this.iFragment = null;
+
+        if (iFragment != null) {
+            this.iFragment = null;
+        }
+        if (iSimpleFragment != null) {
+            this.iSimpleFragment = null;
+        }
     }
 
     @Override
@@ -111,8 +148,14 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     protected FragmentDelegateImpl(Parcel in) {
         this.fragmentManager = in.readParcelable(FragmentManager.class.getClassLoader());
         this.fragment = in.readParcelable(Fragment.class.getClassLoader());
-        this.iFragment = in.readParcelable(IFragment.class.getClassLoader());
         this.unbinder = in.readParcelable(Unbinder.class.getClassLoader());
+
+        if (iFragment != null) {
+            this.iFragment = in.readParcelable(IFragment.class.getClassLoader());
+        }
+        if (iSimpleFragment != null) {
+            this.iSimpleFragment = in.readParcelable(ISimpleFragment.class.getClassLoader());
+        }
     }
 
     public static final Creator<FragmentDelegateImpl> CREATOR = new Creator<FragmentDelegateImpl>() {

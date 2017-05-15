@@ -1,6 +1,5 @@
 package com.tool.common.base.simple.delegate;
 
-
 import android.os.Bundle;
 
 import com.tool.common.base.BaseFragment;
