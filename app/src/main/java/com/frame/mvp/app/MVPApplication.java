@@ -1,5 +1,7 @@
 package com.frame.mvp.app;
 
+import android.content.Context;
+
 import com.tool.common.base.BaseApplication;
 import com.tool.common.http.receiver.NetworkStatusReceiver;
 import com.tool.common.log.QLog;
@@ -16,19 +18,14 @@ public class MVPApplication extends BaseApplication {
         super.onCreate();
     }
 
-    /**
-     * 获得当前网络状态
-     * <p>
-     * NONE(1) 无网络，MOBILE(2)移动网络，WIFI(4)无线网络
-     *
-     * @return
-     */
-    public static NetworkStatusReceiver.Type getNetworkType() {
-        return NetworkStatusReceiver.getType(getContext());
-    }
-
     @Override
     public void onTerminate() {
         super.onTerminate();
     }
+
+//    @Override
+//    protected void attachBaseContext(Context base) {
+//        super.attachBaseContext(base);
+//        MultiDex.install(this);
+//    }
 }
