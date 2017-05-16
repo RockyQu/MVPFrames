@@ -32,6 +32,7 @@ import com.tool.common.http.interceptor.ParameterInterceptor;
 import com.tool.common.integration.ConfigModule;
 import com.tool.common.integration.IRepositoryManager;
 import com.tool.common.log.QLog;
+import com.tool.common.log.crash.ThreadCatchInterceptor;
 import com.tool.common.log.log.LogConfig;
 import com.tool.common.utils.DeviceUtils;
 import com.tool.common.utils.GsonUtils;
@@ -186,6 +187,33 @@ public class AppConfiguration implements ConfigModule {
 
                 // LeakCanary内存泄露检查
                 ((App) application).getAppComponent().extras().put(RefWatcher.class.getName(), BuildConfig.DEBUG_FLAG ? LeakCanary.install(application) : RefWatcher.DISABLED);
+            }
+
+            @Override
+            public void onTerminate(Application application) {
+
+            }
+        });
+
+        lifecycleManager.add(new AppDelegate.Lifecycle() {
+
+            @Override
+            public void onCreate(Application application) {
+                if (ProjectUtils.init()) {
+                    // 设置反馈崩溃信息，不需要可以不设置
+                    ThreadCatchInterceptor.getInstance().install(new ThreadCatchInterceptor.CallBack() {
+
+                        @Override
+                        public void error(Throwable throwable) {
+                            ;
+                        }
+
+                        @Override
+                        public void finish(String path) {
+                            ;
+                        }
+                    });
+                }
             }
 
             @Override

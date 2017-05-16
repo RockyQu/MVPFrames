@@ -14,24 +14,6 @@ public class MVPApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        if (ProjectUtils.init()) {
-            // 设置反馈崩溃信息，不需要可以不设置
-            ThreadCatchInterceptor.getInstance().install(new ThreadCatchInterceptor.CallBack() {
-
-                @Override
-                public void error(Throwable throwable) {
-                    ;
-                }
-
-                @Override
-                public void finish(String path) {
-                    QLog.i(path);
-                }
-            });
-        } else {
-            // 初始化失败
-        }
     }
 
     /**
