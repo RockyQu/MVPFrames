@@ -1,5 +1,6 @@
 package com.tool.common.http;
 
+import android.app.Application;
 import android.content.Context;
 
 import com.tool.common.R;
@@ -17,8 +18,10 @@ import retrofit2.Response;
  */
 public abstract class ResponseCallback<T extends ResponseEntity> implements Callback<T> {
 
-    public ResponseCallback() {
+    private Application application;
 
+    public ResponseCallback(Application application) {
+        this.application = application;
     }
 
     @Override
@@ -29,7 +32,7 @@ public abstract class ResponseCallback<T extends ResponseEntity> implements Call
         if (statusCode == 200) {
             onResponse(response.body());
         } else {
-            onFailure(formatError(BaseApplication.getContext(), statusCode));
+            onFailure(formatError(application, statusCode));
         }
 
         onFinish();
@@ -37,7 +40,7 @@ public abstract class ResponseCallback<T extends ResponseEntity> implements Call
 
     @Override
     public void onFailure(Call<T> call, Throwable throwable) {
-        onFailure(formatError(BaseApplication.getContext(), throwable));
+        onFailure(formatError(application, throwable));
         onFinish();
     }
 

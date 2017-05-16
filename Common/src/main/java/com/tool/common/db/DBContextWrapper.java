@@ -1,5 +1,6 @@
 package com.tool.common.db;
 
+import android.app.Application;
 import android.content.ContextWrapper;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,12 +20,12 @@ public class DBContextWrapper extends ContextWrapper {
     // DB路径
     private String path;
 
-    public DBContextWrapper() {
-        super(BaseApplication.getContext());
+    public DBContextWrapper(Application application) {
+        super(application);
     }
 
-    public DBContextWrapper(String path) {
-        super(BaseApplication.getContext());
+    public DBContextWrapper(Application application, String path) {
+        super(application);
         this.path = path;
     }
 

@@ -27,6 +27,9 @@ android {
 
         // 单元测试
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
+
+        // Enabling MultiDex support.
+//        multiDexEnabled true
     }
 
 //    sourceSets {
@@ -79,6 +82,18 @@ android {
             v2SigningEnabled false
         }
     }
+
+//    sourceSets {
+//        main {
+//            jniLibs.srcDirs = ['libs']
+//        }
+//    }
+//
+//    // 不加入会内存溢出
+//    dexOptions {
+//        incremental true
+//        javaMaxHeapSize "4g"
+//    }
 
     // 多渠道打包
     productFlavors {
@@ -157,7 +172,15 @@ buildscript {
         jcenter()
         mavenCentral()
     }
+}
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+    maven {
+        url "https://jitpack.io"
+    }
 }
 
 dependencies {

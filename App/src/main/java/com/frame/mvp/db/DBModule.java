@@ -1,5 +1,6 @@
 package com.frame.mvp.db;
 
+import android.app.Application;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -23,21 +24,26 @@ import dagger.Provides;
 @Module
 public class DBModule {
 
+    // Application
+    private Application application;
+
     // 是否加密
     public static final boolean ENCRYPTED = false;
     // 加密密钥，客户端可以自己生成一个特征性动态Key,也可服务器配合传过来一个Key
     public static String KEY;
 
-    public DBModule() {
+    public DBModule(Application application) {
+        this.application = application;
+
         if (ENCRYPTED) {
-            KEY = DeviceUtils.getIMEI(MVPApplication.getContext());
+            KEY = DeviceUtils.getIMEI(application);
         }
     }
 
     @ApplicationScope
     @Provides
     public DBOpenHelper provideDevOpenHelper() {
-        return new DBOpenHelper(new DBContextWrapper(), ProjectUtils.PROJECT_NAME + ".db", null);
+        return new DBOpenHelper(new DBContextWrapper(application), ProjectUtils.PROJECT_NAME + ".db", null);
     }
 
     @ApplicationScope

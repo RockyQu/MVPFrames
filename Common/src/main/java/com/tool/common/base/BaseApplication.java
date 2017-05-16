@@ -1,12 +1,13 @@
 package com.tool.common.base;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.tool.common.base.delegate.AppDelegate;
 import com.tool.common.di.component.AppComponent;
 
 /**
+ * GitHub:https://github.com/DesignQu/MVPFrames
+ *
  * 一、项目涉及的主要框架
  * 1、Dagger2 https://google.github.io/dagger
  * 2、ButterKnife http://jakewharton.github.io/butterknife
@@ -23,18 +24,8 @@ import com.tool.common.di.component.AppComponent;
  * 2、使用Activity、Fragment、ViewHolder、Service、Adapter请继承BaseActivity、BaseFragment、BaseViewHolder、BaseService、BaseAdapter来初始化MVP架构
  * 3、通过Application获取AppComponent里面的对象可直接使用
  * 4、简单功能及页面无需引入MVP
- * <p>
- * 三、未来可能会更新的一些功能
- * 1、路由框架
- * 2、用户行为分析日志模块
- * 3、优化MVP缺点（类、接口过多的问题）
- * 4、重构蓝牙定位模块
- * 5、混淆
  */
 public abstract class BaseApplication extends Application implements App {
-
-    // Context
-    private static Context context;
 
     // AppDelegate
     private AppDelegate delegate;
@@ -43,8 +34,6 @@ public abstract class BaseApplication extends Application implements App {
     public void onCreate() {
         super.onCreate();
 
-        this.context = this;
-
         this.delegate = new AppDelegate(this);
         this.delegate.onCreate();
     }
@@ -52,15 +41,8 @@ public abstract class BaseApplication extends Application implements App {
     @Override
     public void onTerminate() {
         super.onTerminate();
-        if (context != null) {
-            this.context = this;
-        }
 
         this.delegate.onTerminate();
-    }
-
-    public static Context getContext() {
-        return context;
     }
 
     /**

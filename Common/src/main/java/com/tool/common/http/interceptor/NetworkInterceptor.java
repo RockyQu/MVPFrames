@@ -1,5 +1,7 @@
 package com.tool.common.http.interceptor;
 
+import android.app.Application;
+
 import com.tool.common.base.BaseApplication;
 import com.tool.common.http.NetworkHandler;
 import com.tool.common.http.receiver.NetworkStatusReceiver;
@@ -26,10 +28,12 @@ import okio.BufferedSource;
 @Singleton
 public class NetworkInterceptor implements Interceptor {
 
+    private Application application;
     private NetworkHandler handler;
 
     @Inject
-    public NetworkInterceptor(NetworkHandler handler) {
+    public NetworkInterceptor(Application application, NetworkHandler handler) {
+        this.application = application;
         this.handler = handler;
     }
 
@@ -43,7 +47,7 @@ public class NetworkInterceptor implements Interceptor {
             request = handler.onHttpRequest(chain, request);
         }
 
-        NetworkStatusReceiver.Type type = NetworkStatusReceiver.getType(BaseApplication.getContext());
+        NetworkStatusReceiver.Type type = NetworkStatusReceiver.getType(application);
         if (type == NetworkStatusReceiver.Type.NONE) {// 无网络时强制从缓存读取(必须得写，不然断网状态下，退出应用，或者等待一分钟后，会获取不到缓存）
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)
