@@ -1,12 +1,6 @@
 package com.frame.mvp.app;
 
-import android.content.Context;
-
 import com.tool.common.base.BaseApplication;
-import com.tool.common.http.receiver.NetworkStatusReceiver;
-import com.tool.common.log.QLog;
-import com.tool.common.log.crash.ThreadCatchInterceptor;
-import com.tool.common.utils.ProjectUtils;
 
 /**
  * Application

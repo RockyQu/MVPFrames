@@ -17,7 +17,7 @@ import javax.inject.Inject;
 /**
  * BaseSimpleFragment
  */
-public abstract class BaseSimpleFragment<P extends BasePresenter> extends Fragment implements ISimpleFragment {
+public abstract class BaseSimpleFragment<P extends BasePresenter> extends Fragment implements ISimpleFragment<P> {
 
     // AppComponent
     protected AppComponent component = null;
@@ -25,7 +25,6 @@ public abstract class BaseSimpleFragment<P extends BasePresenter> extends Fragme
     /**
      * Presenter
      */
-    @Inject
     protected P presenter = null;
 
     public BaseSimpleFragment() {
@@ -35,6 +34,19 @@ public abstract class BaseSimpleFragment<P extends BasePresenter> extends Fragme
     @Override
     public void setComponent(AppComponent component) {
         this.component = component;
+    }
+
+    @Override
+    public void setPresenter(P presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (presenter == null) {
+            presenter = obtainPresenter();
+        }
     }
 
     /**

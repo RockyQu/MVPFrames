@@ -1,5 +1,6 @@
 package com.tool.common.base.simple.base;
 
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.tool.common.base.delegate.IActivity;
@@ -12,7 +13,7 @@ import javax.inject.Inject;
 /**
  * BaseSimpleActivity
  */
-public abstract class BaseSimpleActivity<P extends BasePresenter> extends AppCompatActivity implements ISimpleActivity {
+public abstract class BaseSimpleActivity<P extends BasePresenter> extends AppCompatActivity implements ISimpleActivity<P> {
 
     // AppComponent
     protected AppComponent component = null;
@@ -20,12 +21,24 @@ public abstract class BaseSimpleActivity<P extends BasePresenter> extends AppCom
     /**
      * Presenter
      */
-    @Inject
     protected P presenter;
 
     @Override
     public void setComponent(AppComponent component) {
         this.component = component;
+    }
+
+    @Override
+    public void setPresenter(P presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (presenter == null) {
+            presenter = obtainPresenter();
+        }
     }
 
     @Override
