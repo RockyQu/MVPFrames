@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import com.tool.common.base.App;
-import com.tool.common.base.simple.delegate.ISimpleActivity;
 import com.tool.common.base.simple.delegate.ISimpleFragment;
 import com.tool.common.di.component.AppComponent;
 import com.tool.common.frame.IPresenter;

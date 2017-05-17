@@ -2,17 +2,15 @@ package com.tool.common.integration;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
 
 import com.tool.common.base.BaseFragment;
 import com.tool.common.base.delegate.ActivityDelegate;
 import com.tool.common.base.delegate.ActivityDelegateImpl;
 import com.tool.common.base.delegate.IActivity;
+import com.tool.common.base.simple.delegate.ISimpleActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +44,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         appManager.addActivity(activity);
 
         // 配置ActivityDelegate
-        if (activity instanceof IActivity && activity.getIntent() != null) {
+        if ((activity instanceof IActivity || activity instanceof ISimpleActivity) && activity.getIntent() != null) {
             ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
             if (activityDelegate == null) {
                 activityDelegate = new ActivityDelegateImpl(activity);
@@ -59,7 +57,15 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
          * 给每个Activity配置Fragment的监听，Activity可以通过 {@link IActivity#useFragment()}设置是否使用监听
          * 如果这个Activity返回false的话，这个Activity将不能使用{@link FragmentDelegate}，意味着{@link BaseFragment}也不能使用
          */
-        boolean useFragment = activity instanceof IActivity ? ((IActivity) activity).useFragment() : true;
+        boolean useFragment;
+        if (activity instanceof IActivity) {
+            useFragment = ((IActivity) activity).useFragment();
+        } else if (activity instanceof ISimpleActivity) {
+            useFragment = ((ISimpleActivity) activity).useFragment();
+        } else {
+            useFragment = true;
+        }
+
         if (activity instanceof FragmentActivity && useFragment) {
             if (fragmentLifecycle == null) {
                 fragmentLifecycle = new FragmentLifecycle();
@@ -131,7 +137,15 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
     public void onActivityDestroyed(Activity activity) {
         appManager.removeActivity(activity);
 
-        boolean useFragment = activity instanceof IActivity ? ((IActivity) activity).useFragment() : true;
+        boolean useFragment;
+        if (activity instanceof IActivity) {
+            useFragment = ((IActivity) activity).useFragment();
+        } else if (activity instanceof ISimpleActivity) {
+            useFragment = ((ISimpleActivity) activity).useFragment();
+        } else {
+            useFragment = true;
+        }
+
         if (activity instanceof FragmentActivity && useFragment) {
             if (fragmentLifecycle != null) {
                 ((FragmentActivity) activity).getSupportFragmentManager().unregisterFragmentLifecycleCallbacks(fragmentLifecycle);
@@ -152,7 +166,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     private ActivityDelegate fetchActivityDelegate(Activity activity) {
         ActivityDelegate activityDelegate = null;
-        if (activity instanceof IActivity && activity.getIntent() != null) {
+        if ((activity instanceof IActivity || activity instanceof ISimpleActivity) && activity.getIntent() != null) {
             activityDelegate = activity.getIntent().getParcelableExtra(ActivityDelegate.ACTIVITY_DELEGATE);
         }
         return activityDelegate;

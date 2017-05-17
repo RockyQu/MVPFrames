@@ -3,17 +3,14 @@ package com.tool.common.base.simple.base;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.tool.common.base.delegate.IActivity;
 import com.tool.common.base.simple.delegate.ISimpleActivity;
 import com.tool.common.di.component.AppComponent;
-import com.tool.common.frame.BasePresenter;
-
-import javax.inject.Inject;
+import com.tool.common.frame.simple.BaseSimplePresenter;
 
 /**
  * BaseSimpleActivity
  */
-public abstract class BaseSimpleActivity<P extends BasePresenter> extends AppCompatActivity implements ISimpleActivity<P> {
+public abstract class BaseSimpleActivity<P extends BaseSimplePresenter> extends AppCompatActivity implements ISimpleActivity<P> {
 
     // AppComponent
     protected AppComponent component = null;

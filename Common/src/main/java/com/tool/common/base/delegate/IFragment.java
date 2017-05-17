@@ -1,7 +1,6 @@
 package com.tool.common.base.delegate;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.tool.common.di.component.AppComponent;
 

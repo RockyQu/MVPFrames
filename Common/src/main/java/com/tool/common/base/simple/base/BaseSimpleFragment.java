@@ -7,12 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.tool.common.base.delegate.IFragment;
 import com.tool.common.base.simple.delegate.ISimpleFragment;
 import com.tool.common.di.component.AppComponent;
 import com.tool.common.frame.BasePresenter;
-
-import javax.inject.Inject;
 
 /**
  * BaseSimpleFragment

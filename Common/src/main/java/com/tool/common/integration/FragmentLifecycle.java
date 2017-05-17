@@ -9,6 +9,7 @@ import android.view.View;
 import com.tool.common.base.delegate.FragmentDelegate;
 import com.tool.common.base.delegate.FragmentDelegateImpl;
 import com.tool.common.base.delegate.IFragment;
+import com.tool.common.base.simple.delegate.ISimpleFragment;
 
 /**
  * 管理Fragment生命周期
@@ -22,7 +23,7 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
     @Override
     public void onFragmentAttached(FragmentManager fm, Fragment f, Context context) {
         super.onFragmentAttached(fm, f, context);
-        if (f instanceof IFragment && f.getArguments() != null) {
+        if ((f instanceof IFragment || f instanceof ISimpleFragment) && f.getArguments() != null) {
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate == null) {
                 fragmentDelegate = new FragmentDelegateImpl(fm, f);
@@ -129,7 +130,7 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
     }
 
     private FragmentDelegate fetchFragmentDelegate(Fragment fragment) {
-        if (fragment instanceof IFragment) {
+        if (fragment instanceof IFragment || fragment instanceof ISimpleFragment) {
             return fragment.getArguments() == null ? null : (FragmentDelegate) fragment.getArguments().getParcelable(FragmentDelegate.FRAGMENT_DELEGATE);
         }
         return null;
