@@ -2,10 +2,13 @@ package com.frame.mvp.mvp.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.frame.mvp.R;
+import com.frame.mvp.di.login.DaggerLoginComponent;
+import com.frame.mvp.di.login.LoginModule;
 import com.frame.mvp.entity.User;
 import com.tool.common.base.BaseActivity;
 import com.tool.common.di.component.AppComponent;
@@ -53,12 +56,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void setupActivityComponent(AppComponent component) {
-//        DaggerLoginComponent
-//                .builder()
-//                .appComponent(component)
-//                .loginModule(new LoginModule(this))
-//                .build()
-//                .inject(this);
+        DaggerLoginComponent
+                .builder()
+                .appComponent(component)
+                .loginModule(new LoginModule(this))
+                .build()
+                .inject(this);
     }
 
     /**

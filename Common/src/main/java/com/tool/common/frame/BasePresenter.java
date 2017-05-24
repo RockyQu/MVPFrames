@@ -1,5 +1,7 @@
 package com.tool.common.frame;
 
+import org.simple.eventbus.EventBus;
+
 /**
  * Presenter
  */
@@ -37,7 +39,10 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
      */
     @Override
     public void onStart() {
-
+        if (useEventBus()) {
+            // 注册EventBus
+            EventBus.getDefault().register(this);
+        }
     }
 
     /**
@@ -45,11 +50,25 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
      */
     @Override
     public void onDestroy() {
+        if (useEventBus()) {
+            // 注册EventBus
+            EventBus.getDefault().register(this);
+        }
+
         if (model != null) {
             model.onDestroy();
         }
 
         this.model = null;
         this.view = null;
+    }
+
+    /**
+     * 使用eventBus
+     *
+     * @return
+     */
+    protected boolean useEventBus() {
+        return true;
     }
 }

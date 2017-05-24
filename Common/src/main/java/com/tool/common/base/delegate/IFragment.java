@@ -36,4 +36,11 @@ public interface IFragment {
      * @param savedInstanceState
      */
     void create(Bundle savedInstanceState);
+
+    /**
+     * 使用EventBus
+     *
+     * @return
+     */
+    boolean useEventBus();
 }

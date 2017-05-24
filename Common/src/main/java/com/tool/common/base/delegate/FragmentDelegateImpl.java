@@ -12,6 +12,8 @@ import com.tool.common.base.simple.delegate.ISimpleFragment;
 import com.tool.common.di.component.AppComponent;
 import com.tool.common.frame.IPresenter;
 
+import org.simple.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -85,7 +87,16 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onStart() {
-
+        // 注册EventBus
+        if (iFragment != null) {
+            if (iFragment.useEventBus()) {
+                EventBus.getDefault().register(fragment);
+            }
+        } else if (iSimpleFragment != null) {
+            if (iSimpleFragment.useEventBus()) {
+                EventBus.getDefault().register(fragment);
+            }
+        }
     }
 
     @Override
@@ -100,7 +111,16 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onStop() {
-
+        // 注销EventBus
+        if (iFragment != null) {
+            if (iFragment.useEventBus()) {
+                EventBus.getDefault().unregister(fragment);
+            }
+        } else if (iSimpleFragment != null) {
+            if (iSimpleFragment.useEventBus()) {
+                EventBus.getDefault().unregister(fragment);
+            }
+        }
     }
 
     @Override

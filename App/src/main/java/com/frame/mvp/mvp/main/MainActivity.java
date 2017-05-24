@@ -2,13 +2,13 @@ package com.frame.mvp.mvp.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 
 import com.frame.mvp.R;
 import com.frame.mvp.di.main.DaggerMainComponent;
 import com.frame.mvp.di.main.MainModule;
 import com.tool.common.base.BaseActivity;
 import com.tool.common.di.component.AppComponent;
-import com.tool.common.log.QLog;
 import com.tool.common.widget.ToastBar;
 
 /**

@@ -41,4 +41,11 @@ public interface ISimpleActivity<P extends IPresenter> {
      * @return
      */
     boolean useFragment();
+
+    /**
+     * 使用EventBus
+     *
+     * @return
+     */
+    boolean useEventBus();
 }

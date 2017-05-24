@@ -44,4 +44,11 @@ public interface IActivity {
      * @return
      */
     boolean useFragment();
+
+    /**
+     * 使用EventBus
+     *
+     * @return
+     */
+    boolean useEventBus();
 }

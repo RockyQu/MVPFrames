@@ -39,6 +39,7 @@ ext {
             "dagger2"                    : "com.google.dagger:dagger:${version["dagger2SdkVersion"]}",
             "dagger2-apt-compiler"       : "com.google.dagger:dagger-compiler:${version["dagger2SdkVersion"]}",
             "javax.annotation"           : "javax.annotation:jsr250-api:1.0",
+            "eventbus"                   : "org.simple:androideventbus:1.0.5.1",
             "gson"                       : "com.google.code.gson:gson:2.7",
             "easypermissions"            : "pub.devrel:easypermissions:0.3.0",
             // DB

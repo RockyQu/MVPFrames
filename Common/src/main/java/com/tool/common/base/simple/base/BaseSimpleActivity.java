@@ -44,6 +44,11 @@ public abstract class BaseSimpleActivity<P extends BaseSimplePresenter> extends 
     }
 
     @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
 

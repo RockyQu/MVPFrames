@@ -9,6 +9,8 @@ import com.tool.common.base.simple.delegate.ISimpleActivity;
 import com.tool.common.di.component.AppComponent;
 import com.tool.common.frame.IPresenter;
 
+import org.simple.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -82,7 +84,16 @@ public class ActivityDelegateImpl implements ActivityDelegate {
 
     @Override
     public void onStart() {
-
+        // 注册EventBus
+        if (iActivity != null) {
+            if (iActivity.useEventBus()) {
+                EventBus.getDefault().register(activity);
+            }
+        } else if (iSimpleActivity != null) {
+            if (iSimpleActivity.useEventBus()) {
+                EventBus.getDefault().register(activity);
+            }
+        }
     }
 
     @Override
@@ -110,6 +121,17 @@ public class ActivityDelegateImpl implements ActivityDelegate {
         // 解除绑定
         if (unbinder != Unbinder.EMPTY) {
             unbinder.unbind();
+        }
+
+        // 注销EventBus
+        if (iActivity != null) {
+            if (iActivity.useEventBus()) {
+                EventBus.getDefault().unregister(activity);
+            }
+        } else if (iSimpleActivity != null) {
+            if (iSimpleActivity.useEventBus()) {
+                EventBus.getDefault().unregister(activity);
+            }
         }
 
         this.unbinder = null;

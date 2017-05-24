@@ -45,6 +45,11 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         return inflater.inflate(getLayoutId(), container, false);
     }
 
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
     /**
      * 当Fragment不再被使用时，如按返回键，就会调用此方法
      */

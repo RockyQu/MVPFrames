@@ -33,6 +33,11 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
 

@@ -34,4 +34,11 @@ public interface ISimpleFragment<P extends IPresenter> {
      * @param savedInstanceState
      */
     void create(Bundle savedInstanceState);
+
+    /**
+     * 使用EventBus
+     *
+     * @return
+     */
+    boolean useEventBus();
 }

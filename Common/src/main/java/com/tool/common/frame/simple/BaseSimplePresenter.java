@@ -4,6 +4,8 @@ import com.tool.common.frame.IModel;
 import com.tool.common.frame.IPresenter;
 import com.tool.common.frame.IView;
 
+import org.simple.eventbus.EventBus;
+
 /**
  * Presenter
  */
@@ -27,7 +29,10 @@ public class BaseSimplePresenter<M extends IModel> implements IPresenter {
      */
     @Override
     public void onStart() {
-
+        if (useEventBus()) {
+            // 注册EventBus
+            EventBus.getDefault().register(this);
+        }
     }
 
     /**
@@ -35,10 +40,24 @@ public class BaseSimplePresenter<M extends IModel> implements IPresenter {
      */
     @Override
     public void onDestroy() {
+        if (useEventBus()) {
+            // 注册EventBus
+            EventBus.getDefault().register(this);
+        }
+
         if (model != null) {
             model.onDestroy();
         }
 
         this.model = null;
+    }
+
+    /**
+     * 使用eventBus
+     *
+     * @return
+     */
+    protected boolean useEventBus() {
+        return true;
     }
 }

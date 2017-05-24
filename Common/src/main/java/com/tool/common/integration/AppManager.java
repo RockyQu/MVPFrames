@@ -5,6 +5,16 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Message;
+import android.support.design.widget.Snackbar;
+import android.view.View;
+
+import com.tool.common.log.QLog;
+import com.tool.common.widget.ToastBar;
+
+import org.simple.eventbus.EventBus;
+import org.simple.eventbus.Subscriber;
+import org.simple.eventbus.ThreadMode;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -23,6 +33,12 @@ public class AppManager {
     // Application
     private Application application;
 
+    public static final String APPMANAGER_MESSAGE = "AppManager";
+    public static final int START_ACTIVITY = 0;
+    public static final int SNACKBAR = 1;
+    public static final int KILL = 2;
+    public static final int EXIT = 3;
+
     // 管理所有activity
     public List<Activity> activitys;
     // 当前在前台的activity
@@ -31,6 +47,55 @@ public class AppManager {
     @Inject
     public AppManager(Application application) {
         this.application = application;
+
+        EventBus.getDefault().register(this);
+    }
+
+    /**
+     * 通过EventBus，远程执行相应方法
+     */
+    @Subscriber(tag = APPMANAGER_MESSAGE, mode = ThreadMode.MAIN)
+    public void onReceive(Message message) {
+        QLog.e("onReceive");
+        switch (message.what) {
+            case START_ACTIVITY:
+                if (message.obj == null) {
+                    break;
+                }
+
+                if (message.obj instanceof Intent) {
+                    startActivity((Intent) message.obj);
+                } else if (message.obj instanceof Class) {
+                    startActivity((Class) message.obj);
+                }
+                break;
+            case SNACKBAR:
+                if (message.obj == null) {
+                    break;
+                }
+
+                this.snackbar((String) message.obj);
+                break;
+            case KILL:
+                kill();
+                break;
+            case EXIT:
+                AppExit();
+                break;
+        }
+    }
+
+    /**
+     * 使用Snackbar显示内容
+     *
+     * @param message
+     */
+    public void snackbar(String message) {
+        if (this.getCurrentActivity() == null) {
+            return;
+        }
+        View view = getCurrentActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+        ToastBar.create(view, message).show();
     }
 
     /**
@@ -86,7 +151,6 @@ public class AppManager {
         }
         return activitys;
     }
-
 
     /**
      * 添加Activity到集合
@@ -151,7 +215,6 @@ public class AppManager {
         }
     }
 
-
     /**
      * 指定的activity实例是否存活
      *
@@ -186,7 +249,7 @@ public class AppManager {
     /**
      * 关闭所有activity
      */
-    public void killAll() {
+    public void kill() {
         Iterator<Activity> iterator = getActivityList().iterator();
         while (iterator.hasNext()) {
             iterator.next().finish();
@@ -199,8 +262,8 @@ public class AppManager {
      */
     public void AppExit() {
         try {
-            killAll();
-            if (activitys != null){
+            kill();
+            if (activitys != null) {
                 activitys = null;
             }
             ActivityManager activityManager = (ActivityManager) application.getSystemService(Context.ACTIVITY_SERVICE);
@@ -215,6 +278,7 @@ public class AppManager {
      * 释放资源
      */
     public void release() {
+        EventBus.getDefault().unregister(this);
         activitys.clear();
         activitys = null;
         currentActivity = null;

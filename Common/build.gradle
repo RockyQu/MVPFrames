@@ -70,6 +70,7 @@ dependencies {
     compile rootProject.ext.dependencies["dagger2"]
     apt rootProject.ext.dependencies["dagger2-apt-compiler"]
     provided rootProject.ext.dependencies["javax.annotation"]
+    compile rootProject.ext.dependencies["eventbus"]
     compile rootProject.ext.dependencies["gson"]
     compile rootProject.ext.dependencies["easypermissions"]
     // DB

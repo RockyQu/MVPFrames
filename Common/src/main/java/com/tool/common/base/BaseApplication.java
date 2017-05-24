@@ -14,10 +14,11 @@ import com.tool.common.di.component.AppComponent;
  * 3、Retrofit2 https://github.com/square/retrofit
  * 4、Glide https://github.com/bumptech/glide
  * 5、Okhttp https://github.com/square/okhttp
- * 6、Gson https://github.com/google/gson
- * 7、GreenDAO https://github.com/greenrobot/greenDAO
- * 8、EasyPermissions https://github.com/googlesamples/easypermissions
- * 9、Logg https://github.com/DesignQu/Logg
+ * 6、AndroidEventBus https://github.com/hehonghui/AndroidEventBus
+ * 7、Gson https://github.com/google/gson
+ * 8、GreenDAO https://github.com/greenrobot/greenDAO
+ * 9、EasyPermissions https://github.com/googlesamples/easypermissions
+ * 10、Logg https://github.com/DesignQu/Logg
  * <p>
  * 二、基本使用方法
  * 1、配置自定义Application必须继承BaseApplication，BaseApplication完成Http框架、图片框架、日志管理框架等初始化工作
