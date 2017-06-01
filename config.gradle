@@ -27,12 +27,13 @@ ext {
             // Network
             "retrofit"                   : "com.squareup.retrofit2:retrofit:${version["retrofitSdkVersion"]}",
             "retrofit-converter-gson"    : "com.squareup.retrofit2:converter-gson:${version["retrofitSdkVersion"]}",
-            "okhttp3"                    : "com.squareup.okhttp3:okhttp:3.2.0",
+            "okhttp3"                    : "com.squareup.okhttp3:okhttp:3.7.0",
             "okhttp3-logging-interceptor": "com.squareup.okhttp3:logging-interceptor:3.4.1",
             "okhttp-urlconnection"       : "com.squareup.okhttp:okhttp-urlconnection:2.2.0",
             "okio"                       : "com.squareup.okio:okio:1.8.0",
             // Image
-            "glide"                      : "com.github.bumptech.glide:glide:3.7.0",
+            "glide"                      : "com.github.bumptech.glide:glide:3.8.0",
+            "picasso"                    : "com.squareup.picasso:picasso:2.5.2",
             // Tools
             "butterknife"                : "com.jakewharton:butterknife:${version["butterknifeSdkVersion"]}",
             "butterknife-compiler"       : "com.jakewharton:butterknife-compiler:${version["butterknifeSdkVersion"]}",
@@ -40,13 +41,14 @@ ext {
             "dagger2-apt-compiler"       : "com.google.dagger:dagger-compiler:${version["dagger2SdkVersion"]}",
             "javax.annotation"           : "javax.annotation:jsr250-api:1.0",
             "eventbus"                   : "org.simple:androideventbus:1.0.5.1",
-            "gson"                       : "com.google.code.gson:gson:2.7",
+            "gson"                       : "com.google.code.gson:gson:2.8.0",
             "easypermissions"            : "pub.devrel:easypermissions:0.3.0",
+            "multidex"                   : "com.android.support:multidex:1.0.1",
             // DB
             "greendao"                   : "org.greenrobot:greendao:3.2.2",
             "sqlcipher"                  : "net.zetetic:android-database-sqlcipher:3.5.7",
             // Log
-            "q-log"                      : "com.tool.common.log:Q-Log:0.2.0",
+            "q-log"                      : "com.tool.common.log:Q-Log:0.3.0",
             // Test
             "canary-debug"               : "com.squareup.leakcanary:leakcanary-android:1.5",
             "canary-release"             : "com.squareup.leakcanary:leakcanary-android-no-op:1.5"

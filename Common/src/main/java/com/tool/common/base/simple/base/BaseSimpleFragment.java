@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 
 import com.tool.common.base.simple.delegate.ISimpleFragment;
 import com.tool.common.di.component.AppComponent;
-import com.tool.common.frame.BasePresenter;
+import com.tool.common.frame.simple.BaseSimplePresenter;
 
 /**
  * BaseSimpleFragment
  */
-public abstract class BaseSimpleFragment<P extends BasePresenter> extends Fragment implements ISimpleFragment<P> {
+public abstract class BaseSimpleFragment<P extends BaseSimplePresenter> extends Fragment implements ISimpleFragment<P> {
 
     // AppComponent
     protected AppComponent component = null;
@@ -36,6 +36,35 @@ public abstract class BaseSimpleFragment<P extends BasePresenter> extends Fragme
     @Override
     public void setPresenter(P presenter) {
         this.presenter = presenter;
+    }
+
+    // Fragment当前状态是否可见
+    private boolean isVisible;
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(getUserVisibleHint()) {
+            isVisible = true;
+            onVisible();
+        } else {
+            isVisible = false;
+            onInvisible();
+        }
+    }
+
+    /**
+     * 当前Fragment是可见的
+     */
+    protected void onVisible() {
+
+    }
+
+    /**
+     * 当前Fragment是不可见的
+     */
+    protected void onInvisible() {
+
     }
 
     @Override

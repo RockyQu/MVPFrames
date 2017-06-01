@@ -16,6 +16,10 @@ android {
         renderscriptSupportModeEnabled rootProject.ext.android["renderscriptSupportModeEnabled"]
     }
 
+    dexOptions {
+        preDexLibraries = false
+    }
+
     buildTypes {
         release {
             minifyEnabled false

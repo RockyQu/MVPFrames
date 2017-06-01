@@ -34,7 +34,6 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     public FragmentDelegateImpl(FragmentManager fragmentManager, Fragment fragment) {
         this.fragmentManager = fragmentManager;
         this.fragment = fragment;
-        this.iFragment = (IFragment) fragment;
 
         if (fragment instanceof IFragment) {
             this.iFragment = (IFragment) fragment;

@@ -5,7 +5,6 @@ import android.content.Context;
 
 import com.tool.common.http.converter.GsonConverterBodyFactory;
 import com.tool.common.http.converter.JsonConverterFactory;
-import com.tool.common.http.cookie.CookieManager;
 import com.tool.common.http.interceptor.NetworkInterceptor;
 
 import java.util.List;
@@ -16,6 +15,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
+import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -46,15 +46,19 @@ public class HttpModule {
 
     @Singleton
     @Provides
-    OkHttpClient provideClient(Application application, HttpModule.OkHttpConfiguration okHttpConfiguration, OkHttpClient.Builder okHttpClient, Interceptor interceptor, List<Interceptor> interceptors) {
+    OkHttpClient provideClient(Application application, HttpModule.OkHttpConfiguration okHttpConfiguration, OkHttpClient.Builder okHttpClient, Interceptor interceptor, List<Interceptor> interceptors, CookieJar cookie) {
         OkHttpClient.Builder builder = okHttpClient
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(true)// 设置出现错误进行重新连接
                 .cache(new Cache(application.getCacheDir(), CACHE_MAX_SIZE))// 设置缓存路径和大小
                 .addInterceptor(interceptor)
-                .addNetworkInterceptor(interceptor)// 网络拦截器，在Request和Resposne是分别被调用一次
-                .cookieJar(new CookieManager());// Cookie
+                .addNetworkInterceptor(interceptor);// 网络拦截器，在Request和Resposne是分别被调用一次
+
+        if (cookie != null) {
+            builder.cookieJar(cookie);// Cookie
+        }
+
         if (interceptors != null && interceptors.size() > 0) {// Interceptors，只在Response被调用一次
             for (Interceptor item : interceptors) {
                 builder.addInterceptor(item);
@@ -70,11 +74,13 @@ public class HttpModule {
         return new Retrofit.Builder();
     }
 
+
     @Singleton
     @Provides
     OkHttpClient.Builder provideOkHttpClientBuilder() {
         return new OkHttpClient.Builder();
     }
+
 
     /**
      * Http拦截器

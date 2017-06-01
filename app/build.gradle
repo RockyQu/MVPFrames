@@ -198,6 +198,8 @@ dependencies {
     compile rootProject.ext.dependencies["greendao"]
     compile rootProject.ext.dependencies["sqlcipher"]
 
+    compile rootProject.ext.dependencies["multidex"]
+
     // 引入框架基础共通模块
     compile project(':Common')
 }

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.text.TextUtils;
 
 import com.tool.common.http.NetworkHandler;
+import com.tool.common.http.cookie.PersistentCookieJar;
 import com.tool.common.utils.FileUtils;
 import com.tool.common.widget.imageloader.BaseImageLoader;
 import com.tool.common.widget.imageloader.glide.GlideImageLoader;
@@ -17,6 +18,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 
@@ -38,6 +40,9 @@ public class AppConfigModule {
 
     private AppModule.GsonConfiguration gsonConfiguration;
 
+    private CookieJar cookie;
+    private PersistentCookieJar.CookieLoadForRequest cookieLoadForRequest;
+
     public AppConfigModule(Builder buidler) {
         this.httpUrl = buidler.httpUrl;
         this.cacheFile = buidler.cacheFile;
@@ -50,6 +55,9 @@ public class AppConfigModule {
         this.okHttpConfiguration = buidler.okHttpConfiguration;
 
         this.gsonConfiguration = buidler.gsonConfiguration;
+
+        this.cookie = buidler.cookie;
+        this.cookieLoadForRequest = buidler.cookieLoadForRequest;
     }
 
     public static Builder builder() {
@@ -104,6 +112,12 @@ public class AppConfigModule {
         return gsonConfiguration == null ? AppModule.GsonConfiguration.EMPTY : gsonConfiguration;
     }
 
+    @Singleton
+    @Provides
+    CookieJar provideCookieJar(Application application) {
+        return cookie == null ? new PersistentCookieJar(application, cookieLoadForRequest == null ? PersistentCookieJar.CookieLoadForRequest.EMPTY : cookieLoadForRequest) : cookie;
+    }
+
     /**
      * App全局配置
      */
@@ -128,6 +142,14 @@ public class AppConfigModule {
 
         // 提供一个Gson配置接口，用于对Gson进行格外的参数配置
         private AppModule.GsonConfiguration gsonConfiguration;
+
+        // OkHttp用CookieJar保持会话功能，框架已集成PersistentCookieJar自动管理Cookie，或自己实现CookieJar接口
+        private CookieJar cookie;
+        // 此接口需求配合PersistentCookieJar使用
+        // 这是用来从PersistentCookieJar的loadForRequest获取List<Cookie>
+        // 实际上只是为了获取到接口里的Cookie值，如果项目存在两套Http模块
+        // 比如登录模块用OkHttp，其他模块需要用到登录模块返回的Cookie来保持会话，此时需要实现此接口将返回的Cookie设置给另外一套Http模块
+        private PersistentCookieJar.CookieLoadForRequest cookieLoadForRequest;
 
         private Builder() {
             ;
@@ -173,6 +195,16 @@ public class AppConfigModule {
 
         public Builder gsonConfiguration(AppModule.GsonConfiguration gsonConfiguration) {
             this.gsonConfiguration = gsonConfiguration;
+            return this;
+        }
+
+        public Builder cookie(CookieJar cookie) {
+            this.cookie = cookie;
+            return this;
+        }
+
+        public Builder cookieLoadForRequest(PersistentCookieJar.CookieLoadForRequest cookieLoadForRequest) {
+            this.cookieLoadForRequest = cookieLoadForRequest;
             return this;
         }
 

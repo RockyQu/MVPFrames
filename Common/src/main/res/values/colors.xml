@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ************************************************************ -->
+    <!-- 导航栏颜色相关 -->
+    <color name="colorBottomNavigationAccent">#2B93FF</color>
+    <color name="colorBottomNavigationInactive">#747474</color>
+
+    <color name="colorBottomNavigationActiveColored">#FFFFFF</color>
+    <color name="colorBottomNavigationInactiveColored">#50FFFFFF</color>
+
+    <color name="colorBottomNavigationSelectedBackground">#17000000</color>
+
+    <!--提示圆点-->
+    <color name="colorBottomNavigationNotification">#F63D2B</color>
+
+    <!-- ************************************************************ -->
+
+
+</resources>
