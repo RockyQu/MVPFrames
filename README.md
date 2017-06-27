@@ -1,6 +1,6 @@
 # MVPFrames
-这是一个适用于大中小全能型AndroidMVP开发框架  
-集成目前主流开源框架，涉及Dagger2、ButterKnife、Retrofit2、Glide、Gson等第三方库
+这是一个适用于大中小全能型AndroidMVP开发框架，核心思想取自MVPArms，做了一些适合自己项目的修改
+主要集成目前主流开源框架，涉及Dagger2、ButterKnife、Retrofit2、Glide、Gson等第三方库
 
 ## Usage
 * 配置自定义Application必须继承BaseApplication，BaseApplication完成Http、图片、DB、日志管理等框架的初始化工作  
