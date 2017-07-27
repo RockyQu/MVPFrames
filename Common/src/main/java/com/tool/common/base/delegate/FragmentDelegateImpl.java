@@ -44,6 +44,11 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onAttach(Context context) {
+
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         AppComponent component = ((App) fragment.getActivity().getApplication()).getAppComponent();
         // 在Base基类实现些方法，为了能够方便的获取到AppComponent
         if (iFragment != null) {
@@ -59,11 +64,6 @@ public class FragmentDelegateImpl implements FragmentDelegate {
             this.iPresenter = iSimpleFragment.obtainPresenter();
             iSimpleFragment.setPresenter(iPresenter);
         }
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-
     }
 
     @Override

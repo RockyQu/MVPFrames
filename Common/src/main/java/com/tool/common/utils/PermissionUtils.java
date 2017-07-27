@@ -74,9 +74,11 @@ public class PermissionUtils extends BaseUtils {
     public static final String RECORD_AUDIO = Manifest.permission.RECORD_AUDIO;
     // 允许程序读取短信息
     public static final String READ_SMS = Manifest.permission.READ_SMS;
+    // 允许程序写入但不读取用户联系人数据
+    public static final String WRITE_CONTACTS = Manifest.permission.WRITE_CONTACTS;
 
     // 常用权限组，用于批量申请
-    public static final String[] PERMISSIONS = {READ_PHONE_STATE, CAMERA, ACCESS_FINE_LOCATION, READ_EXTERNAL_STORAGE, RECORD_AUDIO, READ_SMS};
+    public static final String[] PERMISSIONS = {READ_PHONE_STATE, CAMERA, ACCESS_FINE_LOCATION, READ_EXTERNAL_STORAGE, RECORD_AUDIO, READ_SMS, WRITE_CONTACTS};
 
     // requestCode
     public static final int PERMISSION_CODE = 100;

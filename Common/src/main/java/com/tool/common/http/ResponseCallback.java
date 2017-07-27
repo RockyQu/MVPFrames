@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 
 import com.tool.common.R;
-import com.tool.common.base.BaseApplication;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -16,7 +15,7 @@ import retrofit2.Response;
 /**
  * Response Callback
  */
-public abstract class ResponseCallback<T extends ResponseEntity> implements Callback<T> {
+public abstract class ResponseCallback<T> implements Callback<T> {
 
     private Application application;
 
@@ -40,7 +39,10 @@ public abstract class ResponseCallback<T extends ResponseEntity> implements Call
 
     @Override
     public void onFailure(Call<T> call, Throwable throwable) {
-        onFailure(formatError(application, throwable));
+        if (!call.isCanceled()) {
+            onFailure(formatError(application, throwable));
+        }
+
         onFinish();
     }
 

@@ -11,10 +11,13 @@ buildscript {
 
     // 基础依赖
     dependencies {
-        // 声明Android Gradle Plugin插件版本
         classpath 'com.android.tools.build:gradle:2.3.1'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.4.0'
+
+        // 以下这段功能是用来上传至代码库，其他项目不用复制这段代码
+        classpath 'com.novoda:bintray-release:0.3.4'
     }
 }
 
@@ -22,13 +25,16 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
+
+        maven { url 'https://jitpack.io' }
+    }
+
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+        options.addStringOption('encoding', 'UTF-8')
     }
 }
 
-// 声明一个任务，任务名叫clean，任务类型是Delete
-// 运行gradle clean时，删除根目录中的build目录
-// 相当于执行Delete.delete(rootProject.buildDir)
-// 就会删除rootProject.buildDir下的文件
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

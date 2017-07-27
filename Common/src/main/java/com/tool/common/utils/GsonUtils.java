@@ -14,7 +14,7 @@ public class GsonUtils extends BaseUtils {
         super();
     }
 
-    private static Gson getGson() {
+    public static Gson getGson() {
         if (gson == null) {
             gson = new Gson();
         }

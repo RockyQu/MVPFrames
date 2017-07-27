@@ -214,19 +214,4 @@ public class ArrayUtils extends BaseUtils {
             }
         }
     }
-
-    /**
-     * 将数组颠倒
-     */
-    public static Object[] upsideDown(Object[] objects) {
-        int length = objects.length;
-        Object tem;
-        for (int w = 0; w < length / 2; w++) {
-            tem = objects[w];
-            objects[w] = objects[length - 1 - w];
-            objects[length - 1 - w] = tem;
-            tem = null;
-        }
-        return objects;
-    }
 }

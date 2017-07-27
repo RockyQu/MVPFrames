@@ -27,11 +27,11 @@ public class GsonResponseDeserializer implements JsonDeserializer<ResponseEntity
     @Override
     public ResponseEntity deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject response = json.getAsJsonObject();
-        if (response.get("result").isJsonPrimitive()) {// 是否为基本数据类型
-            int code = response.get("code").getAsInt();
-            String message = response.get("info").getAsString();
-            return new ResponseEntity(code, message);
-        }
+//        if (response.get("result").isJsonPrimitive()) {// 是否为基本数据类型
+//            int code = response.get("code").getAsInt();
+//            String message = response.get("info").getAsString();
+//            return new ResponseEntity(code, message);
+//        }
 
         return new Gson().fromJson(json, typeOfT);
     }

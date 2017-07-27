@@ -315,4 +315,151 @@ public class StringUtils extends BaseUtils {
                 .compile("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$",
                         Pattern.CASE_INSENSITIVE).matcher(value).matches();
     }
+
+    // 身份证
+    private static final String codeAndCity[][] = {{"11", "北京"}, {"12", "天津"}, {"13", "河北"}, {"14", "山西"},
+            {"15", "内蒙古"}, {"21", "辽宁"}, {"22", "吉林"}, {"23", "黑龙江"}, {"31", "上海"}, {"32", "江苏"},
+            {"33", "浙江"}, {"34", "安徽"}, {"35", "福建"}, {"36", "江西"}, {"37", "山东"}, {"41", "河南"},
+            {"42", "湖北"}, {"43", "湖南"}, {"44", "广东"}, {"45", "广西"}, {"46", "海南"}, {"50", "重庆"},
+            {"51", "四川"}, {"52", "贵州"}, {"53", "云南"}, {"54", "西藏"}, {"61", "陕西"}, {"62", "甘肃"},
+            {"63", "青海"}, {"64", "宁夏"}, {"65", "新疆"}, {"71", "台湾"}, {"81", "香港"}, {"82", "澳门"},
+            {"91", "国外"}};
+    // 身份证 加权因子 常数
+    private final static int[] wi = {7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1};
+    // 身份证校验码
+    private final static int[] vi = {1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2};
+
+    /**
+     * 身份证号码检查
+     */
+    public static boolean idCard(String idCard) {
+        // 身份证号码非空
+        if (!isEmpty(idCard)) {
+            return !idCardCheck(idCard);
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * 身份证检查
+     */
+    private static boolean idCardCheck(String IDnumber) {
+        boolean result = IDnumber.matches("[0-9]{15}|[0-9]{17}[0-9X]");
+        if (result) {
+            // 地区验证=true
+            if (cityCodeCheck(IDnumber)) {
+                // 15位转18位
+                if (IDnumber.length() == 15) {
+                    IDnumber = IDnumber15To18(IDnumber);
+                }
+                // 出生日期验证=true
+                if (birthdayCheck(IDnumber)) {
+                    // 校验身份证的校验码
+                    return verify(IDnumber);
+                } else
+                    return false;
+            } else
+                return false;
+        } else
+            return false;
+    }
+
+    /**
+     * 地区验证(身份证)
+     */
+    private static boolean cityCodeCheck(String IDnumber) {
+        boolean result = false;
+        String provinceid = IDnumber.substring(0, 2);
+        for (int i = 0; i < codeAndCity.length; i++) {
+            if (codeAndCity[i][0].equals(provinceid)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 15位转18位 (身份证)
+     */
+    private static String IDnumber15To18(String IDnumber) {
+        StringBuffer eighteen = new StringBuffer(IDnumber);
+        eighteen = eighteen.insert(6, "19");
+        IDnumber = eighteen.toString();
+        // 计算最后一位校验值
+        String remain = getVerify(IDnumber);
+        return (IDnumber + remain);
+    }
+
+    /**
+     * 计算最后一位校验值
+     */
+    private static String getVerify(String eighteen) {
+        int remain = 0;
+        if (eighteen.length() == 18) {
+            eighteen = eighteen.substring(0, 17);
+        }
+        if (eighteen.length() == 17) {
+            int sum = 0;
+            int[] ai = new int[18];
+            for (int i = 0; i < 17; i++) {
+                String k = eighteen.substring(i, i + 1);
+                ai[i] = Integer.valueOf(k);
+            }
+            for (int i = 0; i < 17; i++) {
+                sum += wi[i] * ai[i];
+            }
+            remain = sum % 11;
+        }
+        return remain == 2 ? "X" : String.valueOf(vi[remain]);
+    }
+
+    /**
+     * 出生日期验证(身份证)
+     */
+    private static boolean birthdayCheck(String IDnumber) {
+        boolean result = false;
+        int year, month, date;
+        year = Integer.parseInt(IDnumber.substring(6, 10));
+        month = Integer.parseInt(IDnumber.substring(10, 12));
+        date = Integer.parseInt(IDnumber.substring(12, 14));
+        switch (month) {
+            case 2:
+                result = (date >= 1) && (year % 4 == 0 ? date <= 29 : date <= 28);
+                break;
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                result = (date >= 1) && (date <= 31);
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                result = (date >= 1) && (date <= 31);
+                break;
+            default:
+                result = false;
+                break;
+        }
+        return result;
+    }
+
+    /**
+     * 身份证的校验码验证
+     */
+    private static boolean verify(String IDnumber) {
+        // 获取第18位
+        String verify = IDnumber.substring(17, 18);
+        // 验证最后一位校验值
+        if (verify.equals(getVerify(IDnumber))) {
+            return true;
+        }
+        return false;
+    }
 }

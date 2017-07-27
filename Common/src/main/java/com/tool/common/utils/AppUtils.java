@@ -7,10 +7,12 @@ import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -18,8 +20,15 @@ import android.view.WindowManager;
 
 import com.tool.common.utils.base.BaseUtils;
 
+import org.simple.eventbus.EventBus;
+
 import java.io.File;
 import java.util.List;
+
+import static com.tool.common.integration.AppManager.APPMANAGER_MESSAGE;
+import static com.tool.common.integration.AppManager.EXIT;
+import static com.tool.common.integration.AppManager.KILL;
+import static com.tool.common.integration.AppManager.START_ACTIVITY;
 
 /**
  * 应用工具类
@@ -80,6 +89,30 @@ public final class AppUtils extends BaseUtils {
     }
 
     /**
+     * 获取应用渠道信息
+     *
+     * @param context
+     * @param channel 渠道名称
+     * @return
+     */
+    public static String getAppChannel(Context context, String channel) {
+        try {
+            ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(
+                    context.getPackageName(), PackageManager.GET_META_DATA);
+            if (appInfo.metaData != null) {
+                for (String key : appInfo.metaData.keySet()) {
+                    if (key.equals(channel)) {
+                        return appInfo.metaData.get(key).toString();
+                    }
+                }
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return channel;
+    }
+
+    /**
      * 获取应用运行的最大内存
      *
      * @return 最大内存
@@ -110,20 +143,39 @@ public final class AppUtils extends BaseUtils {
     /**
      * 停止运行服务
      *
-     * @param context   上下文
-     * @param className 类名
+     * @param context 上下文
+     * @param cls     类名
      * @return 是否执行成功
      */
-    public static boolean stopRunningService(Context context, String className) {
-        Intent intent_service = null;
-        boolean ret = false;
+    public static void startService(Context context, Class<?> cls) {
+        Intent intentService = null;
         try {
-            intent_service = new Intent(context, Class.forName(className));
+            intentService = new Intent(context, cls);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (intent_service != null) {
-            ret = context.stopService(intent_service);
+        if (intentService != null) {
+            context.startService(intentService);
+        }
+    }
+
+    /**
+     * 停止运行服务
+     *
+     * @param context 上下文
+     * @param cls     类名
+     * @return 是否执行成功
+     */
+    public static boolean stopService(Context context, Class<?> cls) {
+        Intent intentService = null;
+        boolean ret = false;
+        try {
+            intentService = new Intent(context, cls);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (intentService != null) {
+            ret = context.stopService(intentService);
         }
         return ret;
     }
@@ -241,7 +293,7 @@ public final class AppUtils extends BaseUtils {
      */
     public static void openCamera(Activity activity, String path, int requestCode) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(path)));
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(path)));
         activity.startActivityForResult(intent, requestCode);
     }
 
@@ -291,5 +343,41 @@ public final class AppUtils extends BaseUtils {
         Intent sendIntent = new Intent(Intent.ACTION_VIEW, uri);
         sendIntent.putExtra("sms_body", message);
         activity.startActivity(sendIntent);
+    }
+
+    /**
+     * 通过EventBus远程遥控跳转页面
+     *
+     * @param cls
+     */
+    public static void startActivity(Class cls) {
+        Message message = new Message();
+        message.what = START_ACTIVITY;
+        message.obj = cls;
+        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+    }
+
+    /**
+     * 通过EventBus远程遥控跳转页面
+     *
+     * @param content
+     */
+    public static void startActivity(Intent content) {
+        Message message = new Message();
+        message.what = START_ACTIVITY;
+        message.obj = content;
+        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+    }
+
+    public static void kill() {
+        Message message = new Message();
+        message.what = KILL;
+        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+    }
+
+    public static void exit() {
+        Message message = new Message();
+        message.what = EXIT;
+        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
     }
 }

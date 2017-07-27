@@ -6,10 +6,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 
-import com.tool.common.log.QLog;
 import com.tool.common.widget.ToastBar;
 
 import org.simple.eventbus.EventBus;
@@ -56,7 +53,6 @@ public class AppManager {
      */
     @Subscriber(tag = APPMANAGER_MESSAGE, mode = ThreadMode.MAIN)
     public void onReceive(Message message) {
-        QLog.e("onReceive");
         switch (message.what) {
             case START_ACTIVITY:
                 if (message.obj == null) {
@@ -82,6 +78,8 @@ public class AppManager {
             case EXIT:
                 AppExit();
                 break;
+            default:
+                break;
         }
     }
 
@@ -94,8 +92,8 @@ public class AppManager {
         if (this.getCurrentActivity() == null) {
             return;
         }
-        View view = getCurrentActivity().getWindow().getDecorView().findViewById(android.R.id.content);
-        ToastBar.create(view, message).show();
+//        View view = getCurrentActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+        ToastBar.message(this.getCurrentActivity(), message);
     }
 
     /**
@@ -252,8 +250,9 @@ public class AppManager {
     public void kill() {
         Iterator<Activity> iterator = getActivityList().iterator();
         while (iterator.hasNext()) {
-            iterator.next().finish();
+            Activity next = iterator.next();
             iterator.remove();
+            next.finish();
         }
     }
 

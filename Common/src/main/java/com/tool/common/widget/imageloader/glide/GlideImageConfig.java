@@ -112,12 +112,6 @@ public class GlideImageConfig extends ImageConfig {
         }
 
         public GlideImageConfig build() {
-            if (url == null) {
-                throw new IllegalStateException("Url is required");
-            }
-            if (imageView == null) {
-                throw new IllegalStateException("ImageView is required");
-            }
             return new GlideImageConfig(this);
         }
     }

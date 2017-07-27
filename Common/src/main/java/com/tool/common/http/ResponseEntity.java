@@ -7,30 +7,35 @@ import com.google.gson.annotations.SerializedName;
  */
 public class ResponseEntity<T> {
 
-    @SerializedName("code")
-    private int code;
-    @SerializedName("info")
+    // 是否登录
+    @SerializedName("login")
+    private boolean login;
+    // 提示信息
+    @SerializedName("msg")
     private String message;
-    @SerializedName("result")
+    // 请求是否成功
+    @SerializedName("success")
+    private boolean success;
+    // 系统是否正常
+    @SerializedName("sys")
+    private boolean system;
+    // 数量
+    @SerializedName("totalProperty")
+    private long count;
+    // 请求结果
+    @SerializedName("data")
     private T data;
 
-    public ResponseEntity(int code, String message) {
-        this.code = code;
-        this.message = message;
+    public ResponseEntity() {
+        ;
     }
 
-    public ResponseEntity(int code, String message, T data) {
-        this.code = code;
-        this.message = message;
-        this.data = data;
+    public boolean isLogin() {
+        return login;
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
+    public void setLogin(boolean login) {
+        this.login = login;
     }
 
     public String getMessage() {
@@ -39,6 +44,30 @@ public class ResponseEntity<T> {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public boolean isSystem() {
+        return system;
+    }
+
+    public void setSystem(boolean system) {
+        this.system = system;
+    }
+
+    public long getCount() {
+        return count;
+    }
+
+    public void setCount(long count) {
+        this.count = count;
     }
 
     public T getData() {

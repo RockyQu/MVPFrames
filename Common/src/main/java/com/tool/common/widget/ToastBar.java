@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
+import android.os.Message;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
@@ -26,13 +27,20 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tool.common.R;
 import com.tool.common.base.BaseActivity;
 import com.tool.common.base.BaseApplication;
+import com.tool.common.integration.AppManager;
 import com.tool.common.utils.AnimationUtils;
 
+import org.simple.eventbus.EventBus;
+
 import java.lang.ref.WeakReference;
+
+import static com.tool.common.integration.AppManager.APPMANAGER_MESSAGE;
+import static com.tool.common.integration.AppManager.START_ACTIVITY;
 
 /**
  * ToastBar
@@ -83,6 +91,19 @@ public class ToastBar {
      */
     public static ToastBar create(View view, String message) {
         return create(view, message, Snackbar.LENGTH_SHORT);
+    }
+
+    private static Toast TOAST = null;
+
+    public static void message(Context context, String message) {
+        if (TOAST == null) {
+            TOAST = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+        }
+        else {
+            TOAST.setText(message);
+            TOAST.setDuration(Toast.LENGTH_SHORT);
+        }
+        TOAST.show();
     }
 
     /**
@@ -388,5 +409,17 @@ public class ToastBar {
      */
     public void show() {
         snackbar.show();
+    }
+
+    /**
+     * 通过EventBus远程遥控显示提示信息框
+     *
+     * @param message
+     */
+    public static void message(String message) {
+        Message msg = new Message();
+        msg.what = AppManager.SNACKBAR;
+        msg.obj = message;
+        EventBus.getDefault().post(msg, APPMANAGER_MESSAGE);
     }
 }
