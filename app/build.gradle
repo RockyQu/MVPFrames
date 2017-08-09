@@ -9,6 +9,9 @@ android {
     // Build Tools版本
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
 
+    // 解决Android SDK升级至API23，导致原生SDK删除org.apache.http.*类的问题
+    useLibrary 'org.apache.http.legacy'
+
     defaultConfig {
         // 包名
         applicationId "com.frame.mvp"
@@ -27,6 +30,11 @@ android {
 
         // 单元测试
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
+
+//        ndk {
+//            // 设置支持的SO库架构
+//            abiFilters "armeabi", "armeabi-v7a"
+//        }
 
         // Enabling MultiDex support.
 //        multiDexEnabled true
@@ -61,6 +69,7 @@ android {
         disable 'MissingTranslation'
 
         abortOnError false
+        checkReleaseBuilds false
     }
 
     dexOptions {
@@ -142,7 +151,7 @@ android {
             // 混淆文件位置，其中proguard-android.txt为默认的混淆配置，proguard-rules.pro为模块额外的混淆配置
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             // 签名
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
 
             // 批量打包
 //            applicationVariants.all { variant ->
