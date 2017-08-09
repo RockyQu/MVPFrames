@@ -4,10 +4,12 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.tool.common.R;
+import com.tool.common.log.QLog;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -58,7 +61,6 @@ public abstract class BaseDialogFragment extends DialogFragment implements Dialo
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
 
         if (openBlur()) {// 是否开启模糊效果
@@ -148,7 +150,12 @@ public abstract class BaseDialogFragment extends DialogFragment implements Dialo
 
             // 控制Dialog宽高,该部分功能必须写在super.onStart()之后
             // 此设置会导致键盘不自动弹出,原因不明
-//            window.setLayout(window.getAttributes().width, window.getAttributes().height);
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+//            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+            if (getDialogWidth() != 0 && getDialogHeight() != 0) {
+                window.setLayout(getDialogWidth(), getDialogHeight());
+            }
         }
     }
 
@@ -190,6 +197,20 @@ public abstract class BaseDialogFragment extends DialogFragment implements Dialo
             getDialog().setDismissMessage(null);
         }
         super.onDestroyView();
+    }
+
+    /**
+     * 设置自定义宽
+     */
+    protected int getDialogWidth() {
+        return 0;
+    }
+
+    /**
+     * 设置自定义高
+     */
+    protected int getDialogHeight() {
+        return 0;
     }
 
     /**

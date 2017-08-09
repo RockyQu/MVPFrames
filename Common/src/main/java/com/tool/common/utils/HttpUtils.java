@@ -1,5 +1,6 @@
 package com.tool.common.utils;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.tool.common.http.ParameterBody;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 /**

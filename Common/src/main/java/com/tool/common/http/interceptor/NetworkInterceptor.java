@@ -2,7 +2,6 @@ package com.tool.common.http.interceptor;
 
 import android.app.Application;
 
-import com.tool.common.base.BaseApplication;
 import com.tool.common.http.NetworkHandler;
 import com.tool.common.http.receiver.NetworkStatusReceiver;
 import com.tool.common.utils.ZipUtils;
@@ -56,7 +55,7 @@ public class NetworkInterceptor implements Interceptor {
 
         Response originalResponse = chain.proceed(request);
         if (type == NetworkStatusReceiver.Type.MOBILE || type == NetworkStatusReceiver.Type.WIFI) {
-            int maxAge = 5;// 10秒
+            int maxAge = 0;// 0秒
             originalResponse = originalResponse.newBuilder()
                     .removeHeader("Pragma")
                     .removeHeader("Cache-Control")

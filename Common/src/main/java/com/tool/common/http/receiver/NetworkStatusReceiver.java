@@ -53,7 +53,6 @@ public class NetworkStatusReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        QLog.e("NetworkStatusReceiver onReceive");
         if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
             if (NetWorkUtils.isWifiConnected(context)) {
                 type = Type.WIFI;

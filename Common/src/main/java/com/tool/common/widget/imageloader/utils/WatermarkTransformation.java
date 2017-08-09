@@ -16,7 +16,7 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 public class WatermarkTransformation extends BitmapTransformation {
 
     private static Paint paint;
-    private String message;
+    String message;
 
     public WatermarkTransformation(Context context, String message) {
         super(context);
@@ -35,15 +35,15 @@ public class WatermarkTransformation extends BitmapTransformation {
         return watermark(toTransform);
     }
 
-    private Bitmap watermark(Bitmap bitmap) {
-        Canvas canvas = new Canvas(bitmap);
-        canvas.drawBitmap(bitmap, 0, 0, paint);
-        canvas.drawText(message, 40, 40, paint);
-        return bitmap;
-    }
-
     @Override
     public String getId() {
         return WatermarkTransformation.class.getSimpleName();
+    }
+
+    private Bitmap watermark(Bitmap bitmap) {
+        Canvas canvas = new Canvas(bitmap);
+        canvas.drawBitmap(bitmap, 0, 0, paint);
+        canvas.drawText(message, 20, 40, paint);
+        return bitmap;
     }
 }

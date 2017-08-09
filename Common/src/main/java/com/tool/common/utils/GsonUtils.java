@@ -1,7 +1,10 @@
 package com.tool.common.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.tool.common.utils.base.BaseUtils;
+
+import java.util.List;
 
 /**
  * GsonHelper

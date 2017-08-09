@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.tool.common.R;
+import com.tool.common.log.QLog;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;

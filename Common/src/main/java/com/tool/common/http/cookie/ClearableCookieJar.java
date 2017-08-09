@@ -3,7 +3,7 @@ package com.tool.common.http.cookie;
 import okhttp3.CookieJar;
 
 /**
- * This interface extends {@link okhttp3.CookieJar} and adds methods to clear the cookies.
+ * This interface extends {@link CookieJar} and adds methods to clear the cookies.
  */
 public interface ClearableCookieJar extends CookieJar {
 

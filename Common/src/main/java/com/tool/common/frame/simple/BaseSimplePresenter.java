@@ -2,7 +2,6 @@ package com.tool.common.frame.simple;
 
 import com.tool.common.frame.IModel;
 import com.tool.common.frame.IPresenter;
-import com.tool.common.frame.IView;
 
 import org.simple.eventbus.EventBus;
 

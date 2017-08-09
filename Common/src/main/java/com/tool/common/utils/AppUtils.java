@@ -18,6 +18,7 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.tool.common.log.QLog;
 import com.tool.common.utils.base.BaseUtils;
 
 import org.simple.eventbus.EventBus;
@@ -293,7 +294,7 @@ public final class AppUtils extends BaseUtils {
      */
     public static void openCamera(Activity activity, String path, int requestCode) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(path)));
+        intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(path)));
         activity.startActivityForResult(intent, requestCode);
     }
 

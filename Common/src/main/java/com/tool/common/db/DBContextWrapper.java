@@ -6,8 +6,6 @@ import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
-import com.tool.common.base.BaseApplication;
-import com.tool.common.log.QLog;
 import com.tool.common.utils.ProjectUtils;
 
 import java.io.File;
