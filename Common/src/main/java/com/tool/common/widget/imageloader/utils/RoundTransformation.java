@@ -51,6 +51,6 @@ public class RoundTransformation extends BitmapTransformation {
 
     @Override
     public String getId() {
-        return getClass().getName() + Math.round(radius);
+        return RoundTransformation.class.getSimpleName();
     }
 }

@@ -11,23 +11,30 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
 /**
- * 添加水印
+ * 添加文字水印
  */
 public class WatermarkTransformation extends BitmapTransformation {
 
-    private static Paint paint;
-    String message;
+    // Paint
+    private Paint paint;
 
-    public WatermarkTransformation(Context context, String message) {
+    // 文字
+    private String message;
+    // 文字大小
+    private int textSize;
+    // 文字颜色
+    private int color;
+
+    public WatermarkTransformation(Context context, Buidler builder) {
         super(context);
 
-        this.message = message;
-    }
+        this.message = builder.message;
+        this.textSize = builder.textSize;
+        this.color = builder.color;
 
-    static {
         paint = new Paint();
-        paint.setColor(Color.RED);
-        paint.setTextSize(42);
+        paint.setColor(color != 0 ? color : Color.RED);
+        paint.setTextSize(textSize);
     }
 
     @Override
@@ -35,15 +42,59 @@ public class WatermarkTransformation extends BitmapTransformation {
         return watermark(toTransform);
     }
 
-    @Override
-    public String getId() {
-        return WatermarkTransformation.class.getSimpleName();
-    }
-
     private Bitmap watermark(Bitmap bitmap) {
         Canvas canvas = new Canvas(bitmap);
         canvas.drawBitmap(bitmap, 0, 0, paint);
-        canvas.drawText(message, 20, 40, paint);
+        canvas.drawText(message, 40, 40, paint);
         return bitmap;
+    }
+
+    public static Buidler builder() {
+        return new Buidler();
+    }
+
+    public static class Buidler {
+
+        private Context context = null;
+
+        private String message;
+        private int textSize = 40;
+        private int color;
+
+        private Buidler() {
+            ;
+        }
+
+        public Buidler context(Context context) {
+            this.context = context;
+            return this;
+        }
+
+        public Buidler message(String message) {
+            this.message = message;
+            return this;
+        }
+
+        public Buidler textSize(int textSize) {
+            this.textSize = textSize;
+            return this;
+        }
+
+        public Buidler color(int color) {
+            this.color = color;
+            return this;
+        }
+
+        public WatermarkTransformation build() {
+            if (context == null) {
+                throw new IllegalStateException("Context is required");
+            }
+            return new WatermarkTransformation(context, this);
+        }
+    }
+
+    @Override
+    public String getId() {
+        return WatermarkTransformation.class.getSimpleName();
     }
 }
