@@ -3,7 +3,7 @@ package com.frame.mvp.db.di;
 import android.app.Application;
 
 import com.frame.mvp.db.DBModule;
-import com.frame.mvp.entity.DaoSession;
+import com.frame.mvp.db.build.DaoSession;
 import com.tool.common.di.scope.ApplicationScope;
 
 import dagger.Component;

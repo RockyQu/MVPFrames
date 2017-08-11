@@ -5,10 +5,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.frame.mvp.app.MVPApplication;
-import com.frame.mvp.entity.DaoMaster;
-import com.frame.mvp.entity.DaoSession;
-import com.frame.mvp.entity.UserDao;
+import com.frame.mvp.db.build.DaoMaster;
+import com.frame.mvp.db.build.DaoSession;
+import com.frame.mvp.db.build.UserDao;
 import com.tool.common.db.DBContextWrapper;
 import com.tool.common.db.MigrationHelper;
 import com.tool.common.di.scope.ApplicationScope;
