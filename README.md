@@ -10,7 +10,7 @@
 ## Features
 * **网络模块** 使用Retrofit2，并通过Dagger2注入实例提供给开发者。Retrofit采用注解方式定义接口方便管理，极大的减少了请求代码和步骤，底层采用Okhttp  
 * **图片模块** 使用策略者模式，使用者只需替换三个类，就可以更换图片框架，默认使用Glide，通过AppComponent获取ImageLoader实例  
-* **数据库模块** 选择适用于Android的GreenDAO框架，通过AppComponent获取DaoSession实例
+* **数据库模块** 选择适用于Android的GreenDAO框架
 
 ## Libraries
 * [Dagger2](https://google.github.io/dagger)  
