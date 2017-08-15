@@ -2,7 +2,7 @@ package com.tool.common.http;
 
 import com.tool.common.http.exception.ApiException;
 
-public interface HttpCallback<T> {
+public interface ResponseCallback<T> {
 
     /**
      * Invoked for a received HTTP response.
