@@ -8,7 +8,7 @@ public interface Api {
     /**
      * PHP
      */
-    String PHP = "https://api.shaimobao.com/";
+    String PHP = "http://www.baidu.com/";
 
     /**
      * Java
