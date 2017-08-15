@@ -15,6 +15,6 @@ public interface ApiUser {
 
     // 登录
     @FormUrlEncoded
-    @POST("")
+    @POST("test")
     Call<ResponseEntity<User>> login(@Field("username") String username, @Field("password") String password);
 }

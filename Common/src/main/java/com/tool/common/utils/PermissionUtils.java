@@ -78,7 +78,7 @@ public class PermissionUtils extends BaseUtils {
     public static final String WRITE_CONTACTS = Manifest.permission.WRITE_CONTACTS;
 
     // 常用权限组，用于批量申请
-    public static final String[] PERMISSIONS = {READ_PHONE_STATE, CAMERA, ACCESS_FINE_LOCATION, READ_EXTERNAL_STORAGE, RECORD_AUDIO, READ_SMS, WRITE_CONTACTS};
+    public static final String[] PERMISSIONS = {READ_PHONE_STATE, CAMERA, ACCESS_FINE_LOCATION, READ_EXTERNAL_STORAGE};
 
     // requestCode
     public static final int PERMISSION_CODE = 100;

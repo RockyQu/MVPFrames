@@ -3,30 +3,33 @@ package com.tool.common.http.exception;
 /**
  * 统一异常处理
  */
-public class ApiException extends Exception{
+public class ApiException extends Exception {
 
     // 错误码
     private int code;
     // 显示的信息
     private String message;
 
-    public ApiException(Throwable e) {
-        super(e);
+    public ApiException() {
+        super();
     }
 
-    public ApiException(Throwable cause,@CodeException.CodeEp int code, String message) {
-        super(message, cause);
+    public ApiException(Throwable throwable) {
+        super(throwable);
+    }
+
+    public ApiException(Throwable throwable, int code, String message) {
+        super(message, throwable);
 
         this.code = code;
         this.message = message;
     }
 
-    @CodeException.CodeEp
     public int getCode() {
         return code;
     }
 
-    public void setCode(@CodeException.CodeEp int code) {
+    public void setCode(int code) {
         this.code = code;
     }
 

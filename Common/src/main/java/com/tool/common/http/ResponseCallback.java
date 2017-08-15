@@ -1,14 +1,7 @@
 package com.tool.common.http;
 
-import android.app.Application;
-import android.content.Context;
-
-import com.tool.common.R;
 import com.tool.common.http.exception.ApiException;
-import com.tool.common.log.QLog;
-
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
+import com.tool.common.http.exception.FactoryException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,21 +12,16 @@ import retrofit2.Response;
  */
 public abstract class ResponseCallback<T> implements Callback<T> {
 
-    private Application application;
-
-    public ResponseCallback(Application application) {
-        this.application = application;
+    public ResponseCallback() {
+        ;
     }
 
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
-        // Returns the HTTP status code.
-        int statusCode = response.raw().code();
-
-        if (statusCode == 200) {
+        if (response.isSuccessful()) {
             onResponse(response.body());
         } else {
-//            onFailure(formatError(application, statusCode));
+            onFailure(FactoryException.resolveExcetpion(response.code()));
         }
 
         onFinish();
@@ -42,59 +30,10 @@ public abstract class ResponseCallback<T> implements Callback<T> {
     @Override
     public void onFailure(Call<T> call, Throwable throwable) {
         if (!call.isCanceled()) {
-//            onFailure(formatError(application, throwable));
+            onFailure(FactoryException.resolveExcetpion(throwable));
         }
 
         onFinish();
-    }
-
-    /**
-     * Error Throwable
-     *
-     * @param context
-     * @param code
-     */
-    private String formatError(Context context, int code) {
-        String result;
-        switch (code) {
-            case 404:
-                result = context.getString(R.string.errorCode404);
-                break;
-            case 500:
-                result = context.getString(R.string.errorCode500);
-                break;
-            case 502:
-                result = context.getString(R.string.errorCode502);
-                break;
-            default:
-                result = context.getString(R.string.errorCodeDefault) + code;
-                break;
-        }
-        return result;
-    }
-
-    /**
-     * Error Throwable
-     *
-     * @param context
-     * @param throwable
-     */
-    private String formatError(Context context, Throwable throwable) {
-        String result;
-
-        if (throwable == null || throwable.getMessage() == null) {
-            return "There is no error message!";
-        }
-
-        if (throwable instanceof SocketTimeoutException) {
-            result = context.getString(R.string.errorSocketTimeout);
-        } else if (throwable instanceof ConnectException) {
-            result = context.getString(R.string.errorConnect);
-        } else {
-            result = context.getString(R.string.errorDefault);
-        }
-
-        return result;
     }
 
     protected abstract void onResponse(T body);

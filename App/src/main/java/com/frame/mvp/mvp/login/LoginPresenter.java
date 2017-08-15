@@ -37,7 +37,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
     public void login(final String account, final String password) {
         view.showLoading();
         user = model.login(account, password);
-        user.enqueue(new ResponseCallback<ResponseEntity<User>>(application) {
+        user.enqueue(new ResponseCallback<ResponseEntity<User>>() {
 
             @Override
             protected void onResponse(ResponseEntity<User> body) {
