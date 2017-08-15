@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.tool.common.R;
+import com.tool.common.http.exception.ApiException;
 import com.tool.common.log.QLog;
 
 import java.net.ConnectException;
@@ -16,7 +17,7 @@ import retrofit2.Response;
 /**
  * Response Callback
  */
-public abstract class RetrofitCallback<T> implements Callback<T> {
+public abstract class RetrofitCallback<T> implements Callback<T>, ResponseCallback<T> {
 
     private Application application;
 
@@ -32,7 +33,7 @@ public abstract class RetrofitCallback<T> implements Callback<T> {
         if (statusCode == 200) {
             onResponse(response.body());
         } else {
-            onFailure(formatError(application, statusCode));
+//            onFailure(formatError(application, statusCode));
         }
 
         onFinish();
@@ -41,7 +42,7 @@ public abstract class RetrofitCallback<T> implements Callback<T> {
     @Override
     public void onFailure(Call<T> call, Throwable throwable) {
         if (!call.isCanceled()) {
-            onFailure(formatError(application, throwable));
+//            onFailure(formatError(application, throwable));
         }
 
         onFinish();
@@ -96,18 +97,18 @@ public abstract class RetrofitCallback<T> implements Callback<T> {
         return result;
     }
 
-    /**
-     * Invoked for a received HTTP response.
-     */
-    protected abstract void onResponse(T body);
+    @Override
+    public void onResponse(T body) {
 
-    /**
-     * On Failure
-     */
-    protected abstract void onFailure(String message);
+    }
 
-    /**
-     * On Finish
-     */
-    protected abstract void onFinish();
+    @Override
+    public void onFailure(ApiException exception) {
+
+    }
+
+    @Override
+    public void onFinish() {
+
+    }
 }
