@@ -16,11 +16,11 @@ import retrofit2.Response;
 /**
  * Response Callback
  */
-public abstract class ResponseCallback<T> implements Callback<T> {
+public abstract class RetrofitCallback<T> implements Callback<T> {
 
     private Application application;
 
-    public ResponseCallback(Application application) {
+    public RetrofitCallback(Application application) {
         this.application = application;
     }
 

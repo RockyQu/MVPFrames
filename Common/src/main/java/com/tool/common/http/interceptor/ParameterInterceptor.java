@@ -15,7 +15,7 @@ import okio.Buffer;
 
 /**
  * 接口共通参数
- * 为所有接口以Get方式添加共通参数，如版本号、Token等
+ * 为所有接口以Get、POST方式添加共通参数，如版本号、Token等
  */
 public class ParameterInterceptor implements Interceptor {
 
@@ -33,15 +33,15 @@ public class ParameterInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
 
-        HashMap<String, String> parameters = callback.parameters();
+        HashMap<String, Object> parameters = callback.parameters();
         if (request.method().equals("GET")) {// 为GET方式统一添加请求参数
             HttpUrl.Builder modifiedUrl = request.url().newBuilder()
                     .scheme(request.url().scheme())
                     .host(request.url().host());
 
             if (parameters != null && parameters.size() != 0) {
-                for (Map.Entry<String, String> entry : parameters.entrySet()) {
-                    modifiedUrl.addQueryParameter(entry.getKey(), entry.getValue());
+                for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+                    modifiedUrl.addQueryParameter(entry.getKey(), entry.getValue().toString());
                 }
             }
 
@@ -53,8 +53,8 @@ public class ParameterInterceptor implements Interceptor {
         } else if (request.method().equals("POST")) {// 为POST方式统一添加请求参数
             FormBody.Builder body = new FormBody.Builder();
             if (parameters != null && parameters.size() != 0) {
-                for (Map.Entry<String, String> entry : parameters.entrySet()) {
-                    body.addEncoded(entry.getKey(), entry.getValue());
+                for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+                    body.addEncoded(entry.getKey(), entry.getValue().toString());
                 }
             }
 
@@ -94,12 +94,12 @@ public class ParameterInterceptor implements Interceptor {
      */
     public interface ParameterCallback {
 
-        HashMap<String, String> parameters();
+        HashMap<String, Object> parameters();
 
         ParameterCallback DEFAULT = new ParameterCallback() {
 
             @Override
-            public HashMap<String, String> parameters() {
+            public HashMap<String, Object> parameters() {
                 return null;
             }
         };
