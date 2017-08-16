@@ -1,6 +1,9 @@
 package com.tool.common.utils;
 
 import android.os.Environment;
+import android.text.TextUtils;
+
+import com.tool.common.log.QLog;
 
 import java.io.File;
 
@@ -12,13 +15,15 @@ public class ProjectUtils {
     // 目录名称
     public static String PROJECT_NAME = "MVP";
     // 项目目录
-    public static final String ROOT_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + PROJECT_NAME + File.separator;
+    public static String ROOT_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + PROJECT_NAME + File.separator;
     // DB路径
-    public static final String DB = ROOT_PATH + "db/";
+    public static String DB = ROOT_PATH + "db/";
     // 日志路径
-    public static final String LOG = ROOT_PATH + "log/";
+    public static String LOG = ROOT_PATH + "log/";
     // 缓存路径
-    public static final String CACHE = ROOT_PATH + "cache/";
+    public static String CACHE = ROOT_PATH + "cache/";
+    // 缓存路径
+    public static String OTHER = ROOT_PATH + "other/";
 
     /**
      * 初始化项目文件夹
@@ -32,6 +37,7 @@ public class ProjectUtils {
             result = FileUtils.makeFolders(DB);
             result = FileUtils.makeFolders(LOG);
             result = FileUtils.makeFolders(CACHE);
+            result = FileUtils.makeFolders(OTHER);
         }
         return result;
     }
@@ -42,7 +48,12 @@ public class ProjectUtils {
      * @return
      */
     public static boolean init(String name) {
-        PROJECT_NAME = name;
+        PROJECT_NAME = !TextUtils.isEmpty(name) ? name : PROJECT_NAME;
+        ROOT_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + PROJECT_NAME + File.separator;
+        DB = ROOT_PATH + "db/";
+        LOG = ROOT_PATH + "log/";
+        CACHE = ROOT_PATH + "cache/";
+        OTHER = ROOT_PATH + "other/";
         return init();
     }
 }

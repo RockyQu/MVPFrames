@@ -34,6 +34,7 @@ import com.tool.common.integration.IRepositoryManager;
 import com.tool.common.log.QLog;
 import com.tool.common.log.crash.ThreadCatchInterceptor;
 import com.tool.common.log.log.LogConfig;
+import com.tool.common.utils.AppUtils;
 import com.tool.common.utils.DeviceUtils;
 import com.tool.common.utils.GsonUtils;
 import com.tool.common.utils.PreferencesUtils;
@@ -197,22 +198,14 @@ public class AppConfiguration implements ConfigModule {
 
         lifecycleManager.add(new AppDelegate.Lifecycle() {
 
+            // 渠道名称，必须与Mainfests渠道配置name相同
+            final String CHANNEL = "Channel";
+
             @Override
             public void onCreate(Application application) {
-                if (ProjectUtils.init()) {
-                    // 设置反馈崩溃信息，不需要可以不设置
-                    ThreadCatchInterceptor.getInstance().install(new ThreadCatchInterceptor.CallBack() {
-
-                        @Override
-                        public void error(Throwable throwable) {
-                            ;
-                        }
-
-                        @Override
-                        public void finish(String path) {
-                            ;
-                        }
-                    });
+                // 项目在SDCard下创建的目录
+                if (!ProjectUtils.init(AppUtils.getAppChannel(application, CHANNEL))) {
+                    // 失败
                 }
             }
 

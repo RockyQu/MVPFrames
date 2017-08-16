@@ -47,16 +47,17 @@
         </activity>
         <activity
             android:name=".mvp.main.MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".mvp.login.LoginActivity"
             android:screenOrientation="portrait">
         </activity>
 
         <!-- 渠道配置 -->
-        <!--<meta-data-->
-        <!--android:name="Channel"-->
-        <!--android:value="${Channel}"/>-->
+        <meta-data
+            android:name="Channel"
+            android:value="${Channel}"/>
 
         <!-- Glide配置 -->
         <meta-data

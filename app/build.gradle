@@ -127,6 +127,12 @@ android {
 //        huawei {
 //
 //        }
+
+        // 默认渠道
+        Frames {
+            manifestPlaceholders = [Channel: "Frames"]
+//            signingConfig signingConfigs.release
+        }
     }
 
     buildTypes {
