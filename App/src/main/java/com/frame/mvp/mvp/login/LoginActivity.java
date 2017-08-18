@@ -10,6 +10,7 @@ import com.frame.mvp.R;
 import com.frame.mvp.di.login.DaggerLoginComponent;
 import com.frame.mvp.di.login.LoginModule;
 import com.frame.mvp.entity.User;
+import com.logg.Logg;
 import com.tool.common.base.BaseActivity;
 import com.tool.common.di.component.AppComponent;
 import com.tool.common.utils.StringUtils;
@@ -44,6 +45,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             edtAccount.setText(user.getAccount());
             edtPassword.setText(user.getPassword());
         }
+
     }
 
     @OnClick(R.id.btn_submit)

@@ -112,7 +112,7 @@ dependencies {
     compile rootProject.ext.dependencies["greendao"]
     compile rootProject.ext.dependencies["sqlcipher"]
     // Log
-    compile rootProject.ext.dependencies["q-log"]
+    compile rootProject.ext.dependencies["logg"]
     // Test
     debugCompile rootProject.ext.dependencies["canary-debug"]
     releaseCompile rootProject.ext.dependencies["canary-release"]

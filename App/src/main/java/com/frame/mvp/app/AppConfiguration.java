@@ -16,42 +16,31 @@ import com.frame.mvp.app.api.service.ApiUser;
 import com.frame.mvp.entity.User;
 import com.frame.mvp.mvp.login.LoginActivity;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
+import com.logg.config.LoggConfig;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.tool.common.base.App;
 import com.tool.common.base.delegate.AppDelegate;
-import com.tool.common.di.component.AppComponent;
 import com.tool.common.di.module.AppConfigModule;
 import com.tool.common.di.module.AppModule;
 import com.tool.common.di.module.HttpModule;
 import com.tool.common.http.NetworkHandler;
-import com.tool.common.http.ResponseEntity;
 import com.tool.common.http.interceptor.LoggingInterceptor;
 import com.tool.common.http.interceptor.ParameterInterceptor;
 import com.tool.common.integration.ConfigModule;
 import com.tool.common.integration.IRepositoryManager;
-import com.tool.common.log.QLog;
-import com.tool.common.log.crash.ThreadCatchInterceptor;
-import com.tool.common.log.log.LogConfig;
 import com.tool.common.utils.AppUtils;
-import com.tool.common.utils.DeviceUtils;
 import com.tool.common.utils.GsonUtils;
 import com.tool.common.utils.PreferencesUtils;
 import com.tool.common.utils.ProjectUtils;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 
 /**
@@ -176,15 +165,10 @@ public class AppConfiguration implements ConfigModule {
 
             @Override
             public void onCreate(Application application) {
-
-                // Log
-                if (BuildConfig.DEBUG_FLAG) {
-                    LogConfig.Buidler
-                            .buidler()
-                            .setContext(application)
-                            .setOpen(BuildConfig.DEBUG_FLAG)
-                            .build();
-                }
+                LoggConfig
+                        .buidler()
+                        .setDebug(BuildConfig.DEBUG_FLAG)
+                        .build();
 
                 // LeakCanary内存泄露检查
                 ((App) application).getAppComponent().extras().put(RefWatcher.class.getName(), BuildConfig.DEBUG_FLAG ? LeakCanary.install(application) : RefWatcher.DISABLED);

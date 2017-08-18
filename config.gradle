@@ -48,7 +48,7 @@ ext {
             "greendao"                   : "org.greenrobot:greendao:3.2.2",
             "sqlcipher"                  : "net.zetetic:android-database-sqlcipher:3.5.7",
             // Log
-            "q-log"                      : "com.tool.common.log:Q-Log:0.3.0",
+            "logg"                      : "com.logg:Logg:1.0.0",
             // Test
             "canary-debug"               : "com.squareup.leakcanary:leakcanary-android:1.5",
             "canary-release"             : "com.squareup.leakcanary:leakcanary-android-no-op:1.5"
