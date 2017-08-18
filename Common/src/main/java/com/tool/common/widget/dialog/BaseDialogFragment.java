@@ -17,7 +17,6 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.tool.common.R;
-import com.tool.common.log.QLog;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

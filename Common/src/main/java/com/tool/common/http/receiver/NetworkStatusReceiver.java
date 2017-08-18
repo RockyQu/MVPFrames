@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 
-import com.tool.common.log.QLog;
+import com.logg.Logg;
 import com.tool.common.utils.NetWorkUtils;
 
 /**
@@ -62,7 +62,7 @@ public class NetworkStatusReceiver extends BroadcastReceiver {
                 type = Type.NONE;
             }
 
-            QLog.e("The network has changed, code = " + type.value);
+            Logg.e("The network has changed, code = " + type.value);
         }
     }
 

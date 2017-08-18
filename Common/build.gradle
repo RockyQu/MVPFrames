@@ -6,8 +6,8 @@ apply plugin: 'com.jakewharton.butterknife'
 // Start 以下这段功能是用来上传至代码库，其他项目不用复制这段代码
 apply plugin: 'com.novoda.bintray-release'
 
-def libraryVersionCode = 6
-def libraryVersionName = '1.0.51'
+def libraryVersionCode = 8
+def libraryVersionName = '1.0.53'
 
 publish {
     userOrg = 'chinarocky'// 这是代码仓库的账号

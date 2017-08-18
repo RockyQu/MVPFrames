@@ -18,7 +18,6 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.tool.common.log.QLog;
 import com.tool.common.utils.base.BaseUtils;
 
 import org.simple.eventbus.EventBus;

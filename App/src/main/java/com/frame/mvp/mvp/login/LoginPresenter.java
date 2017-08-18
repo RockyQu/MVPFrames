@@ -64,7 +64,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
             }
 
             @Override
-            protected void onFinish() {
+            protected void onFinish(boolean isCanceled) {
                 view.hideLoading();
             }
         });

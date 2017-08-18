@@ -1,6 +1,6 @@
 package com.tool.common.http.interceptor;
 
-import com.tool.common.log.QLog;
+import com.logg.Logg;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -220,7 +220,7 @@ public class LoggingInterceptor implements Interceptor {
 
             @Override
             public void log(String message) {
-                QLog.e(message);
+                Logg.e(message);
             }
         };
     }

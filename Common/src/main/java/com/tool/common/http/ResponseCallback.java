@@ -24,7 +24,7 @@ public abstract class ResponseCallback<T> implements Callback<T> {
             onFailure(FactoryException.resolveExcetpion(response.code()));
         }
 
-        onFinish();
+        onFinish(true);
     }
 
     @Override
@@ -33,12 +33,12 @@ public abstract class ResponseCallback<T> implements Callback<T> {
             onFailure(FactoryException.resolveExcetpion(throwable));
         }
 
-        onFinish();
+        onFinish(!call.isCanceled());
     }
 
     protected abstract void onResponse(T body);
 
     protected abstract void onFailure(ApiException exception);
 
-    protected abstract void onFinish();
+    protected abstract void onFinish(boolean isCanceled);
 }

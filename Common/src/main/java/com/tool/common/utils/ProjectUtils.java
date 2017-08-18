@@ -3,8 +3,6 @@ package com.tool.common.utils;
 import android.os.Environment;
 import android.text.TextUtils;
 
-import com.tool.common.log.QLog;
-
 import java.io.File;
 
 /**

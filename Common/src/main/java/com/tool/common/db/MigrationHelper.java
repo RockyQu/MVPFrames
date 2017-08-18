@@ -5,9 +5,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.tool.common.log.QLog;
+import com.logg.Logg;
 
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.database.Database;
@@ -285,7 +284,7 @@ public class MigrationHelper {
 
             @Override
             public void log(String message) {
-                QLog.e(message);
+                Logg.e(message);
             }
         };
     }
