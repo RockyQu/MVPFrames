@@ -11,19 +11,19 @@ public class ResponseEntity<T> {
     @SerializedName("login")
     private boolean login;
     // 提示信息
-    @SerializedName("msg")
+    @SerializedName(value = "message", alternate = {"msg"})
     private String message;
     // 请求是否成功
     @SerializedName("success")
     private boolean success;
     // 系统是否正常
-    @SerializedName("sys")
+    @SerializedName(value = "system", alternate = {"sys"})
     private boolean system;
     // 数量
-    @SerializedName("totalProperty")
+    @SerializedName(value = "count", alternate = {"totalProperty"})
     private long count;
     // 请求结果
-    @SerializedName("data")
+    @SerializedName(value = "data", alternate = {"result"})
     private T data;
 
     public ResponseEntity() {
