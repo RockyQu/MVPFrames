@@ -1,6 +1,7 @@
 package com.tool.common.utils;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
@@ -8,8 +9,10 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.StatFs;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.text.format.Formatter;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +22,18 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.tool.common.utils.base.BaseUtils;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 
 /**
  * 设备信息工具类
@@ -400,5 +414,148 @@ public class DeviceUtils extends BaseUtils {
                 BluetoothAdapter.getDefaultAdapter().disable();
             }
         }
+    }
+
+    /**
+     * 获取SDCard存储情况
+     */
+    public String[] getSDCardMemory(Context context) {
+        String[] sdCardInfo = new String[2];
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            File sdcardDir = Environment.getExternalStorageDirectory();
+            StatFs sf = new StatFs(sdcardDir.getPath());
+            long bSize = sf.getBlockSize();
+            long bCount = sf.getBlockCount();
+            long availBlocks = sf.getAvailableBlocks();
+
+            sdCardInfo[0] = Formatter.formatFileSize(context, bSize * bCount);//总大小
+            sdCardInfo[1] = Formatter.formatFileSize(context, bSize * availBlocks);//可用大小
+        }
+        return sdCardInfo;
+    }
+
+    /**
+     * 可用内存大小
+     */
+    private String getAvailMemory(Context context) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+        am.getMemoryInfo(mi);
+        return Formatter.formatFileSize(context, mi.availMem);
+    }
+
+    /**
+     * 总内存大小
+     */
+    private String getTotalMemory() {
+        String path = "/proc/meminfo";
+        String firstLine = null;
+        int totalRam = 0;
+        try {
+            FileReader fileReader = new FileReader(path);
+            BufferedReader br = new BufferedReader(fileReader, 8192);
+            firstLine = br.readLine().split("\\s+")[1];
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (firstLine != null) {
+            totalRam = (int) Math.ceil((new Float(Float.valueOf(firstLine) / (1024 * 1024)).doubleValue()));
+        }
+
+        return totalRam + " GB";//返回1GB/2GB/3GB/4GB
+    }
+
+    /**
+     * 基带版本
+     */
+    public static String getBasebandVersion() {
+        String Version = "";
+        try {
+            Class cl = Class.forName("android.os.SystemProperties");
+            Object invoker = cl.newInstance();
+            Method m = cl.getMethod("get", new Class[]{String.class, String.class});
+            Object result = m.invoke(invoker, new Object[]{"gsm.version.baseband", "no message"});
+            Version = (String) result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Version;
+    }
+
+    /**
+     * 内核版本
+     */
+    public static String getKernelVersion() {
+        String kernelVersion = "";
+        InputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream("/proc/version");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return kernelVersion;
+        }
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream), 8 * 1024);
+        String info = "";
+        String line = "";
+        try {
+            while ((line = bufferedReader.readLine()) != null) {
+                info += line;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                bufferedReader.close();
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            if (info != "") {
+                final String keyword = "version ";
+                int index = info.indexOf(keyword);
+                line = info.substring(index + keyword.length());
+                index = line.indexOf(" ");
+                kernelVersion = line.substring(0, index);
+            }
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
+
+        return kernelVersion;
+    }
+
+    /**
+     * WLAN MAC 地址
+     */
+    public static String getMacAddress() {
+        String macAddress = null;
+        StringBuffer buf = new StringBuffer();
+        NetworkInterface networkInterface = null;
+        try {
+            networkInterface = NetworkInterface.getByName("eth1");
+            if (networkInterface == null) {
+                networkInterface = NetworkInterface.getByName("wlan0");
+            }
+            if (networkInterface == null) {
+                return "02:00:00:00:00:02";
+            }
+            byte[] addr = networkInterface.getHardwareAddress();
+            for (byte b : addr) {
+                buf.append(String.format("%02X:", b));
+            }
+            if (buf.length() > 0) {
+                buf.deleteCharAt(buf.length() - 1);
+            }
+            macAddress = buf.toString();
+        } catch (SocketException e) {
+            e.printStackTrace();
+            return "02:00:00:00:00:02";
+        }
+        return macAddress;
     }
 }
