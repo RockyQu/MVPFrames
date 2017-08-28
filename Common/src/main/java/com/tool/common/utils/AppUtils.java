@@ -231,6 +231,28 @@ public final class AppUtils extends BaseUtils {
     }
 
     /**
+     * 给定Context获取进程名
+     *
+     * @param context
+     * @return
+     */
+    public static String getProcessName(Context context) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
+        if (runningApps == null) {
+            return null;
+        }
+        for (ActivityManager.RunningAppProcessInfo proInfo : runningApps) {
+            if (proInfo.pid == android.os.Process.myPid()) {
+                if (proInfo.processName != null) {
+                    return proInfo.processName;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * 获取设备的可用内存大小
      *
      * @param context 应用上下文对象context

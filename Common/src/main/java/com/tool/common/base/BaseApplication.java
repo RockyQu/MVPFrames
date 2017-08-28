@@ -4,10 +4,11 @@ import android.app.Application;
 
 import com.tool.common.base.delegate.AppDelegate;
 import com.tool.common.di.component.AppComponent;
+import com.tool.common.utils.AppUtils;
 
 /**
  * GitHub:https://github.com/DesignQu/MVPFrames
- *
+ * <p>
  * 一、项目涉及的主要框架
  * 1、Dagger2 https://google.github.io/dagger
  * 2、ButterKnife http://jakewharton.github.io/butterknife
@@ -34,6 +35,11 @@ public abstract class BaseApplication extends Application implements App {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        String processName = AppUtils.getProcessName(this);
+        if (!getPackageName().equals(processName)) {
+            return;
+        }
 
         this.delegate = new AppDelegate(this);
         this.delegate.onCreate();
