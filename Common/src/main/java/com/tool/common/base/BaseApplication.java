@@ -36,6 +36,7 @@ public abstract class BaseApplication extends Application implements App {
     public void onCreate() {
         super.onCreate();
 
+        // 如果声明了独立进程的Service会导致Application执行多次，这里控制只执行默认主进程
         String processName = AppUtils.getProcessName(this);
         if (!getPackageName().equals(processName)) {
             return;
