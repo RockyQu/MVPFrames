@@ -3,14 +3,14 @@ ext {
                buildToolsVersion             : "26.0.1",
                minSdkVersion                 : 15,
                targetSdkVersion              : 26,
-               versionCode                   : 1,
-               versionName                   : "1.0.0",
+               versionCode                   : 10,
+               versionName                   : "1.2.0",
                renderscriptTargetApi         : 22,
                renderscriptSupportModeEnabled: true
     ]
 
     version = [
-            androidSupportSdkVersion: "26.0.0-alpha1",
+            androidSupportSdkVersion: "26.0.1",
             retrofitSdkVersion      : "2.3.0",
             dagger2SdkVersion       : "2.11",
             glideSdkVersion         : "4.0.0",

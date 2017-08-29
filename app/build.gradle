@@ -11,6 +11,11 @@ android {
     // 解决Android SDK升级至API23，导致原生SDK删除org.apache.http.*类的问题
     useLibrary 'org.apache.http.legacy'
 
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
         // 包名
         applicationId "com.frame.mvp"
@@ -30,6 +35,9 @@ android {
         // 单元测试
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
 
+        jackOptions {
+            enabled true
+        }
 //        ndk {
 //            // 设置支持的SO库架构
 //            abiFilters "armeabi", "armeabi-v7a"
@@ -53,11 +61,6 @@ android {
 //        }
 //    }
 
-    // Java版本配置
-    compileOptions {
-
-    }
-
     // 移除lint检查的error，可以避免由于编译条件太过严格而编译不过的问题
     lintOptions {
         // InvalidPackage: Package not included in Android
@@ -72,56 +75,28 @@ android {
     }
 
     // 签名
-    signingConfigs {
-        debug {
-            v2SigningEnabled false
-        }
-        release {
-            // storeFile file("../Project-Frame-MVP/APP/keystore/mvp.keystore")
-            // storePassword ""
-            // keyAlias ""
-            // keyPassword ""
-            // 禁用v2签名增强模式
-            v2SigningEnabled false
-        }
-    }
+//    signingConfigs {
+//        debug {
+//            v2SigningEnabled false
+//        }
+//        release {
+//            // storeFile file("../Project-Frame-MVP/APP/keystore/mvp.keystore")
+//            // storePassword ""
+//            // keyAlias ""
+//            // keyPassword ""
+//            // 禁用v2签名增强模式
+//            v2SigningEnabled false
+//        }
+//    }
 
 //    sourceSets {
 //        main {
 //            jniLibs.srcDirs = ['libs']
 //        }
 //    }
-//
-//    // 不加入会内存溢出
-//    dexOptions {
-//        incremental true
-//        javaMaxHeapSize "4g"
-//    }
 
     // 多渠道打包
     productFlavors {
-
-//        // 阿里应用分发平台
-//        alibaba {
-//
-//        }
-//        // 应用宝
-//        yingyongbao {
-//
-//        }
-//        // 360
-//        qihoo360 {
-//
-//        }
-//        // 小米
-//        xiaomi {
-//
-//        }
-//        // 华为
-//        huawei {
-//
-//        }
-
         // 默认渠道
         Frames {
             manifestPlaceholders = [Channel: "Frames"]
@@ -179,18 +154,17 @@ android {
 buildscript {
     repositories {
         jcenter()
-        mavenCentral()
     }
 }
 
-repositories {
-    flatDir {
-        dirs 'libs'
-    }
-    maven {
-        url "https://jitpack.io"
-    }
-}
+//repositories {
+//    flatDir {
+//        dirs 'libs'
+//    }
+//    maven {
+//        url "https://jitpack.io"
+//    }
+//}
 
 dependencies {
     // 本地库依赖，包含app/libs目录下的所有jar文件。因此当module想引用某个jar时，只需将jar拷贝到<moduleName>/libs

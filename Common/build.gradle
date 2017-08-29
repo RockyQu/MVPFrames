@@ -1,21 +1,21 @@
 apply plugin: 'com.android.library'
+apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'org.greenrobot.greendao'
-apply plugin: 'com.jakewharton.butterknife'
 
 // Start 以下这段功能是用来上传至代码库，其他项目不用复制这段代码
-apply plugin: 'com.novoda.bintray-release'
-
-def libraryVersionCode = 9
-def libraryVersionName = '1.0.55'
-
-publish {
-    userOrg = 'chinarocky'// 这是代码仓库的账号
-    groupId = 'com.tool.common'// 包名
-    artifactId = 'MVPFrames'// 项目名
-    publishVersion = libraryVersionName// 版本号
-    desc = 'Android MVP development framework'
-    website = 'https://github.com/DesignQu/'
-}
+//apply plugin: 'com.novoda.bintray-release'
+//
+//def libraryVersionCode = 10
+//def libraryVersionName = '1.0.55'
+//
+//publish {
+//    userOrg = 'chinarocky'// 这是代码仓库的账号
+//    groupId = 'com.tool.common'// 包名
+//    artifactId = 'MVPFrames'// 项目名
+//    publishVersion = rootProject.ext.android["versionName"]// 版本号
+//    desc = 'Android MVP development framework'
+//    website = 'https://github.com/DesignQu/'
+//}
 // End 以上这段功能是用来上传至代码库
 
 android {
@@ -25,8 +25,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
-        versionCode libraryVersionCode
-        versionName libraryVersionName
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
 
         renderscriptTargetApi rootProject.ext.android["renderscriptTargetApi"]
         renderscriptSupportModeEnabled rootProject.ext.android["renderscriptSupportModeEnabled"]
@@ -55,15 +55,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 buildscript {
     repositories {
         jcenter()
-        mavenCentral()
     }
-
 }
 
 dependencies {
@@ -144,3 +141,5 @@ dependencies {
     // Test
     testCompile rootProject.ext.dependencies["junit"]
 }
+
+apply from: 'bintray.gradle'

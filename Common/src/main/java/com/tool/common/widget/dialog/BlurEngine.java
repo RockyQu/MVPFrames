@@ -16,7 +16,6 @@ import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -232,7 +231,6 @@ public class BlurEngine {
         }
         try {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB
-                    || activity instanceof ActionBarActivity
                     || activity instanceof AppCompatActivity) {
                 //add offset as top margin since actionBar height must also considered when we display
                 // the blurred background. Don't want to draw on the actionBar.
