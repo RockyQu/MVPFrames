@@ -11,6 +11,9 @@ import android.graphics.RectF;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
+import java.nio.ByteBuffer;
+import java.security.MessageDigest;
+
 /**
  * 图片转为圆角
  */
@@ -23,7 +26,6 @@ public class RoundTransformation extends BitmapTransformation {
     }
 
     public RoundTransformation(Context context, int dp) {
-        super(context);
         this.radius = Resources.getSystem().getDisplayMetrics().density * dp;
     }
 
@@ -50,7 +52,7 @@ public class RoundTransformation extends BitmapTransformation {
     }
 
     @Override
-    public String getId() {
-        return RoundTransformation.class.getSimpleName();
+    public void updateDiskCacheKey(MessageDigest messageDigest) {
+
     }
 }

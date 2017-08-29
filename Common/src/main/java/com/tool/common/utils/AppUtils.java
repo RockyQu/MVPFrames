@@ -14,10 +14,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.v4.util.Preconditions;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.tool.common.base.App;
+import com.tool.common.di.component.AppComponent;
 import com.tool.common.utils.base.BaseUtils;
 
 import org.simple.eventbus.EventBus;
@@ -401,5 +404,10 @@ public final class AppUtils extends BaseUtils {
         Message message = new Message();
         message.what = EXIT;
         EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+    }
+
+    public static AppComponent obtainAppComponentFromContext(Context context) {
+        Preconditions.checkState(context.getApplicationContext() instanceof App, "Application does not implements App");
+        return ((App) context.getApplicationContext()).getAppComponent();
     }
 }

@@ -9,13 +9,15 @@ import android.graphics.Paint;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
+import java.security.MessageDigest;
+
 /**
  * 图片转为圆形
  */
 public class CircleTransformation extends BitmapTransformation {
 
     public CircleTransformation(Context context) {
-        super(context);
+
     }
 
     @Override
@@ -48,7 +50,7 @@ public class CircleTransformation extends BitmapTransformation {
     }
 
     @Override
-    public String getId() {
-        return CircleTransformation.class.getSimpleName();
+    public void updateDiskCacheKey(MessageDigest messageDigest) {
+
     }
 }

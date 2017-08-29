@@ -1,6 +1,3 @@
-// 说明
-// 一、声明仓库的源，默认指明的jcenter(), 之前版本则是mavenCentral()，jcenter可以理解成是一个新的中央远程仓库，兼容maven中心仓库，且性能更优
-// 二、声明Android Gradle Plugin的版本，Android Studio 1.0正式版必须要求支持Gradle Plugin 1.0的版本
 apply from: "config.gradle"
 
 buildscript {
@@ -11,10 +8,12 @@ buildscript {
 
     // 基础依赖
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.1'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.android.tools.build:gradle:2.3.3'
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.4.0'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+        classpath 'me.tatarka:gradle-retrolambda:3.6.0'
 
         // 以下这段功能是用来上传至代码库，其他项目不用复制这段代码
         classpath 'com.novoda:bintray-release:0.3.4'

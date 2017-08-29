@@ -29,4 +29,8 @@ public class ImageLoader {
     public void setImageLoader(BaseImageLoader imageLoader) {
         this.imageLoader = imageLoader;
     }
+
+    public BaseImageLoader getImageLoader() {
+        return imageLoader;
+    }
 }

@@ -3,7 +3,7 @@ package com.tool.common.widget.imageloader;
 import android.widget.ImageView;
 
 /**
- * 图片加载配置信息
+ * 图片加载配置信息的通用参数
  */
 public class ImageConfig {
 

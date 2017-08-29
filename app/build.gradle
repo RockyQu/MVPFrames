@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'org.greenrobot.greendao'
 
 // 配置Android构建参数
@@ -70,11 +69,6 @@ android {
 
         abortOnError false
         checkReleaseBuilds false
-    }
-
-    dexOptions {
-        // 优化编译效率
-        incremental true
     }
 
     // 签名
@@ -202,18 +196,24 @@ dependencies {
     // 本地库依赖，包含app/libs目录下的所有jar文件。因此当module想引用某个jar时，只需将jar拷贝到<moduleName>/libs
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile rootProject.ext.dependencies["appcompat-v7"]
-    compile rootProject.ext.dependencies["butterknife"]
-    apt rootProject.ext.dependencies["butterknife-compiler"]
-
+    // Tools
+    annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
+        exclude module: 'support-annotations'
+        exclude module: 'butterknife-annotations'
+    }
     provided rootProject.ext.dependencies["javax.annotation"]
+    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
+    compile rootProject.ext.dependencies["multidex"]
 
-    apt rootProject.ext.dependencies["dagger2-apt-compiler"]
-
+    // DB
     compile rootProject.ext.dependencies["greendao"]
     compile rootProject.ext.dependencies["sqlcipher"]
 
-    compile rootProject.ext.dependencies["multidex"]
+    // Test
+    testCompile rootProject.ext.dependencies["junit"]
+    debugCompile rootProject.ext.dependencies["canary-debug"]
+    releaseCompile rootProject.ext.dependencies["canary-release"]
+    testCompile rootProject.ext.dependencies["canary-release"]
 
     // 引入框架基础共通模块
     compile project(':Common')

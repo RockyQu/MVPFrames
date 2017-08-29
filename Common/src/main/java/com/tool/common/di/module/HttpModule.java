@@ -2,6 +2,7 @@ package com.tool.common.di.module;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.tool.common.http.converter.GsonConverterBodyFactory;
 import com.tool.common.http.converter.JsonConverterFactory;
@@ -20,6 +21,7 @@ import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 /**
  * HTTP参数配置
@@ -37,16 +39,20 @@ public class HttpModule {
     Retrofit provideRetrofit(Application application, HttpModule.RetrofitConfiguration retrofitConfiguration, Retrofit.Builder builder, OkHttpClient client, HttpUrl httpUrl) {
         builder
                 .baseUrl(httpUrl)// 域名
-                .client(client)// 设置OkHttpClient
+                .client(client);// 设置OkHttpClient
+
+        retrofitConfiguration.configRetrofit(application, builder);
+
+        builder
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())// 支持RxJava
                 .addConverterFactory(GsonConverterBodyFactory.create())// 支持Gson
                 .addConverterFactory(JsonConverterFactory.create());// 支持Json
-        retrofitConfiguration.configRetrofit(application, builder);
         return builder.build();
     }
 
     @Singleton
     @Provides
-    OkHttpClient provideClient(Application application, HttpModule.OkHttpConfiguration okHttpConfiguration, OkHttpClient.Builder okHttpClient, Interceptor interceptor, List<Interceptor> interceptors, CookieJar cookie) {
+    OkHttpClient provideClient(@Nullable Application application, @Nullable HttpModule.OkHttpConfiguration okHttpConfiguration, @Nullable OkHttpClient.Builder okHttpClient, @Nullable Interceptor interceptor, List<Interceptor> interceptors, CookieJar cookie) {
         OkHttpClient.Builder builder = okHttpClient
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
