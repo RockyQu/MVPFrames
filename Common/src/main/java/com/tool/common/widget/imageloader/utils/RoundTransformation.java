@@ -26,6 +26,8 @@ public class RoundTransformation extends BitmapTransformation {
     }
 
     public RoundTransformation(Context context, int dp) {
+        super();
+
         this.radius = Resources.getSystem().getDisplayMetrics().density * dp;
     }
 

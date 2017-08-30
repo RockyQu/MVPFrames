@@ -17,7 +17,7 @@ import java.security.MessageDigest;
 public class CircleTransformation extends BitmapTransformation {
 
     public CircleTransformation(Context context) {
-
+        super();
     }
 
     @Override
