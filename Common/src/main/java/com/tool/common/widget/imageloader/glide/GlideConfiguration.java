@@ -38,7 +38,7 @@ public class GlideConfiguration extends AppGlideModule {
             @Override
             public DiskCache build() {
                 // Careful: the external cache directory doesn't enforce permissions
-                return DiskLruCacheWrapper.get(FileUtils.makeDirs(new File(component.cacheFile(), "Glide")), IMAGE_DISK_CACHE_MAX_SIZE);
+                return DiskLruCacheWrapper.get(FileUtils.makeDirs(new File(component.getCacheFile(), "Glide")), IMAGE_DISK_CACHE_MAX_SIZE);
             }
         });
 
@@ -52,12 +52,11 @@ public class GlideConfiguration extends AppGlideModule {
         builder.setMemoryCache(new LruResourceCache(customMemoryCacheSize));
         builder.setBitmapPool(new LruBitmapPool(customBitmapPoolSize));
 
-        // 将配置 Glide 的机会转交给 GlideImageLoaderStrategy,如你觉得框架提供的 GlideImageLoaderStrategy
-        // 并不能满足自己的需求,想自定义 BaseImageLoaderStrategy,那请你最好实现 GlideAppliesOptions
-        // 因为只有成为 GlideAppliesOptions 的实现类,这里才能调用 applyGlideOptions(),让你具有配置 Glide 的权利
-        BaseImageLoader loadImgStrategy = component.getImageLoader().getImageLoader();
-        if (loadImgStrategy instanceof GlideAppliesOptions) {
-            ((GlideAppliesOptions) loadImgStrategy).applyGlideOptions(context, builder);
+        // 图片框架最终会走到 GlideImageLoader 的 load 方法中进行处理
+        // 如果你想自己自定义图片框架或自己实现 Glide BaseImageLoader 你需要实现 GlideAppliesOptions 接口
+        BaseImageLoader baseImageLoader = component.getImageLoader().getImageLoader();
+        if (baseImageLoader instanceof GlideAppliesOptions) {
+            ((GlideAppliesOptions) baseImageLoader).applyGlideOptions(context, builder);
         }
     }
 

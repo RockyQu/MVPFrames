@@ -42,7 +42,7 @@ public interface AppComponent {
     ImageLoader getImageLoader();
 
     // 缓存文件根目录，应该将所有缓存放到这个根目录里，便于管理和清理，可在AppConfigModule里配置
-    File cacheFile();
+    File getCacheFile();
 
     // 管理所有Activity
     AppManager appManager();
