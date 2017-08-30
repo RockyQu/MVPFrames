@@ -9,12 +9,12 @@ buildscript {
     // 基础依赖
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
-        classpath 'me.tatarka:gradle-retrolambda:3.6.0'
-
+        // Gradle Android Maven plugin
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+        // Lambda
+        classpath 'me.tatarka:gradle-retrolambda:3.6.0'
+        // Greendao
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
 
         // 以下这段功能是用来上传至代码库，其他项目不用复制这段代码
         classpath 'com.novoda:bintray-release:0.3.4'
