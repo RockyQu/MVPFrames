@@ -27,6 +27,9 @@ import com.tool.common.di.module.HttpModule;
 import com.tool.common.http.NetworkHandler;
 import com.tool.common.http.interceptor.LoggingInterceptor;
 import com.tool.common.http.interceptor.ParameterInterceptor;
+import com.tool.common.http.ssl.SSL;
+import com.tool.common.http.ssl.TrustAllHostnameVerifier;
+import com.tool.common.http.ssl.TrustAllX509TrustManager;
 import com.tool.common.integration.ConfigModule;
 import com.tool.common.integration.IRepositoryManager;
 import com.tool.common.utils.AppUtils;
@@ -140,7 +143,8 @@ public class AppConfiguration implements ConfigModule {
                 .okHttpConfiguration(new HttpModule.OkHttpConfiguration() {// 扩展自定义配置OkHttp参数
                     @Override
                     public void configOkHttp(Context context, OkHttpClient.Builder builder) {
-
+                        // builder.sslSocketFactory(SSL.createSSLSocketFactory(),new TrustAllX509TrustManager());
+                        // builder.hostnameVerifier(new TrustAllHostnameVerifier());
                     }
                 })
                 .gsonConfiguration(new AppModule.GsonConfiguration() {// 扩展自定义配置Gson参数
