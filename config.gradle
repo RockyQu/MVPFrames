@@ -67,7 +67,7 @@ ext {
             "sqlcipher"               : "net.zetetic:android-database-sqlcipher:3.5.7",
 
             // Log
-            "logg"                    : "com.logg:Logg:1.0.0",
+            "logg"                    : "com.logg:Logg:1.1.0",
 
             // Test
             "junit"                   : "junit:junit:4.12",
