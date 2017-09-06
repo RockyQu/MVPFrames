@@ -1,8 +1,10 @@
 package com.tool.common.di.module;
 
 import android.app.Application;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.tool.common.http.BaseUrl;
 import com.tool.common.http.NetworkHandler;
 import com.tool.common.http.cookie.PersistentCookieJar;
 import com.tool.common.utils.FileUtils;
@@ -29,6 +31,8 @@ import okhttp3.Interceptor;
 public class AppConfigModule {
 
     private HttpUrl httpUrl;
+    private BaseUrl baseUrl;
+
     private File cacheFile;
     private NetworkHandler networkHandler;
     private List<Interceptor> interceptors;
@@ -37,6 +41,7 @@ public class AppConfigModule {
 
     private HttpModule.RetrofitConfiguration retrofitConfiguration;
     private HttpModule.OkHttpConfiguration okHttpConfiguration;
+    private HttpModule.RxCacheConfiguration rxCacheConfiguration;
 
     private AppModule.GsonConfiguration gsonConfiguration;
 
@@ -45,6 +50,8 @@ public class AppConfigModule {
 
     public AppConfigModule(Builder buidler) {
         this.httpUrl = buidler.httpUrl;
+        this.baseUrl = buidler.baseUrl;
+
         this.cacheFile = buidler.cacheFile;
         this.networkHandler = buidler.networkHandler;
         this.interceptors = buidler.interceptors;
@@ -53,6 +60,7 @@ public class AppConfigModule {
 
         this.retrofitConfiguration = buidler.retrofitConfiguration;
         this.okHttpConfiguration = buidler.okHttpConfiguration;
+        this.rxCacheConfiguration = buidler.rxCacheConfiguration;
 
         this.gsonConfiguration = buidler.gsonConfiguration;
 
@@ -67,6 +75,12 @@ public class AppConfigModule {
     @Singleton
     @Provides
     HttpUrl provideBaseUrl() {
+        if (baseUrl != null) {
+            HttpUrl httpUrl = baseUrl.url();
+            if (httpUrl != null) {
+                return httpUrl;
+            }
+        }
         return httpUrl;
     }
 
@@ -108,6 +122,13 @@ public class AppConfigModule {
 
     @Singleton
     @Provides
+    @Nullable
+    HttpModule.RxCacheConfiguration provideRxCacheConfiguration() {
+        return rxCacheConfiguration;
+    }
+
+    @Singleton
+    @Provides
     AppModule.GsonConfiguration provideGsonConfiguration() {
         return gsonConfiguration == null ? AppModule.GsonConfiguration.EMPTY : gsonConfiguration;
     }
@@ -125,6 +146,14 @@ public class AppConfigModule {
 
         // Http通信Base接口
         private HttpUrl httpUrl;
+        /**
+         * 针对于 BaseUrl 在 App 启动时不能确定，需要请求服务器接口动态获取的应用场景
+         * 在调用 Retrofit 接口之前，使用 Okhttp 或其他方式，请求到正确的 BaseUrl 并通过此方法返回
+         *
+         * @return
+         */
+        private BaseUrl baseUrl;
+
         // Http缓存路径
         private File cacheFile;
         // 网络通信拦截器
@@ -139,6 +168,8 @@ public class AppConfigModule {
         private HttpModule.RetrofitConfiguration retrofitConfiguration;
         // 提供一个OkHttp配置接口，用于对OkHttp进行格外的参数配置
         private HttpModule.OkHttpConfiguration okHttpConfiguration;
+        // 提供一个RxCache配置接口，用于对RxCache进行格外的参数配置
+        private HttpModule.RxCacheConfiguration rxCacheConfiguration;
 
         // 提供一个Gson配置接口，用于对Gson进行格外的参数配置
         private AppModule.GsonConfiguration gsonConfiguration;
@@ -160,6 +191,14 @@ public class AppConfigModule {
                 throw new IllegalArgumentException("httpUrl can not be empty!");
             }
             this.httpUrl = HttpUrl.parse(httpUrl);
+            return this;
+        }
+
+        public Builder baseurl(BaseUrl baseUrl) {
+            if (baseUrl == null) {
+                throw new IllegalArgumentException("BaseUrl can not be null");
+            }
+            this.baseUrl = baseUrl;
             return this;
         }
 
@@ -190,6 +229,11 @@ public class AppConfigModule {
 
         public Builder okHttpConfiguration(HttpModule.OkHttpConfiguration okHttpConfiguration) {
             this.okHttpConfiguration = okHttpConfiguration;
+            return this;
+        }
+
+        public Builder rxCacheConfiguration(HttpModule.RxCacheConfiguration rxCacheConfiguration) {
+            this.rxCacheConfiguration = rxCacheConfiguration;
             return this;
         }
 

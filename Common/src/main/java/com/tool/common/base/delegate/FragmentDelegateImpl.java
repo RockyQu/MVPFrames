@@ -7,10 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
+import com.logg.Logg;
 import com.tool.common.base.App;
 import com.tool.common.base.simple.delegate.ISimpleFragment;
 import com.tool.common.di.component.AppComponent;
 import com.tool.common.frame.IPresenter;
+import com.tool.common.utils.AppUtils;
 
 import org.simple.eventbus.EventBus;
 
@@ -49,7 +51,7 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        AppComponent component = ((App) fragment.getActivity().getApplication()).getAppComponent();
+        AppComponent component = AppUtils.obtainAppComponentFromContext(fragment.getActivity());
         // 在Base基类实现些方法，为了能够方便的获取到AppComponent
         if (iFragment != null) {
             iFragment.setComponent(component);
@@ -125,7 +127,13 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     @Override
     public void onDestroyView() {
         if (unbinder != null && unbinder != unbinder.EMPTY) {
-            unbinder.unbind();
+            try {
+                unbinder.unbind();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+                // fix Bindings already cleared
+                Logg.w("onDestroyView: " + e.getMessage());
+            }
         }
     }
 

@@ -2,6 +2,7 @@ package com.tool.common.base.delegate;
 
 import android.app.Application;
 import android.content.ComponentCallbacks2;
+import android.content.Context;
 import android.content.res.Configuration;
 
 import com.tool.common.base.App;
@@ -23,7 +24,7 @@ import javax.inject.Inject;
 /**
  * AppDelegateManager用来代理Application以及其他应用组件的生命周期管理
  */
-public class AppDelegate implements App {
+public class AppDelegate implements App, ApplicationLifecycles {
 
     // Application
     private Application application = null;
@@ -38,24 +39,35 @@ public class AppDelegate implements App {
     private List<ConfigModule> modules = null;
 
     // Lifecycles
-    private List<Lifecycle> applicationLifecycles = new ArrayList<>();
+    private List<ApplicationLifecycles> applicationLifecycles = new ArrayList<>();
     // Activity Lifecycles
     private List<Application.ActivityLifecycleCallbacks> activityLifecycles = new ArrayList<>();
 
-    // 这是一个细粒度的内存回收管理接口
+    // 这是一个细粒度的内存回收管理回调
+    // Application、Activity、Service、ContentProvider、Fragment实现了ComponentCallback2接口
+    // 开发者应该实现 onTrimMemory(int) 方法，细粒度 release 内存，参数可以体现不同程度的内存可用情况
+    // 响应 onTrimMemory 回调：开发者的 App 会直接受益，有利于用户体验，系统更有可能让 App 存活的更持久
+    // 不响应 onTrimMemory 回调：系统更有可能 Kill 进程
     private ComponentCallbacks2 componentCallbacks;
 
-    public AppDelegate(Application application) {
-        this.application = application;
-
-        modules = new ManifestParser(application).parse();
+    public AppDelegate(Context context) {
+        modules = new ManifestParser(context).parse();
         for (ConfigModule module : modules) {
-            module.injectAppLifecycle(application, applicationLifecycles);
-            module.injectActivityLifecycle(application, activityLifecycles);
+            module.injectAppLifecycle(context, applicationLifecycles);
+            module.injectActivityLifecycle(context, activityLifecycles);
         }
     }
 
-    public void onCreate() {
+    @Override
+    public void attachBaseContext(Context baseContext) {
+        for (ApplicationLifecycles lifecycle : applicationLifecycles) {
+            lifecycle.attachBaseContext(baseContext);
+        }
+    }
+
+    @Override
+    public void onCreate(Application application) {
+        this.application = application;
         component = DaggerAppComponent
                 .builder()
                 .appModule(new AppModule(application))
@@ -67,27 +79,26 @@ public class AppDelegate implements App {
         // 存放配置接口ConfigModule
         component.extras().put(ConfigModule.class.getName(), modules);
 
+        this.modules = null;
+
         // 注入Activity生命周期
         application.registerActivityLifecycleCallbacks(activityLifecycle);
         for (Application.ActivityLifecycleCallbacks lifecycle : activityLifecycles) {
             application.registerActivityLifecycleCallbacks(lifecycle);
         }
 
-        // 注入API接口
-        for (ConfigModule module : modules) {
-            module.registerComponents(application, component.getRepositoryManager());
-        }
-
-        // 注入Application生命周期
-        for (Lifecycle lifecycle : applicationLifecycles) {
-            lifecycle.onCreate(application);
-        }
-
+        // 内存回收管理接口
         componentCallbacks = new AppComponentCallbacks(application, component);
         application.registerComponentCallbacks(componentCallbacks);
+
+        // 注入Application生命周期
+        for (ApplicationLifecycles lifecycle : applicationLifecycles) {
+            lifecycle.onCreate(application);
+        }
     }
 
-    public void onTerminate() {
+    @Override
+    public void onTerminate(Application application) {
         if (activityLifecycle != null) {
             application.unregisterActivityLifecycleCallbacks(activityLifecycle);
         }
@@ -96,13 +107,13 @@ public class AppDelegate implements App {
             application.unregisterComponentCallbacks(componentCallbacks);
         }
 
-        if (activityLifecycles != null && activityLifecycles.size() > 0) {
+        if (activityLifecycles != null && activityLifecycles.size() != 0) {
             for (Application.ActivityLifecycleCallbacks lifecycle : activityLifecycles) {
                 application.unregisterActivityLifecycleCallbacks(lifecycle);
             }
         }
 
-        for (Lifecycle lifecycle : applicationLifecycles) {
+        for (ApplicationLifecycles lifecycle : applicationLifecycles) {
             lifecycle.onTerminate(application);
         }
 
@@ -139,13 +150,6 @@ public class AppDelegate implements App {
     @Override
     public AppComponent getAppComponent() {
         return component;
-    }
-
-    public interface Lifecycle {
-
-        void onCreate(Application application);
-
-        void onTerminate(Application application);
     }
 
     private static class AppComponentCallbacks implements ComponentCallbacks2 {

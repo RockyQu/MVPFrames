@@ -75,26 +75,16 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private boolean inputCheck(int flag) {
         switch (flag) {
             case R.id.btn_submit:// 登录
-                // 手机号码
-                if (StringUtils.isEmpty(edtAccount.getText().toString().trim())) {
-                    ToastBar.create(this, "输入手机号码").show();
-                    return false;
-                }
-                // 手机号码
-                if (StringUtils.isPhone(edtAccount.getText().toString().trim())) {
-                    ToastBar.create(this, "手机号码不正确").show();
-                    return false;
-                }
-                // 密码
-                if (StringUtils.isEmpty(edtPassword.getText().toString().trim())) {
-                    ToastBar.create(this, "输入密码").show();
-                    return false;
-                }
-                // 密码位数
-                if (StringUtils.isCount(edtPassword.getText().toString().trim(), 6, 20)) {
-                    ToastBar.create(this, "密码为6-20位").show();
-                    return false;
-                }
+//                // 手机号码
+//                if (StringUtils.isEmpty(edtAccount.getText().toString().trim())) {
+//                    ToastBar.create(this, "输入手机号码").show();
+//                    return false;
+//                }
+//                // 密码
+//                if (StringUtils.isEmpty(edtPassword.getText().toString().trim())) {
+//                    ToastBar.create(this, "输入密码").show();
+//                    return false;
+//                }
 
                 break;
             default:

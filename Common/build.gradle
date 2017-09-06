@@ -113,6 +113,13 @@ dependencies {
     compile(rootProject.ext.dependencies["rxandroid2"]) {
         exclude module: 'rxjava'
     }
+    compile(rootProject.ext.dependencies["rxcache2"]) {
+        exclude module: 'rxjava'
+        exclude module: 'dagger'
+    }
+    compile(rootProject.ext.dependencies["rxcache-jolyglot-gson"]) {
+        exclude module: 'gson'
+    }
 
     // Tools
     compile(rootProject.ext.dependencies["butterknife"]) {

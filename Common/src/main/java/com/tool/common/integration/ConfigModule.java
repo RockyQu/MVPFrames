@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.v4.app.FragmentManager;
 
 import com.tool.common.base.delegate.AppDelegate;
+import com.tool.common.base.delegate.ApplicationLifecycles;
 import com.tool.common.di.module.AppConfigModule;
 
 import java.util.List;
@@ -23,19 +24,11 @@ public interface ConfigModule {
     void applyOptions(Context context, AppConfigModule.Builder builder);
 
     /**
-     * 使用{@link IRepositoryManager}给框架注入网络请求和数据缓存等服务
-     *
-     * @param context
-     * @param repositoryManager
-     */
-    void registerComponents(Context context, IRepositoryManager repositoryManager);
-
-    /**
-     * 使用{@link AppDelegate.Lifecycle}在Application的声明周期中注入一些操作
+     * 使用{@link ApplicationLifecycles}在Application的声明周期中注入一些操作
      *
      * @return
      */
-    void injectAppLifecycle(Context context, List<AppDelegate.Lifecycle> lifecycles);
+    void injectAppLifecycle(Context context, List<ApplicationLifecycles> lifecycles);
 
     /**
      * 使用{@link Application.ActivityLifecycleCallbacks}在Activity的生命周期中注入一些操作

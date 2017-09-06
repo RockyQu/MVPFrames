@@ -13,11 +13,14 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * GsonConverterBodyFactory
  */
 public class GsonConverterBodyFactory extends Converter.Factory {
+
+    private final Gson gson;
 
     public static GsonConverterBodyFactory create() {
         GsonBuilder builder = new GsonBuilder().
@@ -26,14 +29,19 @@ public class GsonConverterBodyFactory extends Converter.Factory {
     }
 
     public static GsonConverterBodyFactory create(GsonBuilder builder) {
-        return new GsonConverterBodyFactory(builder);
+        return new GsonConverterBodyFactory(builder.create());
     }
 
-    private final Gson gson;
+    public static GsonConverterBodyFactory create(Gson gson) {
+        return new GsonConverterBodyFactory(gson);
+    }
 
-    private GsonConverterBodyFactory(GsonBuilder builder) {
-        if (builder == null) throw new NullPointerException("GsonBuilder == null");
-        this.gson = builder.create();
+    private GsonConverterBodyFactory(Gson gson) {
+        if (gson == null) {
+            throw new NullPointerException("Gson == null");
+        }
+
+        this.gson = gson;
     }
 
     @Override

@@ -21,10 +21,13 @@ import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.tool.common.base.App;
 import com.tool.common.base.delegate.AppDelegate;
+import com.tool.common.base.delegate.ApplicationLifecycles;
 import com.tool.common.di.module.AppConfigModule;
 import com.tool.common.di.module.AppModule;
 import com.tool.common.di.module.HttpModule;
 import com.tool.common.http.NetworkHandler;
+import com.tool.common.http.ResponseEntity;
+import com.tool.common.http.converter.GsonResponseDeserializer;
 import com.tool.common.http.interceptor.LoggingInterceptor;
 import com.tool.common.http.interceptor.ParameterInterceptor;
 import com.tool.common.http.ssl.SSL;
@@ -40,6 +43,7 @@ import com.tool.common.utils.ProjectUtils;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -54,7 +58,7 @@ public class AppConfiguration implements ConfigModule {
     @Override
     public void applyOptions(final Context context, AppConfigModule.Builder builder) {
         builder
-                .httpUrl(Api.PHP)
+                .httpUrl(Api.JAVA)
                 .cacheFile(new File(ProjectUtils.CACHE))
                 .networkHandler(new NetworkHandler() { // Http全局响应结果的处理类
 
@@ -151,6 +155,7 @@ public class AppConfiguration implements ConfigModule {
                     @Override
                     public void configGson(Context context, GsonBuilder builder) {
                         builder
+                                .registerTypeAdapter(ResponseEntity.class, new GsonResponseDeserializer())
                                 .serializeNulls();// 支持序列化null的参数
                     }
                 })
@@ -158,14 +163,14 @@ public class AppConfiguration implements ConfigModule {
     }
 
     @Override
-    public void registerComponents(Context context, IRepositoryManager repositoryManager) {
-        repositoryManager.injectApiService(ApiCommon.class, ApiUser.class);
-    }
-
-    @Override
-    public void injectAppLifecycle(Context context, List<AppDelegate.Lifecycle> lifecycleManager) {
+    public void injectAppLifecycle(Context context, List<ApplicationLifecycles> lifecycleManager) {
         // AppDelegateManager.Lifecycle的所有方法都会在基类Application对应的生命周期中被调用,所以在对应的方法中可以扩展一些自己需要的逻辑
-        lifecycleManager.add(new AppDelegate.Lifecycle() {
+        lifecycleManager.add(new ApplicationLifecycles() {
+
+            @Override
+            public void attachBaseContext(Context baseContext) {
+
+            }
 
             @Override
             public void onCreate(Application application) {
@@ -184,10 +189,15 @@ public class AppConfiguration implements ConfigModule {
             }
         });
 
-        lifecycleManager.add(new AppDelegate.Lifecycle() {
+        lifecycleManager.add(new ApplicationLifecycles() {
 
             // 渠道名称，必须与Mainfests渠道配置name相同
             final String CHANNEL = "Channel";
+
+            @Override
+            public void attachBaseContext(Context baseContext) {
+
+            }
 
             @Override
             public void onCreate(Application application) {
@@ -203,7 +213,12 @@ public class AppConfiguration implements ConfigModule {
             }
         });
 
-        lifecycleManager.add(new AppDelegate.Lifecycle() {
+        lifecycleManager.add(new ApplicationLifecycles() {
+
+            @Override
+            public void attachBaseContext(Context baseContext) {
+
+            }
 
             @Override
             public void onCreate(Application application) {

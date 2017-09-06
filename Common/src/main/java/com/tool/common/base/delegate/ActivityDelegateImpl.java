@@ -8,6 +8,7 @@ import com.tool.common.base.App;
 import com.tool.common.base.simple.delegate.ISimpleActivity;
 import com.tool.common.di.component.AppComponent;
 import com.tool.common.frame.IPresenter;
+import com.tool.common.utils.AppUtils;
 
 import org.simple.eventbus.EventBus;
 
@@ -38,7 +39,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        AppComponent component = ((App) activity.getApplication()).getAppComponent();
+        AppComponent component = AppUtils.obtainAppComponentFromContext(activity);
         // 在Base基类实现些方法，为了能够方便的获取到AppComponent
         if (iActivity != null) {
             iActivity.setComponent(component);

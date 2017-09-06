@@ -4,17 +4,23 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
+import com.google.gson.Gson;
 import com.tool.common.http.converter.GsonConverterBodyFactory;
 import com.tool.common.http.converter.JsonConverterFactory;
 import com.tool.common.http.interceptor.NetworkInterceptor;
+import com.tool.common.utils.FileUtils;
 
+import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.rx_cache2.internal.RxCache;
+import io.victoralbertos.jolyglot.GsonSpeaker;
 import okhttp3.Cache;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
@@ -36,7 +42,8 @@ public class HttpModule {
 
     @Singleton
     @Provides
-    Retrofit provideRetrofit(Application application, HttpModule.RetrofitConfiguration retrofitConfiguration, Retrofit.Builder builder, OkHttpClient client, HttpUrl httpUrl) {
+    Retrofit provideRetrofit(Application application, HttpModule.RetrofitConfiguration retrofitConfiguration, Retrofit.Builder builder, OkHttpClient client
+            , HttpUrl httpUrl, Gson gson) {
         builder
                 .baseUrl(httpUrl)// 域名
                 .client(client);// 设置OkHttpClient
@@ -45,7 +52,7 @@ public class HttpModule {
 
         builder
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())// 支持RxJava
-                .addConverterFactory(GsonConverterBodyFactory.create())// 支持Gson
+                .addConverterFactory(GsonConverterBodyFactory.create(gson))// 支持Gson
                 .addConverterFactory(JsonConverterFactory.create());// 支持Json
         return builder.build();
     }
@@ -69,7 +76,11 @@ public class HttpModule {
                 builder.addInterceptor(item);
             }
         }
-        okHttpConfiguration.configOkHttp(application, builder);
+
+        if (okHttpConfiguration != null) {
+            okHttpConfiguration.configOkHttp(application, builder);
+        }
+
         return builder.build();
     }
 
@@ -86,7 +97,6 @@ public class HttpModule {
         return new OkHttpClient.Builder();
     }
 
-
     /**
      * Http拦截器
      */
@@ -94,6 +104,36 @@ public class HttpModule {
     @Provides
     Interceptor provideNetworkInterceptor(NetworkInterceptor interceptor) {
         return interceptor;
+    }
+
+    /**
+     * 提供RxCache
+     *
+     * @param cacheDirectory RxCache缓存路径
+     * @return
+     */
+    @Singleton
+    @Provides
+    RxCache provideRxCache(Application application, @Nullable RxCacheConfiguration configuration, @Named("RxCacheDirectory") File cacheDirectory) {
+        RxCache.Builder builder = new RxCache.Builder();
+        if (configuration != null) {
+            configuration.configRxCache(application, builder);
+        }
+        return builder
+                .persistence(cacheDirectory, new GsonSpeaker());
+    }
+
+
+    /**
+     * 需要单独给RxCache提供缓存路径
+     * 提供RxCache缓存地址
+     */
+    @Singleton
+    @Provides
+    @Named("RxCacheDirectory")
+    File provideRxCacheDirectory(File cacheDir) {
+        File cacheDirectory = new File(cacheDir, "RxCache");
+        return FileUtils.makeDirs(cacheDirectory);
     }
 
     /**
@@ -123,6 +163,19 @@ public class HttpModule {
 
             @Override
             public void configOkHttp(Context context, OkHttpClient.Builder builder) {
+
+            }
+        };
+    }
+
+    public interface RxCacheConfiguration {
+
+        void configRxCache(Context context, RxCache.Builder builder);
+
+        RxCacheConfiguration EMPTY = new RxCacheConfiguration() {
+
+            @Override
+            public void configRxCache(Context context, RxCache.Builder builder) {
 
             }
         };

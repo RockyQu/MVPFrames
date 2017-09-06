@@ -38,7 +38,9 @@ public class AppModule {
     @Provides
     public Gson provideGson(Application application, GsonConfiguration configuration) {
         GsonBuilder builder = new GsonBuilder();
-        configuration.configGson(application, builder);
+        if (configuration != null) {
+            configuration.configGson(application, builder);
+        }
         return builder.create();
     }
 
@@ -50,7 +52,7 @@ public class AppModule {
 
     @Singleton
     @Provides
-    public Map<String, Object> provideExtras(){
+    public Map<String, Object> provideExtras() {
         return new ArrayMap<>();
     }
 

@@ -6,12 +6,7 @@ package com.frame.mvp.app.api;
 public interface Api {
 
     /**
-     * PHP
-     */
-    String PHP = "http://www.baidu.com/";
-
-    /**
      * Java
      */
-    String JAVA = "";
+    String JAVA = "https://api.shaimobao.com/";
 }
