@@ -70,6 +70,28 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
         });
     }
 
+    public void test() {
+        view.showLoading();
+        user = model.test();
+        user.enqueue(new ResponseCallback<ResponseEntity<User>>() {
+
+            @Override
+            protected void onResponse(ResponseEntity<User> body) {
+
+            }
+
+            @Override
+            protected void onFailure(ApiException exception) {
+                view.showMessage(exception.getMessage());
+            }
+
+            @Override
+            protected void onFinish(boolean isCanceled) {
+                view.hideLoading();
+            }
+        });
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

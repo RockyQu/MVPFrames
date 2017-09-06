@@ -14,6 +14,7 @@ public interface LoginContract {
 
     interface Model extends IModel{
         Call<ResponseEntity<User>> login(String name, String password);
+        Call<ResponseEntity<User>> test();
     }
 
     interface View extends IView {

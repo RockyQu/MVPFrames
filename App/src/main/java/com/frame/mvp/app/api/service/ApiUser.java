@@ -13,6 +13,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Streaming;
 
 /**
  * 用户相关API
@@ -22,4 +23,8 @@ public interface ApiUser {
     @FormUrlEncoded
     @POST("index.php?m=member&c=api&a=do_login")
     Call<ResponseEntity<User>> login(@Field("username") String username, @Field("password") String password);
+
+    @Streaming
+    @POST("index.php?m=member&c=api&a=do_login")
+    Call<ResponseEntity<User>> test();
 }

@@ -52,7 +52,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void login() {
         if (inputCheck(R.id.btn_submit)) {
             // 登录
-            presenter.login(edtAccount.getText().toString().trim(), edtPassword.getText().toString().trim());
+//            presenter.login(edtAccount.getText().toString().trim(), edtPassword.getText().toString().trim());
+            presenter.test();
         }
     }
 
