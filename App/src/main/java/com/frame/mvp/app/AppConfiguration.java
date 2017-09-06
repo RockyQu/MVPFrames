@@ -58,7 +58,7 @@ public class AppConfiguration implements ConfigModule {
     @Override
     public void applyOptions(final Context context, AppConfigModule.Builder builder) {
         builder
-                .httpUrl(Api.JAVA)
+                .httpUrl(Api.APP_DOMAIN)
                 .cacheFile(new File(ProjectUtils.CACHE))
                 .networkHandler(new NetworkHandler() { // Http全局响应结果的处理类
 

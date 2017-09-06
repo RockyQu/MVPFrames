@@ -5,8 +5,5 @@ package com.frame.mvp.app.api;
  */
 public interface Api {
 
-    /**
-     * Java
-     */
-    String JAVA = "https://api.shaimobao.com/";
+    String APP_DOMAIN = "https://github.com/DesignQu";
 }

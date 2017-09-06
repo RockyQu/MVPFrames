@@ -81,7 +81,7 @@ public class AppConfigModule {
                 return httpUrl;
             }
         }
-        return httpUrl;
+        return httpUrl == null ? HttpUrl.parse("https://api.github.com/") : httpUrl;
     }
 
     @Singleton
