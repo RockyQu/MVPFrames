@@ -24,7 +24,7 @@ public interface ISimpleFragment<P extends IPresenter> {
     /**
      * 布局ID
      *
-     * @return
+     * @return 布局文件ID
      */
     int getLayoutId();
 
@@ -38,7 +38,7 @@ public interface ISimpleFragment<P extends IPresenter> {
     /**
      * 使用EventBus
      *
-     * @return
+     * @return 是否使用EventBus
      */
     boolean useEventBus();
 }
