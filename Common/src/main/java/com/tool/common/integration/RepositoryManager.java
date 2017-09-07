@@ -31,6 +31,8 @@ public class RepositoryManager implements IRepositoryManager {
     private Lazy<Retrofit> mRetrofit;
     private Lazy<RxCache> mRxCache;
 
+    private final Map<String, IModel> mRepositoryCache = new HashMap<>();
+
     private final Map<String, Object> mRetrofitServiceCache = new HashMap<>();
     private final Map<String, Object> mCacheServiceCache = new HashMap<>();
 
@@ -39,6 +41,48 @@ public class RepositoryManager implements IRepositoryManager {
         this.mRetrofit = retrofit;
         this.mRxCache = rxCache;
         this.application = application;
+    }
+
+    /**
+     * 根据传入的 Class 创建对应的仓库
+     *
+     * @param repository
+     * @param <T>
+     * @return
+     */
+    @Override
+    public <T extends IModel> T createRepository(Class<T> repository) {
+        T repositoryInstance;
+        synchronized (mRepositoryCache) {
+            repositoryInstance = (T) mRepositoryCache.get(repository.getName());
+            if (repositoryInstance == null) {
+                Constructor<? extends IModel> constructor = findConstructorForClass(repository);
+                try {
+                    repositoryInstance = (T) constructor.newInstance(this);
+                } catch (InstantiationException e) {
+                    throw new RuntimeException("Unable to invoke " + constructor, e);
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException("Unable to invoke " + constructor, e);
+                } catch (InvocationTargetException e) {
+                    throw new RuntimeException("create repository error", e);
+                }
+                mRepositoryCache.put(repository.getName(), repositoryInstance);
+            }
+        }
+        return repositoryInstance;
+    }
+
+    private static Constructor<? extends IModel> findConstructorForClass(Class<?> cls) {
+        Constructor<? extends IModel> bindingCtor;
+        String clsName = cls.getName();
+        try {
+            // noinspection unchecked
+            bindingCtor = (Constructor<? extends IModel>) cls.getConstructor(IRepositoryManager.class);
+
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException("Unable to find constructor for " + clsName, e);
+        }
+        return bindingCtor;
     }
 
     /**

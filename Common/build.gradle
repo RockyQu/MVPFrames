@@ -7,7 +7,7 @@ apply plugin: 'com.novoda.bintray-release'
 
 publish {
     userOrg = 'chinarocky'// 这是代码仓库的账号
-    groupId = 'com.tool.common'// 包名
+    groupId = 'android.frame'// 包名
     artifactId = 'MVPFrames'// 项目名
     publishVersion = rootProject.ext.android["versionName"]// 版本号
     desc = 'Android MVP development framework'

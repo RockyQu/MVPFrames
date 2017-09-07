@@ -10,6 +10,15 @@ import com.tool.common.frame.IModel;
 public interface IRepositoryManager {
 
     /**
+     * 根据传入的 Class 创建对应的仓库，这个方法在非注入方式下用到
+     *
+     * @param repository
+     * @param <T>
+     * @return
+     */
+    <T extends IModel> T createRepository(Class<T> repository);
+
+    /**
      * 根据传入的Class获取对应的Retrift service
      *
      * @param service

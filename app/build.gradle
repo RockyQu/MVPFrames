@@ -192,4 +192,5 @@ dependencies {
 
     // 引入框架基础共通模块
     compile project(':Common')
+//    compile 'com.tool.common:MVPFrames:1.3.0'
 }
