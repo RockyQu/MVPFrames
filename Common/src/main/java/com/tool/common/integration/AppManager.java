@@ -99,7 +99,7 @@ public class AppManager {
     /**
      * 让在前台的Activity,打开下一个Activity
      *
-     * @param intent
+     * @param intent {@link Intent}
      */
     public void startActivity(Intent intent) {
         if (getCurrentActivity() == null) {
@@ -123,7 +123,7 @@ public class AppManager {
     /**
      * 将在前台的activity保存
      *
-     * @param currentActivity
+     * @param currentActivity {@link Activity}
      */
     public void setCurrentActivity(Activity currentActivity) {
         this.currentActivity = currentActivity;
@@ -132,7 +132,7 @@ public class AppManager {
     /**
      * 获得当前在前台的activity
      *
-     * @return
+     * @return {@link Activity}
      */
     public Activity getCurrentActivity() {
         return currentActivity;
@@ -167,7 +167,7 @@ public class AppManager {
     /**
      * 删除集合里的指定activity
      *
-     * @param activity
+     * @param activity {@link Activity}
      */
     public void removeActivity(Activity activity) {
         if (activitys == null) {
@@ -216,7 +216,7 @@ public class AppManager {
     /**
      * 指定的activity实例是否存活
      *
-     * @param activity
+     * @param activity {@link Activity}
      * @return
      */
     public boolean activityInstanceIsLive(Activity activity) {
