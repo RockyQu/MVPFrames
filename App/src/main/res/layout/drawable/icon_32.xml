@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/icon_32_press" android:state_pressed="true"></item>
+    <!-- 默认 -->
+    <item android:drawable="@drawable/icon_32_normal"></item>
+
+</selector>

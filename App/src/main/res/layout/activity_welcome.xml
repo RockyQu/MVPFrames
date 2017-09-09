@@ -19,7 +19,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:paddingBottom="20dp"
-        android:text="BY DesignQu"
         android:textColor="@android:color/black"
         android:textSize="16sp"/>
 
