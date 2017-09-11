@@ -168,11 +168,6 @@ public class AppConfiguration implements ConfigModule {
         lifecycleManager.add(new ApplicationLifecycles() {
 
             @Override
-            public void attachBaseContext(Context baseContext) {
-
-            }
-
-            @Override
             public void onCreate(Application application) {
                 LoggConfig
                         .buidler()
@@ -195,11 +190,6 @@ public class AppConfiguration implements ConfigModule {
             final String CHANNEL = "Channel";
 
             @Override
-            public void attachBaseContext(Context baseContext) {
-
-            }
-
-            @Override
             public void onCreate(Application application) {
                 // 项目在SDCard下创建的目录
                 if (!ProjectUtils.init(AppUtils.getAppChannel(application, CHANNEL))) {
@@ -214,11 +204,6 @@ public class AppConfiguration implements ConfigModule {
         });
 
         lifecycleManager.add(new ApplicationLifecycles() {
-
-            @Override
-            public void attachBaseContext(Context baseContext) {
-
-            }
 
             @Override
             public void onCreate(Application application) {

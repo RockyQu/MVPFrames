@@ -5,7 +5,7 @@ import android.content.Context;
 
 public interface ApplicationLifecycles {
 
-    void attachBaseContext(Context baseContext);
+//    void attachBaseContext(Context baseContext);
 
     void onCreate(Application application);
 
