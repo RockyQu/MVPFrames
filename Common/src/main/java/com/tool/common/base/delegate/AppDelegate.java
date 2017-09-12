@@ -58,13 +58,6 @@ public class AppDelegate implements App, ApplicationLifecycles {
         }
     }
 
-//    @Override
-//    public void attachBaseContext(Context baseContext) {
-//        for (ApplicationLifecycles lifecycle : applicationLifecycles) {
-//            lifecycle.attachBaseContext(baseContext);
-//        }
-//    }
-
     @Override
     public void onCreate(Application application) {
         this.application = application;
