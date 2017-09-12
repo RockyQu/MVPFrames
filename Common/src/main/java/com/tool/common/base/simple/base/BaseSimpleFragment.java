@@ -88,18 +88,4 @@ public abstract class BaseSimpleFragment<P extends BaseSimplePresenter> extends 
     public boolean useEventBus() {
         return true;
     }
-
-    /**
-     * 当Fragment不再被使用时，如按返回键，就会调用此方法
-     */
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // 释放资源
-        if (presenter != null) {
-            presenter.onDestroy();
-        }
-
-        this.presenter = null;
-    }
 }

@@ -47,16 +47,4 @@ public abstract class BaseSimpleActivity<P extends BaseSimplePresenter> extends 
     public boolean useEventBus() {
         return true;
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        // 释放资源
-        if (presenter != null) {
-            presenter.onDestroy();
-        }
-
-        this.presenter = null;
-    }
 }

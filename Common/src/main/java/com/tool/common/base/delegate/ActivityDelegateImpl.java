@@ -135,6 +135,11 @@ public class ActivityDelegateImpl implements ActivityDelegate {
             }
         }
 
+        //释放资源
+        if (iPresenter != null) {
+            iPresenter.onDestroy();
+        }
+
         this.unbinder = null;
         this.activity = null;
 
@@ -176,6 +181,8 @@ public class ActivityDelegateImpl implements ActivityDelegate {
         if (iSimpleActivity != null) {
             this.iSimpleActivity = in.readParcelable(ISimpleActivity.class.getClassLoader());
         }
+
+        this.iPresenter = in.readParcelable(IPresenter.class.getClassLoader());
     }
 
     public static final Creator<ActivityDelegateImpl> CREATOR = new Creator<ActivityDelegateImpl>() {

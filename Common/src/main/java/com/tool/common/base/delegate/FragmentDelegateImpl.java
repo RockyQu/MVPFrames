@@ -112,16 +112,7 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onStop() {
-        // 注销EventBus
-        if (iFragment != null) {
-            if (iFragment.useEventBus()) {
-                EventBus.getDefault().unregister(fragment);
-            }
-        } else if (iSimpleFragment != null) {
-            if (iSimpleFragment.useEventBus()) {
-                EventBus.getDefault().unregister(fragment);
-            }
-        }
+
     }
 
     @Override
@@ -139,6 +130,21 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onDestroy() {
+        // 注销EventBus
+        if (iFragment != null) {
+            if (iFragment.useEventBus()) {
+                EventBus.getDefault().unregister(fragment);
+            }
+        } else if (iSimpleFragment != null) {
+            if (iSimpleFragment.useEventBus()) {
+                EventBus.getDefault().unregister(fragment);
+            }
+        }
+
+        if (iPresenter != null) {
+            iPresenter.onDestroy();
+        }
+
         this.unbinder = null;
         this.fragmentManager = null;
         this.fragment = null;
@@ -181,6 +187,10 @@ public class FragmentDelegateImpl implements FragmentDelegate {
         }
         if (iSimpleFragment != null) {
             this.iSimpleFragment = in.readParcelable(ISimpleFragment.class.getClassLoader());
+        }
+
+        if (iSimpleFragment != null) {
+            this.iPresenter = in.readParcelable(IPresenter.class.getClassLoader());
         }
     }
 
