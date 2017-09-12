@@ -88,4 +88,15 @@ public abstract class BaseSimpleFragment<P extends BaseSimplePresenter> extends 
     public boolean useEventBus() {
         return true;
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // 释放资源
+        if (presenter != null) {
+            presenter.onDestroy();
+        }
+
+        this.presenter = null;
+    }
 }

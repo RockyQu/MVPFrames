@@ -42,7 +42,7 @@ public class WelcomeActivity extends BaseActivity implements EasyPermissions.Per
         new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(Message msg) {
-                Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
+                Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
                 WelcomeActivity.this.startActivity(intent);
                 WelcomeActivity.this.finish();
                 return false;

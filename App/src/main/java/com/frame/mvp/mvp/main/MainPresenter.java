@@ -1,30 +1,20 @@
 package com.frame.mvp.mvp.main;
 
-import android.app.Application;
-
-import com.frame.mvp.app.MVPApplication;
+import com.tool.common.di.component.AppComponent;
 import com.tool.common.di.scope.ActivityScope;
-import com.tool.common.frame.BasePresenter;
-
-import javax.inject.Inject;
+import com.tool.common.frame.simple.BaseSimplePresenter;
 
 /**
  * MainPresenter
  */
 @ActivityScope
-public class MainPresenter extends BasePresenter<MainContract.Model, MainContract.View> {
+public class MainPresenter extends BaseSimplePresenter<MainRepository> {
 
-    // Application
-    private MVPApplication application;
+    // AppComponent
+    private AppComponent component;
 
-    @Inject
-    public MainPresenter(Application application, MainContract.Model model, MainContract.View view) {
-        super(model, view);
-        this.application = (MVPApplication) application;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public MainPresenter(AppComponent component) {
+        super(component.getRepositoryManager().createRepository(MainRepository.class));
+        this.component = component;
     }
 }

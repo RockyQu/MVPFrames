@@ -122,8 +122,6 @@ public class FragmentDelegateImpl implements FragmentDelegate {
                 unbinder.unbind();
             } catch (IllegalStateException e) {
                 e.printStackTrace();
-                // fix Bindings already cleared
-                Logg.w("onDestroyView: " + e.getMessage());
             }
         }
     }
@@ -155,6 +153,8 @@ public class FragmentDelegateImpl implements FragmentDelegate {
         if (iSimpleFragment != null) {
             this.iSimpleFragment = null;
         }
+
+        this.iPresenter = null;
     }
 
     @Override

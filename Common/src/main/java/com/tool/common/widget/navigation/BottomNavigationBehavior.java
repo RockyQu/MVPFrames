@@ -23,7 +23,7 @@ import com.tool.common.R;
 /**
  *
  */
-public class AHBottomNavigationBehavior<V extends View> extends VerticalScrollingBehavior<V> {
+public class BottomNavigationBehavior<V extends View> extends VerticalScrollingBehavior<V> {
 
 	private static final Interpolator INTERPOLATOR = new LinearOutSlowInInterpolator();
 	private static final int ANIM_DURATION = 300;
@@ -39,22 +39,22 @@ public class AHBottomNavigationBehavior<V extends View> extends VerticalScrollin
 	private boolean fabBottomMarginInitialized = false;
 	private float targetOffset = 0, fabTargetOffset = 0, fabDefaultBottomMargin = 0, snackBarY = 0;
 	private boolean behaviorTranslationEnabled = true;
-	private AHBottomNavigation.OnNavigationPositionListener navigationPositionListener;
+	private BottomNavigation.OnNavigationPositionListener navigationPositionListener;
 
 	/**
 	 * Constructor
 	 */
-	public AHBottomNavigationBehavior() {
+	public BottomNavigationBehavior() {
 		super();
 	}
 
-	public AHBottomNavigationBehavior(boolean behaviorTranslationEnabled, int navigationBarHeight) {
+	public BottomNavigationBehavior(boolean behaviorTranslationEnabled, int navigationBarHeight) {
 		super();
 		this.behaviorTranslationEnabled = behaviorTranslationEnabled;
 		this.navigationBarHeight = navigationBarHeight;
 	}
 
-	public AHBottomNavigationBehavior(Context context, AttributeSet attrs) {
+	public BottomNavigationBehavior(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AHBottomNavigationBehavior_Params);
 		mTabLayoutId = a.getResourceId(R.styleable.AHBottomNavigationBehavior_Params_tabLayoutId, View.NO_ID);
@@ -215,18 +215,18 @@ public class AHBottomNavigationBehavior<V extends View> extends VerticalScrollin
 	}
 
 
-	public static <V extends View> AHBottomNavigationBehavior<V> from(V view) {
+	public static <V extends View> BottomNavigationBehavior<V> from(V view) {
 		ViewGroup.LayoutParams params = view.getLayoutParams();
 		if (!(params instanceof CoordinatorLayout.LayoutParams)) {
 			throw new IllegalArgumentException("The view is not a child of CoordinatorLayout");
 		}
 		CoordinatorLayout.Behavior behavior = ((CoordinatorLayout.LayoutParams) params)
 				.getBehavior();
-		if (!(behavior instanceof AHBottomNavigationBehavior)) {
+		if (!(behavior instanceof BottomNavigationBehavior)) {
 			throw new IllegalArgumentException(
 					"The view is not associated with AHBottomNavigationBehavior");
 		}
-		return (AHBottomNavigationBehavior<V>) behavior;
+		return (BottomNavigationBehavior<V>) behavior;
 	}
 
 	public void setTabLayoutId(int tabId) {
@@ -245,7 +245,7 @@ public class AHBottomNavigationBehavior<V extends View> extends VerticalScrollin
 	/**
 	 * Set OnNavigationPositionListener
 	 */
-	public void setOnNavigationPositionListener(AHBottomNavigation.OnNavigationPositionListener navigationHeightListener) {
+	public void setOnNavigationPositionListener(BottomNavigation.OnNavigationPositionListener navigationHeightListener) {
 		this.navigationPositionListener = navigationHeightListener;
 	}
 

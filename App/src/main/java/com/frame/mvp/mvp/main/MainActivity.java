@@ -1,25 +1,55 @@
 package com.frame.mvp.mvp.main;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 
 import com.frame.mvp.R;
-import com.frame.mvp.di.main.DaggerMainComponent;
-import com.frame.mvp.di.main.MainModule;
-import com.tool.common.base.BaseActivity;
-import com.tool.common.di.component.AppComponent;
-import com.tool.common.widget.ToastBar;
+import com.frame.mvp.ui.adapter.MainViewPagerAdapter;
+import com.tool.common.base.simple.base.BaseSimpleActivity;
+import com.tool.common.frame.simple.ISimpleView;
+import com.tool.common.widget.navigation.BottomNavigation;
+import com.tool.common.widget.navigation.BottomNavigationAdapter;
+import com.tool.common.widget.navigation.BottomNavigationViewPager;
+
+import butterknife.BindView;
 
 /**
  * 主页面
  */
-public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
+public class MainActivity extends BaseSimpleActivity<MainPresenter> implements ISimpleView {
+
+    // UI
+    @BindView(R.id.view_pager)
+    BottomNavigationViewPager viewPager;
+    @BindView(R.id.bottom_navigation)
+    BottomNavigation bottomNavigation;
+
+    // Adapter
+    private MainViewPagerAdapter adapter;
 
     @Override
     public void create(Bundle savedInstanceState) {
-        presenter.onDestroy();
-        ToastBar.create(getWindow().getDecorView(), "测试").show();
+
+        // 隐藏导航栏Items
+        BottomNavigationAdapter navigationAdapter = new BottomNavigationAdapter(this, R.menu.menu_bottom_navigation);
+        navigationAdapter.setupWithBottomNavigation(bottomNavigation);
+
+        // 隐藏导航栏标题
+        bottomNavigation.setTitleState(BottomNavigation.TitleState.ALWAYS_HIDE);
+
+        // 导航点击事件
+        bottomNavigation.setOnTabSelectedListener(new BottomNavigation.OnTabSelectedListener() {
+            @Override
+            public boolean onTabSelected(int position, boolean wasSelected) {
+
+                viewPager.setCurrentItem(position, false);
+
+                return true;
+            }
+        });
+
+        viewPager.setOffscreenPageLimit(3);
+        adapter = new MainViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
     }
 
     @Override
@@ -38,23 +68,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
     @Override
-    public void launchActivity(Intent intent) {
+    public void handleMessage(com.tool.common.frame.simple.Message message) {
 
     }
 
     @Override
-    public void finishActivity() {
-
-    }
-
-    @Override
-    public void setupActivityComponent(AppComponent component) {
-        DaggerMainComponent
-                .builder()
-                .appComponent(component)
-                .mainModule(new MainModule(this))
-                .build()
-                .inject(this);
+    public MainPresenter obtainPresenter() {
+        return null;
     }
 
     @Override

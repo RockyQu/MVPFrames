@@ -15,7 +15,7 @@ import android.support.v7.content.res.AppCompatResources;
  * AHBottomNavigationItem
  * The item is display in the AHBottomNavigation layout
  */
-public class AHBottomNavigationItem {
+public class BottomNavigationItem {
 	
 	private String title = "";
 	private Drawable drawable;
@@ -37,7 +37,7 @@ public class AHBottomNavigationItem {
 	 * @param title    Title
 	 * @param resource Drawable resource
 	 */
-	public AHBottomNavigationItem(String title, @DrawableRes int resource) {
+	public BottomNavigationItem(String title, @DrawableRes int resource) {
 		this.title = title;
 		this.drawableRes = resource;
 	}
@@ -48,7 +48,7 @@ public class AHBottomNavigationItem {
 	 * @param color    Background color
 	 */
 	@Deprecated
-	public AHBottomNavigationItem(String title, @DrawableRes int resource, @ColorRes int color) {
+	public BottomNavigationItem(String title, @DrawableRes int resource, @ColorRes int color) {
 		this.title = title;
 		this.drawableRes = resource;
 		this.color = color;
@@ -61,7 +61,7 @@ public class AHBottomNavigationItem {
 	 * @param drawableRes Drawable resource
 	 * @param colorRes    Color resource
 	 */
-	public AHBottomNavigationItem(@StringRes int titleRes, @DrawableRes int drawableRes, @ColorRes int colorRes) {
+	public BottomNavigationItem(@StringRes int titleRes, @DrawableRes int drawableRes, @ColorRes int colorRes) {
 		this.titleRes = titleRes;
 		this.drawableRes = drawableRes;
 		this.colorRes = colorRes;
@@ -73,7 +73,7 @@ public class AHBottomNavigationItem {
 	 * @param title    String
 	 * @param drawable Drawable
 	 */
-	public AHBottomNavigationItem(String title, Drawable drawable) {
+	public BottomNavigationItem(String title, Drawable drawable) {
 		this.title = title;
 		this.drawable = drawable;
 	}
@@ -85,7 +85,7 @@ public class AHBottomNavigationItem {
 	 * @param drawable Drawable
 	 * @param color    Color
 	 */
-	public AHBottomNavigationItem(String title, Drawable drawable, @ColorInt int color) {
+	public BottomNavigationItem(String title, Drawable drawable, @ColorInt int color) {
 		this.title = title;
 		this.drawable = drawable;
 		this.color = color;

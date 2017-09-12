@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 /**
  *
  */
-public class AHBottomNavigationFABBehavior extends CoordinatorLayout.Behavior<FloatingActionButton> {
+public class BottomNavigationFABBehavior extends CoordinatorLayout.Behavior<FloatingActionButton> {
 
 	private int navigationBarHeight = 0;
 	private long lastSnackbarUpdate = 0;
 
-	public AHBottomNavigationFABBehavior(int navigationBarHeight) {
+	public BottomNavigationFABBehavior(int navigationBarHeight) {
 		this.navigationBarHeight = navigationBarHeight;
 	}
 
@@ -22,7 +22,7 @@ public class AHBottomNavigationFABBehavior extends CoordinatorLayout.Behavior<Fl
 	public boolean layoutDependsOn(CoordinatorLayout parent, FloatingActionButton child, View dependency) {
 		if (dependency != null && dependency instanceof Snackbar.SnackbarLayout) {
 			return true;
-		} else if (dependency != null && dependency instanceof AHBottomNavigation) {
+		} else if (dependency != null && dependency instanceof BottomNavigation) {
 			return true;
 		}
 		return super.layoutDependsOn(parent, child, dependency);
@@ -43,7 +43,7 @@ public class AHBottomNavigationFABBehavior extends CoordinatorLayout.Behavior<Fl
 			ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) child.getLayoutParams();
 			int fabDefaultBottomMargin = p.bottomMargin;
 			child.setY(dependency.getY() - fabDefaultBottomMargin);
-		} else if (child != null && dependency != null && dependency instanceof AHBottomNavigation) {
+		} else if (child != null && dependency != null && dependency instanceof BottomNavigation) {
 			// Hack to avoid moving the FAB when the AHBottomNavigation is moving (showing or hiding animation)
 			if (System.currentTimeMillis() - lastSnackbarUpdate < 30) {
 				return;

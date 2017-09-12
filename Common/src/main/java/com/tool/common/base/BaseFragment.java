@@ -50,9 +50,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         return true;
     }
 
-    /**
-     * 当Fragment不再被使用时，如按返回键，就会调用此方法
-     */
     @Override
     public void onDestroy() {
         super.onDestroy();

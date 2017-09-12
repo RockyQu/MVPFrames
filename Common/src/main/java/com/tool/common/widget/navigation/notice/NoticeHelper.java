@@ -1,4 +1,4 @@
-package com.tool.common.widget.navigation.notification;
+package com.tool.common.widget.navigation.notice;
 
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
@@ -6,9 +6,9 @@ import android.support.annotation.NonNull;
 /**
  * @author repitch
  */
-public final class AHNotificationHelper {
+public final class NoticeHelper {
 
-    private AHNotificationHelper() {
+    private NoticeHelper() {
         // empty
     }
 
@@ -19,7 +19,7 @@ public final class AHNotificationHelper {
      * @param defaultTextColor int default text color for all notifications
      * @return
      */
-    public static int getTextColor(@NonNull AHNotification notification, @ColorInt int defaultTextColor) {
+    public static int getTextColor(@NonNull Notice notification, @ColorInt int defaultTextColor) {
         int textColor = notification.getTextColor();
         return textColor == 0 ? defaultTextColor : textColor;
     }
@@ -31,7 +31,7 @@ public final class AHNotificationHelper {
      * @param defaultBackgroundColor int default background color for all notifications
      * @return
      */
-    public static int getBackgroundColor(@NonNull AHNotification notification, @ColorInt int defaultBackgroundColor) {
+    public static int getBackgroundColor(@NonNull Notice notification, @ColorInt int defaultBackgroundColor) {
         int backgroundColor = notification.getBackgroundColor();
         return backgroundColor == 0 ? defaultBackgroundColor : backgroundColor;
     }

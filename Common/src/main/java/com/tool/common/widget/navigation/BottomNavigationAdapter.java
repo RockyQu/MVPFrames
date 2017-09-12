@@ -13,10 +13,10 @@ import java.util.List;
 /**
  *
  */
-public class AHBottomNavigationAdapter {
+public class BottomNavigationAdapter {
 
 	private Menu mMenu;
-	private List<AHBottomNavigationItem> navigationItems;
+	private List<BottomNavigationItem> navigationItems;
 
 	/**
 	 * Constructor
@@ -24,7 +24,7 @@ public class AHBottomNavigationAdapter {
 	 * @param activity
 	 * @param menuRes
 	 */
-	public AHBottomNavigationAdapter(Activity activity, @MenuRes int menuRes) {
+	public BottomNavigationAdapter(Activity activity, @MenuRes int menuRes) {
 		PopupMenu popupMenu = new PopupMenu(activity, null);
 		mMenu = popupMenu.getMenu();
 		activity.getMenuInflater().inflate(menuRes, mMenu);
@@ -35,7 +35,7 @@ public class AHBottomNavigationAdapter {
 	 *
 	 * @param ahBottomNavigation AHBottomNavigation: Bottom navigation
 	 */
-	public void setupWithBottomNavigation(AHBottomNavigation ahBottomNavigation) {
+	public void setupWithBottomNavigation(BottomNavigation ahBottomNavigation) {
 		setupWithBottomNavigation(ahBottomNavigation, null);
 	}
 
@@ -45,7 +45,7 @@ public class AHBottomNavigationAdapter {
 	 * @param ahBottomNavigation AHBottomNavigation: Bottom navigation
 	 * @param colors             int[]: Colors of the item
 	 */
-	public void setupWithBottomNavigation(AHBottomNavigation ahBottomNavigation, @ColorInt int[] colors) {
+	public void setupWithBottomNavigation(BottomNavigation ahBottomNavigation, @ColorInt int[] colors) {
 		if (navigationItems == null) {
 			navigationItems = new ArrayList<>();
 		} else {
@@ -56,10 +56,10 @@ public class AHBottomNavigationAdapter {
 			for (int i = 0; i < mMenu.size(); i++) {
 				MenuItem item = mMenu.getItem(i);
 				if (colors != null && colors.length >= mMenu.size() && colors[i] != 0) {
-					AHBottomNavigationItem navigationItem = new AHBottomNavigationItem(String.valueOf(item.getTitle()), item.getIcon(), colors[i]);
+					BottomNavigationItem navigationItem = new BottomNavigationItem(String.valueOf(item.getTitle()), item.getIcon(), colors[i]);
 					navigationItems.add(navigationItem);
 				} else {
-					AHBottomNavigationItem navigationItem = new AHBottomNavigationItem(String.valueOf(item.getTitle()), item.getIcon());
+					BottomNavigationItem navigationItem = new BottomNavigationItem(String.valueOf(item.getTitle()), item.getIcon());
 					navigationItems.add(navigationItem);
 				}
 			}
@@ -84,7 +84,7 @@ public class AHBottomNavigationAdapter {
 	 * @param index
 	 * @return
 	 */
-	public AHBottomNavigationItem getNavigationItem(int index) {
+	public BottomNavigationItem getNavigationItem(int index) {
 		return navigationItems.get(index);
 	}
 

@@ -8,11 +8,11 @@ import android.view.MotionEvent;
 /**
  *
  */
-public class AHBottomNavigationViewPager extends ViewPager {
+public class BottomNavigationViewPager extends ViewPager {
 
 	private boolean enabled;
 
-	public AHBottomNavigationViewPager(Context context, AttributeSet attrs) {
+	public BottomNavigationViewPager(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.enabled = false;
 	}

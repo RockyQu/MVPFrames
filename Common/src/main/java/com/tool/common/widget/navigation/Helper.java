@@ -22,7 +22,7 @@ import android.widget.TextView;
 /**
  *
  */
-public class AHHelper {
+public class Helper {
 
 	/**
 	 * Return a tint drawable
@@ -179,7 +179,7 @@ public class AHHelper {
 		colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 			@Override
 			public void onAnimationUpdate(ValueAnimator animator) {
-				imageView.setImageDrawable(AHHelper.getTintDrawable(drawable,
+				imageView.setImageDrawable(Helper.getTintDrawable(drawable,
 						(Integer) animator.getAnimatedValue(), forceTint));
 				imageView.requestLayout();
 			}

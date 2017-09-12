@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:icon="@drawable/ic_navigation_tab1_normal"
+        android:title="Tab"/>
+
+    <item
+        android:icon="@drawable/ic_navigation_tab2_normal"
+        android:title="Tab"/>
+
+    <item
+        android:icon="@drawable/ic_navigation_tab3_normal"
+        android:title="Tab"/>
+
+    <item
+        android:icon="@drawable/ic_navigation_tab4_normal"
+        android:title="Tab"/>
+
+</menu>

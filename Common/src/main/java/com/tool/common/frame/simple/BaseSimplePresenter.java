@@ -23,9 +23,6 @@ public class BaseSimplePresenter<M extends IModel> implements IPresenter {
         this.onStart();
     }
 
-    /**
-     * Start
-     */
     @Override
     public void onStart() {
         if (useEventBus()) {
@@ -34,9 +31,6 @@ public class BaseSimplePresenter<M extends IModel> implements IPresenter {
         }
     }
 
-    /**
-     * Destroy
-     */
     @Override
     public void onDestroy() {
         if (useEventBus()) {

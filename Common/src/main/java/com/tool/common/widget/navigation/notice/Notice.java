@@ -1,4 +1,4 @@
-package com.tool.common.widget.navigation.notification;
+package com.tool.common.widget.navigation.notice;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author repitch
  */
-public class AHNotification implements Parcelable {
+public class Notice implements Parcelable {
 
     @Nullable
     private String text; // can be null, so notification will not be shown
@@ -23,11 +23,11 @@ public class AHNotification implements Parcelable {
     @ColorInt
     private int backgroundColor; // if 0 then use default value
 
-    public AHNotification() {
+    public Notice() {
         // empty
     }
 
-    private AHNotification(Parcel in) {
+    private Notice(Parcel in) {
         text = in.readString();
         textColor = in.readInt();
         backgroundColor = in.readInt();
@@ -49,14 +49,14 @@ public class AHNotification implements Parcelable {
         return backgroundColor;
     }
 
-    public static AHNotification justText(String text) {
+    public static Notice justText(String text) {
         return new Builder().setText(text).build();
     }
 
-    public static List<AHNotification> generateEmptyList(int size) {
-        List<AHNotification> notificationList = new ArrayList<>();
+    public static List<Notice> generateEmptyList(int size) {
+        List<Notice> notificationList = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            notificationList.add(new AHNotification());
+            notificationList.add(new Notice());
         }
         return notificationList;
     }
@@ -96,8 +96,8 @@ public class AHNotification implements Parcelable {
             return this;
         }
 
-        public AHNotification build() {
-            AHNotification notification = new AHNotification();
+        public Notice build() {
+            Notice notification = new Notice();
             notification.text = text;
             notification.textColor = textColor;
             notification.backgroundColor = backgroundColor;
@@ -105,15 +105,15 @@ public class AHNotification implements Parcelable {
         }
     }
 
-    public static final Creator<AHNotification> CREATOR = new Creator<AHNotification>() {
+    public static final Creator<Notice> CREATOR = new Creator<Notice>() {
         @Override
-        public AHNotification createFromParcel(Parcel in) {
-            return new AHNotification(in);
+        public Notice createFromParcel(Parcel in) {
+            return new Notice(in);
         }
 
         @Override
-        public AHNotification[] newArray(int size) {
-            return new AHNotification[size];
+        public Notice[] newArray(int size) {
+            return new Notice[size];
         }
     };
 

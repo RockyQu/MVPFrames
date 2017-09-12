@@ -1,11 +1,9 @@
 package com.tool.common.base;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.tool.common.base.delegate.AppDelegate;
 import com.tool.common.di.component.AppComponent;
-import com.tool.common.utils.AppUtils;
 
 /**
  * Source https://github.com/DesignQu/MVPFrames
