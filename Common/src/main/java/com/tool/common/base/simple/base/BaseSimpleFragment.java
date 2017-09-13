@@ -89,14 +89,14 @@ public abstract class BaseSimpleFragment<P extends BaseSimplePresenter> extends 
         return true;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // 释放资源
-        if (presenter != null) {
-            presenter.onDestroy();
-        }
-
-        this.presenter = null;
-    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        // 释放资源
+//        if (presenter != null) {
+//            presenter.onDestroy();
+//        }
+//
+//        this.presenter = null;
+//    }
 }

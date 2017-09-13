@@ -6,6 +6,7 @@ import com.frame.mvp.R;
 import com.frame.mvp.ui.adapter.MainViewPagerAdapter;
 import com.tool.common.base.simple.base.BaseSimpleActivity;
 import com.tool.common.frame.simple.ISimpleView;
+import com.tool.common.frame.simple.Message;
 import com.tool.common.widget.navigation.BottomNavigation;
 import com.tool.common.widget.navigation.BottomNavigationAdapter;
 import com.tool.common.widget.navigation.BottomNavigationViewPager;
@@ -68,13 +69,13 @@ public class MainActivity extends BaseSimpleActivity<MainPresenter> implements I
     }
 
     @Override
-    public void handleMessage(com.tool.common.frame.simple.Message message) {
+    public void handleMessage(Message message) {
 
     }
 
     @Override
     public MainPresenter obtainPresenter() {
-        return null;
+        return new MainPresenter(component);
     }
 
     @Override

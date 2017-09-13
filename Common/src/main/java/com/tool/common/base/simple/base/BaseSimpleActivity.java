@@ -47,6 +47,4 @@ public abstract class BaseSimpleActivity<P extends BaseSimplePresenter> extends 
     public boolean useEventBus() {
         return true;
     }
-
-
 }

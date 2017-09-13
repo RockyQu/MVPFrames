@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 
 import com.logg.Logg;
-import com.tool.common.base.App;
 import com.tool.common.base.simple.delegate.ISimpleFragment;
 import com.tool.common.di.component.AppComponent;
 import com.tool.common.frame.IPresenter;

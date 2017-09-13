@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
+import com.logg.Logg;
 import com.tool.common.base.delegate.FragmentDelegate;
 import com.tool.common.base.delegate.FragmentDelegateImpl;
 import com.tool.common.base.delegate.IFragment;

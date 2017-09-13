@@ -2,12 +2,9 @@ package com.tool.common.integration;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
 
 import com.tool.common.base.BaseFragment;
 import com.tool.common.base.delegate.ActivityDelegate;
@@ -29,10 +26,11 @@ import javax.inject.Singleton;
 public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks {
 
     private Application application;
+
     private AppManager appManager;
     private Map<String, Object> extras;
 
-    private FragmentLifecycle fragmentLifecycle;
+    private FragmentManager.FragmentLifecycleCallbacks fragmentLifecycle;
     private List<FragmentManager.FragmentLifecycleCallbacks> fragmentLifecycles;
 
     @Inject
@@ -56,38 +54,8 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             activityDelegate.onCreate(savedInstanceState);
         }
 
-        /**
-         * 给每个Activity配置Fragment的监听，Activity可以通过 {@link IActivity#useFragment()}设置是否使用监听
-         * 如果这个Activity返回false的话，这个Activity将不能使用{@link FragmentDelegate}，意味着{@link BaseFragment}也不能使用
-         */
-        boolean useFragment;
-        if (activity instanceof IActivity) {
-            useFragment = ((IActivity) activity).useFragment();
-        } else if (activity instanceof ISimpleActivity) {
-            useFragment = ((ISimpleActivity) activity).useFragment();
-        } else {
-            useFragment = true;
-        }
-
-        if (activity instanceof FragmentActivity && useFragment) {
-            if (fragmentLifecycle == null) {
-                fragmentLifecycle = new FragmentLifecycle();
-            }
-
-            ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(fragmentLifecycle, true);
-
-            if (fragmentLifecycles == null) {
-                fragmentLifecycles = new ArrayList<>();
-                List<ConfigModule> modules = (List<ConfigModule>) extras.get(ConfigModule.class.getName());
-                for (ConfigModule module : modules) {
-                    module.injectFragmentLifecycle(application, fragmentLifecycles);
-                }
-            }
-
-            for (FragmentManager.FragmentLifecycleCallbacks fragmentLifecycle : fragmentLifecycles) {
-                ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(fragmentLifecycle, true);
-            }
-        }
+        // 配置Fragment生命周期监听
+        registerFragmentCallbacks(activity);
     }
 
     @Override
@@ -110,10 +78,6 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivityPaused(Activity activity) {
-        if (appManager.getCurrentActivity() == activity) {
-            appManager.setCurrentActivity(null);
-        }
-
         ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
         if (activityDelegate != null) {
             activityDelegate.onPause();
@@ -140,6 +104,21 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
     public void onActivityDestroyed(Activity activity) {
         appManager.removeActivity(activity);
 
+        ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
+        if (activityDelegate != null) {
+            activityDelegate.onDestroy();
+            activity.getIntent().removeExtra(ActivityDelegate.ACTIVITY_DELEGATE);
+        }
+    }
+
+    /**
+     * 给每个 Activity 的所有 Fragment 设置监听其生命周期, Activity 可以通过 {@link IActivity#useFragment()}
+     * 设置是否使用监听,如果这个 Activity 返回 false 的话,这个 Activity 下面的所有 Fragment 将不能使用 {@link com.tool.common.base.delegate.FragmentDelegate}
+     * 意味着 {@link BaseFragment} 也不能使用
+     *
+     * @param activity
+     */
+    private void registerFragmentCallbacks(Activity activity) {
         boolean useFragment;
         if (activity instanceof IActivity) {
             useFragment = ((IActivity) activity).useFragment();
@@ -150,20 +129,25 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         }
 
         if (activity instanceof FragmentActivity && useFragment) {
-            if (fragmentLifecycle != null) {
-                ((FragmentActivity) activity).getSupportFragmentManager().unregisterFragmentLifecycleCallbacks(fragmentLifecycle);
-            }
-            if (fragmentLifecycles != null && fragmentLifecycles.size() > 0) {
-                for (FragmentManager.FragmentLifecycleCallbacks fragmentLifecycle : fragmentLifecycles) {
-                    ((FragmentActivity) activity).getSupportFragmentManager().unregisterFragmentLifecycleCallbacks(fragmentLifecycle);
-                }
-            }
-        }
 
-        ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
-        if (activityDelegate != null) {
-            activityDelegate.onDestroy();
-            activity.getIntent().removeExtra(ActivityDelegate.ACTIVITY_DELEGATE);
+            if (fragmentLifecycle == null) {
+                fragmentLifecycle = new FragmentLifecycle();
+            }
+
+            ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(fragmentLifecycle, true);
+
+            if (fragmentLifecycles == null && extras.containsKey(ConfigModule.class.getName())) {
+                fragmentLifecycles = new ArrayList<>();
+                List<ConfigModule> modules = (List<ConfigModule>) extras.get(ConfigModule.class.getName());
+                for (ConfigModule module : modules) {
+                    module.injectFragmentLifecycle(application, fragmentLifecycles);
+                }
+                extras.put(ConfigModule.class.getName(), null);
+            }
+
+            for (FragmentManager.FragmentLifecycleCallbacks fragmentLifecycle : fragmentLifecycles) {
+                ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(fragmentLifecycle, true);
+            }
         }
     }
 

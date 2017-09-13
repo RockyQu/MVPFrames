@@ -21,6 +21,5 @@ public class Tab4FragmentPresenter extends BaseSimplePresenter<Tab4FragmentRepos
     public void onDestroy() {
         super.onDestroy();
 
-        Logg.e("onDestroy");
     }
 }

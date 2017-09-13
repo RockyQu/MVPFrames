@@ -44,7 +44,7 @@ public class WelcomeActivity extends BaseActivity implements EasyPermissions.Per
             public boolean handleMessage(Message msg) {
                 Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
                 WelcomeActivity.this.startActivity(intent);
-                WelcomeActivity.this.finish();
+//                WelcomeActivity.this.finish();
                 return false;
             }
         }).sendEmptyMessageDelayed(0, 1000);
