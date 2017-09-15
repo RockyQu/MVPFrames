@@ -5,14 +5,12 @@ import android.content.Context;
 /**
  * 下载器管理
  */
-public class DownloaderManager implements Downloader {
+public class DownloaderManager{
 
-    @Override
     public void init(Context context) {
 
     }
 
-    @Override
     public void init(Context context, DownloaderConfiguration configuration) {
 
     }
