@@ -36,6 +36,6 @@ public class Tab3Fragment extends BaseSimpleFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_tab4;
+        return R.layout.fragment_tab3;
     }
 }
