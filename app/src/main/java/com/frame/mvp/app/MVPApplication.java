@@ -1,5 +1,8 @@
 package com.frame.mvp.app;
 
+import android.content.Context;
+import android.support.multidex.MultiDex;
+
 import com.frame.mvp.db.DBModule;
 import com.frame.mvp.db.di.DBComponent;
 import com.frame.mvp.db.di.DaggerDBComponent;
@@ -39,9 +42,9 @@ public class MVPApplication extends BaseApplication {
         return component;
     }
 
-//    @Override
-//    protected void attachBaseContext(Context base) {
-//        super.attachBaseContext(base);
-//        MultiDex.install(this);
-//    }
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 }

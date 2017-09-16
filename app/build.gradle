@@ -12,8 +12,8 @@ android {
     useLibrary 'org.apache.http.legacy'
 
     compileOptions {
-        targetCompatibility JavaVersion.VERSION_1_8
-        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_7
     }
 
     defaultConfig {
@@ -35,16 +35,16 @@ android {
         // 单元测试
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
 
-        jackOptions {
-            enabled true
-        }
+//        jackOptions {
+//            enabled true
+//        }
 //        ndk {
 //            // 设置支持的SO库架构
 //            abiFilters "armeabi", "armeabi-v7a"
 //        }
 
         // Enabling MultiDex support.
-//        multiDexEnabled true
+        multiDexEnabled true
     }
 
 //    sourceSets {
@@ -108,7 +108,10 @@ android {
         debug {
             buildConfigField "boolean", "DEBUG_FLAG", "true"
 
+            zipAlignEnabled true
             minifyEnabled false
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
             buildConfigField "boolean", "DEBUG_FLAG", "false"
@@ -129,16 +132,16 @@ android {
 //            signingConfig signingConfigs.release
 
             // 批量打包
-//            applicationVariants.all { variant ->
-//                variant.outputs.each { output ->
-//                    def outputFile = output.outputFile
-//                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
-//                        // 输出名称为：渠道名_版本号.apk
-//                        def fileName = "App_${variant.productFlavors[0].name}_v${defaultConfig.versionName}.apk"
-//                        output.outputFile = new File(outputFile.parent, fileName)
-//                    }
-//                }
-//            }
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        // 输出名称为：渠道名_版本号.apk
+                        def fileName = "App_${variant.productFlavors[0].name}_v${defaultConfig.versionName}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
         }
     }
 
