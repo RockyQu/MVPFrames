@@ -20,7 +20,7 @@ public class ProjectUtils {
     public static String LOG = ROOT_PATH + "log/";
     // 缓存路径
     public static String CACHE = ROOT_PATH + "cache/";
-    // 缓存路径
+    // 其他路径
     public static String OTHER = ROOT_PATH + "other/";
 
     /**
