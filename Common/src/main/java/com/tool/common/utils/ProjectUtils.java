@@ -22,6 +22,8 @@ public class ProjectUtils {
     public static String CACHE = ROOT_PATH + "cache/";
     // 其他路径
     public static String OTHER = ROOT_PATH + "other/";
+    // 截图
+    public static String SCREENSHOT = ROOT_PATH + "screenshot/";
 
     /**
      * 初始化项目文件夹
@@ -36,6 +38,7 @@ public class ProjectUtils {
             result = FileUtils.makeFolders(LOG);
             result = FileUtils.makeFolders(CACHE);
             result = FileUtils.makeFolders(OTHER);
+            result = FileUtils.makeFolders(SCREENSHOT);
         }
         return result;
     }
@@ -52,6 +55,7 @@ public class ProjectUtils {
         LOG = ROOT_PATH + "log/";
         CACHE = ROOT_PATH + "cache/";
         OTHER = ROOT_PATH + "other/";
+        SCREENSHOT = ROOT_PATH + "screenshot/";
         return init();
     }
 }
