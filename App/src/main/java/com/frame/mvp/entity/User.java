@@ -1,6 +1,5 @@
 package com.frame.mvp.entity;
 
-import com.frame.mvp.entity.base.BaseEntity;
 import com.google.gson.annotations.SerializedName;
 
 import org.greenrobot.greendao.annotation.Entity;
@@ -11,7 +10,7 @@ import org.greenrobot.greendao.annotation.Id;
  * 用户信息
  */
 @Entity(nameInDb = "User")
-public class User extends BaseEntity.Bean {
+public class User{
 
     // 自增长ID
     @Id(autoincrement = true)

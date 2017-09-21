@@ -54,6 +54,13 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <!-- Network example -->
+        <activity
+            android:name=".mvp.main.fragment.tab1.network.NetworkActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+
         <!-- 渠道配置 -->
         <meta-data
             android:name="Channel"

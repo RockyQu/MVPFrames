@@ -155,7 +155,6 @@ public class AppConfiguration implements ConfigModule {
                     @Override
                     public void configGson(Context context, GsonBuilder builder) {
                         builder
-                                .registerTypeAdapter(ResponseEntity.class, new GsonResponseDeserializer())
                                 .serializeNulls();// 支持序列化null的参数
                     }
                 })

@@ -1,6 +1,5 @@
 package com.frame.mvp.mvp.main;
 
-import com.logg.Logg;
 import com.tool.common.di.component.AppComponent;
 import com.tool.common.frame.simple.BaseSimplePresenter;
 
