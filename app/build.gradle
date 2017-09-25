@@ -44,7 +44,7 @@ android {
 //        }
 
         // Enabling MultiDex support.
-        multiDexEnabled true
+//        multiDexEnabled true
     }
 
 //    sourceSets {
@@ -161,14 +161,14 @@ buildscript {
     }
 }
 
-//repositories {
-//    flatDir {
-//        dirs 'libs'
-//    }
-//    maven {
-//        url "https://jitpack.io"
-//    }
-//}
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+    maven {
+        url "https://jitpack.io"
+    }
+}
 
 dependencies {
     // 本地库依赖，包含app/libs目录下的所有jar文件。因此当module想引用某个jar时，只需将jar拷贝到<moduleName>/libs
