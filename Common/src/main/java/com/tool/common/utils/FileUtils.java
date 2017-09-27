@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,18 +26,9 @@ import java.util.List;
  */
 public class FileUtils extends BaseUtils {
 
-    /**
-     * gb to byte
-     **/
-    public static final long GB_2_BYTE = 1073741824;
-    /**
-     * mb to byte
-     **/
-    public static final long MB_2_BYTE = 1048576;
-    /**
-     * kb to byte
-     **/
-    public static final long KB_2_BYTE = 1024;
+    public static final long GB_BYTE = 1073741824;
+    public static final long MB_BYTE = 1048576;
+    public static final long KB_BYTE = 1024;
 
     public final static String FILE_EXTENSION_SEPARATOR = ".";
 
@@ -90,7 +82,7 @@ public class FileUtils extends BaseUtils {
      *
      * @param filePath
      * @param content
-     * @param append   is append, if true, write to the end of file, else clear content of file and write into it
+     * @param append   是否为追加写入
      * @return return false if content is empty, true otherwise
      * @throws RuntimeException if an error occurs while operator FileWriter
      */
@@ -411,7 +403,7 @@ public class FileUtils extends BaseUtils {
     }
 
     /**
-     * get suffix of file from path
+     * 获取文件的后缀名
      * <p>
      * <pre>
      *      getFileExtension(null)               =   ""
@@ -475,10 +467,11 @@ public class FileUtils extends BaseUtils {
 
     /**
      * 创建未存在的文件夹
+     *
      * @param file
      * @return
      */
-    public static File makeDirs(File file){
+    public static File makeDirs(File file) {
         if (!file.exists()) {
             file.mkdirs();
         }
@@ -522,42 +515,6 @@ public class FileUtils extends BaseUtils {
 
         File dire = new File(directoryPath);
         return (dire.exists() && dire.isDirectory());
-    }
-
-    /**
-     * delete file or directory
-     * <ul>
-     * <li>if path is null or empty, return true</li>
-     * <li>if path not exist, return true</li>
-     * <li>if path exist, delete recursion. return true</li>
-     * <ul>
-     *
-     * @param path
-     * @return
-     */
-    public static boolean deleteFile(String path) {
-        if (StringUtils.isBlank(path)) {
-            return true;
-        }
-
-        File file = new File(path);
-        if (!file.exists()) {
-            return true;
-        }
-        if (file.isFile()) {
-            return file.delete();
-        }
-        if (!file.isDirectory()) {
-            return false;
-        }
-        for (File f : file.listFiles()) {
-            if (f.isFile()) {
-                f.delete();
-            } else if (f.isDirectory()) {
-                deleteFile(f.getAbsolutePath());
-            }
-        }
-        return file.delete();
     }
 
     /**
@@ -690,42 +647,6 @@ public class FileUtils extends BaseUtils {
     }
 
     /**
-     * 将图片文件转化为字节数组字符串，并对其进行Base64编码处理
-     *
-     * @param filePath 本地路径
-     * @return Base64编码
-     */
-    public static String getBase64FromFile(String filePath) {
-        return getBase64FromFile(null, filePath);
-    }
-
-    /**
-     * 将图片文件转化为字节数组字符串，并对其进行Base64编码处理
-     *
-     * @param header   头部信息
-     * @param filePath 本地路径
-     * @return Base64编码
-     */
-    public static String getBase64FromFile(String header, String filePath) {
-        if (filePath == null || filePath.length() == 0) {
-            return "File path does not exist!";
-        }
-
-        byte[] data = null;
-        try {
-            InputStream in = new FileInputStream(filePath);
-            data = new byte[in.available()];
-            in.read(data);
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // 对字节数组Base64编码
-        return header != null ? header + Base64.encodeToString(data, Base64.DEFAULT) : Base64.encodeToString(data, Base64.DEFAULT);
-    }
-
-    /**
      * 返回缓存文件夹
      */
     public static File getCacheFile(Context context) {
@@ -746,6 +667,7 @@ public class FileUtils extends BaseUtils {
 
     /**
      * 获取自定义缓存文件地址
+     *
      * @param context
      * @return
      */
@@ -781,26 +703,107 @@ public class FileUtils extends BaseUtils {
     }
 
     /**
-     * 使用递归删除文件夹
+     * 格式化单位
      *
-     * @param dir
+     * @param size
      * @return
      */
-    public static boolean DeleteDir(File dir) {
-        if (dir == null) {
+    public static String getFormatSize(double size) {
+        double kiloByte = size / 1024;
+        if (kiloByte < 1) {
+            return size + "B";
+        }
+
+        double megaByte = kiloByte / 1024;
+        if (megaByte < 1) {
+            BigDecimal result1 = new BigDecimal(Double.toString(kiloByte));
+            return result1.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "KB";
+        }
+
+        double gigaByte = megaByte / 1024;
+        if (gigaByte < 1) {
+            BigDecimal result2 = new BigDecimal(Double.toString(megaByte));
+            return result2.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "MB";
+        }
+
+        double teraBytes = gigaByte / 1024;
+        if (teraBytes < 1) {
+            BigDecimal result3 = new BigDecimal(Double.toString(gigaByte));
+            return result3.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "GB";
+        }
+        BigDecimal result4 = new BigDecimal(teraBytes);
+        return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "TB";
+    }
+
+    /**
+     * 删除指定目录下文件及目录
+     *
+     * @param filePath
+     * @param deleteThisPath 是否删除根目录
+     * @return
+     */
+    public boolean deleteFolderFile(String filePath, boolean deleteThisPath) {
+        if (TextUtils.isEmpty(filePath)) {
             return false;
         }
-        if (!dir.isDirectory()) {
-            return false;
-        }
-        File[] files = dir.listFiles();
-        for (File file : files) {
-            if (file.isFile()) {
-                file.delete();
-            } else if (file.isDirectory()) {
-                DeleteDir(file); // 递归调用继续删除
+
+        try {
+            File file = new File(filePath);
+            if (file.isDirectory()) {// 处理目录
+                File files[] = file.listFiles();
+                for (int i = 0; i < files.length; i++) {
+                    deleteFolderFile(files[i].getAbsolutePath(), true);
+                }
             }
+            if (deleteThisPath) {
+                if (!file.isDirectory()) {// 如果是文件，删除
+                    file.delete();
+                } else {// 目录
+                    if (file.listFiles().length == 0) {// 目录下没有文件或者目录，删除
+                        file.delete();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
         return true;
+    }
+
+    /**
+     * 将图片文件转化为字节数组字符串，并对其进行Base64编码处理
+     *
+     * @param filePath 本地路径
+     * @return Base64编码
+     */
+    public static String getBase64FromFile(String filePath) {
+        return getBase64FromFile(null, filePath);
+    }
+
+    /**
+     * 将图片文件转化为字节数组字符串，并对其进行Base64编码处理
+     *
+     * @param header   头部信息
+     * @param filePath 本地路径
+     * @return Base64编码
+     */
+    public static String getBase64FromFile(String header, String filePath) {
+        if (filePath == null || filePath.length() == 0) {
+            return "File path does not exist!";
+        }
+
+        byte[] data = null;
+        try {
+            InputStream in = new FileInputStream(filePath);
+            data = new byte[in.available()];
+            in.read(data);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // 对字节数组Base64编码
+        return header != null ? header + Base64.encodeToString(data, Base64.DEFAULT) : Base64.encodeToString(data, Base64.DEFAULT);
     }
 }
