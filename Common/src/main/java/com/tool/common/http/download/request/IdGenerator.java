@@ -1,4 +1,4 @@
-package com.tool.common.http.download.task;
+package com.tool.common.http.download.request;
 
 public interface IdGenerator {
 
@@ -8,5 +8,5 @@ public interface IdGenerator {
      * @param url download url
      * @return download task id.
      */
-    int generateId(String url);
+    String generateId(String url);
 }

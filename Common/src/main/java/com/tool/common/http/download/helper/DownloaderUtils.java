@@ -1,6 +1,4 @@
-package com.tool.common.http.download.utils;
-
-
+package com.tool.common.http.download.helper;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

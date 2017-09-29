@@ -4,12 +4,16 @@ import android.os.Bundle;
 
 import com.frame.mvp.R;
 import com.frame.mvp.ui.adapter.MainViewPagerAdapter;
+import com.logg.Logg;
 import com.tool.common.base.simple.base.BaseSimpleActivity;
 import com.tool.common.frame.simple.ISimpleView;
 import com.tool.common.frame.simple.Message;
 import com.tool.common.widget.navigation.BottomNavigation;
 import com.tool.common.widget.navigation.BottomNavigationAdapter;
 import com.tool.common.widget.navigation.BottomNavigationViewPager;
+
+import java.io.File;
+import java.io.IOException;
 
 import butterknife.BindView;
 
@@ -51,6 +55,14 @@ public class MainActivity extends BaseSimpleActivity<MainPresenter> implements I
         viewPager.setOffscreenPageLimit(3);
         adapter = new MainViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
+
+        Logg.e(getFilesDir()+"/aaaaaaaaaaaaaaaaaa");
+ Logg.e(getCacheDir()+"");
+        try {
+            new File(getFilesDir()+"/aaaaaaaaaaaaaaaaaa").createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

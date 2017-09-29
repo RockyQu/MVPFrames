@@ -559,4 +559,14 @@ public class DeviceUtils extends BaseUtils {
         }
         return macAddress;
     }
+
+    public static int GPS_REQUEST_CODE = 52;
+
+    /**
+     * 打开 Gps 系统设置页面
+     */
+    public static void openGpsSetting(Activity activity) {
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        activity.startActivityForResult(intent, GPS_REQUEST_CODE);
+    }
 }

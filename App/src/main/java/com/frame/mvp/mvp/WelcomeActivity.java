@@ -11,6 +11,7 @@ import com.frame.mvp.mvp.login.LoginActivity;
 import com.frame.mvp.mvp.main.MainActivity;
 import com.tool.common.base.BaseActivity;
 import com.tool.common.di.component.AppComponent;
+import com.tool.common.utils.DeviceUtils;
 import com.tool.common.utils.PermissionUtils;
 
 import java.util.List;
