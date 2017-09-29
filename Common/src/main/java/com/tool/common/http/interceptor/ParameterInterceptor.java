@@ -36,7 +36,6 @@ public class ParameterInterceptor implements Interceptor {
         Request request = chain.request();
 
         HashMap<String, Object> parameters = callback.parameters();
-        Logg.e("request.method():" + request.method());
         if (parameters != null && parameters.size() != 0) {
             if (request.method().equals("GET")) {// 为GET方式统一添加请求参数
                 HttpUrl.Builder modifiedUrl = request.url().newBuilder()

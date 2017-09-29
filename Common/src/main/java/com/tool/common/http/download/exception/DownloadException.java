@@ -3,21 +3,21 @@ package com.tool.common.http.download.exception;
 public class DownloadException extends Exception {
 
     private int code;
-    private String message;
+    private String exceptionMessage;
 
     public DownloadException() {
 
     }
 
-    public DownloadException(String message) {
-        super(message);
-        this.message = message;
+    public DownloadException(String exceptionMessage) {
+        super(exceptionMessage);
+        this.exceptionMessage = exceptionMessage;
     }
 
-    public DownloadException(int code, String message) {
-        super(message);
+    public DownloadException(int code, String exceptionMessage) {
+        super(exceptionMessage);
         this.code = code;
-        this.message = message;
+        this.exceptionMessage = exceptionMessage;
     }
 
     public DownloadException(int code, Throwable throwable) {
@@ -25,15 +25,15 @@ public class DownloadException extends Exception {
         this.code = code;
     }
 
-    public DownloadException(String message, Throwable throwable) {
-        super(message, throwable);
-        this.message = message;
+    public DownloadException(String exceptionMessage, Throwable throwable) {
+        super(exceptionMessage, throwable);
+        this.exceptionMessage = exceptionMessage;
     }
 
-    public DownloadException(int code, String message, Throwable throwable) {
-        super(message, throwable);
+    public DownloadException(int code, String exceptionMessage, Throwable throwable) {
+        super(exceptionMessage, throwable);
         this.code = code;
-        this.message = message;
+        this.exceptionMessage = exceptionMessage;
     }
 
     public DownloadException(Throwable throwable) {
@@ -48,12 +48,11 @@ public class DownloadException extends Exception {
         this.code = code;
     }
 
-    @Override
-    public String getMessage() {
-        return message;
+    public String getExceptionMessage() {
+        return exceptionMessage;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setExceptionMessage(String exceptionMessage) {
+        this.exceptionMessage = exceptionMessage;
     }
 }

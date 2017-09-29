@@ -34,7 +34,7 @@ public class DownloadRequest {
      * <p>
      * 默认为对 Url 进行 MD5 加密后生成的值
      */
-    private CharSequence saveFileName;
+    private String saveFileName;
 
     public DownloadRequest() {
 
@@ -56,10 +56,6 @@ public class DownloadRequest {
     }
 
     public String getId() {
-        if (TextUtils.isEmpty(getUrl())) {
-            throw new NullPointerException("Url is required");
-        }
-
         if (TextUtils.isEmpty(id)) {
             return DownloaderHelper.getTaskIdGenerator().generateId(getUrl());
         }
@@ -93,14 +89,14 @@ public class DownloadRequest {
         this.saveFilePath = saveFilePath;
     }
 
-    public CharSequence getSaveFileName() {
+    public String getSaveFileName() {
         if (TextUtils.isEmpty(saveFileName)) {
             return getId();
         }
         return saveFileName;
     }
 
-    public void setSaveFileName(CharSequence saveFileName) {
+    public void setSaveFileName(String saveFileName) {
         this.saveFileName = saveFileName;
     }
 }

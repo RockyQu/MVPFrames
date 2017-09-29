@@ -2,6 +2,9 @@ package com.tool.common.http.download;
 
 import android.content.Context;
 
+import com.tool.common.http.download.core.DownloadCore;
+import com.tool.common.http.download.helper.DownloaderHelper;
+import com.tool.common.http.download.request.DownloadRequest;
 import com.tool.common.http.download.response.DownloadResponse;
 import com.tool.common.http.download.config.DownloaderConfiguration;
 import com.tool.common.http.download.exception.DownloadException;
@@ -23,7 +26,6 @@ public class Downloader {
     private DownloaderConfiguration configuration;
 
     public Downloader() {
-
 
     }
 
@@ -58,33 +60,18 @@ public class Downloader {
 
     public DownloaderConfiguration getConfiguration() {
         if (this.configuration == null) {
-            DownloaderConfiguration.builder()
+            configuration = DownloaderConfiguration.builder()
                     .application(application)
                     .build();
         }
         return this.configuration;
     }
 
-    public class Response implements DownloadResponse {
-
-        @Override
-        public void onStart() {
-
+    public void start(DownloadRequest request, DownloadResponse response) {
+        if (application == null) {
+            throw new IllegalArgumentException("Not initialized Downloader.getInstance().init(application)");
         }
 
-        @Override
-        public void onProgress(int progress, long total) {
-
-        }
-
-        @Override
-        public void onFailure() {
-
-        }
-
-        @Override
-        public void onFinish(DownloadException exception) {
-
-        }
+        DownloaderHelper.init(application, request, response).execute();
     }
 }

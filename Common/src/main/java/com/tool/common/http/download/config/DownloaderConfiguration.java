@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.logg.Logg;
 import com.tool.common.http.download.request.DownloadRequest;
 import com.tool.common.http.download.Downloader;
 import com.tool.common.utils.ProjectUtils;
@@ -46,7 +47,7 @@ public class DownloaderConfiguration {
         /**
          * 默认保存路径，所有下载的文件会保存至这个目录，如果在单独的下载任务{@link DownloadRequest#saveFilePath}设置了单独的保存路径，则会覆盖此路径
          */
-        private String defaultSaveRootPath = ProjectUtils.OTHER;
+        private String defaultSaveRootPath;
 
         private Builder() {
             ;
