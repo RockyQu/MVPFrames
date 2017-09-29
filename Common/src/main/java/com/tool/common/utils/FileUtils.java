@@ -742,7 +742,7 @@ public class FileUtils extends BaseUtils {
      * @param deleteThisPath 是否删除根目录
      * @return
      */
-    public boolean deleteFolderFile(String filePath, boolean deleteThisPath) {
+    public static boolean deleteFolderFile(String filePath, boolean deleteThisPath) {
         if (TextUtils.isEmpty(filePath)) {
             return false;
         }

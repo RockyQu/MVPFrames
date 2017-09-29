@@ -77,22 +77,23 @@ public class DeviceUtils extends BaseUtils {
      * dp转px
      *
      * @param context
-     * @param dp
+     * @param dpValue
      * @return
      */
-    public static int dpToPixel(Context context, float dp) {
-        return (int) (dp * (getDisplayMetrics(context).densityDpi / 160F));
+    public static int dpToPx(Context context, float dpValue) {
+        return (int) (dpValue * context.getResources().getDisplayMetrics().density + 0.5f);
+
     }
 
     /**
      * px转dp
      *
      * @param context
-     * @param px
+     * @param pxValue
      * @return
      */
-    public static int pixelsToDp(Context context, float px) {
-        return (int) (px / (getDisplayMetrics(context).densityDpi / 160F));
+    public static int pxToDp(Context context, float pxValue) {
+        return (int) (pxValue / context.getResources().getDisplayMetrics().density + 0.5f);
     }
 
     /**
