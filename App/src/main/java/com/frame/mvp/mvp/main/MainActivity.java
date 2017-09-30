@@ -60,7 +60,7 @@ public class MainActivity extends BaseSimpleActivity<MainPresenter> implements I
         viewPager.setOffscreenPageLimit(3);
         adapter = new MainViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
-
+//        http://download.alicdn.com/wireless/taobao4android/latest/702757.apk
         Downloader.getInstance().start(new DownloadRequest("http://s1.music.126.net/download/android/CloudMusic_2.8.1_official_4.apk"),
                 new DownloadResponse() {
                     @Override
