@@ -12,12 +12,12 @@ import com.tool.common.utils.ProjectUtils;
 /**
  * 相关参数配置
  * <p>
- * 该类配合{@link Downloader#init(Context, DownloaderConfiguration)}方法进行使用
+ * 该类配合{@link Downloader#init(DownloaderConfiguration)}方法进行使用
  * 建议在{@link Application#onCreate()}方法调用初始化配置代码
  */
 public class DownloaderConfiguration {
 
-    private Context application;
+    private Application application;
     private String defaultSaveRootPath;
 
     public DownloaderConfiguration(Builder builder) {
@@ -25,7 +25,7 @@ public class DownloaderConfiguration {
         this.defaultSaveRootPath = builder.defaultSaveRootPath;
     }
 
-    public Context getApplication() {
+    public Application getApplication() {
         return application;
     }
 
@@ -42,7 +42,7 @@ public class DownloaderConfiguration {
 
     public static class Builder {
 
-        private Context application;
+        private Application application;
 
         /**
          * 默认保存路径，所有下载的文件会保存至这个目录，如果在单独的下载任务{@link DownloadRequest#saveFilePath}设置了单独的保存路径，则会覆盖此路径
@@ -53,7 +53,7 @@ public class DownloaderConfiguration {
             ;
         }
 
-        public Builder application(Context application) {
+        public Builder application(Application application) {
             this.application = application;
             return this;
         }
@@ -64,6 +64,9 @@ public class DownloaderConfiguration {
         }
 
         public DownloaderConfiguration build() {
+            if (application == null) {
+                throw new IllegalArgumentException("Application must not be null!");
+            }
             return new DownloaderConfiguration(this);
         }
     }

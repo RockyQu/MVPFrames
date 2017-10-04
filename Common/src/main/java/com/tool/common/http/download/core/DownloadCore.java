@@ -1,17 +1,11 @@
 package com.tool.common.http.download.core;
 
 import android.content.Context;
-import android.text.TextUtils;
-
-import com.logg.Logg;
-import com.tool.common.di.component.AppComponent;
+import com.tool.common.http.download.DownloadListener;
 import com.tool.common.http.download.exception.DownloadException;
 import com.tool.common.http.download.request.DownloadRequest;
-import com.tool.common.http.download.response.DownloadResponse;
-import com.tool.common.utils.AppUtils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,32 +22,26 @@ public class DownloadCore implements CoreExecute {
     private OkHttpClient okHttpClient = null;
 
     private DownloadRequest downRequest;
-    private DownloadResponse downResponse;
+    private DownloadListener downloadListener;
 
-    public DownloadCore(Context application, DownloadRequest request, DownloadResponse response) {
-        okHttpClient = AppUtils.obtainAppComponentFromContext(application).getOkHttpClient();
+    public DownloadCore(Context application, DownloadRequest request, DownloadListener listener) {
+        okHttpClient = DownloadClient.getInstance().getOkHttpClient();
 
         this.downRequest = request;
-        this.downResponse = response;
+        this.downloadListener = listener;
     }
 
     @Override
-    public void execute() {
-        final String url = downRequest.getUrl();
-        if (TextUtils.isEmpty(url)) {
-            if (downResponse != null) {
-                downResponse.onFailure(new DownloadException("The download address is empty!"));
-            }
-            return;
-        }
-
-        Request request = new Request.Builder().url(url).build();
+    public String execute() {
+        Request request = new Request.Builder()
+                .url(downRequest.getUrl())
+                .build();
         okHttpClient.newCall(request).enqueue(new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
-                if (downResponse != null) {
-                    downResponse.onFailure(new DownloadException("Download failed! (OkHttp onFailure)", e));
+                if (downloadListener != null) {
+                    downloadListener.onFailure(new DownloadException("Download failed! (OkHttp onFailure)", e));
                 }
             }
 
@@ -61,8 +49,8 @@ public class DownloadCore implements CoreExecute {
             public void onResponse(Call call, Response response) throws IOException {
                 ResponseBody responseBody = response.body();
                 long total = responseBody.contentLength();
-                if (downResponse != null) {
-                    downResponse.onStart(total);
+                if (downloadListener != null) {
+                    downloadListener.onStart(total);
                 }
 
                 InputStream is = null;
@@ -80,19 +68,19 @@ public class DownloadCore implements CoreExecute {
                         sum += len;
 
                         // Downloading
-                        if (downResponse != null) {
-                            downResponse.onProgress(sum, total);
+                        if (downloadListener != null) {
+                            downloadListener.onProgress(sum, total);
                         }
                     }
                     fos.flush();
 
                     // Download completed
-                    if (downResponse != null) {
-                        downResponse.onFinish(downRequest);
+                    if (downloadListener != null) {
+                        downloadListener.onFinish();
                     }
                 } catch (Exception e) {
-                    if (downResponse != null) {
-                        downResponse.onFailure(new DownloadException("File exception! (OkHttp onResponse)", e));
+                    if (downloadListener != null) {
+                        downloadListener.onFailure(new DownloadException("File exception! (OkHttp onResponse)", e));
                     }
                 } finally {
                     try {
@@ -103,13 +91,14 @@ public class DownloadCore implements CoreExecute {
                             fos.close();
                         }
                     } catch (IOException ignored) {
-                        if (downResponse != null) {
-                            downResponse.onFailure(new DownloadException("IO close failed!", ignored));
+                        if (downloadListener != null) {
+                            downloadListener.onFailure(new DownloadException("IO close failed!", ignored));
                         }
                     }
                 }
             }
         });
 
+        return downRequest.getId();
     }
 }

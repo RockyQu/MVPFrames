@@ -7,9 +7,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Response Callback
- */
 public abstract class ResponseCallback<T> implements Callback<T> {
 
     public ResponseCallback() {

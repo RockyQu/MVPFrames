@@ -1,14 +1,13 @@
 package com.tool.common.http.download.helper;
 
-
-import android.content.Context;
+import android.app.Application;
 
 import com.tool.common.http.download.core.CoreExecute;
 import com.tool.common.http.download.core.DownloadCore;
 import com.tool.common.http.download.request.DownloadRequest;
 import com.tool.common.http.download.request.IdGenerator;
 import com.tool.common.http.download.request.TaskIdGenerator;
-import com.tool.common.http.download.response.DownloadResponse;
+import com.tool.common.http.download.DownloadListener;
 
 public class DownloaderHelper {
 
@@ -16,7 +15,7 @@ public class DownloaderHelper {
         return TaskIdGenerator.getInstance();
     }
 
-    public static CoreExecute init(Context application, DownloadRequest request, DownloadResponse response) {
-        return new DownloadCore(application, request, response);
+    public static CoreExecute init(Application application, DownloadRequest request, DownloadListener listener) {
+        return new DownloadCore(application, request, listener);
     }
 }

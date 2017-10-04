@@ -1,5 +1,6 @@
 package com.frame.mvp.mvp.main;
 
+import android.app.DownloadManager;
 import android.os.Bundle;
 
 import com.frame.mvp.R;
@@ -11,14 +12,10 @@ import com.tool.common.frame.simple.Message;
 import com.tool.common.http.download.Downloader;
 import com.tool.common.http.download.exception.DownloadException;
 import com.tool.common.http.download.request.DownloadRequest;
-import com.tool.common.http.download.response.DownloadResponse;
-import com.tool.common.utils.ProjectUtils;
+import com.tool.common.http.download.DownloadSimpleListener;
 import com.tool.common.widget.navigation.BottomNavigation;
 import com.tool.common.widget.navigation.BottomNavigationAdapter;
 import com.tool.common.widget.navigation.BottomNavigationViewPager;
-
-import java.io.File;
-import java.io.IOException;
 
 import butterknife.BindView;
 
@@ -60,12 +57,13 @@ public class MainActivity extends BaseSimpleActivity<MainPresenter> implements I
         viewPager.setOffscreenPageLimit(3);
         adapter = new MainViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
-//        http://download.alicdn.com/wireless/taobao4android/latest/702757.apk
-        Downloader.getInstance().start(new DownloadRequest("http://s1.music.126.net/download/android/CloudMusic_2.8.1_official_4.apk"),
-                new DownloadResponse() {
+
+        Downloader.getInstance().start(new DownloadRequest("http://download.alicdn.com/wireless/taobao4android/latest/702757.apk"),
+                new DownloadSimpleListener() {
+
                     @Override
                     public void onStart(long total) {
-                        Logg.e(total);
+
                     }
 
                     @Override
@@ -80,10 +78,11 @@ public class MainActivity extends BaseSimpleActivity<MainPresenter> implements I
                     }
 
                     @Override
-                    public void onFinish(DownloadRequest downRequest) {
-                        Logg.e("onFinish");
+                    public void onFinish() {
+
                     }
-                });
+                }
+        );
     }
 
     @Override

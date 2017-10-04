@@ -29,6 +29,7 @@ import com.tool.common.http.NetworkHandler;
 import com.tool.common.http.ResponseEntity;
 import com.tool.common.http.converter.GsonResponseDeserializer;
 import com.tool.common.http.download.Downloader;
+import com.tool.common.http.download.config.DownloaderConfiguration;
 import com.tool.common.http.interceptor.LoggingInterceptor;
 import com.tool.common.http.interceptor.ParameterInterceptor;
 import com.tool.common.http.ssl.SSL;
@@ -225,8 +226,11 @@ public class AppConfiguration implements ConfigModule {
 
             @Override
             public void onCreate(Application application) {
-                // 这是此框架的一个轻量级下载模块，使用前请在这里调用如下代码
-                Downloader.getInstance().init(application);
+                // 这是一个轻量级下载模块，使用前请在这里调用如下代码
+                DownloaderConfiguration configuration = DownloaderConfiguration.builder()
+                        .application(application)
+                        .build();
+                Downloader.getInstance().init(configuration);
             }
 
             @Override

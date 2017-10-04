@@ -11,7 +11,7 @@ public class DownloadRequest {
     /**
      * 任务Id
      * <p>
-     * 默认为对 Url 进行 MD5 加密后生成的值
+     * 默认为 Url 进行 MD5 加密后生成的值
      */
     private String id;
 
