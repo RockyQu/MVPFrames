@@ -1,6 +1,5 @@
 package com.frame.mvp.mvp.main;
 
-import android.app.DownloadManager;
 import android.os.Bundle;
 
 import com.frame.mvp.R;
@@ -63,7 +62,7 @@ public class MainActivity extends BaseSimpleActivity<MainPresenter> implements I
 
                     @Override
                     public void onStart(long total) {
-
+                        Logg.e(total);
                     }
 
                     @Override
@@ -74,12 +73,12 @@ public class MainActivity extends BaseSimpleActivity<MainPresenter> implements I
 
                     @Override
                     public void onFailure(DownloadException exception) {
-
+                        Logg.e(exception.getExceptionMessage());
                     }
 
                     @Override
                     public void onFinish() {
-
+                        Logg.e("onFinish");
                     }
                 }
         );

@@ -41,7 +41,7 @@ public class DownloadCore implements CoreExecute {
             @Override
             public void onFailure(Call call, IOException e) {
                 if (downloadListener != null) {
-                    downloadListener.onFailure(new DownloadException("Download failed! (OkHttp onFailure)", e));
+                    downloadListener.onFailure(new DownloadException(e.getMessage(), e));
                 }
             }
 
