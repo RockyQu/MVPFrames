@@ -3,40 +3,30 @@ package com.frame.mvp.app;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.text.TextUtils;
 
 import com.frame.mvp.BuildConfig;
 import com.frame.mvp.app.api.Api;
-import com.frame.mvp.app.api.service.ApiCommon;
-import com.frame.mvp.app.api.service.ApiUser;
 import com.frame.mvp.entity.User;
 import com.frame.mvp.mvp.login.LoginActivity;
 import com.google.gson.GsonBuilder;
-import com.logg.config.LoggConfig;
+import com.logg.Logg;
+import com.logg.config.LoggConfiguration;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.tool.common.base.App;
-import com.tool.common.base.delegate.AppDelegate;
 import com.tool.common.base.delegate.ApplicationLifecycles;
 import com.tool.common.di.module.AppConfigModule;
 import com.tool.common.di.module.AppModule;
 import com.tool.common.di.module.HttpModule;
 import com.tool.common.http.NetworkHandler;
-import com.tool.common.http.ResponseEntity;
-import com.tool.common.http.converter.GsonResponseDeserializer;
 import com.tool.common.http.download.Downloader;
 import com.tool.common.http.download.config.DownloaderConfiguration;
 import com.tool.common.http.interceptor.LoggingInterceptor;
 import com.tool.common.http.interceptor.ParameterInterceptor;
-import com.tool.common.http.ssl.SSL;
-import com.tool.common.http.ssl.TrustAllHostnameVerifier;
-import com.tool.common.http.ssl.TrustAllX509TrustManager;
 import com.tool.common.integration.ConfigModule;
-import com.tool.common.integration.IRepositoryManager;
 import com.tool.common.utils.AppUtils;
 import com.tool.common.utils.GsonUtils;
 import com.tool.common.utils.PreferencesUtils;
@@ -170,10 +160,11 @@ public class AppConfiguration implements ConfigModule {
 
             @Override
             public void onCreate(Application application) {
-                LoggConfig
-                        .buidler()
+                LoggConfiguration configuration = new LoggConfiguration.Buidler()
                         .setDebug(BuildConfig.DEBUG_FLAG)
+//                .setTag("test")// 自定义全局Tag
                         .build();
+                Logg.init(configuration);
 
                 // LeakCanary内存泄露检查
                 ((App) application).getAppComponent().extras().put(RefWatcher.class.getName(), BuildConfig.DEBUG_FLAG ? LeakCanary.install(application) : RefWatcher.DISABLED);
