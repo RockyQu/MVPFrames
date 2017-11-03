@@ -209,7 +209,7 @@ public class AppConfiguration implements ConfigModule {
 
             }
         });
-        
+
         lifecycleManager.add(new ApplicationLifecycles() {
 
             @Override
