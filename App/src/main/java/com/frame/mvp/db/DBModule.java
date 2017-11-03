@@ -23,7 +23,6 @@ import dagger.Provides;
 /**
  * DBModule
  */
-@Module
 public class DBModule {
 
     // Application
@@ -39,11 +38,25 @@ public class DBModule {
     // 加密密钥，客户端可以自己生成一个特征性动态Key,也可服务器配合传过来一个Key
     public static String KEY;
 
-    public DBModule(Application application) {
-        this(application, ProjectUtils.DB, ProjectUtils.PROJECT_NAME);
+    private DaoSession daoSession = null;
+
+    public DBModule() {
+
     }
 
-    public DBModule(Application application, String dbPath, String dbName) {
+    private final static class SingletonHolder {
+        private final static DBModule INSTANCE = new DBModule();
+    }
+
+    public static DBModule getInstance() {
+        return SingletonHolder.INSTANCE;
+    }
+
+    public void init(Application application) {
+        this.init(application, ProjectUtils.DB, ProjectUtils.PROJECT_NAME);
+    }
+
+    public void init(Application application, String dbPath, String dbName) {
         this.application = application;
 
         this.dbPath = dbPath;
@@ -52,27 +65,16 @@ public class DBModule {
         if (ENCRYPTED) {
             KEY = DeviceUtils.getIMEI(application);
         }
-    }
 
-    @ApplicationScope
-    @Provides
-    public DBOpenHelper provideDevOpenHelper() {
+        DBOpenHelper helper;
         if (!TextUtils.isEmpty(dbPath)) {
-            return new DBOpenHelper(new DBContextWrapper(application, dbPath), !TextUtils.isEmpty(dbName) ? dbName : "db", null);
+            helper = new DBOpenHelper(new DBContextWrapper(application, dbPath), !TextUtils.isEmpty(dbName) ? dbName : "db", null);
+        } else {
+            helper = new DBOpenHelper(new DBContextWrapper(application), !TextUtils.isEmpty(dbName) ? dbName : "db", null);
         }
-        return new DBOpenHelper(new DBContextWrapper(application), !TextUtils.isEmpty(dbName) ? dbName : "db", null);
-    }
 
-    @ApplicationScope
-    @Provides
-    public DaoMaster provideDaoMaster(DBOpenHelper helper) {
-        return new DaoMaster(ENCRYPTED ? helper.getEncryptedWritableDb(KEY) : helper.getWritableDb());
-    }
-
-    @ApplicationScope
-    @Provides
-    public DaoSession provideDaoSession(DaoMaster daoMaster) {
-        return daoMaster.newSession();
+        DaoMaster daoMaster = new DaoMaster(ENCRYPTED ? helper.getEncryptedWritableDb(KEY) : helper.getWritableDb());
+        daoSession = daoMaster.newSession();
     }
 
     /**
@@ -89,5 +91,9 @@ public class DBModule {
             Log.i("greenDAO", "Upgrading schema from version " + oldVersion + " to " + newVersion + " by dropping all tables");
             MigrationHelper.getInstance().migrate(db, UserDao.class);
         }
+    }
+
+    public DaoSession getDaoSession() {
+        return daoSession;
     }
 }
