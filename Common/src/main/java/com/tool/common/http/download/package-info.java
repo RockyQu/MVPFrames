@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 /**
- * 根据你的实际需求，选择合适的数据库
- * 如果你选用的是基于 greendao 型的数据库
- * 可以使用{@link com.tool.common.db.DBContextWrapper} 改变 DB 文件保存路径
- * 和 {@link com.tool.common.db.MigrationHelper} 数据迁移工具
+ * 下载管理器
+ * 请在{@link android.app.Application#onCreate()}方法调用初始化配置代码
  */
-package com.tool.common.db;
+package com.tool.common.http.download;
