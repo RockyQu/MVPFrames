@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.frame.mvp.BuildConfig;
 import com.frame.mvp.app.api.Api;
+import com.frame.mvp.db.DBModule;
 import com.frame.mvp.entity.User;
 import com.frame.mvp.mvp.login.LoginActivity;
 import com.google.gson.GsonBuilder;
@@ -195,6 +196,20 @@ public class AppConfiguration implements ConfigModule {
             }
         });
 
+        lifecycleManager.add(new ApplicationLifecycles() {
+
+            @Override
+            public void onCreate(Application application) {
+                // 数据库
+                DBModule.getInstance().init(application);
+            }
+
+            @Override
+            public void onTerminate(Application application) {
+
+            }
+        });
+        
         lifecycleManager.add(new ApplicationLifecycles() {
 
             @Override

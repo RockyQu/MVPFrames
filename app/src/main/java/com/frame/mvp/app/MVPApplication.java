@@ -13,33 +13,9 @@ import com.tool.common.base.BaseApplication;
  */
 public class MVPApplication extends BaseApplication {
 
-    // DBComponent
-    private DBComponent component = null;
-
     @Override
     public void onCreate() {
         super.onCreate();
-
-        // DBComponent
-        component = DaggerDBComponent
-                .builder()
-                .dBModule(new DBModule(this))
-                .build();
-        component.inject(this);
-    }
-
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-    }
-
-    /**
-     * 返回DBComponent提供数据库模块统一出口
-     *
-     * @return
-     */
-    public DBComponent getDBComponent() {
-        return component;
     }
 
     @Override
