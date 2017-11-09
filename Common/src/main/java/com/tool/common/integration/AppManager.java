@@ -93,7 +93,7 @@ public class AppManager {
             return;
         }
 
-        ToastBar.with(this.getCurrentActivity()).message(message).show();
+        ToastBar.with(this.getCurrentActivity()).setMessage(message).show();
     }
 
     /**

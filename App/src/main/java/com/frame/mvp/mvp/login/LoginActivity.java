@@ -117,7 +117,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void showMessage(int type, String message) {
-        ToastBar.with(LoginActivity.this).message(message).show();
+        ToastBar.with(LoginActivity.this).setMessage(message).show();
     }
 
     @Override
