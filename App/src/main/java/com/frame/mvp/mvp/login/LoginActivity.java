@@ -2,7 +2,6 @@ package com.frame.mvp.mvp.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -10,10 +9,9 @@ import com.frame.mvp.R;
 import com.frame.mvp.di.login.DaggerLoginComponent;
 import com.frame.mvp.di.login.LoginModule;
 import com.frame.mvp.entity.User;
-import com.logg.Logg;
+import com.frame.mvp.mvp.main.MainActivity;
 import com.tool.common.base.BaseActivity;
 import com.tool.common.di.component.AppComponent;
-import com.tool.common.utils.StringUtils;
 import com.tool.common.widget.ToastBar;
 
 import butterknife.BindView;
@@ -51,9 +49,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @OnClick(R.id.btn_submit)
     public void login() {
         if (inputCheck(R.id.btn_submit)) {
+
             // 登录
 //            presenter.login(edtAccount.getText().toString().trim(), edtPassword.getText().toString().trim());
-            presenter.test();
+//            presenter.test();
         }
     }
 
@@ -117,8 +116,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
     @Override
-    public void showMessage(String message) {
-        ToastBar.create(LoginActivity.this, message).show();
+    public void showMessage(int type, String message) {
+        ToastBar.with(LoginActivity.this).message(message).show();
     }
 
     @Override

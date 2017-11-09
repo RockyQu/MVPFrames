@@ -41,7 +41,7 @@ public class Tab4Fragment extends BaseSimpleFragment<Tab4FragmentPresenter> impl
     }
 
     @Override
-    public void showMessage(String message) {
+    public void showMessage(int type, String message) {
 
     }
 

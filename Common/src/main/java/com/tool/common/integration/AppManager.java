@@ -32,7 +32,7 @@ public class AppManager {
 
     public static final String APPMANAGER_MESSAGE = "AppManager";
     public static final int START_ACTIVITY = 0;
-    public static final int SNACKBAR = 1;
+    public static final int TOAST = 1;
     public static final int KILL = 2;
     public static final int EXIT = 3;
 
@@ -65,7 +65,7 @@ public class AppManager {
                     startActivity((Class) message.obj);
                 }
                 break;
-            case SNACKBAR:
+            case TOAST:
                 if (message.obj == null) {
                     break;
                 }
@@ -92,8 +92,8 @@ public class AppManager {
         if (this.getCurrentActivity() == null) {
             return;
         }
-//        View view = getCurrentActivity().getWindow().getDecorView().findViewById(android.R.id.content);
-        ToastBar.message(this.getCurrentActivity(), message);
+
+        ToastBar.with(this.getCurrentActivity()).message(message).show();
     }
 
     /**

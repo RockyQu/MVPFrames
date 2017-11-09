@@ -1,6 +1,5 @@
 package com.tool.common.frame.simple;
 
-import com.logg.Logg;
 import com.tool.common.frame.IModel;
 import com.tool.common.frame.IPresenter;
 

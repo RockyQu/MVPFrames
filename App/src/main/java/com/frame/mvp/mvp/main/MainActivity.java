@@ -12,6 +12,7 @@ import com.tool.common.http.download.Downloader;
 import com.tool.common.http.download.exception.DownloadException;
 import com.tool.common.http.download.request.DownloadRequest;
 import com.tool.common.http.download.DownloadSimpleListener;
+import com.tool.common.widget.ToastBar;
 import com.tool.common.widget.navigation.BottomNavigation;
 import com.tool.common.widget.navigation.BottomNavigationAdapter;
 import com.tool.common.widget.navigation.BottomNavigationViewPager;
@@ -48,6 +49,8 @@ public class MainActivity extends BaseSimpleActivity<MainPresenter> implements I
             public boolean onTabSelected(int position, boolean wasSelected) {
 
                 viewPager.setCurrentItem(position, false);
+
+                ToastBar.with(MainActivity.this).setMessage("Success!").show();
 
                 return true;
             }
@@ -95,7 +98,7 @@ public class MainActivity extends BaseSimpleActivity<MainPresenter> implements I
     }
 
     @Override
-    public void showMessage(String message) {
+    public void showMessage(int type, String message) {
 
     }
 

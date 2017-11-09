@@ -1,425 +1,464 @@
 package com.tool.common.widget;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
+import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.Space;
-import android.text.TextUtils;
-import android.util.Log;
+import android.support.v7.widget.AppCompatImageView;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
-import android.widget.Button;
-import android.widget.FrameLayout;
+import android.view.Window;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tool.common.R;
-import com.tool.common.base.BaseActivity;
-import com.tool.common.base.BaseApplication;
 import com.tool.common.integration.AppManager;
-import com.tool.common.utils.AnimationUtils;
 
 import org.simple.eventbus.EventBus;
 
 import java.lang.ref.WeakReference;
 
-import static com.tool.common.integration.AppManager.APPMANAGER_MESSAGE;
-import static com.tool.common.integration.AppManager.START_ACTIVITY;
-
 /**
- * ToastBar
+ * 提示框
  */
-public class ToastBar {
+public class ToastBar implements View.OnClickListener {
 
-    // Snackbar
-    private Snackbar snackbar;
+    private static final int DEFAULT_VALUE = -100000;
 
-    public ToastBar(Snackbar snackbar) {
-        this.snackbar = snackbar;
+    private static WeakReference<LinearLayout> layoutWeakReference;
+    private static WeakReference<Activity> activityWeakReference;
 
-        // 默认居中
-        this.setMessageGravity(Gravity.CENTER);
-        // 圆角
-        this.margins(30, 30, 30, 30);
-        // 圆角
-        this.radius(12);
-        // 提示文字大小
-        this.setMessageTextSize(16);
+    // 显示时长
+    private int duration = 3000;
 
-        AlphaAnimation alphaAnimation = AnimationUtils.getShowAlphaAnimation();
-        getView().setAnimation(alphaAnimation);
-    }
+    // 背景颜色
+    private int backgroundColor = DEFAULT_VALUE;
 
-    private View getView(){
-        return snackbar.getView();
-    }
+    // 提示框高度
+    private int height = DEFAULT_VALUE;
 
-    /**
-     * Create Snackbar
-     *
-     * @param view
-     * @param message
-     * @param duration
-     * @return ToastBar
-     */
-    public static ToastBar create(View view, String message, int duration) {
-        return new ToastBar(Snackbar.make(view, message, duration));
-    }
+    // 左侧图标
+    private int icon = DEFAULT_VALUE;
+    // 左侧图标
+    private Drawable iconDrawable = null;
+    // 图标颜色
+    private int iconColorFilterColor = DEFAULT_VALUE;
+    // 图标尺寸
+    private int iconSize = 24;
+
+    // 提示文字信息
+    private String message = "";
+    // 提示文字信息颜色
+    private int messageColor = DEFAULT_VALUE;
+
+    // 点击事件
+    private OnToastBarClickListener onToastBarClickListener = null;
 
     /**
-     * Create Snackbar
-     *
-     * @param view
-     * @param message
-     * @return ToastBar
-     */
-    public static ToastBar create(View view, String message) {
-        return create(view, message, Snackbar.LENGTH_SHORT);
-    }
-
-    private static Toast TOAST = null;
-
-    public static void message(Context context, String message) {
-        if (TOAST == null) {
-            TOAST = Toast.makeText(context, message, Toast.LENGTH_SHORT);
-        }
-        else {
-            TOAST.setText(message);
-            TOAST.setDuration(Toast.LENGTH_SHORT);
-        }
-        TOAST.show();
-    }
-
-    /**
-     * Create Snackbar
+     * Constructor
      *
      * @param activity
-     * @param message
-     * @return ToastBar
      */
-    public static ToastBar create(Activity activity, String message) {
-        return create(activity.getWindow().getDecorView(), message, Snackbar.LENGTH_SHORT);
+    private ToastBar(Activity activity) {
+        activityWeakReference = new WeakReference<>(activity);
+
+        setDefault();
     }
 
     /**
-     * 设置背景色
+     * Create Sneaker with activity reference
      *
-     * @return ToastBar
-     */
-    public ToastBar setBackgroundColor(int color) {
-        snackbar.getView().setBackgroundColor(color);
-        return this;
-    }
-
-    /**
-     * 设置提示文字内容
-     *
-     * @param textSize
-     * @return ToastBar
-     */
-    public ToastBar setMessageTextSize(float textSize) {
-        return setMessage(0, textSize);
-    }
-
-    /**
-     * 设置文字颜色
-     *
-     * @param color
-     * @return ToastBar
-     */
-    public ToastBar setMessageColor(@ColorInt int color) {
-        return setMessage(color, 0);
-    }
-
-    /**
-     * 设置提示文字内容、颜色
-     *
-     * @param color
-     * @return ToastBar
-     */
-    public ToastBar setMessage(@ColorInt int color, float textSize) {
-        TextView textView = (TextView) snackbar.getView().findViewById(R.id.snackbar_text);
-        if (color != 0) {
-            textView.setTextColor(color);
-        }
-        if (textSize != 0) {
-            textView.setTextSize(textSize);
-        }
-        return this;
-    }
-
-    /**
-     * 设置Button文字内容
-     *
-     * @param message
-     * @return ToastBar
-     */
-    public ToastBar setActionMessage(String message) {
-        return setAction(message, 0, null);
-    }
-
-    /**
-     * 设置Button文字内容、颜色
-     *
-     * @param message
-     * @param color
-     * @return ToastBar
-     */
-    public ToastBar setAction(String message, @ColorInt int color) {
-        return setAction(message, color, null);
-    }
-
-    /**
-     * 设置Button文字内容、颜色、点击事件
-     *
-     * @param message
-     * @param color
-     * @param onClickListener
-     * @return ToastBar
-     */
-    public ToastBar setAction(String message, @ColorInt int color, View.OnClickListener onClickListener) {
-        Button button = (Button) snackbar.getView().findViewById(R.id.snackbar_action);
-        if (!TextUtils.isEmpty(message)) {
-            button.setText(message);
-        }
-        if (color != 0) {
-            button.setTextColor(color);
-        }
-        if (onClickListener != null) {
-            button.setOnClickListener(onClickListener);
-        }
-        return this;
-    }
-
-    /**
-     * 设置背景透明度
-     *
-     * @param alpha
-     * @return ToastBar
-     */
-    public ToastBar alpha(float alpha) {
-        alpha = alpha >= 1.0f ? 1.0f : (alpha <= 0.0f ? 0.0f : alpha);
-        snackbar.getView().setAlpha(alpha);
-        return this;
-    }
-
-    /**
-     * 设置显示位置
-     *
-     * @param gravity
-     */
-    public ToastBar setLayoutGravity(int gravity) {
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(snackbar.getView().getLayoutParams().width, snackbar.getView().getLayoutParams().height);
-        params.gravity = gravity;
-        snackbar.getView().setLayoutParams(params);
-        return this;
-    }
-
-    /**
-     * 设置文字对齐方式（居中，靠左、靠右）
-     *
-     * @param gravity
-     * @return ToastBar
-     */
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private ToastBar setMessageGravity(int gravity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            TextView message = (TextView) snackbar.getView().findViewById(R.id.snackbar_text);
-            // View.setTextAlignment需要SDK>=17
-            message.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
-            message.setGravity(Gravity.CENTER_VERTICAL | gravity);
-        }
-        return this;
-    }
-
-    /**
-     * 设置TextView上下左右的图片
-     *
-     * @param left
-     * @param top
-     * @param right
-     * @param bottom
-     * @return ToastBar
-     */
-    public ToastBar setCompoundDrawables(Drawable left, Drawable top, Drawable right, Drawable bottom) {
-        TextView message = (TextView) snackbar.getView().findViewById(R.id.snackbar_text);
-        LinearLayout.LayoutParams paramsMessage = (LinearLayout.LayoutParams) message.getLayoutParams();
-        paramsMessage = new LinearLayout.LayoutParams(paramsMessage.width, paramsMessage.height, 0.0f);
-        message.setLayoutParams(paramsMessage);
-        message.setCompoundDrawablePadding(message.getPaddingLeft());
-        int textSize = (int) message.getTextSize();
-        if (left != null) {
-            left.setBounds(0, 0, textSize, textSize);
-        }
-        if (right != null) {
-            right.setBounds(0, 0, textSize, textSize);
-        }
-        message.setCompoundDrawables(left, top, right, bottom);
-        LinearLayout.LayoutParams paramsSpace = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
-        ((Snackbar.SnackbarLayout) snackbar.getView()).addView(new Space(snackbar.getView().getContext()), 1, paramsSpace);
-        return this;
-    }
-
-    /**
-     * 设置TextView上下左右的图片
-     *
-     * @param left
-     * @param top
-     * @param right
-     * @param bottom
-     * @return ToastBar
-     */
-    public ToastBar setCompoundDrawables(@DrawableRes Integer left, @DrawableRes Integer top, @DrawableRes Integer right, @DrawableRes Integer bottom) {
-        Drawable drawableLeft = null;
-        Drawable drawableTop = null;
-        Drawable drawableRight = null;
-        Drawable drawableBottom = null;
-        try {
-            if (left != null) {
-                drawableLeft = snackbar.getView().getResources().getDrawable(left.intValue());
-            }
-            if (top != null) {
-                drawableTop = snackbar.getView().getResources().getDrawable(top.intValue());
-            }
-            if (right != null) {
-                drawableRight = snackbar.getView().getResources().getDrawable(right.intValue());
-            }
-            if (bottom != null) {
-                drawableBottom = snackbar.getView().getResources().getDrawable(bottom.intValue());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return setCompoundDrawables(drawableLeft, drawableTop, drawableRight, drawableBottom);
-    }
-
-    /**
-     * 设置Snackbar外边距
-     *
-     * @param margin
-     * @return ToastBar
-     */
-    public ToastBar margins(int margin) {
-        if (snackbar != null) {
-            return margins(margin, margin, margin, margin);
-        } else {
-            return this;
-        }
-    }
-
-    /**
-     * 设置Snackbar外边距
-     * 调用margins后再调用setLayoutGravity，会导致margins无效
-     * 应该先调用setLayoutGravity,在show()之前调用margins
-     *
-     * @param left
-     * @param top
-     * @param right
-     * @param bottom
-     * @return ToastBar
-     */
-    public ToastBar margins(int left, int top, int right, int bottom) {
-        if (snackbar != null) {
-            ViewGroup.LayoutParams params = snackbar.getView().getLayoutParams();
-            ((ViewGroup.MarginLayoutParams) params).setMargins(left, top, right, bottom);
-            snackbar.getView().setLayoutParams(params);
-        }
-        return this;
-    }
-
-    /**
-     * 通过SnackBar现在的背景,获取其设置圆角值时候所需的GradientDrawable实例
-     *
-     * @param backgroundOri
+     * @param activity
      * @return
      */
-    private GradientDrawable getRadiusDrawable(Drawable backgroundOri) {
-        GradientDrawable background = null;
-        if (backgroundOri instanceof GradientDrawable) {
-            background = (GradientDrawable) backgroundOri;
-        } else if (backgroundOri instanceof ColorDrawable) {
-            int backgroundColor = ((ColorDrawable) backgroundOri).getColor();
-            background = new GradientDrawable();
-            background.setColor(backgroundColor);
-        } else {
-        }
-        return background;
+    public static ToastBar with(Activity activity) {
+        ToastBar sneaker = new ToastBar(activity);
+        return sneaker;
     }
 
     /**
-     * 设置Snackbar布局的圆角半径值
+     * Return activity parent view
      *
-     * @param radius 圆角半径
      * @return
      */
-    public ToastBar radius(float radius) {
-        if (snackbar != null) {
-            //将要设置给mSnackbar的背景
-            GradientDrawable background = getRadiusDrawable(snackbar.getView().getBackground());
-            if (background != null) {
-                radius = radius <= 0 ? 12 : radius;
-                background.setCornerRadius(radius);
-                snackbar.getView().setBackgroundDrawable(background);
-            }
-        }
+    private ViewGroup getActivityDecorView() {
+        return (ViewGroup) ((Activity) getContext()).getWindow().getDecorView();
+    }
+
+    /**
+     * Sets the default values to the sneaker
+     */
+    private void setDefault() {
+        this.duration = 3000;
+        this.backgroundColor = DEFAULT_VALUE;
+
+        this.height = DEFAULT_VALUE;
+
+        this.icon = DEFAULT_VALUE;
+        this.iconDrawable = null;
+        this.iconColorFilterColor = DEFAULT_VALUE;
+        this.iconSize = 24;
+
+        this.message = "";
+        this.messageColor = DEFAULT_VALUE;
+
+        this.onToastBarClickListener = null;
+    }
+
+    /**
+     * Return Context
+     *
+     * @return
+     */
+    private Context getContext() {
+        return activityWeakReference.get();
+    }
+
+    /**
+     * Return View
+     *
+     * @return
+     */
+    private View getLayout() {
+        return layoutWeakReference.get();
+    }
+
+    /**
+     * 设置显示时长
+     *
+     * @param duration
+     * @return
+     */
+    public ToastBar setDuration(int duration) {
+        this.duration = duration;
         return this;
     }
 
     /**
-     * 设置Snackbar布局的圆角半径值及边框颜色及边框宽度
+     * 设置背景颜色
      *
-     * @param radius
-     * @param strokeWidth
-     * @param strokeColor
+     * @param backgroundColor
      * @return
      */
-    public ToastBar radius(int radius, int strokeWidth, @ColorInt int strokeColor) {
-        if (snackbar != null) {
-            //将要设置给mSnackbar的背景
-            GradientDrawable background = getRadiusDrawable(snackbar.getView().getBackground());
-            if (background != null) {
-                radius = radius <= 0 ? 12 : radius;
-                strokeWidth = strokeWidth <= 0 ? 1 : (strokeWidth >= snackbar.getView().findViewById(R.id.snackbar_text).getPaddingTop() ? 2 : strokeWidth);
-                background.setCornerRadius(radius);
-                background.setStroke(strokeWidth, strokeColor);
-                snackbar.getView().setBackgroundDrawable(background);
-            }
-        }
+    public ToastBar setBackgroundColor(int backgroundColor) {
+        this.backgroundColor = backgroundColor;
         return this;
     }
 
     /**
-     * 显示Snackbar，最后调用show()
+     * 设置提示框高度
+     *
+     * @param height
+     * @return
      */
-    public void show() {
-        snackbar.show();
+    public ToastBar setHeight(int height) {
+        this.height = height;
+        return this;
     }
 
     /**
-     * 通过EventBus远程遥控显示提示信息框
+     * 设置左侧图标
+     *
+     * @param icon
+     * @return
+     */
+    public ToastBar setIcon(int icon) {
+        this.icon = icon;
+        return this;
+    }
+
+    /**
+     * 设置左侧图标
+     *
+     * @param iconDrawable
+     * @return
+     */
+    public ToastBar setIconDrawable(Drawable iconDrawable) {
+        this.iconDrawable = iconDrawable;
+        return this;
+    }
+
+    /**
+     * 设置图标颜色
+     *
+     * @param iconColorFilterColor
+     * @return
+     */
+    public ToastBar setIconColorFilterColor(int iconColorFilterColor) {
+        this.iconColorFilterColor = iconColorFilterColor;
+        return this;
+    }
+
+    /**
+     * 设置图标尺寸
+     *
+     * @param iconSize
+     * @return
+     */
+    public ToastBar setIconSize(int iconSize) {
+        this.iconSize = iconSize;
+        return this;
+    }
+
+    /**
+     * 设置提示框文字颜色
+     *
+     * @param messageColor
+     * @return
+     */
+    public ToastBar setMessageColor(int messageColor) {
+        this.messageColor = messageColor;
+        return this;
+    }
+
+    /**
+     * 设置ToastBar点击事件
+     *
+     * @param onToastBarClickListener
+     * @return
+     */
+    public ToastBar setOnToastBarClickListener(OnToastBarClickListener onToastBarClickListener) {
+        this.onToastBarClickListener = onToastBarClickListener;
+        return this;
+    }
+
+    /**
+     * 成功
+     *
+     * @return
+     */
+    public ToastBar success() {
+        this.backgroundColor = Color.parseColor("#2bb600");
+        this.messageColor = Color.parseColor("#FFFFFF");
+
+        this.icon = R.drawable.ic_success;
+        this.iconColorFilterColor = Color.parseColor("#FFFFFF");
+
+        return this;
+    }
+
+    /**
+     * 警告
+     *
+     * @return
+     */
+    public ToastBar warning() {
+        this.backgroundColor = Color.parseColor("#ffc100");
+        this.messageColor = Color.parseColor("#000000");
+
+        this.icon = R.drawable.ic_warning;
+        this.iconColorFilterColor = Color.parseColor("#000000");
+
+        return this;
+    }
+
+    /**
+     * 错误
+     *
+     * @return
+     */
+    public ToastBar error() {
+        this.backgroundColor = Color.parseColor("#ff0000");
+        this.messageColor = Color.parseColor("#FFFFFF");
+
+        this.icon = R.drawable.ic_error;
+        this.iconColorFilterColor = Color.parseColor("#FFFFFF");
+
+        return this;
+    }
+
+    /**
+     * 设置提示信息文字，默认为 {@link ToastBar#success()} 类型
+     *
+     * @param message
+     * @return
+     * @see #success() 成功
+     * @see #warning() 警告
+     * @see #error() 错误
+     */
+    public ToastBar setMessage(String message) {
+        this.message = message;
+        return success();
+    }
+
+    /**
+     * 显示提示框，请在最后调用
+     *
+     * @return
+     */
+    public ToastBar show() {
+        if (getContext() != null) {
+            createView();
+        }
+
+        return null;
+    }
+
+    /**
+     * 移除
+     */
+    private void hide() {
+        if (getLayout() != null) {
+            getLayout().startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.popup_hide));
+            getActivityDecorView().removeView(getLayout());
+        }
+    }
+
+    /**
+     * 创建并添加提示框
+     */
+    private void createView() {
+        // Main layout
+        LinearLayout layout = new LinearLayout(getContext());
+        layoutWeakReference = new WeakReference<>(layout);
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, this.height == DEFAULT_VALUE ? (getStatusBarHeight() + convertToDp(56)) : convertToDp(this.height));
+        layout.setLayoutParams(layoutParams);
+        layout.setOrientation(LinearLayout.HORIZONTAL);
+        layout.setGravity(Gravity.CENTER_VERTICAL);
+        layout.setPadding(46, getStatusBarHeight(), 46, 0);
+
+        // 控件高度
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            layout.setElevation(6);
+        }
+
+        // Background color
+        layout.setBackgroundColor(this.backgroundColor);
+
+        // Icon
+        // If icon is set
+        if (this.icon != DEFAULT_VALUE || this.iconDrawable != null) {
+            AppCompatImageView ivIcon = new AppCompatImageView(getContext());
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(convertToDp(this.iconSize), convertToDp(this.iconSize));
+            ivIcon.setLayoutParams(lp);
+
+            if (this.icon == DEFAULT_VALUE) {
+                ivIcon.setImageDrawable(this.iconDrawable);
+            } else {
+                ivIcon.setImageResource(this.icon);
+            }
+            ivIcon.setClickable(false);
+            if (this.iconColorFilterColor != DEFAULT_VALUE) {
+                ivIcon.setColorFilter(this.iconColorFilterColor);
+            }
+            layout.addView(ivIcon);
+        }
+
+        // Title and description
+        LinearLayout textLayout = new LinearLayout(getContext());
+        LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        textLayout.setLayoutParams(textLayoutParams);
+        textLayout.setOrientation(LinearLayout.VERTICAL);
+
+        LinearLayout.LayoutParams lpTv = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        if (!this.message.isEmpty()) {
+            TextView tvTitle = new TextView(getContext());
+            tvTitle.setLayoutParams(lpTv);
+            tvTitle.setGravity(Gravity.CENTER_VERTICAL);
+
+            tvTitle.setPadding(46, 0, 26, 0); // No top padding if there is no message
+            if (messageColor != DEFAULT_VALUE) {
+                tvTitle.setTextColor(messageColor);
+            }
+
+            tvTitle.setTextSize(14);
+            tvTitle.setText(this.message);
+            tvTitle.setClickable(false);
+            textLayout.addView(tvTitle);
+        }
+
+        layout.addView(textLayout);
+        layout.setId(R.id.ToastBar);
+
+        ViewGroup viewGroup = getActivityDecorView();
+        getExistingOverlayInViewAndRemove(viewGroup);
+
+        layout.setOnClickListener(this);
+        viewGroup.addView(layout);
+
+        layout.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.popup_show));
+
+        Handler handler = new Handler();
+        handler.removeCallbacks(null);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                hide();
+            }
+        }, this.duration);
+    }
+
+    /**
+     * Gets the existing sneaker and removes before adding new one
+     *
+     * @param parent
+     */
+    public void getExistingOverlayInViewAndRemove(ViewGroup parent) {
+        for (int i = 0; i < parent.getChildCount(); i++) {
+            View child = parent.getChildAt(i);
+            if (child.getId() == R.id.ToastBar) {
+                parent.removeView(child);
+            }
+            if (child instanceof ViewGroup) {
+                getExistingOverlayInViewAndRemove((ViewGroup) child);
+            }
+        }
+    }
+
+    /**
+     * Returns status bar height.
+     *
+     * @return
+     */
+    private int getStatusBarHeight() {
+        Rect rectangle = new Rect();
+        Window window = ((Activity) getContext()).getWindow();
+        window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
+        int statusBarHeight = rectangle.top;
+        int contentViewTop = window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
+        int titleBarHeight = contentViewTop - statusBarHeight;
+        return statusBarHeight;
+    }
+
+    private int convertToDp(float sizeInDp) {
+        float scale = getContext().getResources().getDisplayMetrics().density;
+        return (int) (sizeInDp * scale + 0.5f);
+    }
+
+    /**
+     * 点击并移除
+     *
+     * @param view
+     */
+    @Override
+    public void onClick(View view) {
+        if (onToastBarClickListener != null) {
+            onToastBarClickListener.onClick(view);
+        }
+        getLayout().startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.popup_hide));
+        getActivityDecorView().removeView(getLayout());
+    }
+
+    public interface OnToastBarClickListener {
+        void onClick(View view);
+    }
+
+    /**
+     * 通过EventBus远程遥控显示 {@link ToastBar}
      *
      * @param message
      */
-    public static void message(String message) {
+    public static void postMessage(String message) {
         Message msg = new Message();
-        msg.what = AppManager.SNACKBAR;
+        msg.what = AppManager.TOAST;
         msg.obj = message;
-        EventBus.getDefault().post(msg, APPMANAGER_MESSAGE);
+        EventBus.getDefault().post(msg, AppManager.APPMANAGER_MESSAGE);
     }
 }

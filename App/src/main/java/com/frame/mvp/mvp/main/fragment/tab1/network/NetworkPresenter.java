@@ -41,16 +41,16 @@ public class NetworkPresenter extends BaseSimplePresenter<NetworkRepository> {
                         msg.obj = user;
                         msg.HandleMessageToTargetUnrecycle();
                     } else {
-                        msg.getTarget().showMessage(body.getMessage());
+                        msg.getTarget().showMessage(0, body.getMessage());
                     }
                 } else {
-                    msg.getTarget().showMessage(body.getMessage());
+                    msg.getTarget().showMessage(0, body.getMessage());
                 }
             }
 
             @Override
             protected void onFailure(ApiException exception) {
-                msg.getTarget().showMessage(exception.getMessage());
+                msg.getTarget().showMessage(0, exception.getMessage());
             }
 
             @Override

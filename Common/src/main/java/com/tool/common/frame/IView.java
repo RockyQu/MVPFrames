@@ -20,14 +20,15 @@ public interface IView {
     /**
      * 显示提示信息
      *
+     * @param type 类型
      * @param message 提示信息
      */
-    void showMessage(String message);
+    void showMessage(int type, String message);
 
     /**
      * 跳转Activity
      *
-     * @param intent   Intent
+     * @param intent Intent
      */
     void launchActivity(Intent intent);
 

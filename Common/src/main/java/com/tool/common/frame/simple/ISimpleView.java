@@ -18,9 +18,10 @@ public interface ISimpleView {
     /**
      * 显示提示信息
      *
+     * @param type    类型
      * @param message 提示信息
      */
-    void showMessage(String message);
+    void showMessage(int type, String message);
 
     /**
      * 处理消息,这里面和handler的原理一样,通过swith(what)做不同的操作

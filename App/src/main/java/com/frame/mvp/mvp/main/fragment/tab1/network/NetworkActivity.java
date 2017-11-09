@@ -37,7 +37,7 @@ public class NetworkActivity extends BaseSimpleActivity<NetworkPresenter> implem
     }
 
     @Override
-    public void showMessage(String message) {
+    public void showMessage(int type, String message) {
 
     }
 

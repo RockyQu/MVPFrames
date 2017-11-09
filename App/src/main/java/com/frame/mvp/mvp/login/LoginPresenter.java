@@ -50,7 +50,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
                     if (value != null) {
                         PreferencesUtils.putString(application, LoginActivity.class.getName(), value);
 
-                        view.showMessage(body.getMessage());
+                        view.showMessage(0, body.getMessage());
                     }
 
                     application.getAppComponent().extras().put(LoginActivity.class.getName(), user);
@@ -60,7 +60,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
 
             @Override
             protected void onFailure(ApiException exception) {
-                view.showMessage(exception.getMessage());
+                view.showMessage(0, exception.getMessage());
             }
 
             @Override
@@ -82,7 +82,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
 
             @Override
             protected void onFailure(ApiException exception) {
-                view.showMessage(exception.getMessage());
+                view.showMessage(0, exception.getMessage());
             }
 
             @Override
