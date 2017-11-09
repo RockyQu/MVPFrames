@@ -9,10 +9,9 @@ import com.frame.mvp.R;
 import com.frame.mvp.di.login.DaggerLoginComponent;
 import com.frame.mvp.di.login.LoginModule;
 import com.frame.mvp.entity.User;
-import com.frame.mvp.mvp.main.MainActivity;
 import com.tool.common.base.BaseActivity;
 import com.tool.common.di.component.AppComponent;
-import com.tool.common.widget.ToastBar;
+import com.tool.common.widget.Snacker;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -117,7 +116,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void showMessage(int type, String message) {
-        ToastBar.with(LoginActivity.this).setMessage(message).show();
+        Snacker.with(LoginActivity.this).setMessage(message).show();
     }
 
     @Override

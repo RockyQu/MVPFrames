@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
 
-import com.tool.common.widget.ToastBar;
+import com.tool.common.widget.Snacker;
 
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
@@ -32,9 +32,12 @@ public class AppManager {
 
     public static final String APPMANAGER_MESSAGE = "AppManager";
     public static final int START_ACTIVITY = 0;
-    public static final int TOAST = 1;
-    public static final int KILL = 2;
-    public static final int EXIT = 3;
+
+    public static final int SNACKER = 1;
+    public static final int TOASTER = 2;
+
+    public static final int KILL = 5;
+    public static final int EXIT = 6;
 
     // 管理所有activity
     public List<Activity> activitys;
@@ -65,12 +68,19 @@ public class AppManager {
                     startActivity((Class) message.obj);
                 }
                 break;
-            case TOAST:
+            case SNACKER:
                 if (message.obj == null) {
                     break;
                 }
 
-                this.snackbar((String) message.obj);
+                this.snacker((String) message.obj);
+                break;
+            case TOASTER:
+                if (message.obj == null) {
+                    break;
+                }
+
+                this.toaster((String) message.obj);
                 break;
             case KILL:
                 kill();
@@ -84,16 +94,29 @@ public class AppManager {
     }
 
     /**
-     * 使用Snackbar显示内容
+     * 使用提示框
      *
      * @param message
      */
-    public void snackbar(String message) {
+    public void snacker(String message) {
         if (this.getCurrentActivity() == null) {
             return;
         }
 
-        ToastBar.with(this.getCurrentActivity()).setMessage(message).show();
+        Snacker.with(this.getCurrentActivity()).setMessage(message).show();
+    }
+
+    /**
+     * 使用提示框
+     *
+     * @param message
+     */
+    public void toaster(String message) {
+        if (this.getCurrentActivity() == null) {
+            return;
+        }
+
+//        Snacker.with(this.getCurrentActivity()).setMessage(message).show();
     }
 
     /**

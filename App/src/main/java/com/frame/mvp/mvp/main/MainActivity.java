@@ -1,5 +1,6 @@
 package com.frame.mvp.mvp.main;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.frame.mvp.R;
@@ -12,7 +13,8 @@ import com.tool.common.http.download.Downloader;
 import com.tool.common.http.download.exception.DownloadException;
 import com.tool.common.http.download.request.DownloadRequest;
 import com.tool.common.http.download.DownloadSimpleListener;
-import com.tool.common.widget.ToastBar;
+import com.tool.common.widget.Snacker;
+import com.tool.common.widget.Toaster;
 import com.tool.common.widget.navigation.BottomNavigation;
 import com.tool.common.widget.navigation.BottomNavigationAdapter;
 import com.tool.common.widget.navigation.BottomNavigationViewPager;
@@ -50,8 +52,9 @@ public class MainActivity extends BaseSimpleActivity<MainPresenter> implements I
 
                 viewPager.setCurrentItem(position, false);
 
-                ToastBar.with(MainActivity.this).setMessage("Success!").show();
+                Snacker.with(MainActivity.this).setMessage("Success").warning().show();
 
+                Toaster.with(MainActivity.this).setMessage("上传成功").show();
                 return true;
             }
         });

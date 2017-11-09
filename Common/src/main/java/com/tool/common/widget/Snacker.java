@@ -27,12 +27,12 @@ import java.lang.ref.WeakReference;
 /**
  * 提示框
  */
-public class ToastBar implements View.OnClickListener {
+public class Snacker implements View.OnClickListener {
 
     private static final int DEFAULT_VALUE = -100000;
 
-    private static WeakReference<LinearLayout> layoutWeakReference;
-    private static WeakReference<Activity> activityWeakReference;
+    private WeakReference<LinearLayout> layoutWeakReference;
+    private WeakReference<Activity> activityWeakReference;
 
     // 显示时长
     private int duration = 3000;
@@ -60,26 +60,20 @@ public class ToastBar implements View.OnClickListener {
     // 点击事件
     private OnToastBarClickListener onToastBarClickListener = null;
 
-    /**
-     * Constructor
-     *
-     * @param activity
-     */
-    private ToastBar(Activity activity) {
+    private Snacker(Activity activity) {
         activityWeakReference = new WeakReference<>(activity);
 
         setDefault();
     }
 
     /**
-     * Create Sneaker with activity reference
+     * Create Snacker with activity reference
      *
      * @param activity
      * @return
      */
-    public static ToastBar with(Activity activity) {
-        ToastBar sneaker = new ToastBar(activity);
-        return sneaker;
+    public static Snacker with(Activity activity) {
+        return new Snacker(activity);
     }
 
     /**
@@ -91,9 +85,6 @@ public class ToastBar implements View.OnClickListener {
         return (ViewGroup) ((Activity) getContext()).getWindow().getDecorView();
     }
 
-    /**
-     * Sets the default values to the sneaker
-     */
     private void setDefault() {
         this.duration = 3000;
         this.backgroundColor = DEFAULT_VALUE;
@@ -135,7 +126,7 @@ public class ToastBar implements View.OnClickListener {
      * @param duration
      * @return
      */
-    public ToastBar setDuration(int duration) {
+    public Snacker setDuration(int duration) {
         this.duration = duration;
         return this;
     }
@@ -146,7 +137,7 @@ public class ToastBar implements View.OnClickListener {
      * @param backgroundColor
      * @return
      */
-    public ToastBar setBackgroundColor(int backgroundColor) {
+    public Snacker setBackgroundColor(int backgroundColor) {
         this.backgroundColor = backgroundColor;
         return this;
     }
@@ -157,7 +148,7 @@ public class ToastBar implements View.OnClickListener {
      * @param height
      * @return
      */
-    public ToastBar setHeight(int height) {
+    public Snacker setHeight(int height) {
         this.height = height;
         return this;
     }
@@ -168,7 +159,7 @@ public class ToastBar implements View.OnClickListener {
      * @param icon
      * @return
      */
-    public ToastBar setIcon(int icon) {
+    public Snacker setIcon(int icon) {
         this.icon = icon;
         return this;
     }
@@ -179,7 +170,7 @@ public class ToastBar implements View.OnClickListener {
      * @param iconDrawable
      * @return
      */
-    public ToastBar setIconDrawable(Drawable iconDrawable) {
+    public Snacker setIconDrawable(Drawable iconDrawable) {
         this.iconDrawable = iconDrawable;
         return this;
     }
@@ -190,7 +181,7 @@ public class ToastBar implements View.OnClickListener {
      * @param iconColorFilterColor
      * @return
      */
-    public ToastBar setIconColorFilterColor(int iconColorFilterColor) {
+    public Snacker setIconColorFilterColor(int iconColorFilterColor) {
         this.iconColorFilterColor = iconColorFilterColor;
         return this;
     }
@@ -201,7 +192,7 @@ public class ToastBar implements View.OnClickListener {
      * @param iconSize
      * @return
      */
-    public ToastBar setIconSize(int iconSize) {
+    public Snacker setIconSize(int iconSize) {
         this.iconSize = iconSize;
         return this;
     }
@@ -212,7 +203,7 @@ public class ToastBar implements View.OnClickListener {
      * @param messageColor
      * @return
      */
-    public ToastBar setMessageColor(int messageColor) {
+    public Snacker setMessageColor(int messageColor) {
         this.messageColor = messageColor;
         return this;
     }
@@ -223,7 +214,7 @@ public class ToastBar implements View.OnClickListener {
      * @param onToastBarClickListener
      * @return
      */
-    public ToastBar setOnToastBarClickListener(OnToastBarClickListener onToastBarClickListener) {
+    public Snacker setOnToastBarClickListener(OnToastBarClickListener onToastBarClickListener) {
         this.onToastBarClickListener = onToastBarClickListener;
         return this;
     }
@@ -233,7 +224,7 @@ public class ToastBar implements View.OnClickListener {
      *
      * @return
      */
-    public ToastBar success() {
+    public Snacker success() {
         this.backgroundColor = Color.parseColor("#2bb600");
         this.messageColor = Color.parseColor("#FFFFFF");
 
@@ -248,7 +239,7 @@ public class ToastBar implements View.OnClickListener {
      *
      * @return
      */
-    public ToastBar warning() {
+    public Snacker warning() {
         this.backgroundColor = Color.parseColor("#ffc100");
         this.messageColor = Color.parseColor("#000000");
 
@@ -263,7 +254,7 @@ public class ToastBar implements View.OnClickListener {
      *
      * @return
      */
-    public ToastBar error() {
+    public Snacker error() {
         this.backgroundColor = Color.parseColor("#ff0000");
         this.messageColor = Color.parseColor("#FFFFFF");
 
@@ -274,7 +265,7 @@ public class ToastBar implements View.OnClickListener {
     }
 
     /**
-     * 设置提示信息文字，默认为 {@link ToastBar#success()} 类型
+     * 设置提示信息文字，默认为 {@link Snacker#success()} 类型
      *
      * @param message
      * @return
@@ -282,7 +273,7 @@ public class ToastBar implements View.OnClickListener {
      * @see #warning() 警告
      * @see #error() 错误
      */
-    public ToastBar setMessage(String message) {
+    public Snacker setMessage(String message) {
         this.message = message;
         return success();
     }
@@ -292,7 +283,7 @@ public class ToastBar implements View.OnClickListener {
      *
      * @return
      */
-    public ToastBar show() {
+    public Snacker show() {
         if (getContext() != null) {
             createView();
         }
@@ -451,13 +442,13 @@ public class ToastBar implements View.OnClickListener {
     }
 
     /**
-     * 通过EventBus远程遥控显示 {@link ToastBar}
+     * 通过EventBus远程遥控显示 {@link Snacker}
      *
      * @param message
      */
     public static void postMessage(String message) {
         Message msg = new Message();
-        msg.what = AppManager.TOAST;
+        msg.what = AppManager.SNACKER;
         msg.obj = message;
         EventBus.getDefault().post(msg, AppManager.APPMANAGER_MESSAGE);
     }
