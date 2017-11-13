@@ -13,9 +13,6 @@ Gradle:
 compile 'android.frame:MVPFrames:1.4.2'
 ```
 
-## History
-[UpdateLog](https://github.com/DesignQu/Logg/releases)   
-
 ## Libraries
 * [Dagger2](https://google.github.io/dagger)  
 * [ButterKnife](http://jakewharton.github.io/butterknife)  
@@ -26,6 +23,9 @@ compile 'android.frame:MVPFrames:1.4.2'
 * [GreenDAO](https://github.com/greenrobot/greenDAO)  
 * [EasyPermissions](https://github.com/googlesamples/easypermissions)  
 * [Logg](https://github.com/DesignQu/Logg)  
+
+## History
+[UpdateLog](https://github.com/DesignQu/Logg/releases)   
 
 ## Feedback
 * Project  [Submit Bug or Idea](https://github.com/DesignQu/MVPFrames/issues)   
