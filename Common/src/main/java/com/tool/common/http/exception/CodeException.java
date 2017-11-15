@@ -1,11 +1,5 @@
 package com.tool.common.http.exception;
 
-import android.support.annotation.IntDef;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-
 /**
  * 异常类型
  */
