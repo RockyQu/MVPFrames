@@ -1,13 +1,10 @@
 package com.tool.common.http.download.config;
 
 import android.app.Application;
-import android.content.Context;
 import android.text.TextUtils;
 
-import com.logg.Logg;
-import com.tool.common.http.download.request.DownloadRequest;
+import com.tool.common.http.download.Tasker;
 import com.tool.common.http.download.Downloader;
-import com.tool.common.utils.ProjectUtils;
 
 /**
  * 相关参数配置
@@ -20,9 +17,12 @@ public class DownloaderConfiguration {
     private Application application;
     private String defaultSaveRootPath;
 
+    private boolean debug;
+
     public DownloaderConfiguration(Builder builder) {
         this.application = builder.application;
         this.defaultSaveRootPath = builder.defaultSaveRootPath;
+        this.debug = builder.debug;
     }
 
     public Application getApplication() {
@@ -36,6 +36,10 @@ public class DownloaderConfiguration {
         return defaultSaveRootPath;
     }
 
+    public boolean isDebug() {
+        return debug;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -45,9 +49,12 @@ public class DownloaderConfiguration {
         private Application application;
 
         /**
-         * 默认保存路径，所有下载的文件会保存至这个目录，如果在单独的下载任务{@link DownloadRequest#saveFilePath}设置了单独的保存路径，则会覆盖此路径
+         * 默认保存路径，所有下载的文件会保存至这个目录，如果在单独的下载任务{@link Tasker#setSaveFilePath(String)}设置了单独的保存路径，则会覆盖此路径
          */
         private String defaultSaveRootPath;
+
+        // 调试模式
+        private boolean debug = false;
 
         private Builder() {
             ;
@@ -63,9 +70,14 @@ public class DownloaderConfiguration {
             return this;
         }
 
+        public Builder debug(boolean debug) {
+            this.debug = debug;
+            return this;
+        }
+
         public DownloaderConfiguration build() {
             if (application == null) {
-                throw new IllegalArgumentException("Application must not be null!");
+                throw new NullPointerException();
             }
             return new DownloaderConfiguration(this);
         }

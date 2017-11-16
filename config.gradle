@@ -64,6 +64,7 @@ ext {
             "multidex"                : "com.android.support:multidex:1.0.1",
             "arouter"                 : "com.alibaba:arouter-api:1.2.2",
             "arouter-compiler"        : "com.alibaba:arouter-compiler:1.1.3",
+            "filedownloader"          : "com.liulishuo.filedownloader:library:1.6.8",
 
             // DB
             "greendao"                : "org.greenrobot:greendao:3.2.2",

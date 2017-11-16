@@ -235,6 +235,7 @@ public class AppConfiguration implements ConfigModule {
                 // 这是一个轻量级下载模块，使用前请在这里调用如下代码
                 DownloaderConfiguration configuration = DownloaderConfiguration.builder()
                         .application(application)
+                        .debug(BuildConfig.DEBUG_FLAG)
                         .build();
                 Downloader.getInstance().init(configuration);
             }

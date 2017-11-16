@@ -1,4 +1,4 @@
-package com.tool.common.http.download.request;
+package com.tool.common.http.download.helper;
 
 public interface IdGenerator {
 

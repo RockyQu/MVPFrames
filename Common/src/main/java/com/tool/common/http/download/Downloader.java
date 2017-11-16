@@ -2,8 +2,8 @@ package com.tool.common.http.download;
 
 import android.app.Application;
 
-import com.tool.common.http.download.helper.DownloaderHelper;
-import com.tool.common.http.download.request.DownloadRequest;
+import com.liulishuo.filedownloader.FileDownloader;
+import com.liulishuo.filedownloader.util.FileDownloadLog;
 import com.tool.common.http.download.config.DownloaderConfiguration;
 
 /**
@@ -22,10 +22,13 @@ public class Downloader {
 
     public void init(DownloaderConfiguration configuration) {
         if (configuration == null) {
-            throw new IllegalArgumentException("DownloaderConfiguration must not be null!");
+            throw new NullPointerException();
         }
 
         this.configuration = configuration;
+
+        FileDownloadLog.NEED_LOG = configuration.isDebug();
+        FileDownloader.setup(configuration.getApplication());
     }
 
     private final static class HolderClass {
@@ -40,11 +43,7 @@ public class Downloader {
         return configuration;
     }
 
-    public String start(DownloadRequest request, DownloadListener listener) {
-        if (request == null) {
-            throw new IllegalArgumentException("DownloadRequest must not be null!");
-        }
-
-        return DownloaderHelper.init(configuration.getApplication(), request, listener).execute();
+    public Tasker create(String url) {
+        return new Tasker(url);
     }
 }

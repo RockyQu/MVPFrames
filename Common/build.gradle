@@ -135,6 +135,8 @@ dependencies {
 
     compile rootProject.ext.dependencies["easypermissions"]
 
+    compile rootProject.ext.dependencies["filedownloader"]
+
     // DB
     compile rootProject.ext.dependencies["greendao"]
     compile rootProject.ext.dependencies["sqlcipher"]

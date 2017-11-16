@@ -1,6 +1,5 @@
 package com.frame.mvp.mvp.main;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import com.frame.mvp.R;
@@ -10,9 +9,9 @@ import com.tool.common.base.simple.base.BaseSimpleActivity;
 import com.tool.common.frame.simple.ISimpleView;
 import com.tool.common.frame.simple.Message;
 import com.tool.common.http.download.Downloader;
+import com.tool.common.http.download.DownloaderSampleListener;
 import com.tool.common.http.download.exception.DownloadException;
-import com.tool.common.http.download.request.DownloadRequest;
-import com.tool.common.http.download.DownloadSimpleListener;
+import com.tool.common.utils.ProjectUtils;
 import com.tool.common.widget.Snacker;
 import com.tool.common.widget.Toaster;
 import com.tool.common.widget.navigation.BottomNavigation;
@@ -63,31 +62,37 @@ public class MainActivity extends BaseSimpleActivity<MainPresenter> implements I
         adapter = new MainViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
-        Downloader.getInstance().start(new DownloadRequest("http://download.alicdn.com/wireless/taobao4android/latest/702757.apk"),
-                new DownloadSimpleListener() {
+        Downloader.getInstance().create("http://download.alicdn.com/wireless/taobao4android/latest/702757.apk")
+//                .setSaveFilePath(ProjectUtils.OTHER + "aaaaa")
+                .setListener(new DownloaderSampleListener() {
 
                     @Override
-                    public void onStart(long total) {
-                        Logg.e(total);
+                    protected void onConnection(boolean isContinue, long progress, long total) {
+                        Logg.e(progress + "/" + total);
                     }
 
                     @Override
-                    public void onProgress(long progress, long total) {
+                    protected void onProgress(long progress, long total, int speed) {
                         int current = (int) (progress * 1.0f / total * 100);
                         Logg.e(progress + "/" + total);
                     }
 
                     @Override
-                    public void onFailure(DownloadException exception) {
-                        Logg.e(exception.getExceptionMessage());
+                    protected void onFailure(DownloadException exception) {
+                        exception.printStackTrace();
                     }
 
                     @Override
-                    public void onFinish() {
-                        Logg.e("onFinish");
+                    protected void onPaused() {
+                        Logg.e("onPaused");
                     }
-                }
-        );
+
+                    @Override
+                    protected void onComplete(String filePath) {
+                        Logg.e("onFinish " + filePath);
+                    }
+                })
+                .start();
     }
 
     @Override
