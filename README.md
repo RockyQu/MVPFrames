@@ -1,5 +1,5 @@
 # MVPFrames
-这是一个适用于大中小全能型AndroidMVP开发框架，主要集成目前主流开源框架，涉及Dagger2、ButterKnife、Retrofit2、Glide、Gson等第三方库
+这是一个Android MVP开发框架
 
 ## Usage
 * 配置自定义Application必须继承BaseApplication，BaseApplication完成Http、图片、DB、日志管理等框架的初始化工作  
@@ -7,10 +7,11 @@
 * 通过Application获取AppComponent里面的对象可直接使用  
 * 简单功能及页面无需引入MVP
 
-## Features
-* **网络模块** 使用Retrofit2，并通过Dagger2注入实例提供给开发者。Retrofit采用注解方式定义接口方便管理，极大的减少了请求代码和步骤，底层采用Okhttp  
-* **图片模块** 使用策略者模式，使用者只需替换三个类，就可以更换图片框架，默认使用Glide，通过AppComponent获取ImageLoader实例  
-* **数据库模块** 选择适用于Android的GreenDAO框架
+## Download
+Gradle:
+```
+compile 'android.frame:MVPFrames:1.4.2'
+```
 
 ## Libraries
 * [Dagger2](https://google.github.io/dagger)  
@@ -21,19 +22,25 @@
 * [Gson](https://github.com/google/gson)  
 * [GreenDAO](https://github.com/greenrobot/greenDAO)  
 * [EasyPermissions](https://github.com/googlesamples/easypermissions)  
-* [Q-Log](https://github.com/googlesamples/easypermissions)  
+* [Logg](https://github.com/DesignQu/Logg)  
+
+## History
+[UpdateLog](https://github.com/DesignQu/Logg/releases)   
 
 ## Feedback
 * Project  [Submit Bug or Idea](https://github.com/DesignQu/MVPFrames/issues)   
 
 ## Thanks
 [MVPArms](https://github.com/JessYanCoding/MVPArms)  
-[TODO-MVP](https://github.com/googlesamples/android-architecture/tree/todo-mvp)  
-[Nucleus](https://github.com/konmik/nucleus)  
+
+## About Me
+* Email [china.rocky.coder@gmail.com](china.rocky.coder@gmail.com)  
+* Home [https://designqu.github.io](https://designqu.github.io)  
+* GitHub [https://github.com/DesignQu](https://github.com/DesignQu)  
 
 ## License
 ```
-Copyright 2016-2017 DesignQu
+Copyright 2016-2018 DesignQu
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
