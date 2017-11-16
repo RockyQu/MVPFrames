@@ -7,9 +7,7 @@ import com.liulishuo.filedownloader.util.FileDownloadLog;
 import com.tool.common.http.download.config.DownloaderConfiguration;
 
 /**
- * 下载管理
- * <p>
- * 这是一个轻量级下载器，作为日常简单下载功能使用
+ * 基于 FileDownloader 的文件下载模块
  * 请在{@link Application#onCreate()}方法调用初始化配置代码
  */
 public class Downloader {
