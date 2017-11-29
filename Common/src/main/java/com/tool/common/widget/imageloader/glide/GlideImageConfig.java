@@ -4,6 +4,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.tool.common.widget.imageloader.ImageConfig;
+import com.tool.common.widget.imageloader.utils.ImageScaleType;
 
 /**
  * 图片加载的配置信息，可以根据需要自定义
@@ -16,6 +17,10 @@ public class GlideImageConfig extends ImageConfig {
     private int fallback;
     // 改变图形的形状
     private BitmapTransformation transformation;
+
+    // 图像加载模式
+    private ImageScaleType scaleType;
+
     // 清理内存缓存
     private boolean isClearMemory;
     // 清理本地缓存
@@ -30,6 +35,9 @@ public class GlideImageConfig extends ImageConfig {
         this.cacheStrategy = builder.cacheStrategy;
         this.transformation = builder.transformation;
         this.fallback = builder.fallback;
+
+        this.scaleType = builder.scaleType;
+
         this.isClearMemory = builder.isClearMemory;
         this.isClearDiskCache = builder.isClearDiskCache;
     }
@@ -44,6 +52,10 @@ public class GlideImageConfig extends ImageConfig {
 
     public BitmapTransformation getTransformation() {
         return transformation;
+    }
+
+    public ImageScaleType getScaleType() {
+        return scaleType;
     }
 
     public boolean isClearMemory() {
@@ -68,6 +80,9 @@ public class GlideImageConfig extends ImageConfig {
         private int cacheStrategy;
         private int fallback;
         private BitmapTransformation transformation;
+
+        private ImageScaleType scaleType;
+
         private boolean isClearMemory;
         private boolean isClearDiskCache;
 
@@ -107,6 +122,11 @@ public class GlideImageConfig extends ImageConfig {
 
         public Buidler transformation(BitmapTransformation transformation) {
             this.transformation = transformation;
+            return this;
+        }
+
+        public Buidler scaleType(ImageScaleType scaleType) {
+            this.scaleType = scaleType;
             return this;
         }
 

@@ -3,7 +3,6 @@ package com.tool.common.widget.imageloader.glide;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
@@ -11,6 +10,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.logg.Logg;
 import com.tool.common.widget.imageloader.BaseImageLoader;
+import com.tool.common.widget.imageloader.utils.ImageScaleType;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -40,8 +40,7 @@ public class GlideImageLoader implements BaseImageLoader<GlideImageConfig>, Glid
         GlideRequests requests = GlideFrames.with(context);
 
         GlideRequest<Drawable> glideRequest = requests.load(config.getUrl())
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .centerCrop();
+                .transition(DrawableTransitionOptions.withCrossFade());
 
         // 缓存策略
         switch (config.getCacheStrategy()) {
@@ -59,6 +58,21 @@ public class GlideImageLoader implements BaseImageLoader<GlideImageConfig>, Glid
                 break;
             case 4:
                 glideRequest.diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+                break;
+        }
+
+        ImageScaleType scaleType = config.getScaleType();
+        switch (scaleType) {
+            case CENTER_CROP:
+                glideRequest.centerCrop();
+                break;
+            case CENTER_INSIDE:
+                glideRequest.centerInside();
+                break;
+            case FIT_CENTER:
+                glideRequest.fitCenter();
+                break;
+            default:
                 break;
         }
 

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Message;
 
 import com.tool.common.widget.Snacker;
+import com.tool.common.widget.Toaster;
 
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
@@ -116,7 +117,7 @@ public class AppManager {
             return;
         }
 
-//        Snacker.with(this.getCurrentActivity()).setMessage(message).show();
+        Toaster.with(this.getCurrentActivity()).setMessage(message).show();
     }
 
     /**
