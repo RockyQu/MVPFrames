@@ -62,19 +62,22 @@ public class GlideImageLoader implements BaseImageLoader<GlideImageConfig>, Glid
         }
 
         ImageScaleType scaleType = config.getScaleType();
-        switch (scaleType) {
-            case CENTER_CROP:
-                glideRequest.centerCrop();
-                break;
-            case CENTER_INSIDE:
-                glideRequest.centerInside();
-                break;
-            case FIT_CENTER:
-                glideRequest.fitCenter();
-                break;
-            default:
-                break;
+        if (scaleType != null) {
+            switch (scaleType) {
+                case CENTER_CROP:
+                    glideRequest.centerCrop();
+                    break;
+                case CENTER_INSIDE:
+                    glideRequest.centerInside();
+                    break;
+                case FIT_CENTER:
+                    glideRequest.fitCenter();
+                    break;
+                default:
+                    break;
+            }
         }
+
 
         if (config.getTransformation() != null) {//glide用它来改变图形的形状
             glideRequest.transform(config.getTransformation());
