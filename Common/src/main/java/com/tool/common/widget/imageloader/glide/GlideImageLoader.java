@@ -77,8 +77,7 @@ public class GlideImageLoader implements BaseImageLoader<GlideImageConfig>, Glid
                     break;
             }
         }
-
-
+        
         if (config.getTransformation() != null) {//glide用它来改变图形的形状
             glideRequest.transform(config.getTransformation());
         }
