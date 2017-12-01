@@ -10,7 +10,9 @@ import com.frame.mvp.R;
 import com.frame.mvp.mvp.login.LoginActivity;
 import com.frame.mvp.mvp.main.MainActivity;
 import com.tool.common.base.BaseActivity;
+import com.tool.common.base.simple.base.BaseSimpleActivity;
 import com.tool.common.di.component.AppComponent;
+import com.tool.common.frame.IPresenter;
 import com.tool.common.utils.DeviceUtils;
 import com.tool.common.utils.PermissionUtils;
 
@@ -22,7 +24,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 /**
  * 欢迎页面
  */
-public class WelcomeActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
+public class WelcomeActivity extends BaseSimpleActivity implements EasyPermissions.PermissionCallbacks {
 
     @Override
     public void create(Bundle savedInstanceState) {
@@ -76,17 +78,12 @@ public class WelcomeActivity extends BaseActivity implements EasyPermissions.Per
     }
 
     @Override
-    public void setupActivityComponent(AppComponent component) {
-
+    public IPresenter obtainPresenter() {
+        return null;
     }
 
     @Override
     public int getLayoutId() {
         return R.layout.activity_welcome;
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 }

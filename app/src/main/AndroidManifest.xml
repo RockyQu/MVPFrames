@@ -14,6 +14,12 @@
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <!-- 允许程序发现和配对蓝牙设备 -->
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <!-- 允许访问振动设备 -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <!-- 允许程序读取底层系统日志文件 -->
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <!-- 允许一个程序打开窗口使用TYPE_SYSTEM_ALERT,显示在其他所有程序的顶层 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <!--Dangerous Permissions-->
     <!-- 允许程序访问电话状态 -->
@@ -77,7 +83,17 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
         </receiver>
-          
+
+        <!-- 适配7.0以上版本的拍照 -->
+        <!--<provider-->
+            <!--android:name="android.support.v4.content.FileProvider"-->
+            <!--android:authorities="com.ld.hmdl.fileprovider"-->
+            <!--android:exported="false"-->
+            <!--android:grantUriPermissions="true">-->
+            <!--<meta-data-->
+                <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
+                <!--android:resource="@xml/fileprovider"/>-->
+        <!--</provider>-->
     </application>
 
 </manifest>
