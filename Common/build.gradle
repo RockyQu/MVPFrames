@@ -137,8 +137,6 @@ dependencies {
     compile rootProject.ext.dependencies["androideventbus"]
     compile rootProject.ext.dependencies["gson"]
 
-    compile rootProject.ext.dependencies["easypermissions"]
-
     compile rootProject.ext.dependencies["filedownloader"]
 
     // DB
