@@ -200,20 +200,6 @@ public class AppConfiguration implements ConfigModule {
 
             @Override
             public void onCreate(Application application) {
-                // 数据库
-                DBModule.getInstance().init(application);
-            }
-
-            @Override
-            public void onTerminate(Application application) {
-
-            }
-        });
-
-        lifecycleManager.add(new ApplicationLifecycles() {
-
-            @Override
-            public void onCreate(Application application) {
                 // 读取当前登录用户信息
                 String value = PreferencesUtils.getString(application, LoginActivity.class.getName(), null);
                 if (value != null) {

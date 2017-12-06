@@ -4,6 +4,8 @@ import android.app.Application;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.tool.common.http.BaseUrl;
 import com.tool.common.http.NetworkHandler;
 import com.tool.common.http.cookie.PersistentCookieJar;
@@ -45,6 +47,8 @@ public class AppConfigModule {
 
     private AppModule.GsonConfiguration gsonConfiguration;
 
+    private AppModule.ErrorConfiguration errorConfiguration;
+
     private CookieJar cookie;
     private PersistentCookieJar.CookieLoadForRequest cookieLoadForRequest;
 
@@ -63,6 +67,8 @@ public class AppConfigModule {
         this.rxCacheConfiguration = buidler.rxCacheConfiguration;
 
         this.gsonConfiguration = buidler.gsonConfiguration;
+
+        this.errorConfiguration = buidler.errorConfiguration;
 
         this.cookie = buidler.cookie;
         this.cookieLoadForRequest = buidler.cookieLoadForRequest;
@@ -139,6 +145,12 @@ public class AppConfigModule {
         return cookie == null ? new PersistentCookieJar(application, cookieLoadForRequest == null ? PersistentCookieJar.CookieLoadForRequest.EMPTY : cookieLoadForRequest) : cookie;
     }
 
+    @Singleton
+    @Provides
+    AppModule.ErrorConfiguration provideErrorConfiguration() {
+        return errorConfiguration == null ? AppModule.ErrorConfiguration.EMPTY : errorConfiguration;
+    }
+
     /**
      * App全局配置
      */
@@ -174,12 +186,17 @@ public class AppConfigModule {
         // 提供一个Gson配置接口，用于对Gson进行格外的参数配置
         private AppModule.GsonConfiguration gsonConfiguration;
 
+        // 提供全局错误响应接口，APP的各种错误信息可以统一回调至此接口
+        private AppModule.ErrorConfiguration errorConfiguration;
+
         // OkHttp用CookieJar保持会话功能，框架已集成PersistentCookieJar自动管理Cookie，或自己实现CookieJar接口
         private CookieJar cookie;
+
         // 此接口需求配合PersistentCookieJar使用
         // 这是用来从PersistentCookieJar的loadForRequest获取List<Cookie>
         // 实际上只是为了获取到接口里的Cookie值，如果项目存在两套Http模块
         // 比如登录模块用OkHttp，其他模块需要用到登录模块返回的Cookie来保持会话，此时需要实现此接口将返回的Cookie设置给另外一套Http模块
+        // 正常情况下一般不会用到
         private PersistentCookieJar.CookieLoadForRequest cookieLoadForRequest;
 
         private Builder() {
@@ -239,6 +256,11 @@ public class AppConfigModule {
 
         public Builder gsonConfiguration(AppModule.GsonConfiguration gsonConfiguration) {
             this.gsonConfiguration = gsonConfiguration;
+            return this;
+        }
+
+        public Builder errorConfiguration(AppModule.ErrorConfiguration errorConfiguration) {
+            this.errorConfiguration = errorConfiguration;
             return this;
         }
 

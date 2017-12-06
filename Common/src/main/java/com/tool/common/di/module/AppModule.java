@@ -68,4 +68,17 @@ public class AppModule {
             }
         };
     }
+
+    public interface ErrorConfiguration {
+
+        void error(Context context, Throwable throwable);
+
+        ErrorConfiguration EMPTY = new ErrorConfiguration() {
+
+            @Override
+            public void error(Context context, Throwable throwable) {
+
+            }
+        };
+    }
 }

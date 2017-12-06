@@ -22,5 +22,6 @@
  * 4、增加 BaseSimpleDialogFragment 基于 DialogFragment 可以轻松实现各种 Dialog 效果
  * 5、修改 文件下载模块，基于 FileDownloader 基本封装，后面会继续完善
  * 6、增加 ImageLoader 配置参数 ScaleType 用法和  ImageView.ScaleType 属性相同，默认不设置任何ScaleType
+ * 7、修改 PermissionUtils 应用权限管理 替换为 RxPermissions
  */
 package com.tool.common;

@@ -2,7 +2,13 @@ package com.tool.common.utils;
 
 import android.Manifest;
 
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.tool.common.utils.base.BaseUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.functions.Consumer;
 
 /**
  * 权限管理
@@ -62,29 +68,103 @@ import com.tool.common.utils.base.BaseUtils;
  */
 public class PermissionUtils extends BaseUtils {
 
-    // 允许程序访问电话状态
-    public static final String READ_PHONE_STATE = Manifest.permission.READ_PHONE_STATE;
-    // 允许访问照相机
-    public static final String CAMERA = Manifest.permission.CAMERA;
-    // 通过GPS芯片接收卫星的定位信息
-    public static final String ACCESS_FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
-    // 允许程序写入外部存储，如SD卡上写文件
-    public static final String READ_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-    // 允许程序录制音频
-    public static final String RECORD_AUDIO = Manifest.permission.RECORD_AUDIO;
-    // 允许程序读取短信息
-    public static final String READ_SMS = Manifest.permission.READ_SMS;
-    // 允许程序写入但不读取用户联系人数据
-    public static final String WRITE_CONTACTS = Manifest.permission.WRITE_CONTACTS;
-
-    // 常用权限组，用于批量申请
-    public static final String[] PERMISSIONS = {READ_PHONE_STATE, CAMERA, ACCESS_FINE_LOCATION, READ_EXTERNAL_STORAGE};
-
-    // requestCode
-    public static final int PERMISSION_CODE = 100;
-
     public PermissionUtils() {
         super();
     }
 
+    public interface RequestPermission {
+
+        /**
+         * 权限申请成功执行的方法
+         */
+        void onRequestPermissionSuccess();
+
+        /**
+         * 权限申请失败执行的方法
+         * 包括：用户拒绝、用户选择了禁止弹出、当批量申请只要有一个拒绝都会执行该方法
+         */
+        void onRequestPermissionFailure();
+    }
+
+    public static void requestPermissions(final RequestPermission requestPermission, RxPermissions rxPermissions, String... permissions) {
+        if (permissions == null || permissions.length == 0) {
+            return;
+        }
+
+        List<String> needRequest = new ArrayList<>();
+        for (String permission : permissions) { // 过滤调已经申请过的权限
+            if (!rxPermissions.isGranted(permission)) {
+                needRequest.add(permission);
+            }
+        }
+
+        if (needRequest.size() == 0) {// 全部权限已经申请过，直接执行成功操作
+            requestPermission.onRequestPermissionSuccess();
+        } else {
+            rxPermissions
+                    .request(needRequest.toArray(new String[needRequest.size()]))
+                    .subscribe(new Consumer<Boolean>() {
+                        @Override
+                        public void accept(Boolean aBoolean) throws Exception {
+                            if (aBoolean) {
+                                requestPermission.onRequestPermissionSuccess();
+                            } else {
+                                requestPermission.onRequestPermissionFailure();
+                            }
+                        }
+                    });
+        }
+    }
+
+    public static void writeContacts(RequestPermission requestPermission, RxPermissions rxPermissions) {
+        requestPermissions(requestPermission, rxPermissions, Manifest.permission.WRITE_CONTACTS);
+    }
+
+    public static void getAccounts(RequestPermission requestPermission, RxPermissions rxPermissions) {
+        requestPermissions(requestPermission, rxPermissions, Manifest.permission.GET_ACCOUNTS);
+    }
+
+    public static void readContacts(RequestPermission requestPermission, RxPermissions rxPermissions) {
+        requestPermissions(requestPermission, rxPermissions, Manifest.permission.READ_CONTACTS);
+    }
+
+    public static void readPhoneState(RequestPermission requestPermission, RxPermissions rxPermissions) {
+        requestPermissions(requestPermission, rxPermissions, Manifest.permission.READ_PHONE_STATE);
+    }
+
+    public static void callPhone(RequestPermission requestPermission, RxPermissions rxPermissions) {
+        requestPermissions(requestPermission, rxPermissions, Manifest.permission.CALL_PHONE);
+    }
+
+    public static void readCalendar(RequestPermission requestPermission, RxPermissions rxPermissions) {
+        requestPermissions(requestPermission, rxPermissions, Manifest.permission.READ_CALENDAR);
+    }
+
+    public static void writeCalendar(RequestPermission requestPermission, RxPermissions rxPermissions) {
+        requestPermissions(requestPermission, rxPermissions, Manifest.permission.WRITE_CALENDAR);
+    }
+
+    public static void camera(RequestPermission requestPermission, RxPermissions rxPermissions) {
+        requestPermissions(requestPermission, rxPermissions, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
+    }
+
+    public static void location(RequestPermission requestPermission, RxPermissions rxPermissions) {
+        requestPermissions(requestPermission, rxPermissions, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION);
+    }
+
+    public static void writeExternalStorage(RequestPermission requestPermission, RxPermissions rxPermissions) {
+        requestPermissions(requestPermission, rxPermissions, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    }
+
+    public static void recordAudio(RequestPermission requestPermission, RxPermissions rxPermissions) {
+        requestPermissions(requestPermission, rxPermissions, Manifest.permission.RECORD_AUDIO);
+    }
+
+    public static void readSMS(RequestPermission requestPermission, RxPermissions rxPermissions) {
+        requestPermissions(requestPermission, rxPermissions, Manifest.permission.READ_SMS);
+    }
+
+    public static void sendSMS(RequestPermission requestPermission, RxPermissions rxPermissions) {
+        requestPermissions(requestPermission, rxPermissions, Manifest.permission.SEND_SMS);
+    }
 }

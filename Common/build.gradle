@@ -120,6 +120,10 @@ dependencies {
     compile(rootProject.ext.dependencies["rxcache-jolyglot-gson"]) {
         exclude module: 'gson'
     }
+    compile(rootProject.ext.dependencies["rxpermissions2"]) {
+        exclude module: 'rxjava'
+        exclude module: 'support-annotations'
+    }
 
     // Tools
     compile(rootProject.ext.dependencies["butterknife"]) {

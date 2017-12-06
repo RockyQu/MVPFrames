@@ -5,6 +5,7 @@ import android.app.ActivityManager;
 import android.app.ActivityManager.MemoryInfo;
 import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.ActivityManager.RunningServiceInfo;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -19,6 +20,7 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.tool.common.BuildConfig;
 import com.tool.common.base.App;
 import com.tool.common.di.component.AppComponent;
 import com.tool.common.utils.base.BaseUtils;
@@ -368,6 +370,17 @@ public final class AppUtils extends BaseUtils {
         Intent sendIntent = new Intent(Intent.ACTION_VIEW, uri);
         sendIntent.putExtra("sms_body", message);
         activity.startActivity(sendIntent);
+    }
+
+    /**
+     * 跳转到权限设置界面
+     */
+    public static void applicationDetailsSettings(Context context) {
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+        intent.setData(Uri.fromParts("package", context.getPackageName(), null));
+        startActivity(intent);
     }
 
     /**
