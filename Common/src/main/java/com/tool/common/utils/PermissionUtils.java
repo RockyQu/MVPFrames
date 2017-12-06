@@ -81,7 +81,7 @@ public class PermissionUtils extends BaseUtils {
 
         /**
          * 权限申请失败执行的方法
-         * 包括：用户拒绝、用户选择了禁止弹出、当批量申请只要有一个拒绝都会执行该方法
+         * 包括：用户拒绝、用户选择了禁止弹出、当批量申请只要有一个拒绝就会执行该方法
          */
         void onRequestPermissionFailure();
     }
