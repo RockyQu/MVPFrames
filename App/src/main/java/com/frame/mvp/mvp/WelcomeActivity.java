@@ -28,26 +28,21 @@ public class WelcomeActivity extends BaseSimpleActivity {
     @Override
     public void create(Bundle savedInstanceState) {
         rxPermissions = new RxPermissions(this);
-        PermissionUtils.
-                requestPermissions(new PermissionUtils.RequestPermission() {
+        PermissionUtils.requestPermissions(new PermissionUtils.RequestPermission() {
 
-                                       @Override
-                                       public void onRequestPermissionSuccess() {
-                                           startNextActivity();
-                                       }
+                                               @Override
+                                               public void onRequestPermissionSuccess() {
+                                                   startNextActivity();
+                                               }
 
-                                       @Override
-                                       public void onRequestPermissionFailure() {
-                                           // 如果失败跳到到应用设置页面
-                                           AppUtils.applicationDetailsSettings(WelcomeActivity.this);
-                                           finish();
-                                       }
-                                   }, rxPermissions,
-                        Manifest.permission.READ_PHONE_STATE,
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                );
+                                               @Override
+                                               public void onRequestPermissionFailure() {
+                                                   // 如果失败跳到到应用设置页面
+                                                   AppUtils.applicationDetailsSettings(WelcomeActivity.this);
+                                                   finish();
+                                               }
+                                           }, rxPermissions,
+                Manifest.permission.READ_PHONE_STATE, Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     /**
