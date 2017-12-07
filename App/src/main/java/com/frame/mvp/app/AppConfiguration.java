@@ -81,10 +81,10 @@ public class AppConfiguration implements ConfigModule {
 //                                    try {
 //                                        JsonObject resultToken = apiToken.execute().body().getData();
 //                                        apiToken.execute().body();
-////                                        QLog.e(resultToken);
-////                                            QLog.e(resultToken.get("access_token"));
+////                                        Logg.e(resultToken);
+////                                            Logg.e(resultToken.get("access_token"));
 //                                        String token = resultToken.get("access_token").getAsString();
-////                                            QLog.e(token);
+////                                            Logg.e(token);
 //
 //                                        HttpUrl.Builder modifiedUrl = request.url().newBuilder()
 //                                                .scheme(request.url().scheme())
