@@ -2,6 +2,8 @@ package com.tool.common.utils;
 
 import android.Manifest;
 
+import com.logg.Logg;
+import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.tool.common.utils.base.BaseUtils;
 
@@ -91,6 +93,7 @@ public class PermissionUtils extends BaseUtils {
             return;
         }
 
+        Logg.e(permissions);
         List<String> needRequest = new ArrayList<>();
         for (String permission : permissions) { // 过滤调已经申请过的权限
             if (!rxPermissions.isGranted(permission)) {
@@ -98,19 +101,34 @@ public class PermissionUtils extends BaseUtils {
             }
         }
 
-        if (needRequest.size() == 0) {// 全部权限已经申请过，直接执行成功操作
+        Logg.e(needRequest);
+        int count = needRequest.size();
+        if (count == 0) {// 全部权限已经申请过，直接执行成功操作
             requestPermission.onRequestPermissionSuccess();
         } else {
             rxPermissions
-                    .request(needRequest.toArray(new String[needRequest.size()]))
-                    .subscribe(new Consumer<Boolean>() {
+                    .requestEach(needRequest.toArray(new String[count]))
+                    .buffer(count)
+                    .subscribe(new Consumer<List<Permission>>() {
                         @Override
-                        public void accept(Boolean aBoolean) throws Exception {
-                            if (aBoolean) {
-                                requestPermission.onRequestPermissionSuccess();
-                            } else {
-                                requestPermission.onRequestPermissionFailure();
+                        public void accept(List<Permission> permissions) throws Exception {
+                            for (Permission p : permissions) {
+                                Logg.e("Permission " + p.name + " " + p.granted);
+                                if (!p.granted) {
+                                    if (p.shouldShowRequestPermissionRationale) {
+                                        Logg.e("Request permissions failure");
+                                        requestPermission.onRequestPermissionFailure();
+                                        return;
+                                    } else {
+                                        Logg.e("Request permissions failure with ask never again");
+                                        requestPermission.onRequestPermissionFailure();
+                                        return;
+                                    }
+                                }
                             }
+
+                            Logg.e("Request permissions success");
+                            requestPermission.onRequestPermissionSuccess();
                         }
                     });
         }
@@ -149,7 +167,7 @@ public class PermissionUtils extends BaseUtils {
     }
 
     public static void location(RequestPermission requestPermission, RxPermissions rxPermissions) {
-        requestPermissions(requestPermission, rxPermissions, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION);
+        requestPermissions(requestPermission, rxPermissions, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
     public static void writeExternalStorage(RequestPermission requestPermission, RxPermissions rxPermissions) {

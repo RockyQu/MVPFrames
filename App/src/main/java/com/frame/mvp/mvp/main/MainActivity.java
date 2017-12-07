@@ -1,7 +1,12 @@
 package com.frame.mvp.mvp.main;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 
 import com.frame.mvp.R;
 import com.frame.mvp.ui.adapter.MainViewPagerAdapter;
@@ -14,6 +19,8 @@ import com.tool.common.frame.simple.Message;
 import com.tool.common.http.download.Downloader;
 import com.tool.common.http.download.DownloaderSampleListener;
 import com.tool.common.http.download.exception.DownloadException;
+import com.tool.common.utils.AppUtils;
+import com.tool.common.utils.PermissionUtils;
 import com.tool.common.widget.Snacker;
 import com.tool.common.widget.Toaster;
 import com.tool.common.widget.navigation.BottomNavigation;
@@ -66,41 +73,60 @@ public class MainActivity extends BaseSimpleActivity<MainPresenter> implements I
         adapter = new MainViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
-        Downloader.getInstance().create("http://download.alicdn.com/wireless/taobao4android/latest/702757.apk")
-//                .setSaveFilePath(ProjectUtils.OTHER + "aaaaa")
-                .setListener(new DownloaderSampleListener() {
+//        Downloader.getInstance().create("http://download.alicdn.com/wireless/taobao4android/latest/702757.apk")
+////                .setSaveFilePath(ProjectUtils.OTHER + "aaaaa")
+//                .setListener(new DownloaderSampleListener() {
+//
+//                    @Override
+//                    protected void onConnection(boolean isContinue, long progress, long total) {
+//                        Logg.e(progress + "/" + total);
+//                    }
+//
+//                    @Override
+//                    protected void onProgress(long progress, long total, int speed) {
+//                        int current = (int) (progress * 1.0f / total * 100);
+//                        Logg.e(progress + "/" + total);
+//                    }
+//
+//                    @Override
+//                    protected void onFailure(DownloadException exception) {
+//                        exception.printStackTrace();
+//                    }
+//
+//                    @Override
+//                    protected void onPaused() {
+//                        Logg.e("onPaused");
+//                    }
+//
+//                    @Override
+//                    protected void onComplete(String filePath) {
+//                        Logg.e("onFinish " + filePath);
+//                    }
+//                })
+//                .start();
 
-                    @Override
-                    protected void onConnection(boolean isContinue, long progress, long total) {
-                        Logg.e(progress + "/" + total);
-                    }
+        RxPermissions rxPermissions = new RxPermissions(this);
+        PermissionUtils.location(new PermissionUtils.RequestPermission() {
 
-                    @Override
-                    protected void onProgress(long progress, long total, int speed) {
-                        int current = (int) (progress * 1.0f / total * 100);
-                        Logg.e(progress + "/" + total);
-                    }
+            @Override
+            public void onRequestPermissionSuccess() {
 
-                    @Override
-                    protected void onFailure(DownloadException exception) {
-                        exception.printStackTrace();
-                    }
+            }
 
-                    @Override
-                    protected void onPaused() {
-                        Logg.e("onPaused");
-                    }
-
-                    @Override
-                    protected void onComplete(String filePath) {
-                        Logg.e("onFinish " + filePath);
-                    }
-                })
-                .start();
-
-        Logg.e("over");
+            @Override
+            public void onRequestPermissionFailure() {
+                // 如果失败跳到到应用设置页面
+                AppUtils.applicationDetailsSettings(MainActivity.this);
+            }
+        }, rxPermissions);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    public static final int REQUEST_LOCATION_PERMISSION = 1;
     @Override
     public void showLoading() {
 
