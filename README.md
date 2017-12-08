@@ -1,5 +1,5 @@
 # MVPFrames
-这是一个整合 [MVPArms](https://github.com/JessYanCoding/MVPArms) 和 [MVPArt](https://github.com/JessYanCoding/MVPArt) 并整合了大量主流开源项目高度可配置化的 Android MVP 快速集成框架
+这是一个基于 [MVPArms](https://github.com/JessYanCoding/MVPArms) 和 [MVPArt](https://github.com/JessYanCoding/MVPArt) 并整合了大量主流开源项目高度可配置化的 Android MVP 快速集成框架
 
 ## Usage
 * 配置自定义Application必须继承BaseApplication，BaseApplication完成Http、图片、DB、日志管理等框架的初始化工作  
