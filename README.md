@@ -1,5 +1,5 @@
 # MVPFrames
-这是一个Android MVP开发框架
+这是一个合并 [MVPArms](https://github.com/JessYanCoding/MVPArms) 和 [MVPArt](https://github.com/JessYanCoding/MVPArt) 并整合了大量主流开源项目高度可配置化的 Android MVP 快速集成框架
 
 ## Usage
 * 配置自定义Application必须继承BaseApplication，BaseApplication完成Http、图片、DB、日志管理等框架的初始化工作  
@@ -15,23 +15,26 @@ compile 'android.frame:MVPFrames:1.4.2'
 
 ## Libraries
 * [Dagger2](https://google.github.io/dagger)  
+* [RxJava2](https://github.com/ReactiveX/RxJava)  
+* [RxLifecycle](https://github.com/trello/RxLifecycle)  
 * [ButterKnife](http://jakewharton.github.io/butterknife)  
 * [Retrofit2](https://github.com/square/retrofit)  
 * [Okhttp](https://github.com/square/okhttp)  
 * [Glide](https://github.com/bumptech/glide)  
 * [Gson](https://github.com/google/gson)  
-* [GreenDAO](https://github.com/greenrobot/greenDAO)  
-* [EasyPermissions](https://github.com/googlesamples/easypermissions)  
+* [RxPermissions](https://github.com/tbruyelle/RxPermissions)  
+* [LeakCanary](https://github.com/square/leakcanary)  
 * [Logg](https://github.com/DesignQu/Logg)  
 
 ## History
-[UpdateLog](https://github.com/DesignQu/Logg/releases)   
+[UpdateLog](https://github.com/DesignQu/MVPFrames/releases)   
 
 ## Feedback
 * Project  [Submit Bug or Idea](https://github.com/DesignQu/MVPFrames/issues)   
 
 ## Thanks
 [MVPArms](https://github.com/JessYanCoding/MVPArms)  
+[MVPArt](https://github.com/JessYanCoding/MVPArt)  
 
 ## About Me
 * Email [china.rocky.coder@gmail.com](china.rocky.coder@gmail.com)  
