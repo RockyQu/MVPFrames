@@ -567,6 +567,7 @@ public class DeviceUtils extends BaseUtils {
      */
     public static void openGpsSetting(Activity activity) {
         Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivityForResult(intent, GPS_REQUEST_CODE);
     }
 }
