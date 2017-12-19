@@ -6,7 +6,7 @@ import com.tool.common.base.delegate.AppDelegate;
 import com.tool.common.di.component.AppComponent;
 
 /**
- * Source https://github.com/DesignQu/MVPFrames
+ * @see <a href="https://github.com/DesignQu/MVPFrames"></a>
  */
 public abstract class BaseApplication extends Application implements App {
 

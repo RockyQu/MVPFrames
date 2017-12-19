@@ -195,5 +195,5 @@ dependencies {
 
     // 引入框架基础共通模块
     compile project(':Common')
-//    compile 'android.frame:MVPFrames:1.4.0'
+//    compile 'android.frame:MVPFrames:1.4.54'
 }
