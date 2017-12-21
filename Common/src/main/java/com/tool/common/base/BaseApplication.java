@@ -8,7 +8,7 @@ import com.tool.common.di.component.AppComponent;
 /**
  * @see <a href="https://github.com/DesignQu/MVPFrames"></a>
  */
-public abstract class BaseApplication extends Application implements App {
+public class BaseApplication extends Application implements App {
 
     // AppDelegate
     private AppDelegate delegate;
