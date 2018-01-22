@@ -52,8 +52,10 @@ public class MainActivity extends BaseSimpleActivity<MainPresenter> implements I
         BottomNavigationAdapter navigationAdapter = new BottomNavigationAdapter(this, R.menu.menu_bottom_navigation);
         navigationAdapter.setupWithBottomNavigation(bottomNavigation);
 
+        bottomNavigation.setDefaultBackgroundColor(ContextCompat.getColor(this, R.color.main_color));
+
         // 隐藏导航栏标题
-        bottomNavigation.setTitleState(BottomNavigation.TitleState.ALWAYS_HIDE);
+        bottomNavigation.setTitleState(BottomNavigation.TitleState.ALWAYS_SHOW);
 
         // 导航点击事件
         bottomNavigation.setOnTabSelectedListener(new BottomNavigation.OnTabSelectedListener() {
@@ -127,6 +129,7 @@ public class MainActivity extends BaseSimpleActivity<MainPresenter> implements I
     }
 
     public static final int REQUEST_LOCATION_PERMISSION = 1;
+
     @Override
     public void showLoading() {
 

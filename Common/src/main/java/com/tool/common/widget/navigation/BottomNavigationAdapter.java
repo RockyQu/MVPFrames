@@ -10,9 +10,6 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
 public class BottomNavigationAdapter {
 
 	private Menu mMenu;

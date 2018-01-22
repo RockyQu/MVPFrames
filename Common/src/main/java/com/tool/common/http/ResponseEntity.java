@@ -19,6 +19,9 @@ public class ResponseEntity<T> {
     // 系统是否正常
     @SerializedName(value = "system", alternate = {"sys"})
     private boolean system;
+    // 其他状态
+    @SerializedName("code")
+    private int code;
     // 数量
     @SerializedName(value = "count", alternate = {"totalProperty"})
     private long count;
