@@ -38,7 +38,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.tool.common.R;
+import com.frame.mvp.R;
 import com.frame.mvp.ui.widget.navigation.notice.Notice;
 import com.frame.mvp.ui.widget.navigation.notice.NoticeHelper;
 

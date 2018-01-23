@@ -18,7 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 
-import com.tool.common.R;
+import com.frame.mvp.R;
 
 /**
  *
