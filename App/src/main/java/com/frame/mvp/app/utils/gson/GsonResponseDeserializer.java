@@ -1,9 +1,10 @@
-package com.tool.common.http.converter;
+package com.frame.mvp.app.utils.gson;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.tool.common.http.ResponseEntity;
 
@@ -25,6 +26,16 @@ public class GsonResponseDeserializer implements JsonDeserializer<ResponseEntity
 
     @Override
     public ResponseEntity deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        JsonObject response = json.getAsJsonObject();
+        if (response.get("result").isJsonPrimitive()) {// 是否为基本数据类型
+            int code = response.get("code").getAsInt();
+            String message = response.get("info").getAsString();
+
+            ResponseEntity entity = new ResponseEntity();
+            entity.setCode(code);
+            entity.setMessage(message);
+            return entity;
+        }
         return new Gson().fromJson(json, typeOfT);
     }
 }

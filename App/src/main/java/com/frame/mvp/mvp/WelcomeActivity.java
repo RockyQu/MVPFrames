@@ -8,6 +8,7 @@ import android.os.Message;
 
 import com.frame.mvp.R;
 import com.frame.mvp.db.DBModule;
+import com.frame.mvp.mvp.login.LoginActivity;
 import com.frame.mvp.mvp.main.MainActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.tool.common.base.simple.base.BaseSimpleActivity;
@@ -52,7 +53,7 @@ public class WelcomeActivity extends BaseSimpleActivity {
                 // 数据库
                 DBModule.getInstance().init(getApplication());
 
-                Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+                Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
                 WelcomeActivity.this.startActivity(intent);
                 WelcomeActivity.this.finish();
                 return false;
