@@ -1,4 +1,4 @@
-package com.tool.common.widget.navigation;
+package com.frame.mvp.ui.widget.navigation;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;

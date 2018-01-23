@@ -1,4 +1,4 @@
-package com.tool.common.widget.navigation;
+package com.frame.mvp.ui.widget.navigation;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

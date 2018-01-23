@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.tool.common.widget.navigation.BottomNavigationViewPager
+    <com.frame.mvp.ui.widget.navigation.BottomNavigationViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <com.tool.common.widget.navigation.BottomNavigation
+    <com.frame.mvp.ui.widget.navigation.BottomNavigation
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

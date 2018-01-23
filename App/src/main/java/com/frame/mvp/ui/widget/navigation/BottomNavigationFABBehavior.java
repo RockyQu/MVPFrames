@@ -1,4 +1,4 @@
-package com.tool.common.widget.navigation;
+package com.frame.mvp.ui.widget.navigation;
 
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;

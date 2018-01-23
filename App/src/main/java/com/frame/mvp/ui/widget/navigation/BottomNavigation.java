@@ -1,4 +1,4 @@
-package com.tool.common.widget.navigation;
+package com.frame.mvp.ui.widget.navigation;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
@@ -39,8 +39,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tool.common.R;
-import com.tool.common.widget.navigation.notice.Notice;
-import com.tool.common.widget.navigation.notice.NoticeHelper;
+import com.frame.mvp.ui.widget.navigation.notice.Notice;
+import com.frame.mvp.ui.widget.navigation.notice.NoticeHelper;
 
 import java.util.ArrayList;
 import java.util.List;

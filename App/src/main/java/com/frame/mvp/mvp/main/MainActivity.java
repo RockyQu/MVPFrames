@@ -1,35 +1,25 @@
 package com.frame.mvp.mvp.main;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
 import com.frame.mvp.R;
 import com.frame.mvp.ui.adapter.MainViewPagerAdapter;
-import com.logg.Logg;
-import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.tool.common.base.simple.base.BaseSimpleActivity;
 import com.tool.common.frame.simple.ISimpleView;
 import com.tool.common.frame.simple.Message;
-import com.tool.common.http.download.Downloader;
-import com.tool.common.http.download.DownloaderSampleListener;
-import com.tool.common.http.download.exception.DownloadException;
 import com.tool.common.utils.AppUtils;
 import com.tool.common.utils.PermissionUtils;
 import com.tool.common.widget.Snacker;
 import com.tool.common.widget.Toaster;
-import com.tool.common.widget.navigation.BottomNavigation;
-import com.tool.common.widget.navigation.BottomNavigationAdapter;
-import com.tool.common.widget.navigation.BottomNavigationViewPager;
+import com.frame.mvp.ui.widget.navigation.BottomNavigation;
+import com.frame.mvp.ui.widget.navigation.BottomNavigationAdapter;
+import com.frame.mvp.ui.widget.navigation.BottomNavigationViewPager;
 
 
 import butterknife.BindView;
-import io.reactivex.functions.Consumer;
 
 /**
  * 主页面

@@ -1,4 +1,4 @@
-package com.tool.common.widget.navigation.notice;
+package com.frame.mvp.ui.widget.navigation.notice;
 
 import android.os.Parcel;
 import android.os.Parcelable;
