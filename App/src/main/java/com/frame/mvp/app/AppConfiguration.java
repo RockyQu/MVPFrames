@@ -24,6 +24,7 @@ import com.tool.common.di.module.AppModule;
 import com.tool.common.di.module.HttpModule;
 import com.tool.common.http.NetworkHandler;
 import com.tool.common.http.ResponseEntity;
+import com.tool.common.http.cookie.PersistentCookieJar;
 import com.tool.common.http.download.Downloader;
 import com.tool.common.http.download.config.DownloaderConfiguration;
 import com.tool.common.http.interceptor.LoggingInterceptor;
@@ -41,6 +42,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.Cookie;
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -154,6 +157,18 @@ public class AppConfiguration implements ConfigModule {
                         builder
                                 .serializeNulls()// 支持序列化null的参数
                                 .registerTypeAdapter(ResponseEntity.class, new GsonResponseDeserializer());
+                    }
+                })
+                .cookieLoadForRequest(new PersistentCookieJar.CookieLoadForRequest() {
+
+                    @Override
+                    public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+
+                    }
+
+                    @Override
+                    public List<Cookie> loadForRequest(List<Cookie> cookies) {
+                        return cookies;
                     }
                 })
         ;

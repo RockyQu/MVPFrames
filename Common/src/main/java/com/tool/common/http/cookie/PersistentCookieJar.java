@@ -36,6 +36,10 @@ public class PersistentCookieJar implements ClearableCookieJar {
 
     @Override
     synchronized public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+        if (cookieLoadForRequest != null) {
+            cookieLoadForRequest.saveFromResponse(url, cookies);
+        }
+
         cache.addAll(cookies);
         persistor.saveAll(filterPersistentCookies(cookies));
     }
@@ -71,7 +75,7 @@ public class PersistentCookieJar implements ClearableCookieJar {
         persistor.removeAll(cookiesToRemove);
 
         if (cookieLoadForRequest != null) {
-            cookieLoadForRequest.loadForRequest(validCookies);
+            validCookies = cookieLoadForRequest.loadForRequest(validCookies);
         }
 
         return validCookies;
@@ -101,13 +105,20 @@ public class PersistentCookieJar implements ClearableCookieJar {
      */
     public interface CookieLoadForRequest {
 
-        void loadForRequest(List<Cookie> cookies);
+        void saveFromResponse(HttpUrl url, List<Cookie> cookies);
+
+        List<Cookie> loadForRequest(List<Cookie> cookies);
 
         CookieLoadForRequest EMPTY = new CookieLoadForRequest() {
 
             @Override
-            public void loadForRequest(List<Cookie> cookies) {
+            public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
 
+            }
+
+            @Override
+            public List<Cookie> loadForRequest(List<Cookie> cookies) {
+                return cookies;
             }
         };
     }
