@@ -1,4 +1,9 @@
 ext {
+
+    frame = [
+            applicationId: "com.frame.mvp"
+    ]
+
     android = [compileSdkVersion             : 26,
                buildToolsVersion             : "26.0.1",
                minSdkVersion                 : 15,

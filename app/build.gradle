@@ -18,7 +18,7 @@ android {
 
     defaultConfig {
         // 包名
-        applicationId "com.frame.mvp"
+        applicationId rootProject.ext.frame["applicationId"]
         // 最低支持SDK版本
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         // 目标SDK版本
