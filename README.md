@@ -38,8 +38,8 @@ compile 'android.frame:MVPFrames:1.4.2'
 
 ## About Me
 * Email [china.rocky.coder@gmail.com](china.rocky.coder@gmail.com)  
-* Home [https://designqu.github.io](https://designqu.github.io)  
-* GitHub [https://github.com/DesignQu](https://github.com/DesignQu)  
+* Home [http://rockycoder.cn ](http://rockycoder.cn)  
+* GitHub [https://github.com/RockyQu](https://github.com/RockyQu)  
 
 ## License
 ```
