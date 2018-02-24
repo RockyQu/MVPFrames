@@ -43,7 +43,7 @@ compile 'android.frame:MVPFrames:1.4.2'
 
 ## License
 ```
-Copyright 2016-2018 DesignQu
+Copyright 2018 RockyQu
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
