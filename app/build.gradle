@@ -12,8 +12,8 @@ android {
 //    useLibrary 'org.apache.http.legacy'
 
     compileOptions {
-        targetCompatibility JavaVersion.VERSION_1_7
-        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
     }
 
     defaultConfig {
@@ -95,6 +95,8 @@ android {
 //        }
 //    }
 
+    flavorDimensions "Frames"
+
     // 多渠道打包
     productFlavors {
         // 默认渠道
@@ -133,13 +135,9 @@ android {
 
             // 批量打包
             applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    def outputFile = output.outputFile
-                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                        // 输出名称为：渠道名_版本号.apk
-                        def fileName = "App_${variant.productFlavors[0].name}_v${defaultConfig.versionName}.apk"
-                        output.outputFile = new File(outputFile.parent, fileName)
-                    }
+                variant.outputs.all {
+                    // 输出名称为：渠道名_版本号.apk
+                    outputFileName = "App_${variant.productFlavors[0].name}_v${variant.versionName}.apk"
                 }
             }
         }
@@ -172,28 +170,26 @@ repositories {
 
 dependencies {
     // 本地库依赖，包含app/libs目录下的所有jar文件。因此当module想引用某个jar时，只需将jar拷贝到<moduleName>/libs
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Tools
     annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
         exclude module: 'support-annotations'
-        exclude module: 'butterknife-annotations'
     }
-    provided rootProject.ext.dependencies["javax.annotation"]
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
-    compile rootProject.ext.dependencies["multidex"]
+    implementation rootProject.ext.dependencies["multidex"]
 
     // DB
-    compile rootProject.ext.dependencies["greendao"]
-    compile rootProject.ext.dependencies["sqlcipher"]
+    implementation rootProject.ext.dependencies["greendao"]
+    implementation rootProject.ext.dependencies["sqlcipher"]
 
     // Test
-    testCompile rootProject.ext.dependencies["junit"]
-    debugCompile rootProject.ext.dependencies["canary-debug"]
-    releaseCompile rootProject.ext.dependencies["canary-release"]
-    testCompile rootProject.ext.dependencies["canary-release"]
+    testImplementation rootProject.ext.dependencies["junit"]
+    debugImplementation rootProject.ext.dependencies["canary-debug"]
+    releaseImplementation rootProject.ext.dependencies["canary-release"]
+    testImplementation rootProject.ext.dependencies["canary-release"]
 
     // 引入框架基础共通模块
-    compile project(':Common')
+    implementation project(':Common')
 //    compile 'android.frame:MVPFrames:1.4.58'
 }
