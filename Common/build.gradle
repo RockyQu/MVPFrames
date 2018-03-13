@@ -60,47 +60,42 @@ buildscript {
 }
 
 dependencies {
-    api fileTree(include: ['*.jar'], dir: 'libs')
-
     // Support
-    api(rootProject.ext.dependencies["support-v4"]) {
+    compile(rootProject.ext.dependencies["support-v4"]) {
         exclude module: 'support-annotations'
     }
-    api(rootProject.ext.dependencies["appcompat-v7"]) {
+    compile(rootProject.ext.dependencies["appcompat-v7"]) {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
-    api(rootProject.ext.dependencies["cardview-v7"]) {
-        exclude module: 'support-annotations'
-    }
-    api(rootProject.ext.dependencies["design"]) {
+    compile(rootProject.ext.dependencies["design"]) {
         exclude module: 'support-annotations'
         exclude module: 'appcompat-v7'
         exclude module: 'support-v4'
     }
-    api rootProject.ext.dependencies["annotations"]
+    compile rootProject.ext.dependencies["annotations"]
 
     // Network
-    api(rootProject.ext.dependencies["retrofit"]) {
+    compile(rootProject.ext.dependencies["retrofit"]) {
         exclude module: 'okhttp'
         exclude module: 'okio'
     }
-    implementation(rootProject.ext.dependencies["retrofit-converter-gson"]) {
+    compile(rootProject.ext.dependencies["retrofit-converter-gson"]) {
         exclude module: 'gson'
         exclude module: 'okhttp'
         exclude module: 'okio'
         exclude module: 'retrofit'
     }
-    implementation(rootProject.ext.dependencies["retrofit-adapter-rxjava2"]) {
+    compile(rootProject.ext.dependencies["retrofit-adapter-rxjava2"]) {
         exclude module: 'rxjava'
         exclude module: 'okhttp'
         exclude module: 'retrofit'
         exclude module: 'okio'
     }
-    api rootProject.ext.dependencies["okhttp3"]
+    compile rootProject.ext.dependencies["okhttp3"]
 
     // Image
-    api(rootProject.ext.dependencies["glide"]) {
+    compile(rootProject.ext.dependencies["glide"]) {
         exclude module: 'support-v4'
     }
     annotationProcessor(rootProject.ext.dependencies["glide-compiler"]) {
@@ -108,41 +103,38 @@ dependencies {
     }
 
     // Rx
-    api rootProject.ext.dependencies["rxjava2"]
-    api(rootProject.ext.dependencies["rxandroid2"]) {
+    compile rootProject.ext.dependencies["rxjava2"]
+    compile(rootProject.ext.dependencies["rxandroid2"]) {
         exclude module: 'rxjava'
     }
-    api(rootProject.ext.dependencies["rxcache2"]) {
+    compile(rootProject.ext.dependencies["rxcache2"]) {
         exclude module: 'rxjava'
         exclude module: 'dagger'
     }
-    implementation(rootProject.ext.dependencies["rxcache-jolyglot-gson"]) {
+    compile(rootProject.ext.dependencies["rxcache-jolyglot-gson"]) {
         exclude module: 'gson'
     }
-    api(rootProject.ext.dependencies["rxpermissions2"]) {
+    compile(rootProject.ext.dependencies["rxpermissions2"]) {
         exclude module: 'rxjava'
         exclude module: 'support-annotations'
     }
 
     // Tools
-    api(rootProject.ext.dependencies["butterknife"]) {
+    compile(rootProject.ext.dependencies["butterknife"]) {
         exclude module: 'support-annotations'
     }
-    compileOnly rootProject.ext.dependencies["javax.annotation"]
-    api rootProject.ext.dependencies["dagger2"]
-    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
-    api rootProject.ext.dependencies["androideventbus"]
-    api rootProject.ext.dependencies["gson"]
 
-    api rootProject.ext.dependencies["filedownloader"]
+    compile rootProject.ext.dependencies["dagger2"]
+    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
+    compile rootProject.ext.dependencies["androideventbus"]
+    compile rootProject.ext.dependencies["gson"]
+
+    compile rootProject.ext.dependencies["filedownloader"]
 
     // DB
-    api rootProject.ext.dependencies["greendao"]
-    api rootProject.ext.dependencies["sqlcipher"]
+    compile rootProject.ext.dependencies["greendao"]
+    compile rootProject.ext.dependencies["sqlcipher"]
 
     // Log
-    api rootProject.ext.dependencies["logg"]
-
-    // Test
-    testApi rootProject.ext.dependencies["junit"]
+    compile rootProject.ext.dependencies["logg"]
 }
