@@ -11,10 +11,10 @@ android {
     // 解决Android SDK升级至API23，导致原生SDK删除org.apache.http.*类的问题
 //    useLibrary 'org.apache.http.legacy'
 
-    compileOptions {
-        targetCompatibility JavaVersion.VERSION_1_8
-        sourceCompatibility JavaVersion.VERSION_1_8
-    }
+//    compileOptions {
+//        targetCompatibility JavaVersion.VERSION_1_8
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//    }
 
     defaultConfig {
         // 包名
@@ -33,7 +33,7 @@ android {
         renderscriptSupportModeEnabled rootProject.ext.android["renderscriptSupportModeEnabled"]
 
         // 单元测试
-        testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
+//        testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
 
 //        jackOptions {
 //            enabled true
@@ -44,7 +44,7 @@ android {
 //        }
 
         // Enabling MultiDex support.
-//        multiDexEnabled true
+        multiDexEnabled true
     }
 
 //    sourceSets {
@@ -95,8 +95,6 @@ android {
 //        }
 //    }
 
-    flavorDimensions "Frames"
-
     // 多渠道打包
     productFlavors {
         // 默认渠道
@@ -134,12 +132,12 @@ android {
 //            signingConfig signingConfigs.release
 
             // 批量打包
-            applicationVariants.all { variant ->
-                variant.outputs.all {
-                    // 输出名称为：渠道名_版本号.apk
-                    outputFileName = "App_${variant.productFlavors[0].name}_v${variant.versionName}.apk"
-                }
-            }
+//            applicationVariants.all { variant ->
+//                variant.outputs.all {
+//                    // 输出名称为：渠道名_版本号.apk
+//                    outputFileName = "App_${variant.productFlavors[0].name}_v${variant.versionName}.apk"
+//                }
+//            }
         }
     }
 
@@ -155,41 +153,26 @@ android {
 buildscript {
     repositories {
         jcenter()
-        mavenCentral()
-    }
-}
-
-repositories {
-    flatDir {
-        dirs 'libs'
-    }
-    maven {
-        url "https://jitpack.io"
     }
 }
 
 dependencies {
-    // 本地库依赖，包含app/libs目录下的所有jar文件。因此当module想引用某个jar时，只需将jar拷贝到<moduleName>/libs
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // Tools
     annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
         exclude module: 'support-annotations'
     }
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
-    implementation rootProject.ext.dependencies["multidex"]
-
-    // DB
-    implementation rootProject.ext.dependencies["greendao"]
-    implementation rootProject.ext.dependencies["sqlcipher"]
-
-    // Test
-    testImplementation rootProject.ext.dependencies["junit"]
-    debugImplementation rootProject.ext.dependencies["canary-debug"]
-    releaseImplementation rootProject.ext.dependencies["canary-release"]
-    testImplementation rootProject.ext.dependencies["canary-release"]
+    compile rootProject.ext.dependencies["multidex"]
 
     // 引入框架基础共通模块
-    implementation project(':Common')
+    compile project(':Common')
 //    compile 'android.frame:MVPFrames:2.0.0'
+
+    // Test
+    testCompile rootProject.ext.dependencies["junit"]
+    debugCompile rootProject.ext.dependencies["canary-debug"]
+    releaseCompile rootProject.ext.dependencies["canary-release"]
+    testCompile rootProject.ext.dependencies["canary-release"]
 }

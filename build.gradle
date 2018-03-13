@@ -1,15 +1,10 @@
 apply from: "config.gradle"
 
 buildscript {
-    repositories {
-        jcenter()
-        mavenCentral()
-        google()
-    }
 
     // 基础依赖
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:2.3.3'
         // Gradle Android Maven plugin
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
         // Greendao
@@ -18,14 +13,23 @@ buildscript {
         // 以下这段功能是用来上传至代码库，其他项目不用复制这段代码
         classpath 'com.novoda:bintray-release:0.5.0'
     }
+
+    repositories {
+        google()
+        jcenter {
+            url "http://jcenter.bintray.com/"
+        }
+    }
 }
 
 allprojects {
     repositories {
+        google()
         jcenter()
         mavenCentral()
-        maven { url "https://jitpack.io" }
-        maven { url "https://maven.google.com" }
+        maven {
+            url "https://jitpack.io"
+        }
     }
 
     tasks.withType(Javadoc) {

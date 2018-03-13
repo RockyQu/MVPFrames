@@ -5,17 +5,17 @@ ext {
     ]
 
     android = [compileSdkVersion             : 27,
-               buildToolsVersion             : "27.0.3",
+               buildToolsVersion             : "27.0.0",
                minSdkVersion                 : 15,
-               targetSdkVersion              : 27,
-               versionCode                   : 32,
+               targetSdkVersion              : 26,
+               versionCode                   : 36,
                versionName                   : "2.0.0",
                renderscriptTargetApi         : 22,
                renderscriptSupportModeEnabled: true
     ]
 
     version = [
-            androidSupportSdkVersion: "27.0.2",
+            androidSupportSdkVersion: "27.0.0",
             retrofitSdkVersion      : "2.3.0",
             dagger2SdkVersion       : "2.14.1",
             glideSdkVersion         : "4.5.0",
