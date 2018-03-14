@@ -23,6 +23,8 @@ public class HttpUtils extends BaseUtils {
 
     /**
      * 用来解析请求参数，将ParameterBody转成RequestBody
+     *
+     * @return 返回格式化后的参数集
      */
     public static Map<String, RequestBody> body(Map<String, ParameterBody> params) {
         Map<String, RequestBody> requestBodyMap = new HashMap<>();
@@ -42,6 +44,8 @@ public class HttpUtils extends BaseUtils {
 
     /**
      * 用来解析请求参数，将ParameterBody转成Object
+     *
+     * @return 返回格式化后的参数集
      */
     public static Map<String, Object> form(Map<String, ParameterBody> params) {
         Map<String, Object> requestFormMap = new HashMap<>();
