@@ -70,7 +70,7 @@ public class Snacker implements View.OnClickListener {
      * Create Snacker with activity reference
      *
      * @param activity
-     * @return
+     * @return return Snacker
      */
     public static Snacker with(Activity activity) {
         return new Snacker(activity);
@@ -79,7 +79,7 @@ public class Snacker implements View.OnClickListener {
     /**
      * Return activity parent view
      *
-     * @return
+     * @return return Snacker
      */
     private ViewGroup getActivityDecorView() {
         return (ViewGroup) ((Activity) getContext()).getWindow().getDecorView();
@@ -105,7 +105,7 @@ public class Snacker implements View.OnClickListener {
     /**
      * Return Context
      *
-     * @return
+     * @return return Snacker
      */
     private Context getContext() {
         return activityWeakReference.get();
@@ -114,7 +114,7 @@ public class Snacker implements View.OnClickListener {
     /**
      * Return View
      *
-     * @return
+     * @return return Snacker
      */
     private View getLayout() {
         return layoutWeakReference.get();
@@ -124,7 +124,7 @@ public class Snacker implements View.OnClickListener {
      * 设置显示时长
      *
      * @param duration
-     * @return
+     * @return return Snacker
      */
     public Snacker setDuration(int duration) {
         this.duration = duration;
@@ -135,7 +135,7 @@ public class Snacker implements View.OnClickListener {
      * 设置背景颜色
      *
      * @param backgroundColor
-     * @return
+     * @return return Snacker
      */
     public Snacker setBackgroundColor(int backgroundColor) {
         this.backgroundColor = backgroundColor;
@@ -146,7 +146,7 @@ public class Snacker implements View.OnClickListener {
      * 设置提示框高度
      *
      * @param height
-     * @return
+     * @return return Snacker
      */
     public Snacker setHeight(int height) {
         this.height = height;
@@ -157,7 +157,7 @@ public class Snacker implements View.OnClickListener {
      * 设置左侧图标
      *
      * @param icon
-     * @return
+     * @return return Snacker
      */
     public Snacker setIcon(int icon) {
         this.icon = icon;
@@ -168,7 +168,7 @@ public class Snacker implements View.OnClickListener {
      * 设置左侧图标
      *
      * @param iconDrawable
-     * @return
+     * @return return Snacker
      */
     public Snacker setIconDrawable(Drawable iconDrawable) {
         this.iconDrawable = iconDrawable;
@@ -179,7 +179,7 @@ public class Snacker implements View.OnClickListener {
      * 设置图标颜色
      *
      * @param iconColorFilterColor
-     * @return
+     * @return return Snacker
      */
     public Snacker setIconColorFilterColor(int iconColorFilterColor) {
         this.iconColorFilterColor = iconColorFilterColor;
@@ -190,7 +190,7 @@ public class Snacker implements View.OnClickListener {
      * 设置图标尺寸
      *
      * @param iconSize
-     * @return
+     * @return return Snacker
      */
     public Snacker setIconSize(int iconSize) {
         this.iconSize = iconSize;
@@ -201,7 +201,7 @@ public class Snacker implements View.OnClickListener {
      * 设置提示框文字颜色
      *
      * @param messageColor
-     * @return
+     * @return return Snacker
      */
     public Snacker setMessageColor(int messageColor) {
         this.messageColor = messageColor;
@@ -212,7 +212,7 @@ public class Snacker implements View.OnClickListener {
      * 设置ToastBar点击事件
      *
      * @param onToastBarClickListener
-     * @return
+     * @return return Snacker
      */
     public Snacker setOnToastBarClickListener(OnToastBarClickListener onToastBarClickListener) {
         this.onToastBarClickListener = onToastBarClickListener;
@@ -222,7 +222,7 @@ public class Snacker implements View.OnClickListener {
     /**
      * 成功
      *
-     * @return
+     * @return return Snacker
      */
     public Snacker success() {
         this.backgroundColor = Color.parseColor("#2bb600");
@@ -237,7 +237,7 @@ public class Snacker implements View.OnClickListener {
     /**
      * 警告
      *
-     * @return
+     * @return return Snacker
      */
     public Snacker warning() {
         this.backgroundColor = Color.parseColor("#ffc100");
@@ -252,7 +252,7 @@ public class Snacker implements View.OnClickListener {
     /**
      * 错误
      *
-     * @return
+     * @return return Snacker
      */
     public Snacker error() {
         this.backgroundColor = Color.parseColor("#ff0000");
@@ -268,7 +268,7 @@ public class Snacker implements View.OnClickListener {
      * 设置提示信息文字，默认为 {@link Snacker#success()} 类型
      *
      * @param message
-     * @return
+     * @return return Snacker
      * @see #success() 成功
      * @see #warning() 警告
      * @see #error() 错误
@@ -281,7 +281,7 @@ public class Snacker implements View.OnClickListener {
     /**
      * 显示提示框，请在最后调用
      *
-     * @return
+     * @return return Snacker
      */
     public Snacker show() {
         if (getContext() != null) {
@@ -406,7 +406,7 @@ public class Snacker implements View.OnClickListener {
     /**
      * Returns status bar height.
      *
-     * @return
+     * @return return to the status bar height.
      */
     private int getStatusBarHeight() {
         Rect rectangle = new Rect();

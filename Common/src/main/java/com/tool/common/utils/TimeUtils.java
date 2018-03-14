@@ -27,7 +27,7 @@ public class TimeUtils extends BaseUtils {
      *
      * @param timeInMillis
      * @param dateFormat
-     * @return
+     * @return 格式化后的时间
      */
     public static String getTime(long timeInMillis, SimpleDateFormat dateFormat) {
         return dateFormat.format(new Date(timeInMillis));
@@ -37,7 +37,7 @@ public class TimeUtils extends BaseUtils {
      * long time to string, format is {@link #DEFAULT_DATE_FORMAT}
      *
      * @param timeInMillis
-     * @return
+     * @return 格式化后的时间
      */
     public static String getTime(long timeInMillis) {
         return getTime(timeInMillis, DEFAULT_DATE_FORMAT);
@@ -46,7 +46,7 @@ public class TimeUtils extends BaseUtils {
     /**
      * get current time in milliseconds
      *
-     * @return
+     * @return the difference, measured in milliseconds, between the current time and midnight, January 1, 1970 UTC.
      */
     public static long getCurrentTimeInLong() {
         return System.currentTimeMillis();
@@ -55,7 +55,7 @@ public class TimeUtils extends BaseUtils {
     /**
      * get current time in milliseconds, format is {@link #DEFAULT_DATE_FORMAT}
      *
-     * @return
+     * @return 格式化后的当前时间
      */
     public static String getCurrentTimeInString() {
         return getTime(getCurrentTimeInLong());
@@ -64,7 +64,7 @@ public class TimeUtils extends BaseUtils {
     /**
      * get current time in milliseconds
      *
-     * @return
+     * @return String
      */
     public static String getCurrentTimeInString(SimpleDateFormat dateFormat) {
         return getTime(getCurrentTimeInLong(), dateFormat);

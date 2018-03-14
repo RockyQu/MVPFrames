@@ -27,7 +27,7 @@ public class ZipUtils extends BaseUtils {
      * zlib decompress 2 String
      *
      * @param bytesToDecompress
-     * @return
+     * @return String
      */
     public static String decompressToStringForZlib(byte[] bytesToDecompress) {
         byte[] bytesDecompressed = decompressForZlib(bytesToDecompress);
@@ -45,7 +45,7 @@ public class ZipUtils extends BaseUtils {
      * zlib decompress 2 byte
      *
      * @param bytesToDecompress
-     * @return
+     * @return byte
      */
     public static byte[] decompressForZlib(byte[] bytesToDecompress) {
         byte[] returnValues = null;
@@ -60,10 +60,10 @@ public class ZipUtils extends BaseUtils {
         int bufferSizeInBytes = numberOfBytesToDecompress;
 
         int numberOfBytesDecompressedSoFar = 0;
-        List<Byte> bytesDecompressedSoFar = new ArrayList<Byte>();
+        List<Byte> bytesDecompressedSoFar = new ArrayList<>();
 
         try {
-            while (inflater.needsInput() == false) {
+            while (!inflater.needsInput()) {
                 byte[] bytesDecompressedBuffer = new byte[bufferSizeInBytes];
 
                 int numberOfBytesDecompressedThisTime = inflater.inflate(bytesDecompressedBuffer);
@@ -93,7 +93,7 @@ public class ZipUtils extends BaseUtils {
      * zlib compress 2 byte
      *
      * @param bytesToCompress
-     * @return
+     * @return byte
      */
     public static byte[] compressForZlib(byte[] bytesToCompress) {
         Deflater deflater = new Deflater();
@@ -115,7 +115,7 @@ public class ZipUtils extends BaseUtils {
      * zlib compress 2 byte
      *
      * @param stringToCompress
-     * @return
+     * @return byte
      */
     public static byte[] compressForZlib(String stringToCompress) {
         byte[] returnValues = null;
@@ -133,8 +133,7 @@ public class ZipUtils extends BaseUtils {
      * gzip compress 2 byte
      *
      * @param string
-     * @return
-     * @throws IOException
+     * @return byte
      */
     public static byte[] compressForGzip(String string) {
         ByteArrayOutputStream os = null;
@@ -158,7 +157,7 @@ public class ZipUtils extends BaseUtils {
      * gzip decompress 2 string
      *
      * @param compressed
-     * @return
+     * @return String
      * @throws IOException
      */
     public static String decompressForGzip(byte[] compressed) {

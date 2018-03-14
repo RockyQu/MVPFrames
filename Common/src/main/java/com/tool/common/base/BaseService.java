@@ -52,7 +52,7 @@ public abstract class BaseService extends Service {
     /**
      * 使用eventBus
      *
-     * @return
+     * @return Whether to use EventBus.
      */
     protected boolean useEventBus() {
         return true;

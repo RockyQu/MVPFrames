@@ -167,8 +167,8 @@ dependencies {
     compile rootProject.ext.dependencies["multidex"]
 
     // 引入框架基础共通模块
-    compile project(':Common')
-//    compile 'android.frame:MVPFrames:2.0.0'
+//    compile project(':Common')
+    compile 'android.frame:MVPFrames:2.0.1'
 
     // Test
     testCompile rootProject.ext.dependencies["junit"]
