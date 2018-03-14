@@ -10,7 +10,7 @@
 ## Download
 Gradle:
 ```
-compile 'android.frame:MVPFrames:2.0.0'
+compile 'android.frame:MVPFrames:2.0.1'
 ```
 
 ## Libraries
