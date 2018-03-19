@@ -5,5 +5,5 @@ package com.frame.mvp.app.api;
  */
 public interface Api {
 
-    String APP_DOMAIN = "https://www.baidu.com/";
+    String APP_DOMAIN = "https://api.shaimobao.com/";
 }

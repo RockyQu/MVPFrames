@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:icon="@drawable/ic_navigation_tab1_checked"
-        android:title="Tab"/>
+        android:icon="@drawable/ic_navigation_main_checked"
+        android:title="首页"/>
 
     <item
-        android:icon="@drawable/ic_navigation_tab2_checked"
-        android:title="Tab"/>
+        android:icon="@drawable/ic_navigation_rx_checked"
+        android:title="Rx"/>
 
     <item
         android:icon="@drawable/ic_navigation_tab3_checked"

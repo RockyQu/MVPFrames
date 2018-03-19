@@ -61,6 +61,10 @@ public class NetworkPresenter extends BaseSimplePresenter<NetworkRepository> {
         });
     }
 
+    public void rxLogin(final Message msg, String username, String password) {
+
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

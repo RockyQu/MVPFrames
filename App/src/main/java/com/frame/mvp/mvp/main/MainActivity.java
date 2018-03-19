@@ -45,7 +45,7 @@ public class MainActivity extends BaseSimpleActivity<MainPresenter> implements I
         bottomNavigation.setDefaultBackgroundColor(ContextCompat.getColor(this, R.color.main_color));
 
         // 隐藏导航栏标题
-        bottomNavigation.setTitleState(BottomNavigation.TitleState.ALWAYS_SHOW);
+        bottomNavigation.setTitleState(BottomNavigation.TitleState.ALWAYS_HIDE);
 
         // 导航点击事件
         bottomNavigation.setOnTabSelectedListener(new BottomNavigation.OnTabSelectedListener() {
