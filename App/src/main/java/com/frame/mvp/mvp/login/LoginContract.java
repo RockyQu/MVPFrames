@@ -7,14 +7,10 @@ import com.tool.common.http.ResponseEntity;
 
 import retrofit2.Call;
 
-/**
- * 定义Model、View的接口
- */
 public interface LoginContract {
 
     interface Model extends IModel{
         Call<ResponseEntity<User>> login(String name, String password);
-        Call<ResponseEntity<User>> test();
     }
 
     interface View extends IView {

@@ -51,7 +51,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
             // 登录
             presenter.login(edtAccount.getText().toString().trim(), edtPassword.getText().toString().trim());
-//            presenter.test();
         }
     }
 

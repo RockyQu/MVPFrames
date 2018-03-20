@@ -54,7 +54,7 @@ public class MainActivity extends BaseSimpleActivity<MainPresenter> implements I
 
                 viewPager.setCurrentItem(position, false);
 
-                Snacker.with(MainActivity.this).setMessage("Success").warning().show();
+                Snacker.with(MainActivity.this).setMessage("警告").warning().show();
 
                 Toaster.with(MainActivity.this).setMessage("上传成功").show();
                 return true;
@@ -97,20 +97,20 @@ public class MainActivity extends BaseSimpleActivity<MainPresenter> implements I
 //                })
 //                .start();
 
-        RxPermissions rxPermissions = new RxPermissions(this);
-        PermissionUtils.location(new PermissionUtils.RequestPermission() {
-
-            @Override
-            public void onRequestPermissionSuccess() {
-
-            }
-
-            @Override
-            public void onRequestPermissionFailure() {
-                // 如果失败跳到到应用设置页面
-                AppUtils.applicationDetailsSettings(MainActivity.this);
-            }
-        }, rxPermissions);
+//        RxPermissions rxPermissions = new RxPermissions(this);
+//        PermissionUtils.location(new PermissionUtils.RequestPermission() {
+//
+//            @Override
+//            public void onRequestPermissionSuccess() {
+//
+//            }
+//
+//            @Override
+//            public void onRequestPermissionFailure() {
+//                // 如果失败跳到到应用设置页面
+//                AppUtils.applicationDetailsSettings(MainActivity.this);
+//            }
+//        }, rxPermissions);
     }
 
     @Override

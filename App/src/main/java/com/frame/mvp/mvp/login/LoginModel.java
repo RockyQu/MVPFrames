@@ -11,9 +11,6 @@ import javax.inject.Inject;
 
 import retrofit2.Call;
 
-/**
- * LoginModel
- */
 @ActivityScope
 public class LoginModel extends BaseModel implements LoginContract.Model {
 
@@ -25,10 +22,5 @@ public class LoginModel extends BaseModel implements LoginContract.Model {
     @Override
     public Call<ResponseEntity<User>> login(String name, String password) {
         return repositoryManager.obtainApiService(ApiUser.class).login(name, password);
-    }
-
-    @Override
-    public Call<ResponseEntity<User>> test() {
-        return repositoryManager.obtainApiService(ApiUser.class).test();
     }
 }

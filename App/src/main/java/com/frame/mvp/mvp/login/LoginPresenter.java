@@ -16,9 +16,6 @@ import javax.inject.Inject;
 
 import retrofit2.Call;
 
-/**
- * LoginPresenter
- */
 @ActivityScope
 public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginContract.View> {
 
@@ -56,28 +53,6 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
                     application.getAppComponent().extras().put(LoginActivity.class.getName(), user);
                     view.finishActivity();
                 }
-            }
-
-            @Override
-            protected void onFailure(ApiException exception) {
-                view.showMessage(0, exception.getMessage());
-            }
-
-            @Override
-            protected void onFinish(boolean isCanceled) {
-                view.hideLoading();
-            }
-        });
-    }
-
-    public void test() {
-        view.showLoading();
-        user = model.test();
-        user.enqueue(new ResponseCallback<ResponseEntity<User>>() {
-
-            @Override
-            protected void onResponse(ResponseEntity<User> body) {
-
             }
 
             @Override
