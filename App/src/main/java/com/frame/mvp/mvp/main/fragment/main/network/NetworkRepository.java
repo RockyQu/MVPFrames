@@ -1,4 +1,4 @@
-package com.frame.mvp.mvp.main.fragment.tab1.network;
+package com.frame.mvp.mvp.main.fragment.main.network;
 
 import com.frame.mvp.app.api.service.ApiNetwork;
 import com.frame.mvp.entity.User;

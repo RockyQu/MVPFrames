@@ -1,7 +1,6 @@
-package com.frame.mvp.mvp.main.fragment.tab1.network;
+package com.frame.mvp.mvp.main.fragment.main.network;
 
 import com.frame.mvp.entity.User;
-import com.frame.mvp.mvp.main.fragment.tab4.Tab4FragmentRepository;
 import com.tool.common.di.component.AppComponent;
 import com.tool.common.frame.simple.BaseSimplePresenter;
 import com.tool.common.frame.simple.Message;

@@ -1,4 +1,4 @@
-package com.frame.mvp.mvp.main.fragment.tab1;
+package com.frame.mvp.mvp.main.fragment.main;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +9,7 @@ import com.tool.common.frame.IPresenter;
 /**
  *
  */
-public class Tab1Fragment extends BaseSimpleFragment {
+public class MainFragment extends BaseSimpleFragment {
 
     /**
      * Create Fragment
@@ -17,7 +17,7 @@ public class Tab1Fragment extends BaseSimpleFragment {
      * @return
      */
     public static Fragment create(int index) {
-        Tab1Fragment fragment = new Tab1Fragment();
+        MainFragment fragment = new MainFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
@@ -35,6 +35,6 @@ public class Tab1Fragment extends BaseSimpleFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_tab1;
+        return R.layout.fragment_main;
     }
 }
