@@ -3,9 +3,6 @@ package com.frame.mvp.mvp.main;
 import com.tool.common.di.component.AppComponent;
 import com.tool.common.frame.simple.BaseSimplePresenter;
 
-/**
- * MainPresenter
- */
 public class MainPresenter extends BaseSimplePresenter<MainRepository> {
 
     // AppComponent
