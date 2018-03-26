@@ -1,17 +1,14 @@
 package com.frame.mvp.mvp.login;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.frame.mvp.R;
-import com.frame.mvp.di.login.DaggerLoginComponent;
-import com.frame.mvp.di.login.LoginModule;
 import com.frame.mvp.entity.User;
-import com.tool.common.base.BaseActivity;
-import com.tool.common.di.component.AppComponent;
-import com.tool.common.widget.Snacker;
+import com.tool.common.base.simple.base.BaseSimpleActivity;
+import com.tool.common.frame.simple.ISimpleView;
+import com.tool.common.frame.simple.Message;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -19,7 +16,7 @@ import butterknife.OnClick;
 /**
  * 登录页面
  */
-public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
+public class LoginActivity extends BaseSimpleActivity<LoginPresenter> implements ISimpleView {
 
     // 账号
     @BindView(R.id.edt_account)
@@ -50,18 +47,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         if (inputCheck(R.id.btn_submit)) {
 
             // 登录
-            presenter.login(edtAccount.getText().toString().trim(), edtPassword.getText().toString().trim());
+            presenter.login(Message.obtain(this), edtAccount.getText().toString().trim(), edtPassword.getText().toString().trim());
         }
-    }
-
-    @Override
-    public void setupActivityComponent(AppComponent component) {
-        DaggerLoginComponent
-                .builder()
-                .appComponent(component)
-                .loginModule(new LoginModule(this))
-                .build()
-                .inject(this);
     }
 
     /**
@@ -105,38 +92,31 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void showLoading() {
-        setViewStatus(btnSubmit, false, "登录中");
+
     }
 
     @Override
     public void hideLoading() {
-        setViewStatus(btnSubmit, true, "登   录");
+
     }
 
     @Override
     public void showMessage(int type, String message) {
-        Snacker.with(LoginActivity.this).setMessage(message).show();
+
     }
 
     @Override
-    public void launchActivity(Intent intent) {
-        setResult(0, intent);
-        finish();
+    public void handleMessage(Message message) {
+
     }
 
     @Override
-    public void finishActivity() {
-
+    public LoginPresenter obtainPresenter() {
+        return new LoginPresenter(component);
     }
 
     @Override
     public int getLayoutId() {
         return R.layout.activity_login;
-    }
-
-    @Override
-    public void onBackPressed() {
-        finishActivity();
-        super.onBackPressed();
     }
 }

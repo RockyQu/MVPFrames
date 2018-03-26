@@ -1,4 +1,4 @@
-package com.frame.mvp.mvp.main.fragment.main.network;
+package com.frame.mvp.mvp.login;
 
 import com.frame.mvp.app.api.service.ApiNetwork;
 import com.frame.mvp.entity.User;
@@ -8,14 +8,11 @@ import com.tool.common.integration.IRepositoryManager;
 
 import retrofit2.Call;
 
-/**
- * Repository
- */
-public class NetworkRepository implements IModel {
+public class LoginRepository implements IModel {
 
     private IRepositoryManager iRepositoryManager;
 
-    public NetworkRepository(IRepositoryManager iRepositoryManager) {
+    public LoginRepository(IRepositoryManager iRepositoryManager) {
         this.iRepositoryManager = iRepositoryManager;
     }
 

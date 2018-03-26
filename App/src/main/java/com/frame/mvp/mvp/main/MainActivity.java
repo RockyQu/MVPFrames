@@ -114,13 +114,6 @@ public class MainActivity extends BaseSimpleActivity<MainPresenter> implements I
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-    public static final int REQUEST_LOCATION_PERMISSION = 1;
-
-    @Override
     public void showLoading() {
 
     }

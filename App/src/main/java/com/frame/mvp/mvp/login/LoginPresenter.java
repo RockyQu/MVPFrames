@@ -1,40 +1,36 @@
 package com.frame.mvp.mvp.login;
 
-import android.app.Application;
-
-import com.frame.mvp.app.MVPApplication;
 import com.frame.mvp.entity.User;
-import com.tool.common.di.scope.ActivityScope;
-import com.tool.common.frame.BasePresenter;
+import com.tool.common.di.component.AppComponent;
+import com.tool.common.frame.simple.BaseSimplePresenter;
+import com.tool.common.frame.simple.Message;
 import com.tool.common.http.ResponseCallback;
 import com.tool.common.http.ResponseEntity;
 import com.tool.common.http.exception.ApiException;
-import com.tool.common.utils.GsonUtils;
-import com.tool.common.utils.PreferencesUtils;
-
-import javax.inject.Inject;
 
 import retrofit2.Call;
 
-@ActivityScope
-public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginContract.View> {
+public class LoginPresenter extends BaseSimplePresenter<LoginRepository> {
 
-    // Application
-    private MVPApplication application;
+    private AppComponent component;
 
-    // Login User
-    private Call<ResponseEntity<User>> user;
+    private Call<ResponseEntity<User>> login = null;
 
-    @Inject
-    public LoginPresenter(Application application, LoginContract.Model model, LoginContract.View view) {
-        super(model, view);
-        this.application = (MVPApplication) application;
+    public static final int FLAG_LOGIN = 1;
+
+    public LoginPresenter(AppComponent component) {
+        super(component.getRepositoryManager().createRepository(LoginRepository.class));
+
+        this.component = component;
     }
 
-    public void login(final String account, final String password) {
-        view.showLoading();
-        user = model.login(account, password);
-        user.enqueue(new ResponseCallback<ResponseEntity<User>>() {
+    public void login(final Message msg, final String account, final String password) {
+        // 回调至实现了ISimpleView接口的showLoading方法，用来显示显示等待框
+        msg.getTarget().showLoading();
+
+        // 准备接口开始调用接口请求数据
+        login = model.login(account, password);
+        login.enqueue(new ResponseCallback<ResponseEntity<User>>() {
 
             @Override
             protected void onResponse(ResponseEntity<User> body) {
@@ -43,26 +39,18 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
                     user.setAccount(account);
                     user.setPassword(password);
 
-                    String value = GsonUtils.getString(user);
-                    if (value != null) {
-                        PreferencesUtils.putString(application, LoginActivity.class.getName(), value);
-
-                        view.showMessage(0, body.getMessage());
-                    }
-
-                    application.getAppComponent().extras().put(LoginActivity.class.getName(), user);
-                    view.finishActivity();
+                    msg.getTarget().showMessage(0, body.getMessage());
                 }
             }
 
             @Override
             protected void onFailure(ApiException exception) {
-                view.showMessage(0, exception.getMessage());
+                msg.getTarget().showMessage(0, exception.getMessage());
             }
 
             @Override
             protected void onFinish(boolean isCanceled) {
-                view.hideLoading();
+                msg.getTarget().hideLoading();
             }
         });
     }
@@ -71,8 +59,8 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
     public void onDestroy() {
         super.onDestroy();
 
-        if (user != null) {
-            user.cancel();
+        if (login != null) {
+            login.cancel();
         }
     }
 }
