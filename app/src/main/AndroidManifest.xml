@@ -58,11 +58,6 @@
             android:name=".mvp.login.LoginActivity"
             android:screenOrientation="portrait" />
 
-        <!-- Network example -->
-        <activity
-            android:name=".mvp.main.fragment.main.network.NetworkActivity"
-            android:screenOrientation="portrait" />
-
         <!-- 渠道配置 -->
         <meta-data
             android:name="Channel"
