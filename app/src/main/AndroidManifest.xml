@@ -78,7 +78,7 @@
         <!-- 适配7.0以上版本的拍照 -->
         <!-- <provider -->
         <!-- android:name="android.support.v4.content.FileProvider" -->
-        <!-- android:authorities="com.ld.hmdl.fileprovider" -->
+        <!-- android:authorities="com.frame.mvp.fileprovider" -->
         <!-- android:exported="false" -->
         <!-- android:grantUriPermissions="true"> -->
         <!-- <meta-data -->
