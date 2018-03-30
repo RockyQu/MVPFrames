@@ -75,19 +75,19 @@ android {
     }
 
     // 签名
-//    signingConfigs {
-//        debug {
-//            v2SigningEnabled false
-//        }
-//        release {
-//            // storeFile file("../Project-Frame-MVP/APP/keystore/mvp.keystore")
-//            // storePassword ""
-//            // keyAlias ""
-//            // keyPassword ""
-//            // 禁用v2签名增强模式
-//            v2SigningEnabled false
-//        }
-//    }
+    signingConfigs {
+        debug {
+            v2SigningEnabled false
+        }
+        release {
+            // storeFile file("../Project-Frame-MVP/APP/keystore/mvp.keystore")
+            // storePassword ""
+            // keyAlias ""
+            // keyPassword ""
+            // 禁用v2签名增强模式
+            v2SigningEnabled false
+        }
+    }
 
 //    sourceSets {
 //        main {
