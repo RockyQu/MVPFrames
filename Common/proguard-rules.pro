@@ -1,5 +1,9 @@
 ####################################################################################################
 #
+# 如添加混淆请将此文件里所有内容移动到 APP 的 proguard-rules.pro 文件下
+#
+####################################################################################################
+#
 # 基本混淆指令
 #
 ####################################################################################################
@@ -198,11 +202,9 @@
 -keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
 
 # Retrofit2
--keepattributes Signature
--keepclassmembernames,allowobfuscation interface * {
-    @retrofit2.http.* <methods>;
-}
--dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Exceptions
 
 # Butterknife
 -keep public class * implements butterknife.Unbinder { public <init>(**, android.view.View); }
@@ -393,7 +395,3 @@ public static java.lang.String TABLENAME;
 -keep class com.autonavi.**{*;}
 
 # 其他
--keep class com.frame.mvp.** { *; }
--keep class com.location.** { *; }
--keep class com.views.** { *; }
--keep class com.tool.camera.** { *; }
