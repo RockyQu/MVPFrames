@@ -135,17 +135,18 @@ android {
 //            signingConfig signingConfigs.release
 
             // 批量打包
-//            android.applicationVariants.all { variant ->
-//                variant.outputs.all {
-//                    if (variant.name.endsWith("Debug")) {
-//                        //debug包
-//                        outputFileName = "$applicationId _v${defaultConfig.versionName}_${debugTime()}_code${defaultConfig.versionCode}_debug.apk"
-//                    } else {
-//                        //release包
-//                        outputFileName = "$applicationId _v${defaultConfig.versionName}_code${defaultConfig.versionCode}_${releaseTime()}_release.apk"
-//                    }
-//                }
-//            }
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    def time = new Date().format("yyyy-MM-dd-HH-mm", TimeZone.getDefault())
+                    if (variant.name.endsWith("Debug")) {
+                        // Debug包
+                        outputFileName = "$applicationId _v${defaultConfig.versionName}_${time}_code${defaultConfig.versionCode}_debug.apk"
+                    } else {
+                        // Release包
+                        outputFileName = "$applicationId _v${defaultConfig.versionName}_code${defaultConfig.versionCode}_${time}_release.apk"
+                    }
+                }
+            }
         }
     }
 
