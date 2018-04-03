@@ -126,7 +126,7 @@ android {
             // 是否支持jni调试
             jniDebuggable false
             // 是否进行混淆
-            minifyEnabled true
+            minifyEnabled false
             // 移除无用资源 如发生Resources$NotFoundException: Resource ID #0x4 错误可关闭此功能
             shrinkResources false
             // 混淆文件位置，其中proguard-android.txt为默认的混淆配置，proguard-rules.pro为模块额外的混淆配置
@@ -139,11 +139,11 @@ android {
                 variant.outputs.all {
                     def time = new Date().format("yyyy-MM-dd-HH-mm", TimeZone.getDefault())
                     if (variant.name.endsWith("Debug")) {
-                        // Debug包
-                        outputFileName = "$applicationId _v${defaultConfig.versionName}_${time}_code${defaultConfig.versionCode}_debug.apk"
+                        // Debug
+                        outputFileName = "App_${variant.productFlavors[0].name}_v${defaultConfig.versionName}_${time}_debug.apk"
                     } else {
-                        // Release包
-                        outputFileName = "$applicationId _v${defaultConfig.versionName}_code${defaultConfig.versionCode}_${time}_release.apk"
+                        // Release
+                        outputFileName = "App_${variant.productFlavors[0].name}_v${defaultConfig.versionName}_${time}_release.apk"
                     }
                 }
             }
