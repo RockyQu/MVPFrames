@@ -23,6 +23,15 @@ compile 'android.frame:MVPFrames:2.0.3'
 ## History
 [UpdateLog](https://github.com/DesignQu/MVPFrames/releases)   
 
+## Proguard
+```
+-keep public class * implements com.tool.common.integration.ConfigModule
+-keep class * implements com.tool.common.frame.IModel {
+    <methods>;
+    <fields>;
+}
+```
+       
 ## Feedback
 * Project  [Submit Bug or Idea](https://github.com/DesignQu/MVPFrames/issues)   
 
