@@ -38,10 +38,11 @@ android {
 //        jackOptions {
 //            enabled true
 //        }
-//        ndk {
-//            // 设置支持的SO库架构
-//            abiFilters "armeabi", "armeabi-v7a"
-//        }
+
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters "armeabi"
+        }
 
         // Enabling MultiDex support.
         multiDexEnabled true
@@ -125,7 +126,7 @@ android {
             // 是否支持jni调试
             jniDebuggable false
             // 是否进行混淆
-            minifyEnabled false
+            minifyEnabled true
             // 移除无用资源 如发生Resources$NotFoundException: Resource ID #0x4 错误可关闭此功能
             shrinkResources false
             // 混淆文件位置，其中proguard-android.txt为默认的混淆配置，proguard-rules.pro为模块额外的混淆配置

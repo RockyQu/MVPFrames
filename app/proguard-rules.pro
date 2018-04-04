@@ -55,24 +55,24 @@
 # 所有重新命名的包都重新打包，并把所有的类移动到所给定的包下面。如果没有指定 packagename，那么所有的类都会被移动到根目录下
 # 如果需要从目录中读取资源文件，移动包的位置可能会导致异常，谨慎使用
 # you.package.path 请改成你自己的项目路径
-#-flatternpackagehierarchy
+#-flatternpackagehierarchy you.package.path
 
 # 所有重新命名过的类都重新打包，并把他们移动到指定的packagename目录下。如果没有指定 packagename，同样把他们放到根目录下面。
 # 这项配置会覆盖-flatternpackagehierarchy的配置。它可以代码体积更小，并且更加难以理解。
 # you.package.path 请改成你自己的项目路径
-#-repackageclasses you.package.path
+-repackageclasses
 
 # 指定一个文本文件用来生成混淆后的名字。默认情况下，混淆后的名字一般为 a、b、c 这种。
 # 通过使用配置的字典文件，可以使用一些非英文字符做为类名。成员变量名、方法名。字典文件中的空格，标点符号，重复的词，还有以'#'开头的行都会被忽略。
 # 需要注意的是添加了字典并不会显著提高混淆的效果，只不过是更不利与人类的阅读。正常的编译器会自动处理他们，并且输出出来的jar包也可以轻易的换个字典再重新混淆一次。
 # 最有用的做法一般是选择已经在类文件中存在的字符串做字典，这样可以稍微压缩包的体积。
 # 查找了字典文件的格式：一行一个单词，空行忽略，重复忽略
-#-obfuscationdictionary
+-obfuscationdictionary proguard-dictionary.txt
 
 # 指定一个混淆类名的字典，字典格式与 -obfuscationdictionary 相同
-#-classobfuscationdictionary
+-classobfuscationdictionary proguard-dictionary.txt
 # 指定一个混淆包名的字典，字典格式与 -obfuscationdictionary 相同
-#-packageobfuscationdictionary
+-packageobfuscationdictionary proguard-dictionary.txt
 
 # 混淆的时候大量使用重载，多个方法名使用同一个混淆名，但是他们的方法签名不同。这可以使包的体积减小一部分，也可以加大理解的难度。仅在混淆阶段有效。
 # 这个参数在 JDK 版本上有一定的限制，可能会导致一些未知的错误，谨慎使用
