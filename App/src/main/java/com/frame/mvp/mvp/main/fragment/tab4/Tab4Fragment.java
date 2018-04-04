@@ -5,13 +5,12 @@ import android.support.v4.app.Fragment;
 
 import com.frame.mvp.R;
 import com.tool.common.base.simple.base.BaseSimpleFragment;
-import com.tool.common.frame.simple.ISimpleView;
-import com.tool.common.frame.simple.Message;
+import com.tool.common.frame.IPresenter;
 
 /**
  *
  */
-public class Tab4Fragment extends BaseSimpleFragment<Tab4FragmentPresenter> implements ISimpleView {
+public class Tab4Fragment extends BaseSimpleFragment {
 
     /**
      * Create Fragment
@@ -31,28 +30,8 @@ public class Tab4Fragment extends BaseSimpleFragment<Tab4FragmentPresenter> impl
     }
 
     @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void showMessage(int type, String message) {
-
-    }
-
-    @Override
-    public void handleMessage(Message message) {
-
-    }
-
-    @Override
-    public Tab4FragmentPresenter obtainPresenter() {
-        return new Tab4FragmentPresenter(component);
+    public IPresenter obtainPresenter() {
+        return null;
     }
 
     @Override

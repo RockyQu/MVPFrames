@@ -112,8 +112,7 @@ android {
         debug {
             buildConfigField "boolean", "DEBUG_FLAG", "true"
 
-            minifyEnabled false
-
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
@@ -176,8 +175,8 @@ dependencies {
     api rootProject.ext.dependencies["multidex"]
 
     // 引入框架基础共通模块
-//    api project(':Common')
-    api 'android.frame:MVPFrames:2.0.3'
+    api project(':Common')
+//    api 'android.frame:MVPFrames:2.0.3'
 
     // Test
     testCompile rootProject.ext.dependencies["junit"]

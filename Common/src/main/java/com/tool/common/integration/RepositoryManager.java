@@ -72,19 +72,6 @@ public class RepositoryManager implements IRepositoryManager {
         return repositoryInstance;
     }
 
-    private static Constructor<? extends IModel> findConstructorForClass(Class<?> cls) {
-        Constructor<? extends IModel> bindingCtor;
-        String clsName = cls.getName();
-        try {
-            // noinspection unchecked
-            bindingCtor = (Constructor<? extends IModel>) cls.getConstructor(IRepositoryManager.class);
-
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException("Unable to find constructor for " + clsName, e);
-        }
-        return bindingCtor;
-    }
-
     /**
      * 根据传入的Class获取对应的Retrift service
      *
@@ -123,6 +110,19 @@ public class RepositoryManager implements IRepositoryManager {
             }
         }
         return cacheService;
+    }
+
+    private Constructor<? extends IModel> findConstructorForClass(Class<?> cls) {
+        Constructor<? extends IModel> bindingCtor;
+        String clsName = cls.getName();
+        try {
+            // noinspection unchecked
+            bindingCtor = (Constructor<? extends IModel>) cls.getConstructor(IRepositoryManager.class);
+
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException("Unable to find constructor for " + clsName, e);
+        }
+        return bindingCtor;
     }
 
     /**
