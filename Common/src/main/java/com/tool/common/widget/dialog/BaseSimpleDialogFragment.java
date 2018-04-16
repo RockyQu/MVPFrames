@@ -22,6 +22,8 @@ import butterknife.Unbinder;
 
 /**
  * 使用 BaseSimpleDialogFragment 自定义自己需要的对话框
+ *
+ * @see <a href="https://github.com/RockyQu/MVPFrames/blob/rx/Common/src/main/java/com/tool/common/widget/dialog/BaseSimpleDialogFragment.java"></a>
  */
 public abstract class BaseSimpleDialogFragment extends DialogFragment {
 
