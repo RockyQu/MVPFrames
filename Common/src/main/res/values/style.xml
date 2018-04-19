@@ -10,8 +10,8 @@
     </style>
 
     <style name="DialogEmptyAnimation" parent="android:Animation">
-        <item name="@android:windowEnterAnimation">@null</item>
-        <item name="@android:windowExitAnimation">@null</item>
+        <item name="android:windowEnterAnimation">@anim/default_dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/default_dialog_out</item>
     </style>
 
 </resources>

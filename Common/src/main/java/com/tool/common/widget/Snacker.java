@@ -296,7 +296,7 @@ public class Snacker implements View.OnClickListener {
      */
     private void hide() {
         if (getLayout() != null) {
-            getLayout().startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.popup_hide));
+            getLayout().startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.snacker_hide));
             getActivityDecorView().removeView(getLayout());
         }
     }
@@ -374,7 +374,7 @@ public class Snacker implements View.OnClickListener {
         layout.setOnClickListener(this);
         viewGroup.addView(layout);
 
-        layout.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.popup_show));
+        layout.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.snacker_show));
 
         Handler handler = new Handler();
         handler.removeCallbacks(null);
@@ -433,7 +433,7 @@ public class Snacker implements View.OnClickListener {
         if (onToastBarClickListener != null) {
             onToastBarClickListener.onClick(view);
         }
-        getLayout().startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.popup_hide));
+        getLayout().startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.snacker_hide));
         getActivityDecorView().removeView(getLayout());
     }
 
