@@ -366,7 +366,7 @@ public class Snacker implements View.OnClickListener {
         }
 
         layout.addView(textLayout);
-        layout.setId(R.id.ToastBar);
+        layout.setId(R.id.Snacker);
 
         ViewGroup viewGroup = getActivityDecorView();
         getExistingOverlayInViewAndRemove(viewGroup);
@@ -394,7 +394,7 @@ public class Snacker implements View.OnClickListener {
     public void getExistingOverlayInViewAndRemove(ViewGroup parent) {
         for (int i = 0; i < parent.getChildCount(); i++) {
             View child = parent.getChildAt(i);
-            if (child.getId() == R.id.ToastBar) {
+            if (child.getId() == R.id.Snacker) {
                 parent.removeView(child);
             }
             if (child instanceof ViewGroup) {
