@@ -10,7 +10,7 @@ publish {
     artifactId = 'MVPFrames'// 项目名
     publishVersion = rootProject.ext.android["versionName"]// 版本号
     desc = 'Android MVP development framework'
-    website = 'https://github.com/DesignQu/'
+    website = 'https://github.com/RockyQu/'
 }
 // End 以上这段功能是用来上传至代码库
 
