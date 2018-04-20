@@ -1,0 +1,187 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+
+// 配置Android构建参数
+android {
+    // 编译SDK版本
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    // Build Tools版本
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+
+    // 解决Android SDK升级至API23，导致原生SDK删除org.apache.http.*类的问题
+//    useLibrary 'org.apache.http.legacy'
+
+//    compileOptions {
+//        targetCompatibility JavaVersion.VERSION_1_8
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//    }
+
+    defaultConfig {
+        // 包名
+        applicationId rootProject.ext.frame["applicationId"]
+        // 最低支持SDK版本
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        // 目标SDK版本
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        // 版本
+        versionCode rootProject.ext.android["versionCode"]
+        // 版本号
+        versionName rootProject.ext.android["versionName"]
+
+        // 开启RenderScript
+        renderscriptTargetApi rootProject.ext.android["renderscriptTargetApi"]
+        renderscriptSupportModeEnabled rootProject.ext.android["renderscriptSupportModeEnabled"]
+
+        // 单元测试
+//        testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
+
+//        jackOptions {
+//            enabled true
+//        }
+
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters "armeabi"
+        }
+
+        // Enabling MultiDex support.
+        multiDexEnabled true
+    }
+
+//    sourceSets {
+//        main {
+//            res.srcDirs =
+//                    [
+//                            'src/main/res/layouts/activity',
+//                            'src/main/res/layouts/dialog',
+//                            'src/main/res/layouts/fragment',
+//                            'src/main/res/layouts/item',
+//                            'src/main/res/layouts',
+//                            'src/main/res'
+//                    ]
+//        }
+//    }
+
+    // 移除lint检查的error，可以避免由于编译条件太过严格而编译不过的问题
+    lintOptions {
+        // InvalidPackage: Package not included in Android
+        disable 'InvalidPackage'
+        // Expected resource of type color [ResourceType] 资源类型错误
+        disable "ResourceType"
+        // 忽略因MissingTranslation导致Build Failed错误 "app_name" is not translated in "zh" (Chinese)
+        disable 'MissingTranslation'
+
+        abortOnError false
+        checkReleaseBuilds false
+    }
+
+    // 签名
+    signingConfigs {
+        debug {
+            v2SigningEnabled false
+        }
+        release {
+            // storeFile file("../Project-Frame-MVP/APP/keystore/mvp.keystore")
+            // storePassword ""
+            // keyAlias ""
+            // keyPassword ""
+            // 禁用v2签名增强模式
+            v2SigningEnabled false
+        }
+    }
+
+//    sourceSets {
+//        main {
+//            jniLibs.srcDirs = ['libs']
+//        }
+//    }
+
+    flavorDimensions "Frames"
+
+    // 多渠道打包
+    productFlavors {
+        // 默认渠道
+        Frames {
+            manifestPlaceholders = [Channel: "Frames"]
+//            signingConfig signingConfigs.release
+
+            dimension "Frames"
+        }
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "DEBUG_FLAG", "true"
+
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            buildConfigField "boolean", "DEBUG_FLAG", "false"
+
+            // 是否支持ZIP
+            zipAlignEnabled true
+            // 是否支持调试
+            debuggable false
+            // 是否支持jni调试
+            jniDebuggable false
+            // 是否进行混淆
+            minifyEnabled true
+            // 移除无用资源 如发生Resources$NotFoundException: Resource ID #0x4 错误可关闭此功能
+            shrinkResources false
+            // 混淆文件位置，其中proguard-android.txt为默认的混淆配置，proguard-rules.pro为模块额外的混淆配置
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 签名
+//            signingConfig signingConfigs.release
+
+            // 批量打包
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    def time = new Date().format("yyyy-MM-dd-HH-mm", TimeZone.getDefault())
+                    if (variant.name.endsWith("Debug")) {
+                        // Debug
+                        outputFileName = "App_${variant.productFlavors[0].name}_v${defaultConfig.versionName}_${time}_debug.apk"
+                    } else {
+                        // Release
+                        outputFileName = "App_${variant.productFlavors[0].name}_v${defaultConfig.versionName}_${time}_release.apk"
+                    }
+                }
+            }
+        }
+    }
+
+    greendao {
+        schemaVersion 1 // 数据库版本号
+//        daoPackage 'me.mvp.demo.db.build' //设置DaoMaster、DaoSession、Dao包名
+//        targetGenDir 'src/main/java' //设置DaoMaster、DaoSession、Dao目录
+        //targetGenDirTest 设置生成单元测试目录
+        //generateTests 设置自动生成单元测试用例
+    }
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Tools
+    annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
+        exclude module: 'support-annotations'
+    }
+    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
+    api rootProject.ext.dependencies["multidex"]
+
+    // 引入框架基础共通模块
+    api project(':Common')
+//    api 'android.frame:MVPFrames:2.0.3'
+
+    // Test
+    testCompile rootProject.ext.dependencies["junit"]
+    debugCompile rootProject.ext.dependencies["canary-debug"]
+    releaseCompile rootProject.ext.dependencies["canary-release"]
+    testCompile rootProject.ext.dependencies["canary-release"]
+}
