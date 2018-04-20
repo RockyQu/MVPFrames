@@ -1,2 +1,0 @@
-// 全局项目配置文件，描述Project包含哪些Module
-include ':App', ':Common'
