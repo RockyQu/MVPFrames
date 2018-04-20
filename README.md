@@ -18,10 +18,10 @@ compile 'android.frame:MVPFrames:2.0.3'
 * [Gson](https://github.com/google/gson)  
 * [RxPermissions](https://github.com/tbruyelle/RxPermissions)  
 * [LeakCanary](https://github.com/square/leakcanary)  
-* [Logg](https://github.com/DesignQu/Logg)  
+* [Logg](https://github.com/RockyQu/Logg)  
 
 ## History
-[UpdateLog](https://github.com/DesignQu/MVPFrames/releases)   
+[UpdateLog](https://github.com/RockyQu/MVPFrames/releases)
 
 ## Proguard
 ```
@@ -33,7 +33,7 @@ compile 'android.frame:MVPFrames:2.0.3'
 ```
        
 ## Feedback
-* Project  [Submit Bug or Idea](https://github.com/DesignQu/MVPFrames/issues)   
+* Project  [Submit Bug or Idea](https://github.com/RockyQu/MVPFrames/issues)
 
 ## Thanks
 [MVPArms](https://github.com/JessYanCoding/MVPArms)  

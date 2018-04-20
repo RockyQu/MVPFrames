@@ -121,7 +121,7 @@ public class Toaster implements View.OnClickListener {
     private Toast createView() {
         TextView view = new TextView(getContext());
         view.setOnClickListener(this);
-        view.setBackgroundResource(R.drawable.toast_background);
+        view.setBackgroundResource(R.drawable.bg_toaster);
         view.setGravity(Gravity.CENTER);
         view.setText(message);
         view.setTextColor(Color.parseColor("#FFFFFF"));
