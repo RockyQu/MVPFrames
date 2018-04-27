@@ -1,5 +1,5 @@
 # MVPFrames
-这是一个基于 [MVPArms](https://github.com/JessYanCoding/MVPArms) 和 [MVPArt](https://github.com/JessYanCoding/MVPArt) 并整合了大量主流开源项目可高度配置化的 Android MVP 快速集成框架
+这是一个基于 [MVPArms](https://github.com/JessYanCoding/MVPArms) 并整合了大量主流开源项目可高度配置化的 Android MVP 快速集成框架
 
 ## Download
 Gradle:
