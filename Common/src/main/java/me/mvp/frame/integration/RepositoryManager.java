@@ -51,7 +51,7 @@ public class RepositoryManager implements IRepositoryManager {
      *
      * @param repository
      * @param <T>
-     * @return
+     * @return Model
      */
     @Override
     public synchronized <T extends IModel> T createRepository(Class<T> repository) {
@@ -82,7 +82,7 @@ public class RepositoryManager implements IRepositoryManager {
      *
      * @param service
      * @param <T>
-     * @return
+     * @return Retrofit Service
      */
     @Override
     public synchronized <T> T createRetrofitService(Class<T> service) {
@@ -104,7 +104,7 @@ public class RepositoryManager implements IRepositoryManager {
      *
      * @param cache
      * @param <T>
-     * @return
+     * @return Cache Service
      */
     @Override
     public synchronized <T> T createCacheService(Class<T> cache) {

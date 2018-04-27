@@ -168,7 +168,7 @@ public class AppManager {
     /**
      * 返回一个存储所有未销毁的activity的集合
      *
-     * @return
+     * @return Activity List
      */
     public List<Activity> getActivityList() {
         if (activitys == null) {
@@ -241,10 +241,10 @@ public class AppManager {
     }
 
     /**
-     * 指定的activity实例是否存活
+     * 指定的 Activity 实例是否存活
      *
      * @param activity {@link Activity}
-     * @return
+     * @return Activity Is Live
      */
     public boolean activityInstanceIsLive(Activity activity) {
         if (activitys == null) {
@@ -254,10 +254,10 @@ public class AppManager {
     }
 
     /**
-     * 指定的Activity是否存活（一个activity可能有多个实例）
+     * 指定的 Activity 是否存活（一个activity可能有多个实例）
      *
      * @param activityClass
-     * @return
+     * @return Activity Is Live
      */
     public boolean activityClassIsLive(Class<?> activityClass) {
         if (activitys == null) {

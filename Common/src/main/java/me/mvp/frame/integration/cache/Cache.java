@@ -22,7 +22,7 @@ public interface Cache<K, V> {
          * Returns a new cache
          *
          * @param type 框架中需要缓存的模块类型
-         * @return
+         * @return Cache
          */
         @NonNull
         Cache build(CacheType type);
@@ -31,14 +31,14 @@ public interface Cache<K, V> {
     /**
      * 返回当前缓存已占用的总 size
      *
-     * @return
+     * @return size
      */
     int size();
 
     /**
      * 返回当前缓存所能允许的最大 size
      *
-     * @return
+     * @return max size
      */
     int getMaxSize();
 
@@ -46,7 +46,7 @@ public interface Cache<K, V> {
      * 返回这个 {@code key} 在缓存中对应的 {@code value}, 如果返回 {@code null} 说明这个 {@code key} 没有对应的 {@code value}
      *
      * @param key
-     * @return
+     * @return value
      */
     @Nullable
     V get(K key);
@@ -76,14 +76,14 @@ public interface Cache<K, V> {
      * 如果这个 {@code key} 在缓存中有对应的 value 并且不为 {@code null}, 则返回 {@code true}
      *
      * @param key
-     * @return
+     * @return boolean
      */
     boolean containsKey(K key);
 
     /**
      * 返回当前缓存中含有的所有 {@code key}
      *
-     * @return
+     * @return keys
      */
     Set<K> keySet();
 

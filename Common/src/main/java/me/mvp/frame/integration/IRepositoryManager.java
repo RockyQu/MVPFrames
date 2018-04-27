@@ -14,7 +14,7 @@ public interface IRepositoryManager {
      *
      * @param repository
      * @param <T>
-     * @return
+     * @return Model
      */
     <T extends IModel> T createRepository(Class<T> repository);
 
@@ -23,7 +23,7 @@ public interface IRepositoryManager {
      *
      * @param service
      * @param <T>
-     * @return
+     * @return Retrofit Service
      */
     <T> T createRetrofitService(Class<T> service);
 
@@ -32,7 +32,7 @@ public interface IRepositoryManager {
      *
      * @param cache
      * @param <T>
-     * @return
+     * @return Cache Service
      */
     <T> T createCacheService(Class<T> cache);
 

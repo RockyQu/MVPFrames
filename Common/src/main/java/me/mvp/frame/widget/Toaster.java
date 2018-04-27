@@ -53,7 +53,7 @@ public class Toaster implements View.OnClickListener {
      * Create Toaster with activity reference
      *
      * @param activity
-     * @return
+     * @return Toaster
      */
     public static Toaster with(Activity activity) {
         return new Toaster(activity);
@@ -71,7 +71,7 @@ public class Toaster implements View.OnClickListener {
     /**
      * Return Context
      *
-     * @return
+     * @return Context
      */
     private Context getContext() {
         return activityWeakReference.get();
@@ -81,7 +81,7 @@ public class Toaster implements View.OnClickListener {
      * 设置显示时长
      *
      * @param duration
-     * @return
+     * @return Toaster
      */
     public Toaster setDuration(@Duration int duration) {
         this.duration = duration;
@@ -92,7 +92,7 @@ public class Toaster implements View.OnClickListener {
      * 设置提示信息文字
      *
      * @param message
-     * @return
+     * @return Toaster
      */
     public Toaster setMessage(String message) {
         this.message = message;
@@ -101,8 +101,6 @@ public class Toaster implements View.OnClickListener {
 
     /**
      * 显示提示框，请在最后调用
-     *
-     * @return
      */
     public void show() {
         this.createView().show();
@@ -111,12 +109,15 @@ public class Toaster implements View.OnClickListener {
     /**
      * 移除
      */
+    @Deprecated
     private void hide() {
 
     }
 
     /**
      * 创建并添加提示框
+     *
+     * @return Toast
      */
     private Toast createView() {
         TextView view = new TextView(getContext());
