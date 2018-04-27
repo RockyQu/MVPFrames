@@ -2,10 +2,8 @@ package me.mvp.frame.base.delegate;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 
-import me.mvp.frame.base.simple.delegate.ISimpleActivity;
+import me.mvp.frame.base.IActivity;
 import me.mvp.frame.di.component.AppComponent;
 import me.mvp.frame.frame.IPresenter;
 import me.mvp.frame.utils.AppUtils;
@@ -16,7 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * ActivityDelegateImpl
+ * {@link ActivityDelegate} Activity 生命周期代理实现类
  */
 public class ActivityDelegateImpl implements ActivityDelegate {
 
@@ -24,7 +22,6 @@ public class ActivityDelegateImpl implements ActivityDelegate {
     private Unbinder unbinder;
 
     private IActivity iActivity;
-    private ISimpleActivity iSimpleActivity;
 
     private IPresenter iPresenter;
 
@@ -32,35 +29,35 @@ public class ActivityDelegateImpl implements ActivityDelegate {
         this.activity = activity;
         if (activity instanceof IActivity) {
             this.iActivity = (IActivity) activity;
-        } else if (activity instanceof ISimpleActivity) {
-            this.iSimpleActivity = (ISimpleActivity) activity;
         }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        // 注册EventBus
+        if (iActivity != null) {
+            if (iActivity.useEventBus()) {
+                EventBus.getDefault().register(activity);
+            }
+        }
+
         AppComponent component = AppUtils.obtainAppComponentFromContext(activity);
+
         // 在Base基类实现些方法，为了能够方便的获取到AppComponent
         if (iActivity != null) {
             iActivity.setComponent(component);
-        } else if (iSimpleActivity != null) {
-            iSimpleActivity.setComponent(component);
         }
 
         // 依赖注入
         if (iActivity != null) {
-            iActivity.setupActivityComponent(component);
-        } else if (iSimpleActivity != null) {
-            this.iPresenter = iSimpleActivity.obtainPresenter();
-            iSimpleActivity.setPresenter(iPresenter);
+            this.iPresenter = iActivity.obtainPresenter();
+            iActivity.setPresenter(iPresenter);
         }
 
         try {
             int layoutResID;
             if (iActivity != null) {
                 layoutResID = iActivity.getLayoutId();
-            } else if (iSimpleActivity != null) {
-                layoutResID = iSimpleActivity.getLayoutId();
             } else {
                 layoutResID = 0;
             }
@@ -78,23 +75,12 @@ public class ActivityDelegateImpl implements ActivityDelegate {
         // 初始化方法
         if (iActivity != null) {
             iActivity.create(savedInstanceState);
-        } else if (iSimpleActivity != null) {
-            iSimpleActivity.create(savedInstanceState);
         }
     }
 
     @Override
     public void onStart() {
-        // 注册EventBus
-        if (iActivity != null) {
-            if (iActivity.useEventBus()) {
-                EventBus.getDefault().register(activity);
-            }
-        } else if (iSimpleActivity != null) {
-            if (iSimpleActivity.useEventBus()) {
-                EventBus.getDefault().register(activity);
-            }
-        }
+
     }
 
     @Override
@@ -129,26 +115,16 @@ public class ActivityDelegateImpl implements ActivityDelegate {
             if (iActivity.useEventBus()) {
                 EventBus.getDefault().unregister(activity);
             }
-        } else if (iSimpleActivity != null) {
-            if (iSimpleActivity.useEventBus()) {
-                EventBus.getDefault().unregister(activity);
-            }
         }
 
-        //释放资源
+        // 释放资源
         if (iPresenter != null) {
             iPresenter.onDestroy();
         }
 
         this.unbinder = null;
         this.activity = null;
-
-        if (iActivity != null) {
-            this.iActivity = null;
-        }
-        if (iSimpleActivity != null) {
-            this.iSimpleActivity = null;
-        }
+        this.iActivity = null;
     }
 
     @Override
@@ -160,41 +136,4 @@ public class ActivityDelegateImpl implements ActivityDelegate {
     public void onRestoreInstanceState(Bundle outState) {
 
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
-    }
-
-    protected ActivityDelegateImpl(Parcel in) {
-        this.activity = in.readParcelable(Activity.class.getClassLoader());
-        this.unbinder = in.readParcelable(Unbinder.class.getClassLoader());
-
-        if (iActivity != null) {
-            this.iActivity = in.readParcelable(IActivity.class.getClassLoader());
-        }
-        if (iSimpleActivity != null) {
-            this.iSimpleActivity = in.readParcelable(ISimpleActivity.class.getClassLoader());
-        }
-
-        this.iPresenter = in.readParcelable(IPresenter.class.getClassLoader());
-    }
-
-    public static final Parcelable.Creator<ActivityDelegateImpl> CREATOR = new Parcelable.Creator<ActivityDelegateImpl>() {
-
-        @Override
-        public ActivityDelegateImpl createFromParcel(Parcel source) {
-            return new ActivityDelegateImpl(source);
-        }
-
-        @Override
-        public ActivityDelegateImpl[] newArray(int size) {
-            return new ActivityDelegateImpl[size];
-        }
-    };
 }

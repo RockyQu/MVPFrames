@@ -2,13 +2,11 @@ package me.mvp.frame.base.delegate;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
-import me.mvp.frame.base.simple.delegate.ISimpleFragment;
+import me.mvp.frame.base.IFragment;
 import me.mvp.frame.di.component.AppComponent;
 import me.mvp.frame.frame.IPresenter;
 import me.mvp.frame.utils.AppUtils;
@@ -19,7 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * FragmentDelegateImpl
+ * {@link FragmentDelegate} Fragment 生命周期代理实现类
  */
 public class FragmentDelegateImpl implements FragmentDelegate {
 
@@ -28,7 +26,6 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     private Unbinder unbinder;
 
     private IFragment iFragment;
-    private ISimpleFragment iSimpleFragment;
 
     private IPresenter iPresenter;
 
@@ -38,8 +35,6 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
         if (fragment instanceof IFragment) {
             this.iFragment = (IFragment) fragment;
-        } else if (fragment instanceof ISimpleFragment) {
-            this.iSimpleFragment = (ISimpleFragment) fragment;
         }
     }
 
@@ -50,27 +45,29 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        // 注册EventBus
+        if (iFragment != null) {
+            if (iFragment.useEventBus()) {
+                EventBus.getDefault().register(fragment);
+            }
+        }
+
         AppComponent component = AppUtils.obtainAppComponentFromContext(fragment.getActivity());
-        // 在Base基类实现些方法，为了能够方便的获取到AppComponent
+
+        // 在 Base 基类实现些方法，为了能够方便的获取到AppComponent
         if (iFragment != null) {
             iFragment.setComponent(component);
-        } else if (iSimpleFragment != null) {
-            iSimpleFragment.setComponent(component);
         }
 
         // 依赖注入
         if (iFragment != null) {
-            iFragment.setupFragmentComponent(component);
-        } else if (iSimpleFragment != null) {
-            this.iPresenter = iSimpleFragment.obtainPresenter();
-            iSimpleFragment.setPresenter(iPresenter);
+            this.iPresenter = iFragment.obtainPresenter();
+            iFragment.setPresenter(iPresenter);
         }
     }
 
     @Override
     public void onCreateView(View view, Bundle savedInstanceState) {
-
-        // 绑定ButterKnife
         if (view != null) {
             unbinder = ButterKnife.bind(fragment, view);
         }
@@ -80,23 +77,12 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     public void onActivityCreated(Bundle savedInstanceState) {
         if (iFragment != null) {
             iFragment.create(savedInstanceState);
-        } else if (iSimpleFragment != null) {
-            iSimpleFragment.create(savedInstanceState);
         }
     }
 
     @Override
     public void onStart() {
-        // 注册EventBus
-        if (iFragment != null) {
-            if (iFragment.useEventBus()) {
-                EventBus.getDefault().register(fragment);
-            }
-        } else if (iSimpleFragment != null) {
-            if (iSimpleFragment.useEventBus()) {
-                EventBus.getDefault().register(fragment);
-            }
-        }
+
     }
 
     @Override
@@ -132,10 +118,6 @@ public class FragmentDelegateImpl implements FragmentDelegate {
             if (iFragment.useEventBus()) {
                 EventBus.getDefault().unregister(fragment);
             }
-        } else if (iSimpleFragment != null) {
-            if (iSimpleFragment.useEventBus()) {
-                EventBus.getDefault().unregister(fragment);
-            }
         }
 
         if (iPresenter != null) {
@@ -145,14 +127,7 @@ public class FragmentDelegateImpl implements FragmentDelegate {
         this.unbinder = null;
         this.fragmentManager = null;
         this.fragment = null;
-
-        if (iFragment != null) {
-            this.iFragment = null;
-        }
-        if (iSimpleFragment != null) {
-            this.iSimpleFragment = null;
-        }
-
+        this.iFragment = null;
         this.iPresenter = null;
     }
 
@@ -167,42 +142,7 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     }
 
     @Override
-    public int describeContents() {
-        return 0;
+    public boolean isAdded() {
+        return fragment != null && fragment.isAdded();
     }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
-    }
-
-    protected FragmentDelegateImpl(Parcel in) {
-        this.fragmentManager = in.readParcelable(FragmentManager.class.getClassLoader());
-        this.fragment = in.readParcelable(Fragment.class.getClassLoader());
-        this.unbinder = in.readParcelable(Unbinder.class.getClassLoader());
-
-        if (iFragment != null) {
-            this.iFragment = in.readParcelable(IFragment.class.getClassLoader());
-        }
-        if (iSimpleFragment != null) {
-            this.iSimpleFragment = in.readParcelable(ISimpleFragment.class.getClassLoader());
-        }
-
-        if (iSimpleFragment != null) {
-            this.iPresenter = in.readParcelable(IPresenter.class.getClassLoader());
-        }
-    }
-
-    public static final Parcelable.Creator<FragmentDelegateImpl> CREATOR = new Parcelable.Creator<FragmentDelegateImpl>() {
-
-        @Override
-        public FragmentDelegateImpl createFromParcel(Parcel source) {
-            return new FragmentDelegateImpl(source);
-        }
-
-        @Override
-        public FragmentDelegateImpl[] newArray(int size) {
-            return new FragmentDelegateImpl[size];
-        }
-    };
 }

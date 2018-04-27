@@ -3,16 +3,17 @@ package me.mvp.frame.di.component;
 import android.app.Application;
 
 import com.google.gson.Gson;
-import me.mvp.frame.base.delegate.AppDelegate;
+
+import me.mvp.frame.base.delegate.ApplicationDelegate;
 import me.mvp.frame.di.module.AppConfigModule;
 import me.mvp.frame.di.module.AppModule;
 import me.mvp.frame.di.module.HttpModule;
 import me.mvp.frame.integration.AppManager;
 import me.mvp.frame.integration.IRepositoryManager;
+import me.mvp.frame.integration.cache.Cache;
 import me.mvp.frame.widget.imageloader.ImageLoader;
 
 import java.io.File;
-import java.util.Map;
 
 import javax.inject.Singleton;
 
@@ -47,8 +48,11 @@ public interface AppComponent {
     // 管理所有Activity
     AppManager appManager();
 
-    // 用来存取一些App公用数据，切勿大量存放大容量数据
-    Map<String, Object> extras();
+    // 用来存取一些 App 公用数据，切勿大量存放大容量数据
+    Cache<String, Object> extras();
 
-    void inject(AppDelegate delegate);
+    // 缓存对象的工厂
+    Cache.Factory cacheFactory();
+
+    void inject(ApplicationDelegate delegate);
 }

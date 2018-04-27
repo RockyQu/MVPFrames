@@ -1,16 +1,17 @@
 package me.mvp.frame.base.delegate;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 /**
- * ActivityDelegate
+ * {@link Activity} 生命周期代理接口
  */
-public interface ActivityDelegate extends Parcelable {
+public interface ActivityDelegate{
 
     String ACTIVITY_DELEGATE = "ACTIVITY_DELEGATE";
 
-    void onCreate(Bundle savedInstanceState);
+    void onCreate(@NonNull Bundle savedInstanceState);
 
     void onStart();
 
@@ -24,7 +25,7 @@ public interface ActivityDelegate extends Parcelable {
 
     void onDestroy();
 
-    void onSaveInstanceState(Bundle outState);
+    void onSaveInstanceState(@NonNull Bundle outState);
 
-    void onRestoreInstanceState(Bundle outState);
+    void onRestoreInstanceState(@NonNull Bundle outState);
 }

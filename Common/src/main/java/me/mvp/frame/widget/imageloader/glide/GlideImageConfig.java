@@ -4,7 +4,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import me.mvp.frame.widget.imageloader.ImageConfig;
-import me.mvp.frame.widget.imageloader.utils.ImageScaleType;
 
 /**
  * 图片加载的配置信息，可以根据需要自定义

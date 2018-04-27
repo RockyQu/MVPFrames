@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 
-import com.logg.Logg;
+import me.logg.Logg;
 import me.mvp.frame.utils.NetWorkUtils;
 
 /**

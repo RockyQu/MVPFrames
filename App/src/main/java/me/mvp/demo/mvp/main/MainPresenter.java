@@ -1,9 +1,9 @@
 package me.mvp.demo.mvp.main;
 
 import me.mvp.frame.di.component.AppComponent;
-import me.mvp.frame.frame.simple.BaseSimplePresenter;
+import me.mvp.frame.frame.BasePresenter;
 
-public class MainPresenter extends BaseSimplePresenter<MainRepository> {
+public class MainPresenter extends BasePresenter<MainRepository> {
 
     // AppComponent
     private AppComponent component;

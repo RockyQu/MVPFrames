@@ -31,6 +31,9 @@ public class AppManager {
     // Application
     private Application application;
 
+    // true 为不需要加入到 Activity 容器进行统一管理，默认为 false
+    public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_not_add_activity_list";
+
     public static final String APPMANAGER_MESSAGE = "AppManager";
     public static final int START_ACTIVITY = 0;
 

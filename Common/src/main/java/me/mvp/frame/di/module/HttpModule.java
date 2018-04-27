@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
+
 import me.mvp.frame.http.converter.GsonConverterBodyFactory;
 import me.mvp.frame.http.converter.JsonConverterFactory;
 import me.mvp.frame.http.interceptor.NetworkInterceptor;
@@ -51,9 +52,9 @@ public class HttpModule {
         retrofitConfiguration.configRetrofit(application, builder);
 
         builder
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())// 支持RxJava
-                .addConverterFactory(GsonConverterBodyFactory.create(gson))// 支持Gson
-                .addConverterFactory(JsonConverterFactory.create());// 支持Json
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())// 支持 RxJava
+                .addConverterFactory(GsonConverterBodyFactory.create(gson))// 支持 Gson
+                .addConverterFactory(JsonConverterFactory.create());// 支持 Json
         return builder.build();
     }
 
@@ -116,11 +117,12 @@ public class HttpModule {
     @Provides
     RxCache provideRxCache(Application application, @Nullable RxCacheConfiguration configuration, @Named("RxCacheDirectory") File cacheDirectory) {
         RxCache.Builder builder = new RxCache.Builder();
+        RxCache rxCache = null;
         if (configuration != null) {
-            configuration.configRxCache(application, builder);
+            rxCache = configuration.configRxCache(application, builder);
         }
-        return builder
-                .persistence(cacheDirectory, new GsonSpeaker());
+        if (rxCache != null) return rxCache;
+        return builder.persistence(cacheDirectory, new GsonSpeaker());
     }
 
 
@@ -170,13 +172,13 @@ public class HttpModule {
 
     public interface RxCacheConfiguration {
 
-        void configRxCache(Context context, RxCache.Builder builder);
+        RxCache configRxCache(Context context, RxCache.Builder builder);
 
         RxCacheConfiguration EMPTY = new RxCacheConfiguration() {
 
             @Override
-            public void configRxCache(Context context, RxCache.Builder builder) {
-
+            public RxCache configRxCache(Context context, RxCache.Builder builder) {
+                return null;
             }
         };
     }

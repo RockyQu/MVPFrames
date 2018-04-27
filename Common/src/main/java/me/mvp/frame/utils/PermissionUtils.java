@@ -2,9 +2,10 @@ package me.mvp.frame.utils;
 
 import android.Manifest;
 
-import com.logg.Logg;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import me.logg.Logg;
 import me.mvp.frame.utils.base.BaseUtils;
 
 import java.util.ArrayList;

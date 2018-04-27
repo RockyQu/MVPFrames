@@ -17,7 +17,7 @@ public class LoginRepository implements IModel {
     }
 
     public Call<ResponseEntity<User>> login(String username, String password) {
-        return iRepositoryManager.obtainApiService(ApiNetwork.class).login(username, password);
+        return iRepositoryManager.createRetrofitService(ApiNetwork.class).login(username, password);
     }
 
     @Override

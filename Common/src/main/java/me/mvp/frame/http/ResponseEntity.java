@@ -3,7 +3,7 @@ package me.mvp.frame.http;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Response Result
+ * 如果你后台的服务器返回的 Json 格式类似于这种，可以使用此类作为共通数据的解析
  */
 public class ResponseEntity<T> {
 

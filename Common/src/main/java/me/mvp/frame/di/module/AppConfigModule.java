@@ -1,12 +1,16 @@
 package me.mvp.frame.di.module;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import me.mvp.frame.http.BaseUrl;
 import me.mvp.frame.http.NetworkHandler;
 import me.mvp.frame.http.cookie.PersistentCookieJar;
+import me.mvp.frame.integration.cache.Cache;
+import me.mvp.frame.integration.cache.CacheType;
+import me.mvp.frame.integration.cache.LruCache;
 import me.mvp.frame.utils.FileUtils;
 import me.mvp.frame.widget.imageloader.BaseImageLoader;
 import me.mvp.frame.widget.imageloader.glide.GlideImageLoader;
@@ -50,6 +54,8 @@ public class AppConfigModule {
     private CookieJar cookie;
     private PersistentCookieJar.CookieLoadForRequest cookieLoadForRequest;
 
+    private Cache.Factory cacheFactory;
+
     public AppConfigModule(Builder buidler) {
         this.httpUrl = buidler.httpUrl;
         this.baseUrl = buidler.baseUrl;
@@ -67,6 +73,8 @@ public class AppConfigModule {
         this.gsonConfiguration = buidler.gsonConfiguration;
 
         this.errorConfiguration = buidler.errorConfiguration;
+
+        this.cacheFactory = buidler.cacheFactory;
 
         this.cookie = buidler.cookie;
         this.cookieLoadForRequest = buidler.cookieLoadForRequest;
@@ -149,6 +157,21 @@ public class AppConfigModule {
         return errorConfiguration == null ? AppModule.ErrorConfiguration.EMPTY : errorConfiguration;
     }
 
+    @Singleton
+    @Provides
+    Cache.Factory provideCacheFactory(final Application application) {
+        return cacheFactory == null ? new Cache.Factory() {
+
+            @NonNull
+            @Override
+            public Cache build(CacheType type) {
+                //若想自定义 LruCache 的 size,或者不想使用 LruCache ,想使用自己自定义的策略
+                //请使用 GlobalConfigModule.Builder#cacheFactory() 扩展
+                return new LruCache(type.calculateCacheSize(application));
+            }
+        } : cacheFactory;
+    }
+
     /**
      * App全局配置
      */
@@ -186,6 +209,9 @@ public class AppConfigModule {
 
         // 提供全局错误响应接口，APP的各种错误信息可以统一回调至此接口
         private AppModule.ErrorConfiguration errorConfiguration;
+
+        // 框架缓存中组件
+        private Cache.Factory cacheFactory;
 
         // OkHttp用CookieJar保持会话功能，框架已集成PersistentCookieJar自动管理Cookie，或自己实现CookieJar接口
         private CookieJar cookie;
@@ -259,6 +285,11 @@ public class AppConfigModule {
 
         public Builder errorConfiguration(AppModule.ErrorConfiguration errorConfiguration) {
             this.errorConfiguration = errorConfiguration;
+            return this;
+        }
+
+        public Builder cacheFactory(Cache.Factory cacheFactory) {
+            this.cacheFactory = cacheFactory;
             return this;
         }
 

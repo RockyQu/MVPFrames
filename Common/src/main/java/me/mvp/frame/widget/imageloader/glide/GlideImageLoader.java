@@ -8,9 +8,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.logg.Logg;
+
+import me.logg.Logg;
 import me.mvp.frame.widget.imageloader.BaseImageLoader;
-import me.mvp.frame.widget.imageloader.utils.ImageScaleType;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

@@ -1,10 +1,17 @@
 package me.mvp.frame.base.delegate;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.annotation.NonNull;
 
+/**
+ * {@link Application} 生命周期代理接口
+ */
 public interface ApplicationLifecycles {
 
-    void onCreate(Application application);
+    void attachBaseContext(@NonNull Context base);
 
-    void onTerminate(Application application);
+    void onCreate(@NonNull Application application);
+
+    void onTerminate(@NonNull Application application);
 }

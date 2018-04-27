@@ -2,23 +2,24 @@ package me.mvp.frame.base.delegate;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.view.View;
 
 /**
- * FragmentDelegate
+ * {@link Fragment} 生命周期代理接口
  */
-public interface FragmentDelegate extends Parcelable {
+public interface FragmentDelegate{
 
     String FRAGMENT_DELEGATE = "FRAGMENT_DELEGATE";
 
-    void onAttach(Context context);
+    void onAttach(@NonNull Context context);
 
-    void onCreate(Bundle savedInstanceState);
+    void onCreate(@NonNull Bundle savedInstanceState);
 
-    void onCreateView(View view, Bundle savedInstanceState);
+    void onCreateView(@NonNull View view, @NonNull Bundle savedInstanceState);
 
-    void onActivityCreated(Bundle savedInstanceState);
+    void onActivityCreated(@NonNull Bundle savedInstanceState);
 
     void onStart();
 
@@ -34,5 +35,10 @@ public interface FragmentDelegate extends Parcelable {
 
     void onDetach();
 
-    void onSaveInstanceState(Bundle outState);
+    void onSaveInstanceState(@NonNull Bundle outState);
+
+    /**
+     * Return true if the fragment is currently added to its activity.
+     */
+    boolean isAdded();
 }

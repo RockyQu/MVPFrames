@@ -1,4 +1,4 @@
-package me.mvp.frame.widget.imageloader.utils;
+package me.mvp.frame.widget.imageloader.glide;
 
 public enum ImageScaleType {
 

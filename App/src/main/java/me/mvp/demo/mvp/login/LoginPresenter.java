@@ -2,15 +2,15 @@ package me.mvp.demo.mvp.login;
 
 import me.mvp.demo.entity.User;
 import me.mvp.frame.di.component.AppComponent;
-import me.mvp.frame.frame.simple.BaseSimplePresenter;
-import me.mvp.frame.frame.simple.Message;
+import me.mvp.frame.frame.BasePresenter;
+import me.mvp.frame.frame.Message;
 import me.mvp.frame.http.ResponseCallback;
 import me.mvp.frame.http.ResponseEntity;
 import me.mvp.frame.http.exception.ApiException;
 
 import retrofit2.Call;
 
-public class LoginPresenter extends BaseSimplePresenter<LoginRepository> {
+public class LoginPresenter extends BasePresenter<LoginRepository> {
 
     private AppComponent component;
 

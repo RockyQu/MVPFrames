@@ -10,7 +10,7 @@ import me.mvp.frame.di.module.AppConfigModule;
 import java.util.List;
 
 /**
- * 框架配置参数配置，实现此接口后，在AndroidManifest中声明该实现类
+ * 框架配置参数配置，实现此接口后，在AndroidManifest 中声明该实现类
  */
 public interface ConfigModule {
 
@@ -25,7 +25,7 @@ public interface ConfigModule {
     /**
      * 使用{@link ApplicationLifecycles}在Application的声明周期中注入一些操作
      */
-    void injectAppLifecycle(Context context, List<ApplicationLifecycles> lifecycles);
+    void injectApplicationLifecycle(Context context, List<ApplicationLifecycles> lifecycles);
 
     /**
      * 使用{@link Application.ActivityLifecycleCallbacks}在Activity的生命周期中注入一些操作

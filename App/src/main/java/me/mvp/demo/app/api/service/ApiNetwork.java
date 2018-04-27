@@ -12,7 +12,7 @@ import retrofit2.http.POST;
 public interface ApiNetwork {
 
     @FormUrlEncoded
-    @POST("xxxxxxxx")
+    @POST("index.php?m=member&c=api&a=do_login")
     Call<ResponseEntity<User>> login(@Field("username") String username, @Field("password") String password);
 
     @FormUrlEncoded

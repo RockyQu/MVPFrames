@@ -7,14 +7,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
+import io.rx_cache2.internal.RxCache;
+import me.logg.Logg;
+import me.logg.config.LoggConfiguration;
 import me.mvp.demo.BuildConfig;
 import me.mvp.demo.app.api.Api;
 import me.mvp.demo.app.utils.gson.GsonResponseDeserializer;
 import me.mvp.demo.entity.User;
 import me.mvp.demo.mvp.login.LoginActivity;
 import com.google.gson.GsonBuilder;
-import com.logg.Logg;
-import com.logg.config.LoggConfiguration;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import me.mvp.frame.base.App;
@@ -151,6 +152,13 @@ public class AppConfiguration implements ConfigModule {
                         builder.hostnameVerifier(new TrustAllHostnameVerifier());
                     }
                 })
+                .rxCacheConfiguration(new HttpModule.RxCacheConfiguration() {
+                    @Override
+                    public RxCache configRxCache(Context context, RxCache.Builder builder) {
+                        // 想自定义 RxCache 的缓存文件夹或者解析方式，如改成 fastjson，请 return rxCacheBuilder.persistence(cacheDirectory, new FastJsonSpeaker());
+                        return null;
+                    }
+                })
                 .gsonConfiguration(new AppModule.GsonConfiguration() {// 扩展自定义配置Gson参数
                     @Override
                     public void configGson(Context context, GsonBuilder builder) {
@@ -175,9 +183,13 @@ public class AppConfiguration implements ConfigModule {
     }
 
     @Override
-    public void injectAppLifecycle(Context context, List<ApplicationLifecycles> lifecycleManager) {
-        // AppDelegateManager.Lifecycle的所有方法都会在基类Application对应的生命周期中被调用,所以在对应的方法中可以扩展一些自己需要的逻辑
+    public void injectApplicationLifecycle(Context context, List<ApplicationLifecycles> lifecycleManager) {
         lifecycleManager.add(new ApplicationLifecycles() {
+
+            @Override
+            public void attachBaseContext(Context base) {
+
+            }
 
             @Override
             public void onCreate(Application application) {
@@ -203,6 +215,11 @@ public class AppConfiguration implements ConfigModule {
             final String CHANNEL = "Channel";
 
             @Override
+            public void attachBaseContext(Context base) {
+
+            }
+
+            @Override
             public void onCreate(Application application) {
                 // 项目在SDCard下创建的目录
                 if (!ProjectUtils.init(AppUtils.getAppChannel(application, CHANNEL))) {
@@ -217,6 +234,11 @@ public class AppConfiguration implements ConfigModule {
         });
 
         lifecycleManager.add(new ApplicationLifecycles() {
+
+            @Override
+            public void attachBaseContext(Context base) {
+
+            }
 
             @Override
             public void onCreate(Application application) {
@@ -235,6 +257,11 @@ public class AppConfiguration implements ConfigModule {
         });
 
         lifecycleManager.add(new ApplicationLifecycles() {
+
+            @Override
+            public void attachBaseContext(Context base) {
+
+            }
 
             @Override
             public void onCreate(Application application) {

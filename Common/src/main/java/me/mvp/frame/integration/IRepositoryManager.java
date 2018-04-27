@@ -25,16 +25,16 @@ public interface IRepositoryManager {
      * @param <T>
      * @return
      */
-    <T> T obtainApiService(Class<T> service);
+    <T> T createRetrofitService(Class<T> service);
 
     /**
-     * 根据传入的Class获取对应的RxCache service
+     * 根据传入的 Class 创建对应的 RxCache service
      *
      * @param cache
      * @param <T>
      * @return
      */
-    <T> T obtainCacheService(Class<T> cache);
+    <T> T createCacheService(Class<T> cache);
 
     /**
      * 清理所有缓存

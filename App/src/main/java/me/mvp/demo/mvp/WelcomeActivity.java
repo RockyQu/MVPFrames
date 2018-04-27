@@ -8,9 +8,10 @@ import android.os.Message;
 
 import me.mvp.demo.R;
 import me.mvp.demo.db.DBModule;
+import me.mvp.demo.mvp.login.LoginActivity;
 import me.mvp.demo.mvp.main.MainActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import me.mvp.frame.base.simple.base.BaseSimpleActivity;
+import me.mvp.frame.base.BaseActivity;
 import me.mvp.frame.frame.IPresenter;
 import me.mvp.frame.utils.AppUtils;
 import me.mvp.frame.utils.PermissionUtils;
@@ -18,7 +19,7 @@ import me.mvp.frame.utils.PermissionUtils;
 /**
  * 欢迎页面
  */
-public class WelcomeActivity extends BaseSimpleActivity {
+public class WelcomeActivity extends BaseActivity {
 
     private RxPermissions rxPermissions;
 

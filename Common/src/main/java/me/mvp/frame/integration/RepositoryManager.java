@@ -15,30 +15,35 @@ import javax.inject.Singleton;
 
 import dagger.Lazy;
 import io.rx_cache2.internal.RxCache;
+import me.mvp.frame.integration.cache.Cache;
+import me.mvp.frame.integration.cache.CacheType;
+import me.mvp.frame.utils.ExceptionUtils;
 import retrofit2.Retrofit;
 
 /**
- * 用来管理网络请求层,以及数据缓存层,以后可以添加数据库请求层
- * 需要在{@link ConfigModule}的实现类中先inject需要的服务
+ * 用来管理网络请求层，以及数据缓存层
  */
 @Singleton
 public class RepositoryManager implements IRepositoryManager {
 
     private Application application;
 
-    private Lazy<Retrofit> mRetrofit;
-    private Lazy<RxCache> mRxCache;
+    private Lazy<Retrofit> retrofit;
+    private Lazy<RxCache> rxCache;
 
-    private final Map<String, IModel> mRepositoryCache = new HashMap<>();
+    private Cache<String, IModel> repositoryCache = null;
 
-    private final Map<String, Object> mRetrofitServiceCache = new HashMap<>();
-    private final Map<String, Object> mCacheServiceCache = new HashMap<>();
+    private Cache<String, Object> retrofitServiceCache = null;
+    private Cache<String, Object> cacheServiceCache = null;
+
+    private Cache.Factory cachefactory;
 
     @Inject
-    public RepositoryManager(Application application, Lazy<Retrofit> retrofit, Lazy<RxCache> rxCache) {
-        this.mRetrofit = retrofit;
-        this.mRxCache = rxCache;
+    public RepositoryManager(Application application, Lazy<Retrofit> retrofit, Lazy<RxCache> rxCache, Cache.Factory cachefactory) {
         this.application = application;
+        this.retrofit = retrofit;
+        this.rxCache = rxCache;
+        this.cachefactory = cachefactory;
     }
 
     /**
@@ -49,63 +54,69 @@ public class RepositoryManager implements IRepositoryManager {
      * @return
      */
     @Override
-    public <T extends IModel> T createRepository(Class<T> repository) {
-        T repositoryInstance;
-        synchronized (mRepositoryCache) {
-            repositoryInstance = (T) mRepositoryCache.get(repository.getName());
-            if (repositoryInstance == null) {
-                Constructor<? extends IModel> constructor = findConstructorForClass(repository);
-                try {
-                    repositoryInstance = (T) constructor.newInstance(this);
-                } catch (InstantiationException e) {
-                    throw new RuntimeException("Unable to invoke " + constructor, e);
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException("Unable to invoke " + constructor, e);
-                } catch (InvocationTargetException e) {
-                    throw new RuntimeException("create repository error", e);
-                }
-                mRepositoryCache.put(repository.getName(), repositoryInstance);
+    public synchronized <T extends IModel> T createRepository(Class<T> repository) {
+        if (repositoryCache == null) {
+            repositoryCache = cachefactory.build(CacheType.REPOSITORY_CACHE);
+        }
+
+        ExceptionUtils.checkNotNull(repositoryCache, "Cannot return null from a Cache.Factory#build(int) method");
+        T repositoryInstance = (T) repositoryCache.get(repository.getCanonicalName());
+        if (repositoryInstance == null) {
+            Constructor<? extends IModel> constructor = findConstructorForClass(repository);
+            try {
+                repositoryInstance = (T) constructor.newInstance(this);
+            } catch (InstantiationException e) {
+                throw new RuntimeException("Unable to invoke " + constructor, e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException("Unable to invoke " + constructor, e);
+            } catch (InvocationTargetException e) {
+                throw new RuntimeException("Create repository error", e);
             }
+            repositoryCache.put(repository.getCanonicalName(), repositoryInstance);
         }
         return repositoryInstance;
     }
 
     /**
-     * 根据传入的Class获取对应的Retrift service
+     * 根据传入的 Class 创建对应的 Retrofit service
      *
      * @param service
      * @param <T>
      * @return
      */
     @Override
-    public <T> T obtainApiService(Class<T> service) {
-        T retrofitService;
-        synchronized (mRetrofitServiceCache) {
-            retrofitService = (T) mRetrofitServiceCache.get(service.getName());
-            if (retrofitService == null) {
-                retrofitService = mRetrofit.get().create(service);
-                mRetrofitServiceCache.put(service.getName(), retrofitService);
-            }
+    public synchronized <T> T createRetrofitService(Class<T> service) {
+        if (retrofitServiceCache == null) {
+            retrofitServiceCache = cachefactory.build(CacheType.RETROFIT_SERVICE_CACHE);
+        }
+
+        ExceptionUtils.checkNotNull(retrofitServiceCache, "Cannot return null from a Cache.Factory#build(int) method");
+        T retrofitService = (T) retrofitServiceCache.get(service.getCanonicalName());
+        if (retrofitService == null) {
+            retrofitService = retrofit.get().create(service);
+            retrofitServiceCache.put(service.getCanonicalName(), retrofitService);
         }
         return retrofitService;
     }
 
     /**
-     * 根据传入的Class获取对应的RxCache service
+     * 根据传入的 Class 创建对应的 RxCache service
      *
      * @param cache
      * @param <T>
      * @return
      */
     @Override
-    public <T> T obtainCacheService(Class<T> cache) {
-        T cacheService;
-        synchronized (mCacheServiceCache) {
-            cacheService = (T) mCacheServiceCache.get(cache.getName());
-            if (cacheService == null) {
-                cacheService = mRxCache.get().using(cache);
-                mCacheServiceCache.put(cache.getName(), cacheService);
-            }
+    public synchronized <T> T createCacheService(Class<T> cache) {
+        if (cacheServiceCache == null) {
+            cacheServiceCache = cachefactory.build(CacheType.CACHE_SERVICE_CACHE);
+        }
+
+        ExceptionUtils.checkNotNull(cacheServiceCache, "Cannot return null from a Cache.Factory#build(int) method");
+        T cacheService = (T) cacheServiceCache.get(cache.getCanonicalName());
+        if (cacheService == null) {
+            cacheService = rxCache.get().using(cache);
+            cacheServiceCache.put(cache.getCanonicalName(), cacheService);
         }
         return cacheService;
     }
@@ -128,7 +139,7 @@ public class RepositoryManager implements IRepositoryManager {
      */
     @Override
     public void clearAllCache() {
-        mRxCache.get().evictAll();
+        this.rxCache.get().evictAll();
     }
 
     @Override

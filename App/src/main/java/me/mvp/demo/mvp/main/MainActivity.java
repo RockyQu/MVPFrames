@@ -1,6 +1,7 @@
 package me.mvp.demo.mvp.main;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 
 import me.mvp.demo.R;
@@ -8,9 +9,9 @@ import me.mvp.demo.ui.adapter.MainViewPagerAdapter;
 import me.mvp.demo.ui.widget.navigation.BottomNavigation;
 import me.mvp.demo.ui.widget.navigation.BottomNavigationAdapter;
 import me.mvp.demo.ui.widget.navigation.BottomNavigationViewPager;
-import me.mvp.frame.base.simple.base.BaseSimpleActivity;
-import me.mvp.frame.frame.simple.ISimpleView;
-import me.mvp.frame.frame.simple.Message;
+import me.mvp.frame.base.BaseActivity;
+import me.mvp.frame.frame.IView;
+import me.mvp.frame.frame.Message;
 import me.mvp.frame.widget.Snacker;
 import me.mvp.frame.widget.Toaster;
 
@@ -19,7 +20,7 @@ import butterknife.BindView;
 /**
  * 主页面
  */
-public class MainActivity extends BaseSimpleActivity<MainPresenter> implements ISimpleView {
+public class MainActivity extends BaseActivity<MainPresenter> implements IView {
 
     // UI
     @BindView(R.id.view_pager)
@@ -119,12 +120,12 @@ public class MainActivity extends BaseSimpleActivity<MainPresenter> implements I
     }
 
     @Override
-    public void showMessage(int type, String message) {
+    public void showMessage(int type, @NonNull String message) {
 
     }
 
     @Override
-    public void handleMessage(Message message) {
+    public void handleMessage(@NonNull Message message) {
 
     }
 

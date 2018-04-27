@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ManifestParser
+ * 用于解析 AndroidManifest 中的 Meta 属性
+ * 配合 {@link ConfigModule} 使用
  */
 public final class ManifestParser {
 

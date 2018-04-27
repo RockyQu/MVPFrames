@@ -2,32 +2,32 @@ package me.mvp.frame.integration;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import me.mvp.frame.base.delegate.FragmentDelegate;
 import me.mvp.frame.base.delegate.FragmentDelegateImpl;
-import me.mvp.frame.base.delegate.IFragment;
-import me.mvp.frame.base.simple.delegate.ISimpleFragment;
+import me.mvp.frame.base.IFragment;
+import me.mvp.frame.integration.cache.Cache;
+import me.mvp.frame.utils.ExceptionUtils;
 
 /**
- * 管理Fragment生命周期
+ * {@link FragmentManager.FragmentLifecycleCallbacks} 默认实现类
+ * 通过 {@link FragmentDelegate} 管理 {@link Fragment}
  */
 public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallbacks {
-
-    public FragmentLifecycle() {
-
-    }
 
     @Override
     public void onFragmentAttached(FragmentManager fm, Fragment f, Context context) {
         super.onFragmentAttached(fm, f, context);
-        if ((f instanceof IFragment || f instanceof ISimpleFragment) && f.getArguments() != null) {
+        if (f instanceof IFragment) {
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
-            if (fragmentDelegate == null) {
+            if (fragmentDelegate == null || !fragmentDelegate.isAdded()) {
+                Cache<String, Object> cache = getCacheFromFragment((IFragment) f);
                 fragmentDelegate = new FragmentDelegateImpl(fm, f);
-                f.getArguments().putParcelable(FragmentDelegate.FRAGMENT_DELEGATE, fragmentDelegate);
+                cache.put(FragmentDelegate.FRAGMENT_DELEGATE, fragmentDelegate);
             }
             fragmentDelegate.onAttach(context);
         }
@@ -130,9 +130,17 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
     }
 
     private FragmentDelegate fetchFragmentDelegate(Fragment fragment) {
-        if (fragment instanceof IFragment || fragment instanceof ISimpleFragment) {
-            return fragment.getArguments() == null ? null : (FragmentDelegate) fragment.getArguments().getParcelable(FragmentDelegate.FRAGMENT_DELEGATE);
+        if (fragment instanceof IFragment) {
+            Cache<String, Object> cache = getCacheFromFragment((IFragment) fragment);
+            return (FragmentDelegate) cache.get(FragmentDelegate.FRAGMENT_DELEGATE);
         }
         return null;
+    }
+
+    @NonNull
+    private Cache<String, Object> getCacheFromFragment(IFragment fragment) {
+        Cache<String, Object> cache = fragment.provideCache();
+        ExceptionUtils.checkNotNull(cache, "%s cannot be null on Fragment", Cache.class.getName());
+        return cache;
     }
 }

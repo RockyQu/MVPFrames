@@ -7,10 +7,15 @@ import android.support.annotation.Nullable;
 
 import org.simple.eventbus.EventBus;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+
 /**
- * Service
+ * 基类 {@link Service}
  */
 public abstract class BaseService extends Service {
+
+    protected CompositeDisposable compositeDisposable;
 
     public BaseService() {
 
@@ -42,6 +47,24 @@ public abstract class BaseService extends Service {
             // 注册EventBus
             EventBus.getDefault().unregister(this);
         }
+
+        // 解除订阅
+        unDispose();
+    }
+
+    protected void addDispose(Disposable disposable) {
+        if (compositeDisposable == null) {
+            compositeDisposable = new CompositeDisposable();
+        }
+        compositeDisposable.add(disposable);// 将所有subscription放入，集中处理
+    }
+
+    protected void unDispose() {
+        if (compositeDisposable != null) {
+            compositeDisposable.clear();// 保证 Activity 结束时取消所有正在执行的订阅
+        }
+
+        this.compositeDisposable = null;
     }
 
     /**

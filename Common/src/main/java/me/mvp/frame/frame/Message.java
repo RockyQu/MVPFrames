@@ -1,4 +1,4 @@
-package me.mvp.frame.frame.simple;
+package me.mvp.frame.frame;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +20,7 @@ import android.text.TextUtils;
  * them from a pool of recycled objects.</p>
  */
 public final class Message implements Parcelable {
+
     /**
      * User-defined message code so that the recipient can identify
      * what this message is about. Each {@link Handler} has its own name-space
@@ -105,7 +106,7 @@ public final class Message implements Parcelable {
 
     /*package*/ Bundle data;
 
-    /*package*/ ISimpleView target;
+    /*package*/ IView target;
 
     // sometimes we store linked lists of these things
     /*package*/ Message next;
@@ -168,20 +169,20 @@ public final class Message implements Parcelable {
      * @param v Handler to assign to the returned Message object's <em>target</em> member.
      * @return A Message object from the global pool.
      */
-    public static Message obtain(ISimpleView v) {
+    public static Message obtain(IView v) {
         Message m = obtain();
         m.target = v;
         return m;
     }
 
-    public static Message obtain(ISimpleView v, Object obj) {
+    public static Message obtain(IView v, Object obj) {
         Message m = obtain();
         m.target = v;
         m.obj = obj;
         return m;
     }
 
-    public static Message obtain(ISimpleView v, Object[] objs) {
+    public static Message obtain(IView v, Object[] objs) {
         Message m = obtain();
         m.target = v;
         m.objs = objs;
@@ -189,7 +190,7 @@ public final class Message implements Parcelable {
     }
 
 
-    public static Message obtain(ISimpleView v, Class presenter) {
+    public static Message obtain(IView v, Class presenter) {
         Message m = obtain();
         m.target = v;
         m.presenter = presenter.getSimpleName();
@@ -197,7 +198,7 @@ public final class Message implements Parcelable {
     }
 
 
-    public static Message obtain(ISimpleView v, Object obj, Class presenter) {
+    public static Message obtain(IView v, Object obj, Class presenter) {
         Message m = obtain();
         m.target = v;
         m.obj = obj;
@@ -205,7 +206,7 @@ public final class Message implements Parcelable {
         return m;
     }
 
-    public static Message obtain(ISimpleView v, Object[] objs, Class presenter) {
+    public static Message obtain(IView v, Object[] objs, Class presenter) {
         Message m = obtain();
         m.target = v;
         m.objs = objs;
@@ -222,7 +223,7 @@ public final class Message implements Parcelable {
      * @param what Value to assign to the <em>what</em> member.
      * @return A Message object from the global pool.
      */
-    public static Message obtain(ISimpleView v, int what) {
+    public static Message obtain(IView v, int what) {
         Message m = obtain();
         m.target = v;
         m.what = what;
@@ -239,7 +240,7 @@ public final class Message implements Parcelable {
      * @param obj  The <em>object</em> method to set.
      * @return A Message object from the global pool.
      */
-    public static Message obtain(ISimpleView v, int what, Object obj) {
+    public static Message obtain(IView v, int what, Object obj) {
         Message m = obtain();
         m.target = v;
         m.what = what;
@@ -258,7 +259,7 @@ public final class Message implements Parcelable {
      * @param arg2 The <em>arg2</em> value to set.
      * @return A Message object from the global pool.
      */
-    public static Message obtain(ISimpleView v, int what, int arg1, int arg2) {
+    public static Message obtain(IView v, int what, int arg1, int arg2) {
         Message m = obtain();
         m.target = v;
         m.what = what;
@@ -279,7 +280,7 @@ public final class Message implements Parcelable {
      * @param obj  The <em>obj</em> value to set.
      * @return A Message object from the global pool.
      */
-    public static Message obtain(ISimpleView v, int what,
+    public static Message obtain(IView v, int what,
                                  int arg1, int arg2, Object obj) {
         Message m = obtain();
         m.target = v;
@@ -383,7 +384,7 @@ public final class Message implements Parcelable {
     }
 
 
-    public void setTarget(ISimpleView target) {
+    public void setTarget(IView target) {
         this.target = target;
     }
 
@@ -395,7 +396,7 @@ public final class Message implements Parcelable {
      * message codes, so you do not need to
      * worry about yours conflicting with other handlers.
      */
-    public ISimpleView getTarget() {
+    public IView getTarget() {
         return target;
     }
 
@@ -444,7 +445,7 @@ public final class Message implements Parcelable {
     }
 
     /**
-     * 分发消息(这里需要自己切换线程),调用{@link ISimpleView#handleMessage(Message)}处理消息后
+     * 分发消息(这里需要自己切换线程),调用{@link IView#handleMessage(Message)}处理消息后
      * 将消息放入消息池,供下次{@link #obtain()}
      */
     public void HandleMessageToTarget() {
@@ -454,7 +455,7 @@ public final class Message implements Parcelable {
     }
 
     /**
-     * 分发消息(这里需要自己切换线程),调用{@link ISimpleView#handleMessage(Message)}处理消息
+     * 分发消息(这里需要自己切换线程),调用{@link IView#handleMessage(Message)}处理消息
      */
     public void HandleMessageToTargetUnrecycle() {
         if (target == null) throw new IllegalArgumentException("target is null");

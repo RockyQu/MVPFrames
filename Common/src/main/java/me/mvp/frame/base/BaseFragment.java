@@ -1,39 +1,91 @@
 package me.mvp.frame.base;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import me.mvp.frame.base.delegate.IFragment;
 import me.mvp.frame.di.component.AppComponent;
 import me.mvp.frame.frame.BasePresenter;
-
-import javax.inject.Inject;
+import me.mvp.frame.integration.cache.Cache;
+import me.mvp.frame.integration.cache.CacheType;
+import me.mvp.frame.utils.AppUtils;
 
 /**
- * Fragment
+ * BaseFragment
  */
-public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements IFragment {
+public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements IFragment<P> {
 
     // AppComponent
     protected AppComponent component = null;
 
-    /**
-     * Presenter
-     */
-    @Inject
+    // Cache
+    private Cache<String, Object> cache;
+
+    // Presenter
     protected P presenter = null;
 
     public BaseFragment() {
         setArguments(new Bundle());
     }
 
+    @NonNull
+    @Override
+    public synchronized Cache<String, Object> provideCache() {
+        if (cache == null) {
+            cache = AppUtils.obtainAppComponentFromContext(getActivity()).cacheFactory().build(CacheType.FRAGMENT_CACHE);
+        }
+        return cache;
+    }
+
     @Override
     public void setComponent(AppComponent component) {
         this.component = component;
+    }
+
+    @Override
+    public void setPresenter(P presenter) {
+        this.presenter = presenter;
+    }
+
+    // Fragment当前状态是否可见
+    private boolean isVisible;
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(getUserVisibleHint()) {
+            isVisible = true;
+            onVisible();
+        } else {
+            isVisible = false;
+            onInvisible();
+        }
+    }
+
+    /**
+     * 当前Fragment是可见的
+     */
+    protected void onVisible() {
+
+    }
+
+    /**
+     * 当前Fragment是不可见的
+     */
+    protected void onInvisible() {
+
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (presenter == null) {
+            presenter = obtainPresenter();
+        }
     }
 
     /**
@@ -48,16 +100,5 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     @Override
     public boolean useEventBus() {
         return true;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // 释放资源
-        if (presenter != null) {
-            presenter.onDestroy();
-        }
-
-        this.presenter = null;
     }
 }

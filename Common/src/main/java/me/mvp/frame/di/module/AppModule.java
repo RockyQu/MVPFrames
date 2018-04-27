@@ -15,9 +15,11 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import me.mvp.frame.integration.cache.Cache;
+import me.mvp.frame.integration.cache.CacheType;
 
 /**
- * AppModule
+ * 提供一些框架必须的实例的
  */
 @Module
 public class AppModule {
@@ -52,8 +54,8 @@ public class AppModule {
 
     @Singleton
     @Provides
-    public Map<String, Object> provideExtras() {
-        return new ArrayMap<>();
+    public Cache<String, Object> provideExtras(Cache.Factory cacheFactory) {
+        return cacheFactory.build(CacheType.EXTRAS);
     }
 
     public interface GsonConfiguration {

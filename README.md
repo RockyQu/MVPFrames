@@ -36,8 +36,7 @@ compile 'me.frame:MVPFrames:2.0.4'
 * Project  [Submit Bug or Idea](https://github.com/RockyQu/MVPFrames/issues)
 
 ## Thanks
-[MVPArms](https://github.com/JessYanCoding/MVPArms)  
-[MVPArt](https://github.com/JessYanCoding/MVPArt)  
+[MVPArms](https://github.com/JessYanCoding/MVPArms)
 
 ## About Me
 * Email [250533855@qq.com](250533855@qq.com)  

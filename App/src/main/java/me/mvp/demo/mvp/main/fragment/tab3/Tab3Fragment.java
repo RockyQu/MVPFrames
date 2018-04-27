@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import me.mvp.demo.R;
-import me.mvp.frame.base.simple.base.BaseSimpleFragment;
+import me.mvp.frame.base.BaseFragment;
 import me.mvp.frame.frame.IPresenter;
 
 /**
  *
  */
-public class Tab3Fragment extends BaseSimpleFragment {
+public class Tab3Fragment extends BaseFragment {
 
     /**
      * Create Fragment

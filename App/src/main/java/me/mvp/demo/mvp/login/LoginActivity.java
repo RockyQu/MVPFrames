@@ -1,14 +1,15 @@
 package me.mvp.demo.mvp.login;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.widget.Button;
 import android.widget.EditText;
 
 import me.mvp.demo.R;
 import me.mvp.demo.entity.User;
-import me.mvp.frame.base.simple.base.BaseSimpleActivity;
-import me.mvp.frame.frame.simple.ISimpleView;
-import me.mvp.frame.frame.simple.Message;
+import me.mvp.frame.base.BaseActivity;
+import me.mvp.frame.frame.IView;
+import me.mvp.frame.frame.Message;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -16,7 +17,7 @@ import butterknife.OnClick;
 /**
  * 登录页面
  */
-public class LoginActivity extends BaseSimpleActivity<LoginPresenter> implements ISimpleView {
+public class LoginActivity extends BaseActivity<LoginPresenter> implements IView {
 
     // 账号
     @BindView(R.id.edt_account)
@@ -101,12 +102,12 @@ public class LoginActivity extends BaseSimpleActivity<LoginPresenter> implements
     }
 
     @Override
-    public void showMessage(int type, String message) {
+    public void showMessage(int type, @NonNull String message) {
 
     }
 
     @Override
-    public void handleMessage(Message message) {
+    public void handleMessage(@NonNull Message message) {
 
     }
 
