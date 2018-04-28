@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import me.mvp.frame.utils.base.BaseUtils;
 
 /**
- * Android轻量级存储工具类
+ * Android 轻量级存储工具类
  */
 public class PreferencesUtils extends BaseUtils {
 

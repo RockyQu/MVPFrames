@@ -47,7 +47,7 @@ public class DeviceUtils extends BaseUtils {
     /**
      * 判断是否存在sd卡
      *
-     * @return
+     * @return 存在则返回 true
      */
     public static boolean isExitsSdcard() {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
@@ -57,7 +57,7 @@ public class DeviceUtils extends BaseUtils {
      * 屏幕高度
      *
      * @param context
-     * @return
+     * @return Screen Height
      */
     public static int getScreenHeight(Context context) {
         return getDisplayMetrics(context).heightPixels;
@@ -67,7 +67,7 @@ public class DeviceUtils extends BaseUtils {
      * 屏幕宽度
      *
      * @param context
-     * @return
+     * @return Screen Width
      */
     public static int getScreenWidth(Context context) {
         return getDisplayMetrics(context).widthPixels;
@@ -78,7 +78,7 @@ public class DeviceUtils extends BaseUtils {
      *
      * @param context
      * @param dpValue
-     * @return
+     * @return Px
      */
     public static int dpToPx(Context context, float dpValue) {
         return (int) (dpValue * context.getResources().getDisplayMetrics().density + 0.5f);
@@ -90,7 +90,7 @@ public class DeviceUtils extends BaseUtils {
      *
      * @param context
      * @param pxValue
-     * @return
+     * @return Dp
      */
     public static int pxToDp(Context context, float pxValue) {
         return (int) (pxValue / context.getResources().getDisplayMetrics().density + 0.5f);
@@ -100,7 +100,7 @@ public class DeviceUtils extends BaseUtils {
      * 获取状态栏高度
      *
      * @param context
-     * @return
+     * @return StatusBar Height
      */
     public static int getStatusBarHeight(Context context) {
         Class<?> c = null;
@@ -123,7 +123,7 @@ public class DeviceUtils extends BaseUtils {
      * 获取DisplayMetrics
      *
      * @param context
-     * @return
+     * @return DisplayMetrics
      */
     private static DisplayMetrics getDisplayMetrics(Context context) {
         DisplayMetrics displaymetrics = new DisplayMetrics();
@@ -135,7 +135,7 @@ public class DeviceUtils extends BaseUtils {
      * 是否是横屏
      *
      * @param context
-     * @return
+     * @return 横屏返回 true
      */
     public static boolean isLandscape(Context context) {
         boolean flag;
@@ -151,7 +151,7 @@ public class DeviceUtils extends BaseUtils {
      * 是否是竖屏
      *
      * @param context
-     * @return
+     * @return 竖屏返回 true
      */
     public static boolean isPortrait(Context context) {
         boolean flag = true;
@@ -171,6 +171,7 @@ public class DeviceUtils extends BaseUtils {
         if (view == null) {
             return;
         }
+
         InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (inputMethodManager.isActive()) {
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -182,7 +183,7 @@ public class DeviceUtils extends BaseUtils {
      *
      * @param context
      * @param pckName
-     * @return
+     * @return Package Exist
      */
     public static boolean isPackageExist(Context context, String pckName) {
         try {
@@ -215,7 +216,7 @@ public class DeviceUtils extends BaseUtils {
      *
      * @param context
      * @param flag    后置or前置
-     * @return
+     * @return 存在返回 ture
      */
     public static boolean hasCamera(Context context, boolean flag) {
         boolean hasCamera = false;
@@ -247,6 +248,7 @@ public class DeviceUtils extends BaseUtils {
      * 获取设备IMEI
      *
      * @param context
+     * @return IMEI
      */
     public static String getIMEI(Context context) {
         return ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
@@ -346,75 +348,17 @@ public class DeviceUtils extends BaseUtils {
      * @return true：自动；false：手动；默认：true
      */
     public static boolean isScreenBrightnessModeAuto(Context context) {
-        return getScreenBrightnessModeState(context) == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC ? true
-                : false;
+        return getScreenBrightnessModeState(context) == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;
     }
 
     /**
      * 获取系统屏幕亮度模式的状态，需要WRITE_SETTINGS权限
      *
      * @param context 上下文
-     * @return System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC：自动；System.
-     * SCREEN_BRIGHTNESS_MODE_AUTOMATIC
-     * ：手动；默认：System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC
+     * @return System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC 自动;System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC 手动;System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC 默认
      */
     public static int getScreenBrightnessModeState(Context context) {
-        return Settings.System.getInt(context.getContentResolver(),
-                Settings.System.SCREEN_BRIGHTNESS_MODE,
-                Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
-    }
-
-    /**
-     * 获取蓝牙的状态
-     *
-     * @return 取值为BluetoothAdapter的四个静态字段：STATE_OFF, STATE_TURNING_OFF,
-     * STATE_ON, STATE_TURNING_ON
-     * @throws Exception 没有找到蓝牙设备
-     */
-    public static int getBluetoothState() throws Exception {
-        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (bluetoothAdapter == null) {
-            throw new Exception("bluetooth device not found!");
-        } else {
-            return bluetoothAdapter.getState();
-        }
-    }
-
-    /**
-     * 判断蓝牙是否打开
-     *
-     * @return true：已经打开或者正在打开；false：已经关闭或者正在关闭
-     * 没有找到蓝牙设备
-     */
-    public static boolean isBluetoothOpen() {
-        int bluetoothStateCode = 0;
-        try {
-            bluetoothStateCode = getBluetoothState();
-            return bluetoothStateCode == BluetoothAdapter.STATE_ON
-                    || bluetoothStateCode == BluetoothAdapter.STATE_TURNING_ON ? true
-                    : false;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    /**
-     * 设置蓝牙状态
-     *
-     * @param enable 打开
-     *               没有找到蓝牙设备
-     */
-    public static void setBluetooth(boolean enable) {
-        // 如果当前蓝牙的状态与要设置的状态不一样
-        if (isBluetoothOpen() != enable) {
-            // 如果是要打开就打开，否则关闭
-            if (enable) {
-                BluetoothAdapter.getDefaultAdapter().enable();
-            } else {
-                BluetoothAdapter.getDefaultAdapter().disable();
-            }
-        }
+        return Settings.System.getInt(context.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
     }
 
     /**

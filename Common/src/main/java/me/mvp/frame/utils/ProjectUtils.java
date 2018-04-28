@@ -5,10 +5,12 @@ import android.text.TextUtils;
 
 import java.io.File;
 
+import me.mvp.frame.utils.base.BaseUtils;
+
 /**
  * ProjectUtils
  */
-public class ProjectUtils {
+public class ProjectUtils extends BaseUtils {
 
     // 目录名称
     public static String PROJECT_NAME = "MVP";
@@ -24,6 +26,10 @@ public class ProjectUtils {
     public static String OTHER = ROOT_PATH + "other/";
     // Camera
     public static String CAMERA = ROOT_PATH + "camera/";
+
+    public ProjectUtils() {
+        super();
+    }
 
     /**
      * 初始化项目文件夹
