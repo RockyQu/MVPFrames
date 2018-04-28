@@ -4,6 +4,7 @@ import me.mvp.frame.utils.base.BaseUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -27,43 +28,53 @@ public class ZipUtils extends BaseUtils {
      * zlib decompress 2 String
      *
      * @param bytesToDecompress
-     * @return String
+     * @return
      */
     public static String decompressToStringForZlib(byte[] bytesToDecompress) {
+        return decompressToStringForZlib(bytesToDecompress, "UTF-8");
+    }
+
+    /**
+     * zlib decompress 2 String
+     *
+     * @param bytesToDecompress
+     * @param charsetName
+     * @return
+     */
+    public static String decompressToStringForZlib(byte[] bytesToDecompress, String charsetName) {
         byte[] bytesDecompressed = decompressForZlib(bytesToDecompress);
+
         String returnValue = null;
         try {
-            returnValue = new String(bytesDecompressed, 0, bytesDecompressed.length, "UTF-8");
+            returnValue = new String(bytesDecompressed, 0, bytesDecompressed.length, charsetName);
         } catch (UnsupportedEncodingException uee) {
             uee.printStackTrace();
         }
+
         return returnValue;
     }
-
 
     /**
      * zlib decompress 2 byte
      *
      * @param bytesToDecompress
-     * @return byte
+     * @return
      */
     public static byte[] decompressForZlib(byte[] bytesToDecompress) {
         byte[] returnValues = null;
 
         Inflater inflater = new Inflater();
-
         int numberOfBytesToDecompress = bytesToDecompress.length;
 
-        inflater.setInput
-                (bytesToDecompress, 0, numberOfBytesToDecompress);
+        inflater.setInput(bytesToDecompress, 0, numberOfBytesToDecompress);
 
         int bufferSizeInBytes = numberOfBytesToDecompress;
 
         int numberOfBytesDecompressedSoFar = 0;
-        List<Byte> bytesDecompressedSoFar = new ArrayList<>();
+        List<Byte> bytesDecompressedSoFar = new ArrayList<Byte>();
 
         try {
-            while (!inflater.needsInput()) {
+            while (inflater.needsInput() == false) {
                 byte[] bytesDecompressedBuffer = new byte[bufferSizeInBytes];
 
                 int numberOfBytesDecompressedThisTime = inflater.inflate(bytesDecompressedBuffer);
@@ -93,7 +104,7 @@ public class ZipUtils extends BaseUtils {
      * zlib compress 2 byte
      *
      * @param bytesToCompress
-     * @return byte
+     * @return
      */
     public static byte[] compressForZlib(byte[] bytesToCompress) {
         Deflater deflater = new Deflater();
@@ -115,7 +126,7 @@ public class ZipUtils extends BaseUtils {
      * zlib compress 2 byte
      *
      * @param stringToCompress
-     * @return byte
+     * @return
      */
     public static byte[] compressForZlib(String stringToCompress) {
         byte[] returnValues = null;
@@ -133,7 +144,8 @@ public class ZipUtils extends BaseUtils {
      * gzip compress 2 byte
      *
      * @param string
-     * @return byte
+     * @return
+     * @throws IOException
      */
     public static byte[] compressForGzip(String string) {
         ByteArrayOutputStream os = null;
@@ -147,8 +159,8 @@ public class ZipUtils extends BaseUtils {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            okhttp3.internal.Util.closeQuietly(gos);
-            okhttp3.internal.Util.closeQuietly(os);
+            closeQuietly(gos);
+            closeQuietly(os);
         }
         return null;
     }
@@ -157,11 +169,21 @@ public class ZipUtils extends BaseUtils {
      * gzip decompress 2 string
      *
      * @param compressed
-     * @return String
+     * @return
      * @throws IOException
      */
     public static String decompressForGzip(byte[] compressed) {
+        return decompressForGzip(compressed, "UTF-8");
+    }
 
+    /**
+     * gzip decompress 2 string
+     *
+     * @param compressed
+     * @param charsetName
+     * @return
+     */
+    public static String decompressForGzip(byte[] compressed, String charsetName) {
         final int BUFFER_SIZE = compressed.length;
         GZIPInputStream gis = null;
         ByteArrayInputStream is = null;
@@ -172,15 +194,26 @@ public class ZipUtils extends BaseUtils {
             byte[] data = new byte[BUFFER_SIZE];
             int bytesRead;
             while ((bytesRead = gis.read(data)) != -1) {
-                string.append(new String(data, 0, bytesRead, "UTF-8"));
+                string.append(new String(data, 0, bytesRead, charsetName));
             }
             return string.toString();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            okhttp3.internal.Util.closeQuietly(gis);
-            okhttp3.internal.Util.closeQuietly(is);
+            closeQuietly(gis);
+            closeQuietly(is);
         }
         return null;
+    }
+
+    public static void closeQuietly(Closeable closeable) {
+        if (closeable != null) {
+            try {
+                closeable.close();
+            } catch (RuntimeException rethrown) {
+                throw rethrown;
+            } catch (Exception ignored) {
+            }
+        }
     }
 }

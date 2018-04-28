@@ -23,16 +23,14 @@ import me.mvp.frame.base.delegate.ApplicationLifecycles;
 import me.mvp.frame.di.module.AppConfigModule;
 import me.mvp.frame.di.module.AppModule;
 import me.mvp.frame.di.module.HttpModule;
-import me.mvp.frame.http.NetworkHandler;
+import me.mvp.frame.http.NetworkInterceptorHandler;
 import me.mvp.frame.http.ResponseEntity;
 import me.mvp.frame.http.cookie.PersistentCookieJar;
 import me.mvp.frame.http.download.Downloader;
 import me.mvp.frame.http.download.config.DownloaderConfiguration;
+import me.mvp.frame.http.interceptor.HttpLoggingInterceptor;
 import me.mvp.frame.http.interceptor.LoggingInterceptor;
 import me.mvp.frame.http.interceptor.ParameterInterceptor;
-import me.mvp.frame.http.ssl.SSL;
-import me.mvp.frame.http.ssl.TrustAllHostnameVerifier;
-import me.mvp.frame.http.ssl.TrustAllX509TrustManager;
 import me.mvp.frame.integration.ConfigModule;
 import me.mvp.frame.utils.AppUtils;
 import me.mvp.frame.utils.GsonUtils;
@@ -61,7 +59,7 @@ public class AppConfiguration implements ConfigModule {
         builder
                 .httpUrl(Api.APP_DOMAIN)
                 .cacheFile(new File(ProjectUtils.CACHE))
-                .networkHandler(new NetworkHandler() { // Http全局响应结果的处理类
+                .networkInterceptorHandler(new NetworkInterceptorHandler() { // Http全局响应结果的处理类
 
                     @Override
                     public Request onHttpRequest(Interceptor.Chain chain, Request request) {
@@ -118,7 +116,7 @@ public class AppConfiguration implements ConfigModule {
                 })
                 .interceptors(new Interceptor[]
                         {
-                                new LoggingInterceptor(),
+                                new HttpLoggingInterceptor(),
                                 new ParameterInterceptor(new ParameterInterceptor.ParameterCallback() {
 
                                     /**
@@ -148,8 +146,9 @@ public class AppConfiguration implements ConfigModule {
                 .okHttpConfiguration(new HttpModule.OkHttpConfiguration() {// 扩展自定义配置OkHttp参数
                     @Override
                     public void configOkHttp(Context context, OkHttpClient.Builder builder) {
-                        builder.sslSocketFactory(SSL.createSSLSocketFactory(), new TrustAllX509TrustManager());
-                        builder.hostnameVerifier(new TrustAllHostnameVerifier());
+                        // 配置 HTTPS
+                        // builder.sslSocketFactory(SSL.createSSLSocketFactory(), new TrustAllX509TrustManager());
+                        // builder.hostnameVerifier(new TrustAllHostnameVerifier());
                     }
                 })
                 .rxCacheConfiguration(new HttpModule.RxCacheConfiguration() {

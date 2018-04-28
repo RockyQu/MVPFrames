@@ -5,9 +5,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Http通信拦截器
+ * Http 通信拦截器
  */
-public interface NetworkHandler {
+public interface NetworkInterceptorHandler {
 
     /**
      * Http请求
@@ -28,7 +28,7 @@ public interface NetworkHandler {
      */
     Response onHttpResponse(String result, Interceptor.Chain chain, Request request, Response response);
 
-    NetworkHandler EMPTY = new NetworkHandler() {
+    NetworkInterceptorHandler EMPTY = new NetworkInterceptorHandler() {
 
         @Override
         public Request onHttpRequest(Interceptor.Chain chain, Request request) {

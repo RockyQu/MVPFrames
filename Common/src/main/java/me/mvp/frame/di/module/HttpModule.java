@@ -66,7 +66,7 @@ public class HttpModule {
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(true)// 设置出现错误进行重新连接
                 .cache(new Cache(application.getCacheDir(), CACHE_MAX_SIZE))// 设置缓存路径和大小
-                .addNetworkInterceptor(interceptor);// 网络拦截器，在Request和Resposne是分别被调用一次
+                .addNetworkInterceptor(interceptor);// 网络拦截器，在 Request 和 Resposne 是分别被调用一次
 
         if (cookie != null) {
             builder.cookieJar(cookie);// Cookie

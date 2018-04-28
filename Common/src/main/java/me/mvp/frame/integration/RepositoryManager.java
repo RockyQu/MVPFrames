@@ -26,24 +26,25 @@ import retrofit2.Retrofit;
 @Singleton
 public class RepositoryManager implements IRepositoryManager {
 
-    private Application application;
+    @Inject
+    Application application;
 
-    private Lazy<Retrofit> retrofit;
-    private Lazy<RxCache> rxCache;
+    @Inject
+    Lazy<Retrofit> retrofit;
+
+    @Inject
+    Lazy<RxCache> rxCache;
+
+    @Inject
+    Cache.Factory cachefactory;
 
     private Cache<String, IModel> repositoryCache = null;
-
     private Cache<String, Object> retrofitServiceCache = null;
     private Cache<String, Object> cacheServiceCache = null;
 
-    private Cache.Factory cachefactory;
-
     @Inject
-    public RepositoryManager(Application application, Lazy<Retrofit> retrofit, Lazy<RxCache> rxCache, Cache.Factory cachefactory) {
-        this.application = application;
-        this.retrofit = retrofit;
-        this.rxCache = rxCache;
-        this.cachefactory = cachefactory;
+    public RepositoryManager() {
+
     }
 
     /**

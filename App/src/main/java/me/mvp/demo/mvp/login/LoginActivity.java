@@ -93,12 +93,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements IView
 
     @Override
     public void showLoading() {
-
+        setViewStatus(btnSubmit, false, "加载中");
     }
 
     @Override
     public void hideLoading() {
-
+        setViewStatus(btnSubmit, true, "加载完成");
     }
 
     @Override

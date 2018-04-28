@@ -6,8 +6,9 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import me.mvp.frame.http.BaseUrl;
-import me.mvp.frame.http.NetworkHandler;
+import me.mvp.frame.http.NetworkInterceptorHandler;
 import me.mvp.frame.http.cookie.PersistentCookieJar;
+import me.mvp.frame.http.interceptor.NetworkInterceptor;
 import me.mvp.frame.integration.cache.Cache;
 import me.mvp.frame.integration.cache.CacheType;
 import me.mvp.frame.integration.cache.LruCache;
@@ -38,7 +39,7 @@ public class AppConfigModule {
     private BaseUrl baseUrl;
 
     private File cacheFile;
-    private NetworkHandler networkHandler;
+    private NetworkInterceptorHandler networkInterceptorHandler;
     private List<Interceptor> interceptors;
 
     private BaseImageLoader imageLoader;
@@ -56,12 +57,14 @@ public class AppConfigModule {
 
     private Cache.Factory cacheFactory;
 
+    private NetworkInterceptor.Level httpLogLevel;
+
     public AppConfigModule(Builder buidler) {
         this.httpUrl = buidler.httpUrl;
         this.baseUrl = buidler.baseUrl;
 
         this.cacheFile = buidler.cacheFile;
-        this.networkHandler = buidler.networkHandler;
+        this.networkInterceptorHandler = buidler.networkInterceptorHandler;
         this.interceptors = buidler.interceptors;
 
         this.imageLoader = buidler.imageLoader;
@@ -78,6 +81,8 @@ public class AppConfigModule {
 
         this.cookie = buidler.cookie;
         this.cookieLoadForRequest = buidler.cookieLoadForRequest;
+
+        this.httpLogLevel = buidler.httpLogLevel;
     }
 
     public static Builder builder() {
@@ -104,8 +109,8 @@ public class AppConfigModule {
 
     @Singleton
     @Provides
-    NetworkHandler provideNetworkHandler() {
-        return networkHandler == null ? NetworkHandler.EMPTY : networkHandler;
+    NetworkInterceptorHandler provideNetworkHandler() {
+        return networkInterceptorHandler == null ? NetworkInterceptorHandler.EMPTY : networkInterceptorHandler;
     }
 
     @Singleton
@@ -172,13 +177,20 @@ public class AppConfigModule {
         } : cacheFactory;
     }
 
+    @Singleton
+    @Provides
+    NetworkInterceptor.Level provideHttpLogLevel() {
+        return httpLogLevel == null ? NetworkInterceptor.Level.ALL : httpLogLevel;
+    }
+
     /**
-     * App全局配置
+     * App 全局配置
      */
     public static class Builder {
 
         // Http通信Base接口
         private HttpUrl httpUrl;
+
         /**
          * 针对于 BaseUrl 在 App 启动时不能确定，需要请求服务器接口动态获取的应用场景
          * 在调用 Retrofit 接口之前，使用 Okhttp 或其他方式，请求到正确的 BaseUrl 并通过此方法返回
@@ -190,7 +202,7 @@ public class AppConfigModule {
         // Http缓存路径
         private File cacheFile;
         // 网络通信拦截器
-        private NetworkHandler networkHandler;
+        private NetworkInterceptorHandler networkInterceptorHandler;
         // 其他拦截器
         private List<Interceptor> interceptors = new ArrayList<>();
 
@@ -223,6 +235,9 @@ public class AppConfigModule {
         // 正常情况下一般不会用到
         private PersistentCookieJar.CookieLoadForRequest cookieLoadForRequest;
 
+        // 设置 HTTP 日志级别
+        private NetworkInterceptor.Level httpLogLevel;
+
         private Builder() {
             ;
         }
@@ -248,8 +263,8 @@ public class AppConfigModule {
             return this;
         }
 
-        public Builder networkHandler(NetworkHandler networkHandler) {
-            this.networkHandler = networkHandler;
+        public Builder networkInterceptorHandler(NetworkInterceptorHandler networkInterceptorHandler) {
+            this.networkInterceptorHandler = networkInterceptorHandler;
             return this;
         }
 
@@ -300,6 +315,11 @@ public class AppConfigModule {
 
         public Builder cookieLoadForRequest(PersistentCookieJar.CookieLoadForRequest cookieLoadForRequest) {
             this.cookieLoadForRequest = cookieLoadForRequest;
+            return this;
+        }
+
+        public Builder httpLogLevel(NetworkInterceptor.Level httpLogLevel) {
+            this.httpLogLevel = httpLogLevel;
             return this;
         }
 

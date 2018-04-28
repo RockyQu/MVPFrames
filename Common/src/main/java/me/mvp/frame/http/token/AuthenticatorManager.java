@@ -11,7 +11,7 @@ import okhttp3.Route;
 
 /**
  * Token失效的处理方案一，当HTTP的状态码为401回调接口Authenticator.authenticate()方法，如果服务端遵循设计规范，可以尝试使用如下方法
- * 使用方法：setAuthenticator(new AuthenticatorManager());
+ * 使用方法：OkHttpClient.setAuthenticator(new AuthenticatorManager());
  */
 public class AuthenticatorManager implements Authenticator {
 

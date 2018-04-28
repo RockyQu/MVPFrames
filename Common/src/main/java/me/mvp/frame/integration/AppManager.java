@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
 
+import me.mvp.frame.di.component.AppComponent;
 import me.mvp.frame.widget.Snacker;
 import me.mvp.frame.widget.Toaster;
 
@@ -22,14 +23,14 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * 管理所有Activity，和在前台的Activity
- * 可以通过直接持有AppManager对象执行对应方法
+ * 管理所有 Activity
+ * 通过 {@link AppComponent#appManager()} 获取实例来执行对应方法
  */
 @Singleton
 public class AppManager {
 
-    // Application
-    private Application application;
+    @Inject
+    Application application;
 
     // true 为不需要加入到 Activity 容器进行统一管理，默认为 false
     public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_not_add_activity_list";
@@ -49,9 +50,7 @@ public class AppManager {
     private Activity currentActivity;
 
     @Inject
-    public AppManager(Application application) {
-        this.application = application;
-
+    public AppManager() {
         EventBus.getDefault().register(this);
     }
 
