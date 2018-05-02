@@ -14,9 +14,11 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import okhttp3.CacheControl;
+import okhttp3.Connection;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okio.Buffer;
@@ -30,7 +32,6 @@ public class NetworkInterceptor implements Interceptor {
 
     private static final Charset UTF8 = Charset.forName("UTF-8");
 
-    // Application
     @Inject
     Application application;
 
@@ -55,7 +56,6 @@ public class NetworkInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-
         Request request = chain.request();
 
         // 在请求服务器之前可以拿到 Request，做一些操作比如给 Request 添加 Header，如果不需要操作则返回参数中的 Request
@@ -63,29 +63,13 @@ public class NetworkInterceptor implements Interceptor {
             request = networkInterceptorHandler.onHttpRequest(chain, request);
         }
 
-        NetworkStatusReceiver.Type type = NetworkStatusReceiver.getType(application);
-        if (type == NetworkStatusReceiver.Type.NONE) {// 无网络时强制从缓存读取(必须得写，不然断网状态下，退出应用，或者等待一分钟后，会获取不到缓存）
-            request = request.newBuilder()
-                    .cacheControl(CacheControl.FORCE_CACHE)
-                    .build();
-        }
+        // 日志信息
+        StringBuilder logBuilder = new StringBuilder();
+
+        resolveRequestLog(chain, request);
+
 
         Response originalResponse = chain.proceed(request);
-        if (type == NetworkStatusReceiver.Type.MOBILE || type == NetworkStatusReceiver.Type.WIFI) {
-            int maxAge = 0;// 0秒
-            originalResponse = originalResponse.newBuilder()
-                    .removeHeader("Pragma")
-                    .removeHeader("Cache-Control")
-                    .header("Cache-Control", "public, max-age=" + maxAge)
-                    .build();
-        } else {
-            int maxTime = 60 * 60; // 1小时
-            originalResponse = originalResponse.newBuilder()
-                    .removeHeader("Pragma")
-                    .removeHeader("Cache-Control")
-                    .header("Cache-Control", "public, only-if-cached, max-stale=" + maxTime)
-                    .build();
-        }
 
         // 读取服务器返回结果
         ResponseBody responseBody = originalResponse.body();
@@ -93,7 +77,7 @@ public class NetworkInterceptor implements Interceptor {
         // 解释服务器返回结果
         String bodyString = null;
         if (responseBody != null && isParseable(responseBody.contentType())) {
-            bodyString = printResult(request, originalResponse);
+            bodyString = resolveResult(request, originalResponse);
         }
 
         // 这里可以提前一步拿到服务器返回的结果,外部实现此接口可以做一些操作，比如 Token 超时，重新获取
@@ -102,6 +86,20 @@ public class NetworkInterceptor implements Interceptor {
         }
 
         return originalResponse;
+    }
+
+    private void resolveRequestLog(Chain chain, Request request) throws IOException {
+        RequestBody requestBody = request.body();
+
+        Connection connection = chain.connection();
+        String requestStartMessage = "--> "
+                + request.method()
+                + ' ' + request.url()
+                + (connection != null ? " " + connection.protocol() : "");
+
+        if (requestBody != null) {
+            requestStartMessage += " (" + request.body().contentLength() + "-byte body)";
+        }
     }
 
     /**
@@ -113,7 +111,7 @@ public class NetworkInterceptor implements Interceptor {
      * @throws IOException
      */
     @Nullable
-    private String printResult(Request request, Response response) throws IOException {
+    private String resolveResult(Request request, Response response) throws IOException {
         try {
             ResponseBody responseBody = response.newBuilder().build().body();
             BufferedSource source = responseBody.source();

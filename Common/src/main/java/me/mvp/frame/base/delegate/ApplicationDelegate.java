@@ -58,10 +58,10 @@ public class ApplicationDelegate implements App, ApplicationLifecycles {
         modules = new ManifestParser(context).parse();
         for (ConfigModule module : modules) {
 
-            // 将框架外部，开发者实现的 Application 的生命周期回调 (AppLifecycles) 存入 mAppLifecycles 集合 (此时还未注册回调)
+            // 将框架外部，开发者实现的 Application 的生命周期回调 (AppLifecycles) 存入 applicationLifecycles 集合 (此时还未注册回调)
             module.injectApplicationLifecycle(context, applicationLifecycles);
 
-            // 将框架外部，开发者实现的 Activity 的生命周期回调 (ActivityLifecycleCallbacks) 存入 mActivityLifecycles 集合 (此时还未注册回调)
+            // 将框架外部，开发者实现的 Activity 的生命周期回调 (ActivityLifecycleCallbacks) 存入 activityLifecycles 集合 (此时还未注册回调)
             module.injectActivityLifecycle(context, activityLifecycles);
         }
     }

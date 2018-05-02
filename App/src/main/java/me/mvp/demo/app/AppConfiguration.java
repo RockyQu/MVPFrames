@@ -29,7 +29,6 @@ import me.mvp.frame.http.cookie.PersistentCookieJar;
 import me.mvp.frame.http.download.Downloader;
 import me.mvp.frame.http.download.config.DownloaderConfiguration;
 import me.mvp.frame.http.interceptor.HttpLoggingInterceptor;
-import me.mvp.frame.http.interceptor.LoggingInterceptor;
 import me.mvp.frame.http.interceptor.ParameterInterceptor;
 import me.mvp.frame.integration.ConfigModule;
 import me.mvp.frame.utils.AppUtils;

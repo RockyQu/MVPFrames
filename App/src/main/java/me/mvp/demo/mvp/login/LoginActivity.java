@@ -41,6 +41,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements IView
             edtPassword.setText(user.getPassword());
         }
 
+        edtAccount.setText("18012345678");
+        edtPassword.setText("123456");
     }
 
     @OnClick(R.id.btn_submit)

@@ -398,7 +398,7 @@ public static java.lang.String TABLENAME;
 }
 
 # JavaBean 实体类不能混淆，一般会将实体类统一放到一个包下，you.package.path 请改成你自己的项目路径
--keep public class com.frame.mvp.entity.** {
+-keep public class me.mvp.frame.entity.** {
     public void set*(***);
     public *** get*();
     public *** is*();
