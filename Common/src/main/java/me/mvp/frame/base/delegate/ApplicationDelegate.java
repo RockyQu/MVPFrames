@@ -7,6 +7,7 @@ import android.content.ComponentCallbacks2;
 import android.content.ContentProvider;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
 import java.util.ArrayList;
@@ -139,10 +140,10 @@ public class ApplicationDelegate implements App, ApplicationLifecycles {
     }
 
     /**
-     * 将app的全局配置信息封装进module(使用Dagger注入到需要配置信息的地方)
-     * 需要在AndroidManifest中声明{@link ConfigModule}的实现类,和Glide的配置方式相似
+     * 将 App 的全局配置信息封装进 Module (使用Dagger注入到需要配置信息的地方)
+     * 需要在 AndroidManifest 中声明 {@link ConfigModule} 的实现类
      *
-     * @return
+     * @return AppConfigModule
      */
     private AppConfigModule getAppConfigModule(Application context, List<ConfigModule> modules) {
         AppConfigModule.Builder builder = AppConfigModule
@@ -155,6 +156,7 @@ public class ApplicationDelegate implements App, ApplicationLifecycles {
         return builder.build();
     }
 
+    @NonNull
     @Override
     public AppComponent getAppComponent() {
         return component;

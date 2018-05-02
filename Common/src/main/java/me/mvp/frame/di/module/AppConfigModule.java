@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import me.logg.Logg;
+import me.logg.config.LoggConfiguration;
 import me.mvp.frame.http.BaseUrl;
 import me.mvp.frame.http.NetworkInterceptorHandler;
 import me.mvp.frame.http.cookie.PersistentCookieJar;
@@ -83,6 +85,11 @@ public class AppConfigModule {
         this.cookieLoadForRequest = buidler.cookieLoadForRequest;
 
         this.httpLogLevel = buidler.httpLogLevel;
+
+        LoggConfiguration configuration = new LoggConfiguration.Buidler()
+                .setDebug(httpLogLevel != NetworkInterceptor.Level.NONE)
+                .build();
+        Logg.init(configuration);
     }
 
     public static Builder builder() {
@@ -236,7 +243,7 @@ public class AppConfigModule {
         private PersistentCookieJar.CookieLoadForRequest cookieLoadForRequest;
 
         // 设置 HTTP 日志级别
-        private NetworkInterceptor.Level httpLogLevel;
+        private NetworkInterceptor.Level httpLogLevel = NetworkInterceptor.Level.ALL;
 
         private Builder() {
             ;

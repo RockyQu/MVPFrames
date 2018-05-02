@@ -56,39 +56,46 @@ public class NetworkInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Request request = chain.request();
+
+        // 日志信息
+        StringBuilder logBuilder = new StringBuilder();
+
+        // 解析 Request 日志
+        Request request = this.resolveRequestLogger(logBuilder, chain);
 
         // 在请求服务器之前可以拿到 Request，做一些操作比如给 Request 添加 Header，如果不需要操作则返回参数中的 Request
         if (networkInterceptorHandler != null) {
             request = networkInterceptorHandler.onHttpRequest(chain, request);
         }
 
-        // 日志信息
-        StringBuilder logBuilder = new StringBuilder();
-
-        resolveRequestLog(chain, request);
-
-
-        Response originalResponse = chain.proceed(request);
+        // 解析 Response 日志
+        Response response = this.resolveResponseLogger(logBuilder, chain);
 
         // 读取服务器返回结果
-        ResponseBody responseBody = originalResponse.body();
+        ResponseBody responseBody = response.body();
 
         // 解释服务器返回结果
         String bodyString = null;
         if (responseBody != null && isParseable(responseBody.contentType())) {
-            bodyString = resolveResult(request, originalResponse);
+            bodyString = this.resolveResult(request, response);
         }
 
-        // 这里可以提前一步拿到服务器返回的结果,外部实现此接口可以做一些操作，比如 Token 超时，重新获取
+        // 这里可以提前一步拿到服务器返回的结果，外部实现此接口可以做一些操作，比如 Token 超时，重新获取
         if (networkInterceptorHandler != null) {
-            return networkInterceptorHandler.onHttpResponse(bodyString, chain, request, originalResponse);
+            return networkInterceptorHandler.onHttpResponse(bodyString, chain, request, response);
         }
 
-        return originalResponse;
+        return response;
     }
 
-    private void resolveRequestLog(Chain chain, Request request) throws IOException {
+    /**
+     * 解析 Request 日志
+     *
+     * @param logBuilder
+     * @param chain
+     */
+    private Request resolveRequestLogger(StringBuilder logBuilder, Chain chain) throws IOException {
+        Request request = chain.request();
         RequestBody requestBody = request.body();
 
         Connection connection = chain.connection();
@@ -100,6 +107,20 @@ public class NetworkInterceptor implements Interceptor {
         if (requestBody != null) {
             requestStartMessage += " (" + request.body().contentLength() + "-byte body)";
         }
+
+        return request;
+    }
+
+    /**
+     * Resolve Response Logger
+     *
+     * @param logBuilder
+     * @param chain
+     */
+    private Response resolveResponseLogger(StringBuilder logBuilder, Chain chain) throws IOException {
+        Response response = chain.proceed(chain.request());
+
+        return response;
     }
 
     /**

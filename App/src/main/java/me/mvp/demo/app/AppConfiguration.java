@@ -193,7 +193,6 @@ public class AppConfiguration implements ConfigModule {
             public void onCreate(Application application) {
                 LoggConfiguration configuration = new LoggConfiguration.Buidler()
                         .setDebug(BuildConfig.DEBUG_FLAG)
-//                .setTag("test")// 自定义全局Tag
                         .build();
                 Logg.init(configuration);
 
