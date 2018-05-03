@@ -57,6 +57,8 @@ public class AppConfiguration implements ConfigModule {
     public void applyOptions(final Context context, AppConfigModule.Builder builder) {
         if (BuildConfig.DEBUG_FLAG) { // 只在 Debug 时打印日志
             builder.httpLogLevel(NetworkInterceptor.Level.ALL);
+        } else {
+            builder.httpLogLevel(NetworkInterceptor.Level.NONE);
         }
 
         builder
