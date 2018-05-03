@@ -71,14 +71,14 @@ public class AppModule {
         };
     }
 
-    public interface ErrorConfiguration {
+    public interface HttpErrorListener {
 
-        void error(Context context, Throwable throwable);
+        void handleError(Context context, Throwable throwable);
 
-        ErrorConfiguration EMPTY = new ErrorConfiguration() {
+        HttpErrorListener EMPTY = new HttpErrorListener() {
 
             @Override
-            public void error(Context context, Throwable throwable) {
+            public void handleError(Context context, Throwable throwable) {
 
             }
         };

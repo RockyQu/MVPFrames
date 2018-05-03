@@ -54,7 +54,7 @@ public class AppConfigModule {
 
     private AppModule.GsonConfiguration gsonConfiguration;
 
-    private AppModule.ErrorConfiguration errorConfiguration;
+    private AppModule.HttpErrorListener httpErrorListener;
 
     private CookieJar cookie;
     private PersistentCookieJar.CookieLoadForRequest cookieLoadForRequest;
@@ -79,7 +79,7 @@ public class AppConfigModule {
 
         this.gsonConfiguration = buidler.gsonConfiguration;
 
-        this.errorConfiguration = buidler.errorConfiguration;
+        this.httpErrorListener = buidler.httpErrorListener;
 
         this.cacheFactory = buidler.cacheFactory;
 
@@ -167,8 +167,8 @@ public class AppConfigModule {
 
     @Singleton
     @Provides
-    AppModule.ErrorConfiguration provideErrorConfiguration() {
-        return errorConfiguration == null ? AppModule.ErrorConfiguration.EMPTY : errorConfiguration;
+    AppModule.HttpErrorListener provideErrorConfiguration() {
+        return httpErrorListener == null ? AppModule.HttpErrorListener.EMPTY : httpErrorListener;
     }
 
     @Singleton
@@ -222,29 +222,29 @@ public class AppConfigModule {
         // 图片框架，默认为Glide
         private BaseImageLoader imageLoader;
 
-        // 提供一个Retrofit配置接口，用于对Retrofit进行格外的参数配置
+        // 提供一个 Retrofit 配置接口，用于对 Retrofit 进行格外的参数配置
         private HttpModule.RetrofitConfiguration retrofitConfiguration;
-        // 提供一个OkHttp配置接口，用于对OkHttp进行格外的参数配置
+        // 提供一个 OkHttp 配置接口，用于对 OkHttp 进行格外的参数配置
         private HttpModule.OkHttpConfiguration okHttpConfiguration;
-        // 提供一个RxCache配置接口，用于对RxCache进行格外的参数配置
+        // 提供一个 RxCache 配置接口，用于对 RxCache 进行格外的参数配置
         private HttpModule.RxCacheConfiguration rxCacheConfiguration;
 
-        // 提供一个Gson配置接口，用于对Gson进行格外的参数配置
+        // 提供一个 Gson 配置接口，用于对 Gson 进行格外的参数配置
         private AppModule.GsonConfiguration gsonConfiguration;
 
         // 提供全局错误响应接口，APP的各种错误信息可以统一回调至此接口
-        private AppModule.ErrorConfiguration errorConfiguration;
+        private AppModule.HttpErrorListener httpErrorListener;
 
-        // 框架缓存中组件
+        // 框架缓存组件
         private Cache.Factory cacheFactory;
 
-        // OkHttp用CookieJar保持会话功能，框架已集成PersistentCookieJar自动管理Cookie，或自己实现CookieJar接口
+        // OkHttp 用 CookieJar 保持会话功能，框架已集成 PersistentCookieJar 自动管理 Cookie，或自己实现 CookieJar 接口
         private CookieJar cookie;
 
-        // 此接口需求配合PersistentCookieJar使用
-        // 这是用来从PersistentCookieJar的loadForRequest获取List<Cookie>
-        // 实际上只是为了获取到接口里的Cookie值，如果项目存在两套Http模块
-        // 比如登录模块用OkHttp，其他模块需要用到登录模块返回的Cookie来保持会话，此时需要实现此接口将返回的Cookie设置给另外一套Http模块
+        // 此接口需求配合 PersistentCookieJar 使用
+        // 这是用来从 PersistentCookieJar 的 loadForRequest 获取 List<Cookie>
+        // 实际上只是为了获取到接口里的 Cookie 值，如果项目存在两套 Http 模块
+        // 比如登录模块用 OkHttp，其他模块需要用到登录模块返回的Cookie来保持会话，此时需要实现此接口将返回的 Cookie 设置给另外一套Http模块
         // 正常情况下一般不会用到
         private PersistentCookieJar.CookieLoadForRequest cookieLoadForRequest;
 
@@ -311,8 +311,8 @@ public class AppConfigModule {
             return this;
         }
 
-        public Builder errorConfiguration(AppModule.ErrorConfiguration errorConfiguration) {
-            this.errorConfiguration = errorConfiguration;
+        public Builder httpErrorListener(AppModule.HttpErrorListener httpErrorListener) {
+            this.httpErrorListener = httpErrorListener;
             return this;
         }
 
