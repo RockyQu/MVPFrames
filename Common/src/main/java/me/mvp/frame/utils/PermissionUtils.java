@@ -163,8 +163,11 @@ public class PermissionUtils extends BaseUtils {
         requestPermissions(requestPermission, rxPermissions, Manifest.permission.WRITE_CALENDAR);
     }
 
+    /**
+     * 申请相机权限时，必须保证 Manifest.permission.CAMERA、Manifest.permission.WRITE_EXTERNAL_STORAGE 权限同时申请
+     */
     public static void camera(RequestPermission requestPermission, RxPermissions rxPermissions) {
-        requestPermissions(requestPermission, rxPermissions, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
+        requestPermissions(requestPermission, rxPermissions, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     public static void location(RequestPermission requestPermission, RxPermissions rxPermissions) {
