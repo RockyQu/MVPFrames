@@ -32,7 +32,9 @@ import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 
 /**
- * App全局配置信息
+ * 全局配置信息
+ * <p>
+ * {@link Builder}
  */
 @Module
 public class AppConfigModule {
@@ -187,6 +189,10 @@ public class AppConfigModule {
     @Singleton
     @Provides
     NetworkInterceptor.Level provideHttpLogLevel() {
+        Logg.init(new LoggConfiguration.Buidler()
+                .setDebug(httpLogLevel != null
+                        && (httpLogLevel == NetworkInterceptor.Level.ALL || httpLogLevel == NetworkInterceptor.Level.SIMPLE))
+                .build());
         return httpLogLevel == null ? NetworkInterceptor.Level.ALL : httpLogLevel;
     }
 
@@ -195,7 +201,7 @@ public class AppConfigModule {
      */
     public static class Builder {
 
-        // Http通信Base接口
+        // Http 通信 Base 接口
         private HttpUrl httpUrl;
 
         /**
@@ -243,7 +249,7 @@ public class AppConfigModule {
         private PersistentCookieJar.CookieLoadForRequest cookieLoadForRequest;
 
         // 设置 HTTP 日志级别
-        private NetworkInterceptor.Level httpLogLevel = NetworkInterceptor.Level.ALL;
+        private NetworkInterceptor.Level httpLogLevel;
 
         private Builder() {
             ;

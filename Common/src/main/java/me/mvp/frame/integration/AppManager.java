@@ -36,13 +36,13 @@ public class AppManager {
     public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_not_add_activity_list";
 
     public static final String APPMANAGER_MESSAGE = "AppManager";
-    public static final int START_ACTIVITY = 0;
+    public static final int START_ACTIVITY = 0x00000;
 
-    public static final int SNACKER = 1;
-    public static final int TOASTER = 2;
+    public static final int SNACKER = 0x00001;
+    public static final int TOASTER = 0x00002;
 
-    public static final int KILL = 5;
-    public static final int EXIT = 6;
+    public static final int KILL = 0x00005;
+    public static final int EXIT = 0x00006;
 
     // 管理所有activity
     public List<Activity> activitys;

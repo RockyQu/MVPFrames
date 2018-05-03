@@ -8,16 +8,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import io.rx_cache2.internal.RxCache;
-import me.logg.Logg;
-import me.logg.config.LoggConfiguration;
 import me.mvp.demo.BuildConfig;
 import me.mvp.demo.app.api.Api;
 import me.mvp.demo.app.utils.gson.GsonResponseDeserializer;
 import me.mvp.demo.entity.User;
 import me.mvp.demo.mvp.login.LoginActivity;
+
 import com.google.gson.GsonBuilder;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+
 import me.mvp.frame.base.App;
 import me.mvp.frame.base.delegate.ApplicationLifecycles;
 import me.mvp.frame.di.module.AppConfigModule;
@@ -28,7 +28,7 @@ import me.mvp.frame.http.ResponseEntity;
 import me.mvp.frame.http.cookie.PersistentCookieJar;
 import me.mvp.frame.http.download.Downloader;
 import me.mvp.frame.http.download.config.DownloaderConfiguration;
-import me.mvp.frame.http.interceptor.HttpLoggingInterceptor;
+import me.mvp.frame.http.interceptor.NetworkInterceptor;
 import me.mvp.frame.http.interceptor.ParameterInterceptor;
 import me.mvp.frame.integration.ConfigModule;
 import me.mvp.frame.utils.AppUtils;
@@ -49,12 +49,16 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 
 /**
- * App全局配置信息在此配置，需要将此实现类声明到AndroidManifest中
+ * 全局配置信息在此配置，需要将此实现类声明到 AndroidManifest 中
  */
 public class AppConfiguration implements ConfigModule {
 
     @Override
     public void applyOptions(final Context context, AppConfigModule.Builder builder) {
+        if (BuildConfig.DEBUG_FLAG) { // 只在 Debug 时打印日志
+            builder.httpLogLevel(NetworkInterceptor.Level.ALL);
+        }
+
         builder
                 .httpUrl(Api.APP_DOMAIN)
                 .cacheFile(new File(ProjectUtils.CACHE))
@@ -115,7 +119,6 @@ public class AppConfiguration implements ConfigModule {
                 })
                 .interceptors(new Interceptor[]
                         {
-                                new HttpLoggingInterceptor(),
                                 new ParameterInterceptor(new ParameterInterceptor.ParameterCallback() {
 
                                     /**
@@ -191,11 +194,6 @@ public class AppConfiguration implements ConfigModule {
 
             @Override
             public void onCreate(Application application) {
-                LoggConfiguration configuration = new LoggConfiguration.Buidler()
-                        .setDebug(BuildConfig.DEBUG_FLAG)
-                        .build();
-                Logg.init(configuration);
-
                 // LeakCanary内存泄露检查
                 ((App) application).getAppComponent().extras().put(RefWatcher.class.getName(), BuildConfig.DEBUG_FLAG ? LeakCanary.install(application) : RefWatcher.DISABLED);
             }

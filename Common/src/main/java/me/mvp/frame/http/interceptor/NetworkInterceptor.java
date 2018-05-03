@@ -3,26 +3,33 @@ package me.mvp.frame.http.interceptor;
 import android.app.Application;
 import android.support.annotation.Nullable;
 
+import me.logg.Logg;
+import me.logg.config.LoggConstant;
 import me.mvp.frame.http.NetworkInterceptorHandler;
 import me.mvp.frame.http.receiver.NetworkStatusReceiver;
 import me.mvp.frame.utils.ZipUtils;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import okhttp3.CacheControl;
 import okhttp3.Connection;
+import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okhttp3.internal.http.HttpHeaders;
 import okio.Buffer;
 import okio.BufferedSource;
+import okio.GzipSource;
 
 /**
  * Http 拦截器
@@ -57,11 +64,8 @@ public class NetworkInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
 
-        // 日志信息
-        StringBuilder logBuilder = new StringBuilder();
-
         // 解析 Request 日志
-        Request request = this.resolveRequestLogger(logBuilder, chain);
+        Request request = this.resolveRequestLogger(new StringBuilder(), chain);
 
         // 在请求服务器之前可以拿到 Request，做一些操作比如给 Request 添加 Header，如果不需要操作则返回参数中的 Request
         if (networkInterceptorHandler != null) {
@@ -69,12 +73,12 @@ public class NetworkInterceptor implements Interceptor {
         }
 
         // 解析 Response 日志
-        Response response = this.resolveResponseLogger(logBuilder, chain);
+        Response response = this.resolveResponseLogger(new StringBuilder(), chain);
 
         // 读取服务器返回结果
         ResponseBody responseBody = response.body();
 
-        // 解释服务器返回结果
+        // 解析服务器返回结果
         String bodyString = null;
         if (responseBody != null && isParseable(responseBody.contentType())) {
             bodyString = this.resolveResult(request, response);
@@ -91,35 +95,188 @@ public class NetworkInterceptor implements Interceptor {
     /**
      * 解析 Request 日志
      *
-     * @param logBuilder
+     * @param builder
      * @param chain
      */
-    private Request resolveRequestLogger(StringBuilder logBuilder, Chain chain) throws IOException {
+    private Request resolveRequestLogger(StringBuilder builder, Chain chain) throws IOException {
         Request request = chain.request();
+
         RequestBody requestBody = request.body();
+        boolean hasRequestBody = requestBody != null;
 
         Connection connection = chain.connection();
-        String requestStartMessage = "--> "
-                + request.method()
-                + ' ' + request.url()
-                + (connection != null ? " " + connection.protocol() : "");
 
-        if (requestBody != null) {
-            requestStartMessage += " (" + request.body().contentLength() + "-byte body)";
+        builder.append(LoggConstant.SPACE).append(LoggConstant.BR);
+        builder
+                .append("--> ")
+                .append(request.method())
+                .append(' ')
+                .append(request.url())
+                .append(connection != null ? " " + connection.protocol() : "")
+        ;
+
+        if (hasRequestBody) {
+            builder
+                    .append(" (")
+                    .append(requestBody.contentLength())
+                    .append("-byte body)");
         }
 
+        builder.append(LoggConstant.BR);
+
+        if (hasRequestBody) {
+            if (requestBody.contentType() != null) {
+                builder.append("Content-Type: ").append(requestBody.contentType()).append(LoggConstant.BR);
+            }
+            if (requestBody.contentLength() != -1) {
+                builder.append("Content-Length: ").append(requestBody.contentLength()).append(LoggConstant.BR);
+            }
+        }
+
+        Headers headers = request.headers();
+        for (int i = 0, count = headers.size(); i < count; i++) {
+            String name = headers.name(i);
+            if (!"Content-Type".equalsIgnoreCase(name) && !"Content-Length".equalsIgnoreCase(name)) {
+                builder.append(name).append(": ").append(headers.value(i)).append(LoggConstant.BR);
+            }
+        }
+
+        if (!hasRequestBody) {
+            builder.append("--> END ").append(request.method()).append(LoggConstant.BR);
+        } else if (bodyHasUnknownEncoding(request.headers())) {
+            builder.append("--> END ").append(request.method()).append(" (encoded body omitted)").append(LoggConstant.BR);
+        } else {
+            Buffer buffer = new Buffer();
+            requestBody.writeTo(buffer);
+
+            Charset charset = UTF8;
+            MediaType contentType = requestBody.contentType();
+            if (contentType != null) {
+                charset = contentType.charset(UTF8);
+            }
+
+            if (isPlaintext(buffer)) {
+                builder.append(buffer.readString(charset)).append(LoggConstant.BR);
+                builder
+                        .append("--> END ")
+                        .append(request.method())
+                        .append(" (")
+                        .append(requestBody.contentLength())
+                        .append("-byte body)")
+                        .append(LoggConstant.BR)
+                ;
+            } else {
+                builder
+                        .append("--> END ")
+                        .append(request.method())
+                        .append(" (binary ")
+                        .append(requestBody.contentLength())
+                        .append("-byte body omitted)")
+                        .append(LoggConstant.BR)
+                ;
+            }
+        }
+
+        Logg.e("OkHttp", builder.toString());
         return request;
     }
 
     /**
-     * Resolve Response Logger
+     * 解析 Response 日志
      *
-     * @param logBuilder
+     * @param builder
      * @param chain
      */
-    private Response resolveResponseLogger(StringBuilder logBuilder, Chain chain) throws IOException {
-        Response response = chain.proceed(chain.request());
+    private Response resolveResponseLogger(StringBuilder builder, Chain chain) throws IOException {
+        long startNs = System.nanoTime();
 
+        Response response;
+        try {
+            response = chain.proceed(chain.request());
+        } catch (Exception e) {
+            builder.append("<-- HTTP FAILED: ").append(e);
+            throw e;
+        }
+
+        long tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
+
+        ResponseBody responseBody = response.body();
+        boolean hasResponseBody = responseBody != null;
+
+        if (hasResponseBody) {
+            long contentLength = responseBody.contentLength();
+
+            builder.append(LoggConstant.SPACE).append(LoggConstant.BR);
+            builder
+                    .append("<-- ")
+                    .append(response.code())
+                    .append(response.message().isEmpty() ? "" : ' ' + response.message())
+                    .append(' ')
+                    .append(response.request().url())
+                    .append(" (")
+                    .append(tookMs)
+                    .append("ms")
+                    .append(", ")
+                    .append(contentLength != -1 ? contentLength + "-byte" : "unknown-length")
+                    .append(" body")
+                    .append(')')
+                    .append(LoggConstant.BR)
+            ;
+
+            Headers headers = response.headers();
+            for (int i = 0, count = headers.size(); i < count; i++) {
+                builder.append(headers.name(i)).append(": ").append(headers.value(i)).append(LoggConstant.BR);
+            }
+
+            if (!HttpHeaders.hasBody(response)) {
+                builder.append("<-- END HTTP").append(LoggConstant.BR);
+            } else if (bodyHasUnknownEncoding(response.headers())) {
+                builder.append("<-- END HTTP (encoded body omitted)").append(LoggConstant.BR);
+            } else {
+                BufferedSource source = responseBody.source();
+                source.request(Long.MAX_VALUE); // Buffer the entire body.
+                Buffer buffer = source.buffer();
+
+                Long gzippedLength = null;
+                if ("gzip".equalsIgnoreCase(headers.get("Content-Encoding"))) {
+                    gzippedLength = buffer.size();
+                    GzipSource gzippedResponseBody = null;
+                    try {
+                        gzippedResponseBody = new GzipSource(buffer.clone());
+                        buffer = new Buffer();
+                        buffer.writeAll(gzippedResponseBody);
+                    } finally {
+                        if (gzippedResponseBody != null) {
+                            gzippedResponseBody.close();
+                        }
+                    }
+                }
+
+                Charset charset = UTF8;
+                MediaType contentType = responseBody.contentType();
+                if (contentType != null) {
+                    charset = contentType.charset(UTF8);
+                }
+
+                if (!isPlaintext(buffer)) {
+                    builder.append("<-- END HTTP (binary ").append(buffer.size()).append("-byte body omitted)").append(LoggConstant.BR);
+                    return response;
+                }
+
+                if (contentLength != 0) {
+                    builder.append(buffer.clone().readString(charset)).append(LoggConstant.BR);
+                }
+
+                if (gzippedLength != null) {
+                    builder.append("<-- END HTTP (").append(buffer.size()).append("-byte, ").append(gzippedLength).append("-gzipped-byte body)").append(LoggConstant.BR);
+                } else {
+                    builder.append("<-- END HTTP (").append(buffer.size()).append("-byte body)").append(LoggConstant.BR);
+                }
+            }
+
+        }
+
+        Logg.e("OkHttp", builder.toString());
         return response;
     }
 
@@ -258,5 +415,40 @@ public class NetworkInterceptor implements Interceptor {
         }
 
         return s.substring(i + 1, s.length() - 1);
+    }
+
+    /**
+     * Returns true if the body in question probably contains human readable text. Uses a small sample
+     * of code points to detect unicode control characters commonly used in binary file signatures.
+     */
+    static boolean isPlaintext(Buffer buffer) {
+        try {
+            Buffer prefix = new Buffer();
+            long byteCount = buffer.size() < 64 ? buffer.size() : 64;
+            buffer.copyTo(prefix, 0, byteCount);
+            for (int i = 0; i < 16; i++) {
+                if (prefix.exhausted()) {
+                    break;
+                }
+                int codePoint = prefix.readUtf8CodePoint();
+                if (Character.isISOControl(codePoint) && !Character.isWhitespace(codePoint)) {
+                    return false;
+                }
+            }
+            return true;
+        } catch (EOFException e) {
+            return false; // Truncated UTF-8 sequence.
+        }
+    }
+
+    /**
+     * @param headers
+     * @return boolean
+     */
+    private boolean bodyHasUnknownEncoding(Headers headers) {
+        String contentEncoding = headers.get("Content-Encoding");
+        return contentEncoding != null
+                && !contentEncoding.equalsIgnoreCase("identity")
+                && !contentEncoding.equalsIgnoreCase("gzip");
     }
 }
