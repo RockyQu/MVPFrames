@@ -100,6 +100,11 @@ public class NetworkInterceptor implements Interceptor {
      */
     private Request resolveRequestLogger(StringBuilder builder, Chain chain) throws IOException {
         Request request = chain.request();
+        if (level == Level.NONE) {
+            return request;
+        }
+
+        boolean hasSimpleLog = level == Level.SIMPLE;
 
         RequestBody requestBody = request.body();
         boolean hasRequestBody = requestBody != null;
@@ -124,7 +129,7 @@ public class NetworkInterceptor implements Interceptor {
 
         builder.append(LoggConstant.BR);
 
-        if (hasRequestBody) {
+        if (hasRequestBody && hasSimpleLog) {
             if (requestBody.contentType() != null) {
                 builder.append("Content-Type: ").append(requestBody.contentType()).append(LoggConstant.BR);
             }
@@ -190,15 +195,14 @@ public class NetworkInterceptor implements Interceptor {
     private Response resolveResponseLogger(StringBuilder builder, Chain chain) throws IOException {
         long startNs = System.nanoTime();
 
-        Response response;
-        try {
-            response = chain.proceed(chain.request());
-        } catch (Exception e) {
-            builder.append("<-- HTTP FAILED: ").append(e);
-            throw e;
+        Response response = chain.proceed(chain.request());
+        if (level == Level.NONE) {
+            return response;
         }
 
         long tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
+
+        boolean hasSimpleLog = level == Level.SIMPLE;
 
         ResponseBody responseBody = response.body();
         boolean hasResponseBody = responseBody != null;
