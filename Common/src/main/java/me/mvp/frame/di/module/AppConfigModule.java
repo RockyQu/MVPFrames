@@ -190,8 +190,7 @@ public class AppConfigModule {
     @Provides
     NetworkInterceptor.Level provideHttpLogLevel() {
         Logg.init(new LoggConfiguration.Buidler()
-                .setDebug(httpLogLevel != null
-                        && (httpLogLevel == NetworkInterceptor.Level.ALL || httpLogLevel == NetworkInterceptor.Level.SIMPLE))
+                .setDebug(httpLogLevel != null && httpLogLevel == NetworkInterceptor.Level.ALL)
                 .build());
         return httpLogLevel == null ? NetworkInterceptor.Level.ALL : httpLogLevel;
     }

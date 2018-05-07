@@ -52,7 +52,6 @@ public class NetworkInterceptor implements Interceptor {
 
     public enum Level {
         NONE,// 不打印任何日志
-        SIMPLE,// 只打印关键日志
         ALL// 打印全部日志
     }
 
@@ -104,8 +103,6 @@ public class NetworkInterceptor implements Interceptor {
             return request;
         }
 
-        boolean hasSimpleLog = level == Level.SIMPLE;
-
         RequestBody requestBody = request.body();
         boolean hasRequestBody = requestBody != null;
 
@@ -129,7 +126,7 @@ public class NetworkInterceptor implements Interceptor {
 
         builder.append(LoggConstant.BR);
 
-        if (hasRequestBody && hasSimpleLog) {
+        if (hasRequestBody) {
             if (requestBody.contentType() != null) {
                 builder.append("Content-Type: ").append(requestBody.contentType()).append(LoggConstant.BR);
             }
@@ -201,8 +198,6 @@ public class NetworkInterceptor implements Interceptor {
         }
 
         long tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
-
-        boolean hasSimpleLog = level == Level.SIMPLE;
 
         ResponseBody responseBody = response.body();
         boolean hasResponseBody = responseBody != null;
