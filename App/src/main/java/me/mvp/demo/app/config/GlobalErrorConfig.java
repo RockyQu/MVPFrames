@@ -32,14 +32,18 @@ public class GlobalErrorConfig implements AppModule.GlobalErrorHandler {
             message = "请求网络超时或网络连接异常";
         } else if (throwable instanceof HttpException) {
             HttpException httpException = (HttpException) throwable;
-            if (httpException.code() == 500) {
-                message = "服务器发生错误";
+            if (httpException.code() == 504) {
+                message = "网关超时";
+            } else if (httpException.code() == 500) {
+                message = "服务器内部错误";
             } else if (httpException.code() == 404) {
-                message = "请求地址不存在";
+                message = "所仿问的地址不存在";
             } else if (httpException.code() == 403) {
-                message = "请求被服务器拒绝";
+                message = "没有权限，拒绝仿问";
             } else if (httpException.code() == 307) {
                 message = "请求被重定向到其他页面";
+            } else if (httpException.code() == 304) {
+                message = "请求的内容未修改";
             } else {
                 message = httpException.message();
             }
