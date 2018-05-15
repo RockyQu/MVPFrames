@@ -54,7 +54,7 @@ public class AppConfigModule {
 
     private AppModule.GsonConfiguration gsonConfiguration;
 
-    private AppModule.HttpErrorListener httpErrorListener;
+    private AppModule.GlobalErrorHandler globalErrorHandler;
 
     private CookieJar cookie;
     private PersistentCookieJar.CookieLoadForRequest cookieLoadForRequest;
@@ -79,7 +79,7 @@ public class AppConfigModule {
 
         this.gsonConfiguration = buidler.gsonConfiguration;
 
-        this.httpErrorListener = buidler.httpErrorListener;
+        this.globalErrorHandler = buidler.globalErrorHandler;
 
         this.cacheFactory = buidler.cacheFactory;
 
@@ -167,8 +167,8 @@ public class AppConfigModule {
 
     @Singleton
     @Provides
-    AppModule.HttpErrorListener provideErrorConfiguration() {
-        return httpErrorListener == null ? AppModule.HttpErrorListener.EMPTY : httpErrorListener;
+    AppModule.GlobalErrorHandler provideErrorConfiguration() {
+        return globalErrorHandler == null ? AppModule.GlobalErrorHandler.EMPTY : globalErrorHandler;
     }
 
     @Singleton
@@ -232,7 +232,7 @@ public class AppConfigModule {
         private AppModule.GsonConfiguration gsonConfiguration;
 
         // 提供全局错误响应接口，APP的各种错误信息可以统一回调至此接口
-        private AppModule.HttpErrorListener httpErrorListener;
+        private AppModule.GlobalErrorHandler globalErrorHandler;
 
         // 框架缓存组件
         private Cache.Factory cacheFactory;
@@ -280,8 +280,8 @@ public class AppConfigModule {
             return this;
         }
 
-        public Builder interceptors(Interceptor[] interceptors) {
-            this.interceptors = Arrays.asList(interceptors);
+        public Builder interceptors(Interceptor interceptor) {
+            this.interceptors.add(interceptor);
             return this;
         }
 
@@ -310,8 +310,8 @@ public class AppConfigModule {
             return this;
         }
 
-        public Builder httpErrorListener(AppModule.HttpErrorListener httpErrorListener) {
-            this.httpErrorListener = httpErrorListener;
+        public Builder globalErrorHandler(AppModule.GlobalErrorHandler globalErrorHandler) {
+            this.globalErrorHandler = globalErrorHandler;
             return this;
         }
 

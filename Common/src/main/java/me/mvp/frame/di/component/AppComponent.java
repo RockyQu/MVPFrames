@@ -39,6 +39,9 @@ public interface AppComponent {
     // OkHttpClient
     OkHttpClient getOkHttpClient();
 
+    // Global Error
+    AppModule.GlobalErrorHandler getGlobalErrorHandler();
+
     // 图片框架
     ImageLoader getImageLoader();
 

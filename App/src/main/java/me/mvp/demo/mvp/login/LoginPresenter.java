@@ -6,7 +6,6 @@ import me.mvp.frame.frame.BasePresenter;
 import me.mvp.frame.frame.Message;
 import me.mvp.frame.http.ResponseCallback;
 import me.mvp.frame.http.ResponseEntity;
-import me.mvp.frame.http.exception.ApiException;
 
 import retrofit2.Call;
 
@@ -44,8 +43,8 @@ public class LoginPresenter extends BasePresenter<LoginRepository> {
             }
 
             @Override
-            protected void onFailure(ApiException exception) {
-                msg.getTarget().showMessage(0, exception.getMessage());
+            protected void onFailure(Throwable throwable) {
+                msg.getTarget().showMessage(0, throwable.getMessage());
             }
 
             @Override
