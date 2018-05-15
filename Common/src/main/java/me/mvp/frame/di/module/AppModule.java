@@ -71,14 +71,21 @@ public class AppModule {
         };
     }
 
-    public interface HttpErrorListener {
+    public interface GlobalErrorHandler {
 
-        void handleError(Context context, Throwable throwable);
+        void httpError(Context context, Throwable throwable);
 
-        HttpErrorListener EMPTY = new HttpErrorListener() {
+        void handlerError(Context context, Throwable throwable);
+
+        GlobalErrorHandler EMPTY = new GlobalErrorHandler() {
 
             @Override
-            public void handleError(Context context, Throwable throwable) {
+            public void httpError(Context context, Throwable throwable) {
+
+            }
+
+            @Override
+            public void handlerError(Context context, Throwable throwable) {
 
             }
         };

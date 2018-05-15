@@ -9,31 +9,19 @@ import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
-import okio.Buffer;
 
 /**
  * 接口共通参数，支持 Get、POST 方式
  * 你可以使用 {@link OkHttpClient.Builder#addInterceptor(Interceptor)} 这种方式为接口统一添加共通参数，如版本号、Token 等
  */
-public class ParameterInterceptor implements Interceptor {
-
-    private final ParameterCallback callback;
-
-    public ParameterInterceptor() {
-        this(ParameterCallback.DEFAULT);
-    }
-
-    public ParameterInterceptor(ParameterCallback callback) {
-        this.callback = callback;
-    }
+public abstract class ParameterInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
 
-        HashMap<String, Object> parameters = callback.parameters();
+        HashMap<String, Object> parameters = parameters();
         if (parameters != null && parameters.size() != 0) {
             if (request.method().equals("GET")) {// 为GET方式统一添加请求参数
                 HttpUrl.Builder modifiedUrl = request.url().newBuilder()
@@ -78,18 +66,7 @@ public class ParameterInterceptor implements Interceptor {
     }
 
     /**
-     * 实例化 {@link ParameterInterceptor} 拦截器时必须实现此接口并传入构造方法来添加共通参数
+     * 子类必须实现此方法来添加共通参数
      */
-    public interface ParameterCallback {
-
-        HashMap<String, Object> parameters();
-
-        ParameterCallback DEFAULT = new ParameterCallback() {
-
-            @Override
-            public HashMap<String, Object> parameters() {
-                return null;
-            }
-        };
-    }
+    protected abstract HashMap<String, Object> parameters();
 }

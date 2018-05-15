@@ -5,12 +5,15 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 
+import javax.inject.Inject;
+
 import me.mvp.demo.R;
 import me.mvp.demo.ui.adapter.MainViewPagerAdapter;
 import me.mvp.demo.ui.widget.navigation.BottomNavigation;
 import me.mvp.demo.ui.widget.navigation.BottomNavigationAdapter;
 import me.mvp.demo.ui.widget.navigation.BottomNavigationViewPager;
 import me.mvp.frame.base.BaseActivity;
+import me.mvp.frame.di.module.AppModule;
 import me.mvp.frame.frame.IView;
 import me.mvp.frame.frame.Message;
 import me.mvp.frame.widget.Snacker;
