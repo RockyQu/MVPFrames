@@ -57,7 +57,7 @@ public class StringUtils extends BaseUtils {
      *
      * @param actual
      * @param expected
-     * @return
+     * @return boolean
      */
     public static boolean isEquals(String actual, String expected) {
         return actual == expected || (actual == null ? expected == null : actual.equals(expected));
@@ -73,7 +73,7 @@ public class StringUtils extends BaseUtils {
      * </pre>
      *
      * @param str
-     * @return
+     * @return String
      */
     public static String nullStrToEmpty(Object str) {
         return (str == null ? "" : (str instanceof String ? (String) str : str.toString()));
@@ -92,7 +92,7 @@ public class StringUtils extends BaseUtils {
      * </pre>
      *
      * @param str
-     * @return
+     * @return String
      */
     public static String capitalizeFirstLetter(String str) {
         if (isEmpty(str)) {
@@ -115,7 +115,7 @@ public class StringUtils extends BaseUtils {
      * </pre>
      *
      * @param str
-     * @return
+     * @return String
      * @throws UnsupportedEncodingException if an error occurs
      */
     public static String utf8Encode(String str) {
@@ -134,7 +134,7 @@ public class StringUtils extends BaseUtils {
      *
      * @param str
      * @param defultReturn
-     * @return
+     * @return String
      */
     public static String utf8Encode(String str, String defultReturn) {
         if (!isEmpty(str) && str.getBytes().length != str.length()) {
@@ -201,7 +201,7 @@ public class StringUtils extends BaseUtils {
      * </pre>
      *
      * @param source
-     * @return
+     * @return String
      */
     public static String htmlEscapeCharsToString(String source) {
         return StringUtils.isEmpty(source) ? source : source.replaceAll("&lt;", "<").replaceAll("&gt;", ">")
@@ -219,7 +219,7 @@ public class StringUtils extends BaseUtils {
      * </pre>
      *
      * @param s
-     * @return
+     * @return String
      */
     public static String fullWidthToHalfWidth(String s) {
         if (isEmpty(s)) {
@@ -252,7 +252,7 @@ public class StringUtils extends BaseUtils {
      * </pre>
      *
      * @param s
-     * @return
+     * @return String
      */
     public static String halfWidthToFullWidth(String s) {
         if (isEmpty(s)) {

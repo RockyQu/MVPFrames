@@ -58,7 +58,7 @@ public class BasePresenter<M extends IModel> implements IPresenter {
     /**
      * 使用eventBus
      *
-     * @return
+     * @return boolean
      */
     protected boolean useEventBus() {
         return true;
