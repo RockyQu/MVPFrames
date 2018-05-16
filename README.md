@@ -4,7 +4,7 @@
 ## Download
 Gradle:
 ```
-api 'me.frame:MVPFrames:2.1.0'
+api 'me.frame:MVPFrames:2.1.1'
 ```
 
 ## Libraries
