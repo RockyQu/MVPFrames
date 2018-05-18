@@ -39,10 +39,10 @@ android {
 //            enabled true
 //        }
 
-        ndk {
-            // 设置支持的SO库架构
-            abiFilters "armeabi"
-        }
+//        ndk {
+//            // 设置支持的SO库架构
+//            abiFilters "armeabi", "armeabi-v7a"
+//        }
 
         // Enabling MultiDex support.
         multiDexEnabled true
