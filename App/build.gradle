@@ -113,8 +113,11 @@ android {
         debug {
             buildConfigField "boolean", "DEBUG_FLAG", "true"
 
-            minifyEnabled false
+            minifyEnabled true
+
+
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            multiDexKeepProguard file('multidex-config.pro')
         }
         release {
             buildConfigField "boolean", "DEBUG_FLAG", "false"
