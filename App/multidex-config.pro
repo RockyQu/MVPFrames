@@ -1,1 +1,1 @@
--keep class me.mvp.demo.app.**
+-keep class me.mvp.demo.app.AppConfiguration

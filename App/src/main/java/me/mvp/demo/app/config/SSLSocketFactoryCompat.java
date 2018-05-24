@@ -17,6 +17,7 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.X509TrustManager;
 
+
 public class SSLSocketFactoryCompat extends SSLSocketFactory {
 
     private SSLSocketFactory defaultFactory;
