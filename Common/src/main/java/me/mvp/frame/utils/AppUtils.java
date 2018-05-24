@@ -1,5 +1,6 @@
 package me.mvp.frame.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.MemoryInfo;
@@ -46,7 +47,7 @@ public final class AppUtils extends BaseUtils {
      * 获取版本号
      *
      * @param context
-     * @return
+     * @return int
      */
     public static int getVersionCode(Context context) {
         int versionCode = 0;
@@ -63,7 +64,7 @@ public final class AppUtils extends BaseUtils {
      *
      * @param context
      * @param packageName
-     * @return
+     * @return int
      */
     public static int getVersionCode(Context context, String packageName) {
         int versionCode = 0;
@@ -79,7 +80,7 @@ public final class AppUtils extends BaseUtils {
      * 获取版本名
      *
      * @param context
-     * @return
+     * @return String
      */
     public static String getVersionName(Context context) {
         String name = "";
@@ -96,7 +97,7 @@ public final class AppUtils extends BaseUtils {
      *
      * @param context
      * @param channel 渠道名称
-     * @return
+     * @return String
      */
     public static String getAppChannel(Context context, String channel) {
         try {
@@ -148,7 +149,6 @@ public final class AppUtils extends BaseUtils {
      *
      * @param context 上下文
      * @param cls     类名
-     * @return 是否执行成功
      */
     public static void startService(Context context, Class<?> cls) {
         Intent intentService = null;
@@ -237,7 +237,7 @@ public final class AppUtils extends BaseUtils {
      * 给定Context获取进程名
      *
      * @param context
-     * @return
+     * @return String
      */
     public static String getProcessName(Context context) {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -273,7 +273,7 @@ public final class AppUtils extends BaseUtils {
      * 获取activity尺寸
      *
      * @param activity
-     * @return
+     * @return int[]
      */
     public static int[] getRealScreenSize(Activity activity) {
         int[] size = new int[2];
@@ -418,7 +418,7 @@ public final class AppUtils extends BaseUtils {
     }
 
     public static AppComponent obtainAppComponentFromContext(Context context) {
-        Preconditions.checkState(context.getApplicationContext() instanceof App, "Application does not implements App");
+        ExceptionUtils.checkState(context.getApplicationContext() instanceof App, "Application does not implements App");
         return ((App) context.getApplicationContext()).getAppComponent();
     }
 }

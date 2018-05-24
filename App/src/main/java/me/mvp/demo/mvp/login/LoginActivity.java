@@ -7,12 +7,14 @@ import android.widget.EditText;
 
 import me.mvp.demo.R;
 import me.mvp.demo.entity.User;
+import me.mvp.demo.mvp.main.MainActivity;
 import me.mvp.frame.base.BaseActivity;
 import me.mvp.frame.frame.IView;
 import me.mvp.frame.frame.Message;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.mvp.frame.widget.Toaster;
 
 /**
  * 登录页面
@@ -105,7 +107,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements IView
 
     @Override
     public void showMessage(int type, @NonNull String message) {
-
+        Toaster.with(this).setMessage(message).show();
     }
 
     @Override

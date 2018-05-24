@@ -28,7 +28,7 @@ public class ZipUtils extends BaseUtils {
      * zlib decompress 2 String
      *
      * @param bytesToDecompress
-     * @return
+     * @return String
      */
     public static String decompressToStringForZlib(byte[] bytesToDecompress) {
         return decompressToStringForZlib(bytesToDecompress, "UTF-8");
@@ -39,7 +39,7 @@ public class ZipUtils extends BaseUtils {
      *
      * @param bytesToDecompress
      * @param charsetName
-     * @return
+     * @return String
      */
     public static String decompressToStringForZlib(byte[] bytesToDecompress, String charsetName) {
         byte[] bytesDecompressed = decompressForZlib(bytesToDecompress);
@@ -58,7 +58,7 @@ public class ZipUtils extends BaseUtils {
      * zlib decompress 2 byte
      *
      * @param bytesToDecompress
-     * @return
+     * @return byte[]
      */
     public static byte[] decompressForZlib(byte[] bytesToDecompress) {
         byte[] returnValues = null;
@@ -104,7 +104,7 @@ public class ZipUtils extends BaseUtils {
      * zlib compress 2 byte
      *
      * @param bytesToCompress
-     * @return
+     * @return byte[]
      */
     public static byte[] compressForZlib(byte[] bytesToCompress) {
         Deflater deflater = new Deflater();
@@ -126,7 +126,7 @@ public class ZipUtils extends BaseUtils {
      * zlib compress 2 byte
      *
      * @param stringToCompress
-     * @return
+     * @return byte[]
      */
     public static byte[] compressForZlib(String stringToCompress) {
         byte[] returnValues = null;
@@ -144,8 +144,7 @@ public class ZipUtils extends BaseUtils {
      * gzip compress 2 byte
      *
      * @param string
-     * @return
-     * @throws IOException
+     * @return byte[]
      */
     public static byte[] compressForGzip(String string) {
         ByteArrayOutputStream os = null;
@@ -169,8 +168,7 @@ public class ZipUtils extends BaseUtils {
      * gzip decompress 2 string
      *
      * @param compressed
-     * @return
-     * @throws IOException
+     * @return String
      */
     public static String decompressForGzip(byte[] compressed) {
         return decompressForGzip(compressed, "UTF-8");
@@ -181,7 +179,7 @@ public class ZipUtils extends BaseUtils {
      *
      * @param compressed
      * @param charsetName
-     * @return
+     * @return String
      */
     public static String decompressForGzip(byte[] compressed, String charsetName) {
         final int BUFFER_SIZE = compressed.length;
@@ -206,6 +204,9 @@ public class ZipUtils extends BaseUtils {
         return null;
     }
 
+    /**
+     * @param closeable
+     */
     public static void closeQuietly(Closeable closeable) {
         if (closeable != null) {
             try {

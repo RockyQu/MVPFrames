@@ -1,0 +1,1 @@
+-keep class me.mvp.demo.app.AppConfiguration
