@@ -113,8 +113,7 @@ android {
         debug {
             buildConfigField "boolean", "DEBUG_FLAG", "true"
 
-            minifyEnabled true
-
+            minifyEnabled false
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             multiDexKeepProguard file('multidex-config.pro')
@@ -134,8 +133,10 @@ android {
             shrinkResources false
             // 混淆文件位置，其中proguard-android.txt为默认的混淆配置，proguard-rules.pro为模块额外的混淆配置
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 手动分包操作，详细 http://rockycoder.cn/multidex/2018/05/16/Android-NoClassDefFoundError.html
+            multiDexKeepProguard file('multidex-config.pro')
             // 签名
-//            signingConfig signingConfigs.release
+            // signingConfig signingConfigs.release
 
             // 批量打包
             android.applicationVariants.all { variant ->
