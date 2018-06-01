@@ -154,13 +154,7 @@ android {
         }
     }
 
-    greendao {
-        schemaVersion 1 // 数据库版本号
-//        daoPackage 'me.mvp.demo.db.build' //设置DaoMaster、DaoSession、Dao包名
-//        targetGenDir 'src/main/java' //设置DaoMaster、DaoSession、Dao目录
-        //targetGenDirTest 设置生成单元测试目录
-        //generateTests 设置自动生成单元测试用例
-    }
+
 }
 
 buildscript {
@@ -178,6 +172,10 @@ dependencies {
     }
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
     api rootProject.ext.dependencies["multidex"]
+
+    // DB
+    api rootProject.ext.dependencies["roomRuntime"]
+    annotationProcessor rootProject.ext.dependencies["roomCompiler"]
 
     // 引入框架基础共通模块
     api project(':Common')

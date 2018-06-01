@@ -1,5 +1,6 @@
 package me.mvp.demo.mvp.main;
 
+import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -8,6 +9,8 @@ import android.support.v4.content.ContextCompat;
 import javax.inject.Inject;
 
 import me.mvp.demo.R;
+import me.mvp.demo.db.AppDB;
+import me.mvp.demo.entity.User;
 import me.mvp.demo.ui.adapter.MainViewPagerAdapter;
 import me.mvp.demo.ui.widget.navigation.BottomNavigation;
 import me.mvp.demo.ui.widget.navigation.BottomNavigationAdapter;
@@ -111,6 +114,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IView {
 //                AppUtils.applicationDetailsSettings(MainActivity.this);
 //            }
 //        }, rxPermissions);
+
+
+        AppDB db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "test.db").build();
+
+        User user = new User();
+        user.setName("测试");
+        user.setUserId("userid");
+        db.userDao().insertAll(user);
     }
 
     @Override

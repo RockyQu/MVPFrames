@@ -22,13 +22,13 @@ public class ParameterInterceptorConfig extends ParameterInterceptor {
 
     @Override
     public HashMap<String, Object> parameters() {
-        User user = (User) ((App) context).getAppComponent().extras().get(LoginActivity.class.getName());
-
-        HashMap<String, Object> parameters = new HashMap<>();
-        if (user != null) {
-            // 为接口统一添加access_token参数
-            parameters.put("access_token", user.getToken());
-        }
-        return parameters;
+//        User user = (User) ((App) context).getAppComponent().extras().get(LoginActivity.class.getName());
+//
+//        HashMap<String, Object> parameters = new HashMap<>();
+//        if (user != null) {
+//            // 为接口统一添加access_token参数
+//            parameters.put("access_token", user.getToken());
+//        }
+        return null;
     }
 }

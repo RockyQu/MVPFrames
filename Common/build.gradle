@@ -132,8 +132,8 @@ dependencies {
     api rootProject.ext.dependencies["filedownloader"]
 
     // DB
-    api rootProject.ext.dependencies["greendao"]
-    api rootProject.ext.dependencies["sqlcipher"]
+    api rootProject.ext.dependencies["roomRuntime"]
+    annotationProcessor rootProject.ext.dependencies["roomCompiler"]
 
     // Log
     api rootProject.ext.dependencies["logg"]

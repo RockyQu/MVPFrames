@@ -23,7 +23,8 @@ ext {
             rxlifecycleSdkVersion   : "1.0",
             rxlifecycle2SdkVersion  : "2.2.1",
             espressoSdkVersion      : "3.0.1",
-            canarySdkVersion        : "1.5.4"
+            canarySdkVersion        : "1.5.4",
+            roomVersion             : "1.1.0"
     ]
 
     dependencies = [
@@ -73,6 +74,12 @@ ext {
             "arouter-compiler"             : "com.alibaba:arouter-compiler:1.1.4",
 
             // DB
+            "roomRuntime"                  : "android.arch.persistence.room:runtime:${version["roomVersion"]}",
+            "roomCompiler"                 : "android.arch.persistence.room:compiler:${version["roomVersion"]}",
+            "roomRxjava2"                  : "android.arch.persistence.room:rxjava2:${version["roomVersion"]}",
+            "roomGuava"                    : "android.arch.persistence.room:guava:${version["roomVersion"]}",
+            "roomTesting"                  : "android.arch.persistence.room:testing:${version["roomVersion"]}",
+
             "greendao"                     : "org.greenrobot:greendao:3.2.2",
             "sqlcipher"                    : "net.zetetic:android-database-sqlcipher:3.5.7",
 
