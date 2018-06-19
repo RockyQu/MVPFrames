@@ -36,8 +36,6 @@ public class LoginPresenter extends BasePresenter<LoginRepository> {
             protected void onResponse(ResponseEntity<User> body) {
                 User user = body.getData();
                 if (user != null) {
-                    user.setAccount(account);
-                    user.setPassword(password);
 
                     msg.getTarget().showMessage(0, body.getMessage());
                 }

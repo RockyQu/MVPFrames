@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 /**
- * 根据你的实际需求，选择合适的数据库
- * 如果你选用的是基于 greendao 型的数据库
- * 可以使用{@link me.mvp.frame.db.DBContextWrapper} 改变 DB 文件保存路径
- * 和 {@link me.mvp.frame.db.MigrationHelper} 数据迁移工具
+ * 2017 Google IO 大会 Architecture Components 架构组件 Room
  */
 package me.mvp.frame.db;

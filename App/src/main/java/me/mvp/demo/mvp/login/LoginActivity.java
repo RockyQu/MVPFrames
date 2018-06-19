@@ -39,8 +39,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements IView
     public void create(Bundle savedInstanceState) {
         user = (User) component.extras().get(LoginActivity.class.getName());
         if (user != null) {
-            edtAccount.setText(user.getAccount());
-            edtPassword.setText(user.getPassword());
+
         }
 
         edtAccount.setText("18012345678");

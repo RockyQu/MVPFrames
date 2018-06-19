@@ -113,8 +113,7 @@ android {
         debug {
             buildConfigField "boolean", "DEBUG_FLAG", "true"
 
-            minifyEnabled true
-
+            minifyEnabled false
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             multiDexKeepProguard file('multidex-config.pro')
@@ -134,8 +133,10 @@ android {
             shrinkResources false
             // 混淆文件位置，其中proguard-android.txt为默认的混淆配置，proguard-rules.pro为模块额外的混淆配置
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 手动分包操作，详细 http://rockycoder.cn/multidex/2018/05/16/Android-NoClassDefFoundError.html
+            multiDexKeepProguard file('multidex-config.pro')
             // 签名
-//            signingConfig signingConfigs.release
+            // signingConfig signingConfigs.release
 
             // 批量打包
             android.applicationVariants.all { variant ->
@@ -153,13 +154,7 @@ android {
         }
     }
 
-    greendao {
-        schemaVersion 1 // 数据库版本号
-//        daoPackage 'me.mvp.demo.db.build' //设置DaoMaster、DaoSession、Dao包名
-//        targetGenDir 'src/main/java' //设置DaoMaster、DaoSession、Dao目录
-        //targetGenDirTest 设置生成单元测试目录
-        //generateTests 设置自动生成单元测试用例
-    }
+
 }
 
 buildscript {
@@ -178,9 +173,13 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
     api rootProject.ext.dependencies["multidex"]
 
+    // DB
+    api rootProject.ext.dependencies["roomRuntime"]
+    annotationProcessor rootProject.ext.dependencies["roomCompiler"]
+
     // 引入框架基础共通模块
     api project(':Common')
-//    api 'me.frame:MVPFrames:2.1.0'
+//    api 'me.frame:MVPFrames:2.1.1'
 
     // Test
     testCompile rootProject.ext.dependencies["junit"]
