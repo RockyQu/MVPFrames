@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import me.logg.Logg;
 import me.logg.config.LoggConstant;
 import me.mvp.frame.http.NetworkInterceptorHandler;
-import me.mvp.frame.http.receiver.NetworkStatusReceiver;
 import me.mvp.frame.utils.ZipUtils;
 
 import java.io.EOFException;
@@ -17,7 +16,6 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import okhttp3.CacheControl;
 import okhttp3.Connection;
 import okhttp3.Headers;
 import okhttp3.Interceptor;
@@ -44,7 +42,7 @@ public class NetworkInterceptor implements Interceptor {
 
     // 通信拦截器回调接口
     @Inject
-    NetworkInterceptorHandler networkInterceptorHandler;
+    NetworkInterceptorHandler handler;
 
     // HTTP 日志级别
     @Inject
@@ -63,16 +61,17 @@ public class NetworkInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
 
-        // 解析 Request 日志
-        Request request = this.resolveRequestLogger(new StringBuilder(), chain);
+        // Request
+        Request request = chain.request();
 
-        // 在请求服务器之前可以拿到 Request，做一些操作比如给 Request 添加 Header，如果不需要操作则返回参数中的 Request
-        if (networkInterceptorHandler != null) {
-            request = networkInterceptorHandler.onHttpRequest(chain, request);
-        }
+        // 解析 Request 日志
+        this.resolveRequestLogger(new StringBuilder(), chain, request);
+
+        // Response
+        Response response = chain.proceed(chain.request());
 
         // 解析 Response 日志
-        Response response = this.resolveResponseLogger(new StringBuilder(), chain);
+        this.resolveResponseLogger(new StringBuilder(), chain, response);
 
         // 读取服务器返回结果
         ResponseBody responseBody = response.body();
@@ -84,8 +83,8 @@ public class NetworkInterceptor implements Interceptor {
         }
 
         // 这里可以提前一步拿到服务器返回的结果，外部实现此接口可以做一些操作，比如 Token 超时，重新获取
-        if (networkInterceptorHandler != null) {
-            return networkInterceptorHandler.onHttpResponse(bodyString, chain, request, response);
+        if (handler != null) {
+            return handler.onHttpResponse(bodyString, chain, request, response);
         }
 
         return response;
@@ -97,8 +96,7 @@ public class NetworkInterceptor implements Interceptor {
      * @param builder
      * @param chain
      */
-    private Request resolveRequestLogger(StringBuilder builder, Chain chain) throws IOException {
-        Request request = chain.request();
+    private Request resolveRequestLogger(StringBuilder builder, Chain chain, Request request) throws IOException {
         if (level == Level.NONE) {
             return request;
         }
@@ -189,10 +187,9 @@ public class NetworkInterceptor implements Interceptor {
      * @param builder
      * @param chain
      */
-    private Response resolveResponseLogger(StringBuilder builder, Chain chain) throws IOException {
+    private Response resolveResponseLogger(StringBuilder builder, Chain chain, Response response) throws IOException {
         long startNs = System.nanoTime();
 
-        Response response = chain.proceed(chain.request());
         if (level == Level.NONE) {
             return response;
         }

@@ -1,13 +1,6 @@
 package me.mvp.demo.db;
 
 import android.app.Application;
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.text.TextUtils;
-import android.util.Log;
-
-import me.mvp.frame.db.DBContextWrapper;
-import me.mvp.frame.db.MigrationHelper;
 import me.mvp.frame.utils.DeviceUtils;
 import me.mvp.frame.utils.ProjectUtils;
 

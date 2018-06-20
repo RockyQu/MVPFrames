@@ -5,12 +5,12 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Http 通信拦截器
+ * Http 通信拦截器接口
  */
 public interface NetworkInterceptorHandler {
 
     /**
-     * Http请求
+     * Http 请求，这里可以添加、删除或替换请求头信息，还可以改变的请求携带的实体
      *
      * @param chain
      * @param request
@@ -19,7 +19,7 @@ public interface NetworkInterceptorHandler {
     Request onHttpRequest(Interceptor.Chain chain, Request request);
 
     /**
-     * Http响应，这里提前拿到http响应结果,可以用来判断Token是否过期
+     * Http 响应，这里提前拿到 Http 响应结果，可以用来判断 Token 是否过期等
      *
      * @param result
      * @param chain

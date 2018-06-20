@@ -14,6 +14,7 @@ import me.mvp.frame.frame.Message;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.mvp.frame.utils.StringUtils;
 import me.mvp.frame.widget.Toaster;
 
 /**
@@ -65,10 +66,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements IView
         switch (flag) {
             case R.id.btn_submit:// 登录
 //                // 手机号码
-//                if (StringUtils.isEmpty(edtAccount.getText().toString().trim())) {
+                if (StringUtils.isEmpty(edtAccount.getText().toString().trim())) {
 //                    ToastBar.create(this, "输入手机号码").show();
 //                    return false;
-//                }
+                }
 //                // 密码
 //                if (StringUtils.isEmpty(edtPassword.getText().toString().trim())) {
 //                    ToastBar.create(this, "输入密码").show();

@@ -6,12 +6,14 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
 
+import me.mvp.frame.http.NetworkInterceptorHandler;
 import me.mvp.frame.http.converter.GsonConverterBodyFactory;
 import me.mvp.frame.http.converter.JsonConverterFactory;
 import me.mvp.frame.http.interceptor.NetworkInterceptor;
 import me.mvp.frame.utils.FileUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -27,6 +29,7 @@ import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -60,13 +63,23 @@ public class HttpModule {
 
     @Singleton
     @Provides
-    OkHttpClient provideClient(@Nullable Application application, @Nullable HttpModule.OkHttpConfiguration okHttpConfiguration, @Nullable OkHttpClient.Builder okHttpClient, @Nullable Interceptor interceptor, List<Interceptor> interceptors, CookieJar cookie) {
+    OkHttpClient provideClient(@Nullable Application application, @Nullable HttpModule.OkHttpConfiguration okHttpConfiguration, @Nullable OkHttpClient.Builder okHttpClient, @Nullable Interceptor interceptor,
+                               final NetworkInterceptorHandler handler, List<Interceptor> interceptors, CookieJar cookie) {
         OkHttpClient.Builder builder = okHttpClient
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(true)// 设置出现错误进行重新连接
                 .cache(new Cache(application.getCacheDir(), CACHE_MAX_SIZE))// 设置缓存路径和大小
-                .addNetworkInterceptor(interceptor);// 网络拦截器，在 Request 和 Resposne 是分别被调用一次
+                .addNetworkInterceptor(interceptor);// 网络拦截器
+
+        if (handler != null) {
+            okHttpClient.addNetworkInterceptor(new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    return chain.proceed(handler.onHttpRequest(chain, chain.request()));
+                }
+            });
+        }
 
         if (cookie != null) {
             builder.cookieJar(cookie);// Cookie
