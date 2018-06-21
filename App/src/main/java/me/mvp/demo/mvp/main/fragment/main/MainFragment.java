@@ -3,6 +3,7 @@ package me.mvp.demo.mvp.main.fragment.main;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import me.logg.Logg;
 import me.mvp.demo.R;
 import me.mvp.frame.base.BaseFragment;
 import me.mvp.frame.frame.IPresenter;
@@ -26,7 +27,7 @@ public class MainFragment extends BaseFragment {
 
     @Override
     public void create(Bundle savedInstanceState) {
-
+        Logg.e("MainFragment");
     }
 
     @Override

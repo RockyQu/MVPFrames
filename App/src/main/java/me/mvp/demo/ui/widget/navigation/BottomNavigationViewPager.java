@@ -14,7 +14,7 @@ public class BottomNavigationViewPager extends ViewPager {
 
 	public BottomNavigationViewPager(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		this.enabled = false;
+		this.enabled = true;
 	}
 
 	@Override

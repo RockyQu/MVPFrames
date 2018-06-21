@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 
 import javax.inject.Inject;
 
@@ -50,6 +51,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IView {
 
         // 导航点击事件
         bottomNavigation.setOnTabSelectedListener(new BottomNavigation.OnTabSelectedListener() {
+
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
 
@@ -59,6 +61,24 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IView {
 
                 Toaster.with(MainActivity.this).setMessage("上传成功").show();
                 return true;
+            }
+        });
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                bottomNavigation.setCurrentItem(position, false);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
 
