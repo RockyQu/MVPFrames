@@ -66,7 +66,7 @@
             android:value="ConfigModule" />
 
         <!-- 网络状态变化接收器 -->
-        <receiver android:name="me.mvp.frame.http.receiver.NetworkStatusReceiver">
+        <receiver android:name="me.mvp.frame.utils.NetworkStatusReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>

@@ -1,4 +1,4 @@
-package me.mvp.frame.http.receiver;
+package me.mvp.frame.utils;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 
 import me.logg.Logg;
-import me.mvp.frame.utils.NetWorkUtils;
 
 /**
  * 网络状态变化接收器

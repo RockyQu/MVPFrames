@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'org.greenrobot.greendao'
 
 // 配置Android构建参数
 android {
@@ -182,8 +181,8 @@ dependencies {
 //    api 'me.frame:MVPFrames:2.1.1'
 
     // Test
-    testCompile rootProject.ext.dependencies["junit"]
-    debugCompile rootProject.ext.dependencies["canary-debug"]
-    releaseCompile rootProject.ext.dependencies["canary-release"]
-    testCompile rootProject.ext.dependencies["canary-release"]
+    testImplementation rootProject.ext.dependencies["junit"]
+    debugImplementation rootProject.ext.dependencies["canary-debug"]
+    releaseImplementation rootProject.ext.dependencies["canary-release"]
+    testImplementation rootProject.ext.dependencies["canary-release"]
 }
