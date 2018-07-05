@@ -117,21 +117,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IView {
 //                    }
 //                })
 //                .start();
-
-//        RxPermissions rxPermissions = new RxPermissions(this);
-//        PermissionUtils.location(new PermissionUtils.RequestPermission() {
-//
-//            @Override
-//            public void onRequestPermissionSuccess() {
-//
-//            }
-//
-//            @Override
-//            public void onRequestPermissionFailure() {
-//                // 如果失败跳到到应用设置页面
-//                AppUtils.applicationDetailsSettings(MainActivity.this);
-//            }
-//        }, rxPermissions);
     }
 
     @Override

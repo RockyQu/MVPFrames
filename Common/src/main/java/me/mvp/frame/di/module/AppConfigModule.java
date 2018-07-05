@@ -234,6 +234,10 @@ public class AppConfigModule {
         // 提供全局错误响应接口，APP的各种错误信息可以统一回调至此接口
         private AppModule.GlobalErrorHandler globalErrorHandler;
 
+        // DB 数据库
+
+
+
         // 框架缓存组件
         private Cache.Factory cacheFactory;
 

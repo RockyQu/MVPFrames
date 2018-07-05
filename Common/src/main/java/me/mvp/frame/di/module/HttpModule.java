@@ -34,7 +34,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 /**
- * HTTP参数配置
+ * HTTP 参数配置
  */
 @Module
 public class HttpModule {
@@ -112,7 +112,7 @@ public class HttpModule {
     }
 
     /**
-     * Http拦截器
+     * Http 拦截器
      */
     @Singleton
     @Provides
@@ -121,9 +121,9 @@ public class HttpModule {
     }
 
     /**
-     * 提供RxCache
+     * 提供 RxCache
      *
-     * @param cacheDirectory RxCache缓存路径
+     * @param cacheDirectory RxCache 缓存路径
      * @return
      */
     @Singleton
@@ -140,8 +140,8 @@ public class HttpModule {
 
 
     /**
-     * 需要单独给RxCache提供缓存路径
-     * 提供RxCache缓存地址
+     * 需要单独给 RxCache 提供缓存路径
+     * 提供 RxCache 缓存地址
      */
     @Singleton
     @Provides
@@ -152,7 +152,7 @@ public class HttpModule {
     }
 
     /**
-     * 提供一个Retrofit配置接口，用于对Retrofit进行格外的参数配置
+     * 提供一个 Retrofit 配置接口，用于对 Retrofit 进行格外的参数配置
      */
     public interface RetrofitConfiguration {
 
@@ -168,7 +168,7 @@ public class HttpModule {
     }
 
     /**
-     * 提供一个OkHttp配置接口，用于对OkHttp进行格外的参数配置
+     * 提供一个 OkHttp 配置接口，用于对 OkHttp 进行格外的参数配置
      */
     public interface OkHttpConfiguration {
 
@@ -183,6 +183,9 @@ public class HttpModule {
         };
     }
 
+    /**
+     * 提供一个 RxCache 配置接口，用于对 RxCache 进行格外的参数配置
+     */
     public interface RxCacheConfiguration {
 
         RxCache configRxCache(Context context, RxCache.Builder builder);
