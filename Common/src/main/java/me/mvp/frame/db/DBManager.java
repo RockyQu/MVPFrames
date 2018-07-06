@@ -1,8 +1,10 @@
 package me.mvp.frame.db;
 
 import android.app.Application;
+import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -41,6 +43,14 @@ public class DBManager {
         return (T) databaseBuilder(config.getDatabaseClass());
     }
 
+    /**
+     * Use this method instead of {@link Room#databaseBuilder(Context, Class, String)} to create a database.
+     *
+     * @param klass   The abstract class which is annotated with {@link Database} and extends
+     *                {@link RoomDatabase}.
+     * @param <T>     The type of the database class.
+     * @return A {@code RoomDatabaseBuilder<T>} which you can use to create the database.
+     */
     public <T extends RoomDatabase> T databaseBuilder(@NonNull Class<T> klass) {
         if (TextUtils.isEmpty(config.getName())) {
             throw new IllegalArgumentException("Cannot build a database with null or empty name."
