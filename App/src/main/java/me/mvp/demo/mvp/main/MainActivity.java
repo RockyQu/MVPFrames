@@ -1,13 +1,9 @@
 package me.mvp.demo.mvp.main;
 
-import android.arch.persistence.room.Room;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-
-import javax.inject.Inject;
 
 import me.mvp.demo.R;
 import me.mvp.demo.ui.adapter.MainViewPagerAdapter;
@@ -15,7 +11,6 @@ import me.mvp.demo.ui.widget.navigation.BottomNavigation;
 import me.mvp.demo.ui.widget.navigation.BottomNavigationAdapter;
 import me.mvp.demo.ui.widget.navigation.BottomNavigationViewPager;
 import me.mvp.frame.base.BaseActivity;
-import me.mvp.frame.di.module.AppModule;
 import me.mvp.frame.frame.IView;
 import me.mvp.frame.frame.Message;
 import me.mvp.frame.widget.Snacker;
@@ -85,38 +80,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IView {
         viewPager.setOffscreenPageLimit(3);
         adapter = new MainViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
-
-//        Downloader.getInstance().create("http://download.alicdn.com/wireless/taobao4android/latest/702757.apk")
-////                .setSaveFilePath(ProjectUtils.OTHER + "aaaaa")
-//                .setListener(new DownloaderSampleListener() {
-//
-//                    @Override
-//                    protected void onConnection(boolean isContinue, long progress, long total) {
-//                        Logg.e(progress + "/" + total);
-//                    }
-//
-//                    @Override
-//                    protected void onProgress(long progress, long total, int speed) {
-//                        int current = (int) (progress * 1.0f / total * 100);
-//                        Logg.e(progress + "/" + total);
-//                    }
-//
-//                    @Override
-//                    protected void onFailure(DownloadException exception) {
-//                        exception.printStackTrace();
-//                    }
-//
-//                    @Override
-//                    protected void onPaused() {
-//                        Logg.e("onPaused");
-//                    }
-//
-//                    @Override
-//                    protected void onComplete(String filePath) {
-//                        Logg.e("onFinish " + filePath);
-//                    }
-//                })
-//                .start();
     }
 
     @Override

@@ -104,7 +104,6 @@ public class HttpModule {
         return new Retrofit.Builder();
     }
 
-
     @Singleton
     @Provides
     OkHttpClient.Builder provideOkHttpClientBuilder() {

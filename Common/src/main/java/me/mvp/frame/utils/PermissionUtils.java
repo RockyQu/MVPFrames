@@ -94,7 +94,6 @@ public class PermissionUtils extends BaseUtils {
             return;
         }
 
-        Logg.e(permissions);
         List<String> needRequest = new ArrayList<>();
         for (String permission : permissions) { // 过滤调已经申请过的权限
             if (!rxPermissions.isGranted(permission)) {
@@ -102,7 +101,6 @@ public class PermissionUtils extends BaseUtils {
             }
         }
 
-        Logg.e(needRequest);
         int count = needRequest.size();
         if (count == 0) {// 全部权限已经申请过，直接执行成功操作
             requestPermission.onRequestPermissionSuccess();

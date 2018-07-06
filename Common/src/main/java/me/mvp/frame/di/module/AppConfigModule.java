@@ -20,7 +20,6 @@ import me.mvp.frame.widget.imageloader.glide.GlideImageLoader;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Singleton;
@@ -56,10 +55,12 @@ public class AppConfigModule {
 
     private AppModule.GlobalErrorHandler globalErrorHandler;
 
-    private CookieJar cookie;
-    private PersistentCookieJar.CookieLoadForRequest cookieLoadForRequest;
+    private DBModule.DBConfiguration dbConfiguration;
 
     private Cache.Factory cacheFactory;
+
+    private CookieJar cookie;
+    private PersistentCookieJar.CookieLoadForRequest cookieLoadForRequest;
 
     private NetworkInterceptor.Level httpLogLevel;
 
@@ -81,6 +82,8 @@ public class AppConfigModule {
 
         this.globalErrorHandler = buidler.globalErrorHandler;
 
+        this.dbConfiguration = buidler.dbConfiguration;
+
         this.cacheFactory = buidler.cacheFactory;
 
         this.cookie = buidler.cookie;
@@ -88,10 +91,7 @@ public class AppConfigModule {
 
         this.httpLogLevel = buidler.httpLogLevel;
 
-        LoggConfiguration configuration = new LoggConfiguration.Buidler()
-                .setDebug(httpLogLevel != NetworkInterceptor.Level.NONE)
-                .build();
-        Logg.init(configuration);
+        Logg.init(new LoggConfiguration.Buidler().setDebug(httpLogLevel != NetworkInterceptor.Level.NONE).build());
     }
 
     public static Builder builder() {
@@ -161,6 +161,12 @@ public class AppConfigModule {
 
     @Singleton
     @Provides
+    DBModule.DBConfiguration provideDBConfiguration() {
+        return dbConfiguration == null ? DBModule.DBConfiguration.EMPTY : dbConfiguration;
+    }
+
+    @Singleton
+    @Provides
     CookieJar provideCookieJar(Application application) {
         return cookie == null ? new PersistentCookieJar(application, cookieLoadForRequest == null ? PersistentCookieJar.CookieLoadForRequest.EMPTY : cookieLoadForRequest) : cookie;
     }
@@ -189,9 +195,6 @@ public class AppConfigModule {
     @Singleton
     @Provides
     NetworkInterceptor.Level provideHttpLogLevel() {
-        Logg.init(new LoggConfiguration.Buidler()
-                .setDebug(httpLogLevel != null && httpLogLevel == NetworkInterceptor.Level.ALL)
-                .build());
         return httpLogLevel == null ? NetworkInterceptor.Level.ALL : httpLogLevel;
     }
 
@@ -203,12 +206,8 @@ public class AppConfigModule {
         // Http 通信 Base 接口
         private HttpUrl httpUrl;
 
-        /**
-         * 针对于 BaseUrl 在 App 启动时不能确定，需要请求服务器接口动态获取的应用场景
-         * 在调用 Retrofit 接口之前，使用 Okhttp 或其他方式，请求到正确的 BaseUrl 并通过此方法返回
-         *
-         * @return
-         */
+        // 针对于 BaseUrl 在 App 启动时不能确定，需要请求服务器接口动态获取的应用场景
+        // 在调用 Retrofit 接口之前，使用 Okhttp 或其他方式，请求到正确的 BaseUrl 并通过此方法返回
         private BaseUrl baseUrl;
 
         // Http缓存路径
@@ -234,9 +233,8 @@ public class AppConfigModule {
         // 提供全局错误响应接口，APP的各种错误信息可以统一回调至此接口
         private AppModule.GlobalErrorHandler globalErrorHandler;
 
-        // DB 数据库
-
-
+        // 数据库参数配置
+        private DBModule.DBConfiguration dbConfiguration;
 
         // 框架缓存组件
         private Cache.Factory cacheFactory;
@@ -316,6 +314,11 @@ public class AppConfigModule {
 
         public Builder globalErrorHandler(AppModule.GlobalErrorHandler globalErrorHandler) {
             this.globalErrorHandler = globalErrorHandler;
+            return this;
+        }
+
+        public Builder dbConfiguration(DBModule.DBConfiguration dbConfiguration) {
+            this.dbConfiguration = dbConfiguration;
             return this;
         }
 

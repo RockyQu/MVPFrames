@@ -5,8 +5,10 @@ import android.app.Application;
 import com.google.gson.Gson;
 
 import me.mvp.frame.base.delegate.ApplicationDelegate;
+import me.mvp.frame.db.DBManager;
 import me.mvp.frame.di.module.AppConfigModule;
 import me.mvp.frame.di.module.AppModule;
+import me.mvp.frame.di.module.DBModule;
 import me.mvp.frame.di.module.HttpModule;
 import me.mvp.frame.integration.AppManager;
 import me.mvp.frame.integration.IRepositoryManager;
@@ -24,7 +26,7 @@ import okhttp3.OkHttpClient;
  * BaseComponent
  */
 @Singleton
-@Component(modules = {AppModule.class, HttpModule.class, AppConfigModule.class})
+@Component(modules = {AppModule.class, HttpModule.class, DBModule.class, AppConfigModule.class})
 public interface AppComponent {
 
     // Application
@@ -50,6 +52,9 @@ public interface AppComponent {
 
     // 管理所有Activity
     AppManager appManager();
+
+    // 数据库
+    DBManager dbManager();
 
     // 用来存取一些 App 公用数据，切勿大量存放大容量数据
     Cache<String, Object> extras();
