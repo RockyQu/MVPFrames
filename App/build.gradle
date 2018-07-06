@@ -179,7 +179,7 @@ dependencies {
 
     // 引入框架基础共通模块
     api project(':Common')
-//    api 'me.frame:MVPFrames:2.1.1'
+//    api 'me.frame:MVPFrames:2.1.4'
 
     // Test
     testImplementation rootProject.ext.dependencies["junit"]
