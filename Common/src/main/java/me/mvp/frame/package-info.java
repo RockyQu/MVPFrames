@@ -17,12 +17,11 @@
 /**
  * 更新日志
  * <p>
- * 1.修改部分核心包名及类名称
- * 2.数据库引入 2017 Google IO 大会 Architecture Components 架构组件 Room
- * 3.完善部分注释
- * 4.框架增加日志模块，提供扩展开关接口
- * 5.增加全局错误回调接口 AppModule.GlobalErrorHandler，可以通过 AppComponent 获取，此接口不限于只处理 HTTP 异常，其他模块也可以回调此接口来处理统一异常管理
- * 6.修复 Okhttp addNetworkInterceptor 拦截器执行顺序问题
- * 7.完善 Demo
+ * 1.
+ * 2.
+ * 3.
+ * 4.
+ * 5.
+ * 6.
  */
 package me.mvp.frame;
