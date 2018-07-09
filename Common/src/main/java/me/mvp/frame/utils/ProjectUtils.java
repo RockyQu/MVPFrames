@@ -39,12 +39,12 @@ public class ProjectUtils extends BaseUtils {
     public static boolean init() {
         boolean result = true;
         if (DeviceUtils.isExitsSdcard()) {
-            result = FileUtils.makeFolders(ROOT_PATH);
-            result = FileUtils.makeFolders(DB);
-            result = FileUtils.makeFolders(LOG);
-            result = FileUtils.makeFolders(CACHE);
-            result = FileUtils.makeFolders(OTHER);
-            result = FileUtils.makeFolders(CAMERA);
+            result = FileUtils.createOrExistsDir(ROOT_PATH);
+            result = FileUtils.createOrExistsDir(DB);
+            result = FileUtils.createOrExistsDir(LOG);
+            result = FileUtils.createOrExistsDir(CACHE);
+            result = FileUtils.createOrExistsDir(OTHER);
+            result = FileUtils.createOrExistsDir(CAMERA);
         }
         return result;
     }

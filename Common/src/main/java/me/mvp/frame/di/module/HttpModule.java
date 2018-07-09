@@ -147,7 +147,8 @@ public class HttpModule {
     @Named("RxCacheDirectory")
     File provideRxCacheDirectory(File cacheDir) {
         File cacheDirectory = new File(cacheDir, "RxCache");
-        return FileUtils.makeDirs(cacheDirectory);
+        FileUtils.createOrExistsDir(cacheDirectory);
+        return cacheDirectory;
     }
 
     /**
