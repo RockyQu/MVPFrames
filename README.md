@@ -4,7 +4,7 @@
 ## Download
 Gradle:
 ```
-api 'me.frame:MVPFrames:2.1.1'
+api 'me.frame:MVPFrames:2.1.4'
 ```
 
 ## Libraries
@@ -18,6 +18,7 @@ api 'me.frame:MVPFrames:2.1.1'
 * [Gson](https://github.com/google/gson)  
 * [RxPermissions](https://github.com/tbruyelle/RxPermissions)  
 * [LeakCanary](https://github.com/square/leakcanary)  
+* [Room](https://developer.android.com/topic/libraries/architecture/room.html)  2017 Google IO 大会 Architecture Components 架构组件 Room
 * [Logg](https://github.com/RockyQu/Logg)  
 
 ## History

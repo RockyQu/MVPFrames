@@ -24,7 +24,6 @@ import me.mvp.frame.di.module.HttpModule;
 import me.mvp.frame.integration.ActivityLifecycle;
 import me.mvp.frame.integration.ConfigModule;
 import me.mvp.frame.integration.ManifestParser;
-import me.mvp.frame.widget.imageloader.glide.GlideImageConfig;
 
 /**
  * {@link ApplicationLifecycles} Application 生命周期代理实现类

@@ -7,8 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 
 import me.mvp.demo.R;
-import me.mvp.demo.db.DBModule;
-import me.mvp.demo.mvp.login.LoginActivity;
 import me.mvp.demo.mvp.main.MainActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import me.mvp.frame.base.BaseActivity;
@@ -50,11 +48,7 @@ public class WelcomeActivity extends BaseActivity {
         new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(Message msg) {
-                // 数据库
-                DBModule.getInstance().init(getApplication());
-
                 Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-//                Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
                 WelcomeActivity.this.startActivity(intent);
                 WelcomeActivity.this.finish();
                 return false;

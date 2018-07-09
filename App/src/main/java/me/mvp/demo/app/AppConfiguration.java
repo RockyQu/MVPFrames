@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 
 import me.mvp.demo.BuildConfig;
 import me.mvp.demo.app.api.Api;
+import me.mvp.demo.app.config.DBConfig;
 import me.mvp.demo.app.config.GlobalErrorConfig;
 import me.mvp.demo.app.config.GsonConfig;
 import me.mvp.demo.app.config.NetworkInterceptorConfig;
@@ -60,6 +61,7 @@ public class AppConfiguration implements ConfigModule {
                 .globalErrorHandler(new GlobalErrorConfig())
                 .rxCacheConfiguration(new RxCacheConfig())
                 .gsonConfiguration(new GsonConfig())
+                .dbConfiguration(new DBConfig())
         ;
     }
 
