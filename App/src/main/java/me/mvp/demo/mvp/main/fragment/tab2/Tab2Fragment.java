@@ -12,6 +12,7 @@ import me.mvp.demo.entity.User;
 import me.mvp.demo.entity.UserDao;
 import me.mvp.frame.base.BaseFragment;
 import me.mvp.frame.frame.IPresenter;
+import me.mvp.frame.utils.FileUtils;
 
 /**
  *
