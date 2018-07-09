@@ -16,6 +16,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
 
     public static AppDatabase get(AppComponent component) {
-        return component.dbManager().databaseBuilder(AppDatabase.class);
+        return (AppDatabase) component.dbManager().getDb();
     }
 }

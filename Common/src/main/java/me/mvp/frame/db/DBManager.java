@@ -11,6 +11,8 @@ import android.text.TextUtils;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import me.logg.Logg;
+
 /**
  * 数据库配置
  * <p>
@@ -28,13 +30,21 @@ public class DBManager {
     @Inject
     DatabaseConfig config;
 
+    RoomDatabase db;
+
     @Inject
     public DBManager() {
+        Logg.e("DBManager");
+    }
 
+    public RoomDatabase getDb() {
+        Logg.e("getDb");
+        return db = databaseBuilder();
     }
 
     @SuppressWarnings("unchecked")
     public <T extends RoomDatabase> T databaseBuilder() {
+        Logg.e("databaseBuilder"+config.getName());
         if (config.getDatabaseClass() == null) {
             throw new IllegalArgumentException("Cannot build a database with null or empty name."
                     + " If you are trying to create an in memory database, use Room"
@@ -51,7 +61,7 @@ public class DBManager {
      * @param <T>     The type of the database class.
      * @return A {@code RoomDatabaseBuilder<T>} which you can use to create the database.
      */
-    public <T extends RoomDatabase> T databaseBuilder(@NonNull Class<T> klass) {
+    private  <T extends RoomDatabase> T databaseBuilder(@NonNull Class<T> klass) {
         if (TextUtils.isEmpty(config.getName())) {
             throw new IllegalArgumentException("Cannot build a database with null or empty name."
                     + " If you are trying to create an in memory database, use Room"

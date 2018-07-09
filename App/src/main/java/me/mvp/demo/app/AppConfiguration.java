@@ -54,6 +54,7 @@ public class AppConfiguration implements ConfigModule {
         builder
                 .httpUrl(Api.APP_DOMAIN)
                 .cacheFile(new File(ProjectUtils.CACHE))
+                .dbConfiguration(new DBConfig())
                 .networkInterceptorHandler(new NetworkInterceptorConfig())
                 .interceptors(new ParameterInterceptorConfig(context))
                 .retrofitConfiguration(new RetrofitConfig())
@@ -61,7 +62,6 @@ public class AppConfiguration implements ConfigModule {
                 .globalErrorHandler(new GlobalErrorConfig())
                 .rxCacheConfiguration(new RxCacheConfig())
                 .gsonConfiguration(new GsonConfig())
-                .dbConfiguration(new DBConfig())
         ;
     }
 

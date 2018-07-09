@@ -38,6 +38,7 @@ public class Tab2Fragment extends BaseFragment {
         User user = new User();
         user.setUserId("testid");
         user.setName("test");
+
         UserDao dao = AppDatabase.get(component).userDao();
         dao.insertAll(user);
 
