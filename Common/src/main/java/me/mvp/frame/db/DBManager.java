@@ -48,7 +48,7 @@ public class DBManager {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends RoomDatabase> T databaseBuilder() {
+    private <T extends RoomDatabase> T databaseBuilder() {
         if (config.getDatabaseClass() == null) {
             throw new IllegalArgumentException("Cannot build a database with null or empty name."
                     + " If you are trying to create an in memory database, use Room"
