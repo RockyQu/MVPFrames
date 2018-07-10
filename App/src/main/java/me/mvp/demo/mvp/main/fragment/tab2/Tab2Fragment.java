@@ -2,6 +2,7 @@ package me.mvp.demo.mvp.main.fragment.tab2;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
 import java.util.List;
 
@@ -44,6 +45,9 @@ public class Tab2Fragment extends BaseFragment {
 
         List<User> users = dao.getAll();
         Logg.e(users);
+
+        Log.e("aaaaa",""+AppDatabase.get(component));
+        Log.e("bbbbb",""+AppDatabase.get(component));
     }
 
     @Override
