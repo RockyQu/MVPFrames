@@ -8,8 +8,8 @@ ext {
                buildToolsVersion             : "27.0.3",
                minSdkVersion                 : 15,
                targetSdkVersion              : 26,
-               versionCode                   : 45,
-               versionName                   : "2.1.4",
+               versionCode                   : 46,
+               versionName                   : "2.1.5",
                renderscriptTargetApi         : 22,
                renderscriptSupportModeEnabled: true
     ]

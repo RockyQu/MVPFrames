@@ -45,9 +45,6 @@ public class Tab2Fragment extends BaseFragment {
 
         List<User> users = dao.getAll();
         Logg.e(users);
-
-        Log.e("aaaaa",""+AppDatabase.get(component));
-        Log.e("bbbbb",""+AppDatabase.get(component));
     }
 
     @Override
