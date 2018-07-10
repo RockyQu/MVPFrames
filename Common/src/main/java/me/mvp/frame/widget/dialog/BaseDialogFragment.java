@@ -20,7 +20,7 @@ import me.mvp.frame.base.App;
 import me.mvp.frame.di.component.AppComponent;
 
 /**
- * 使用 BaseSimpleDialogFragment 自定义自己需要的对话框
+ * 使用 BaseDialogFragment 自定义自己需要的对话框
  */
 public abstract class BaseDialogFragment extends DialogFragment {
 
