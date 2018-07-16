@@ -1,6 +1,8 @@
 package me.mvp.frame.utils;
 
 import com.google.gson.Gson;
+
+import me.mvp.frame.di.component.AppComponent;
 import me.mvp.frame.utils.base.BaseUtils;
 
 /**
@@ -19,6 +21,10 @@ public class GsonUtils extends BaseUtils {
             gson = new Gson();
         }
         return gson;
+    }
+
+    public static Gson getGson(AppComponent component) {
+        return component.getGson();
     }
 
     /**
