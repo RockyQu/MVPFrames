@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-path
+        name="camera"
+        path=""/>
+    <external-path
+        name="apk"
+        path=""/>
+</paths>
