@@ -1469,24 +1469,22 @@ public class FileUtils extends BaseUtils {
 
     public static void copyFilesFromAssets(Context context, String assetsPath, String savePath) {
         try {
-            String fileNames[] = context.getAssets().list(assetsPath);// 获取assets目录下的所有文件及目录名
-            if (fileNames.length > 0) {// 如果是目录
+            String fileNames[] = context.getAssets().list(assetsPath);
+            if (fileNames.length > 0) {
                 File file = new File(savePath);
-                file.mkdirs();// 如果文件夹不存在，则递归
+                file.mkdirs();
                 for (String fileName : fileNames) {
-                    copyFilesFromAssets(context, assetsPath + "/" + fileName,
-                            savePath + "/" + fileName);
+                    copyFilesFromAssets(context, assetsPath + "/" + fileName, savePath + "/" + fileName);
                 }
-            } else {// 如果是文件
+            } else {
                 InputStream is = context.getAssets().open(assetsPath);
                 FileOutputStream fos = new FileOutputStream(new File(savePath));
                 byte[] buffer = new byte[1024];
                 int byteCount = 0;
-                while ((byteCount = is.read(buffer)) != -1) {// 循环从输入流读取
-                    // buffer字节
-                    fos.write(buffer, 0, byteCount);// 将读取的输入流写入到输出流
+                while ((byteCount = is.read(buffer)) != -1) {
+                    fos.write(buffer, 0, byteCount);
                 }
-                fos.flush();// 刷新缓冲区
+                fos.flush();
                 is.close();
                 fos.close();
             }

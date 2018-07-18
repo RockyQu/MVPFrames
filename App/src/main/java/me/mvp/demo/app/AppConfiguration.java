@@ -43,6 +43,9 @@ import java.util.List;
  */
 public class AppConfiguration implements ConfigModule {
 
+    // 渠道名称，必须与Mainfests渠道配置name相同
+    public static final String CHANNEL = "Channel";
+
     @Override
     public void applyOptions(final Context context, AppConfigModule.Builder builder) {
         if (BuildConfig.DEBUG_FLAG) { // 只在 Debug 时打印日志
@@ -78,30 +81,6 @@ public class AppConfiguration implements ConfigModule {
             public void onCreate(Application application) {
                 // LeakCanary内存泄露检查
                 ((App) application).getAppComponent().extras().put(RefWatcher.class.getName(), BuildConfig.DEBUG_FLAG ? LeakCanary.install(application) : RefWatcher.DISABLED);
-            }
-
-            @Override
-            public void onTerminate(Application application) {
-
-            }
-        });
-
-        lifecycleManager.add(new ApplicationLifecycles() {
-
-            // 渠道名称，必须与Mainfests渠道配置name相同
-            final String CHANNEL = "Channel";
-
-            @Override
-            public void attachBaseContext(Context base) {
-
-            }
-
-            @Override
-            public void onCreate(Application application) {
-                // 项目在SDCard下创建的目录
-                if (!ProjectUtils.init(AppUtils.getAppChannel(application, CHANNEL))) {
-                    // 失败
-                }
             }
 
             @Override

@@ -12,11 +12,15 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import me.logg.Logg;
+import me.mvp.frame.di.component.AppComponent;
 
 /**
  * 数据库配置
  * <p>
  * 使用 2017 Google IO 大会 Architecture Components 架构组件 Room
+ * <p>
+ * 请在外部 Module 添加自己的数据库并继承 {@link RoomDatabase} ，调用 {@link AppComponent#dbManager()#database()}
+ * 方法获取实例，{@link RoomDatabase} 已经实现单例化，外部无需再处理
  *
  * @see <a href="https://developer.android.google.cn/training/data-storage/room"></a>
  * @see <a href="https://github.com/googlesamples/android-architecture-components"></a>

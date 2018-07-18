@@ -7,12 +7,14 @@ import android.os.Handler;
 import android.os.Message;
 
 import me.mvp.demo.R;
+import me.mvp.demo.app.AppConfiguration;
 import me.mvp.demo.mvp.main.MainActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import me.mvp.frame.base.BaseActivity;
 import me.mvp.frame.frame.IPresenter;
 import me.mvp.frame.utils.AppUtils;
 import me.mvp.frame.utils.PermissionUtils;
+import me.mvp.frame.utils.ProjectUtils;
 
 /**
  * 欢迎页面
@@ -28,6 +30,9 @@ public class WelcomeActivity extends BaseActivity {
 
                                                @Override
                                                public void onRequestPermissionSuccess() {
+                                                   // 创建一些文件夹
+                                                   ProjectUtils.init(AppUtils.getAppChannel(WelcomeActivity.this, AppConfiguration.CHANNEL));
+
                                                    startNextActivity();
                                                }
 

@@ -101,8 +101,7 @@ public final class AppUtils extends BaseUtils {
      */
     public static String getAppChannel(Context context, String channel) {
         try {
-            ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(
-                    context.getPackageName(), PackageManager.GET_META_DATA);
+            ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
             if (appInfo.metaData != null) {
                 for (String key : appInfo.metaData.keySet()) {
                     if (key.equals(channel)) {
