@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
+    <!-- 对应Context.getFilesDir() + “/path/”，即/data/data/<package-name>/files/Frames/ -->
+    <files-path
+        name="name"
+        path="Frames" />
+    <!-- 对应Context.getCacheDir() + “/path/”，即/data/data/<package-name>/cache/Frames/ -->
+    <cache-path
+        name="name"
+        path="Frames" />
+    <!-- 对应Context.getExternalFilesDir(null) + “/path/”，即/storage/emulated/0/Android/data/<package_name>/files/Frames/ -->
+    <external-files-path
+        name="name"
+        path="Frames" />
+    <!-- 对应Context.getExternalCacheDir() + “/path/”，即/storage/emulated/0/Android/data/<package-name>/cache/Frames/ -->
+    <external-cache-path
+        name="name"
+        path="Frames" />
+    <!-- 对应Environment.getExternalStorageDirectory() + “/path/”，即/storage/emulated/0/Frames/ -->
     <external-path
-        name="camera"
-        path=""/>
-    <external-path
-        name="apk"
-        path=""/>
+        name="name"
+        path="Frames" />
 </paths>
