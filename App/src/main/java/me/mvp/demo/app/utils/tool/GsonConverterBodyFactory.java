@@ -1,14 +1,14 @@
-package me.mvp.frame.http.converter;
+package me.mvp.demo.app.utils.tool;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
-import me.mvp.frame.http.ResponseEntity;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
+import me.mvp.demo.entity.base.ResponseEntity;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
@@ -22,8 +22,7 @@ public class GsonConverterBodyFactory extends Converter.Factory {
     private final Gson gson;
 
     public static GsonConverterBodyFactory create() {
-        GsonBuilder builder = new GsonBuilder().
-                registerTypeAdapter(ResponseEntity.class, new GsonResponseDeserializer());
+        GsonBuilder builder = new GsonBuilder().registerTypeAdapter(ResponseEntity.class, new GsonResponseDeserializer());
         return create(builder);
     }
 

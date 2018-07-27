@@ -1,7 +1,7 @@
 package me.mvp.demo.app.api.service;
 
 import me.mvp.demo.entity.User;
-import me.mvp.frame.http.ResponseEntity;
+import me.mvp.demo.entity.base.ResponseEntity;
 
 import io.reactivex.Observable;
 import retrofit2.Call;

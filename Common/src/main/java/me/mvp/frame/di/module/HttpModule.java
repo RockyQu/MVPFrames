@@ -4,11 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
-import com.google.gson.Gson;
-
 import me.mvp.frame.http.NetworkInterceptorHandler;
-import me.mvp.frame.http.converter.GsonConverterBodyFactory;
-import me.mvp.frame.http.converter.JsonConverterFactory;
 import me.mvp.frame.http.interceptor.NetworkInterceptor;
 import me.mvp.frame.utils.FileUtils;
 
@@ -46,18 +42,16 @@ public class HttpModule {
 
     @Singleton
     @Provides
-    Retrofit provideRetrofit(Application application, HttpModule.RetrofitConfiguration retrofitConfiguration, Retrofit.Builder builder, OkHttpClient client
-            , HttpUrl httpUrl, Gson gson) {
+    Retrofit provideRetrofit(Application application, HttpModule.RetrofitConfiguration retrofitConfiguration, Retrofit.Builder builder, OkHttpClient client, HttpUrl httpUrl) {
         builder
                 .baseUrl(httpUrl)// 域名
                 .client(client);// 设置OkHttpClient
 
+        builder
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create());// 支持 RxJava
+
         retrofitConfiguration.configRetrofit(application, builder);
 
-        builder
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())// 支持 RxJava
-                .addConverterFactory(GsonConverterBodyFactory.create(gson))// 支持 Gson
-                .addConverterFactory(JsonConverterFactory.create());// 支持 Json
         return builder.build();
     }
 
@@ -129,11 +123,16 @@ public class HttpModule {
     @Provides
     RxCache provideRxCache(Application application, @Nullable RxCacheConfiguration configuration, @Named("RxCacheDirectory") File cacheDirectory) {
         RxCache.Builder builder = new RxCache.Builder();
+
         RxCache rxCache = null;
         if (configuration != null) {
             rxCache = configuration.configRxCache(application, builder);
         }
-        if (rxCache != null) return rxCache;
+
+        if (rxCache != null) {
+            return rxCache;
+        }
+
         return builder.persistence(cacheDirectory, new GsonSpeaker());
     }
 

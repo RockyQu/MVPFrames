@@ -4,9 +4,9 @@ import android.content.Context;
 
 import com.google.gson.GsonBuilder;
 
-import me.mvp.demo.app.utils.gson.GsonResponseDeserializer;
+import me.mvp.demo.app.utils.tool.GsonResponseDeserializer;
 import me.mvp.frame.di.module.AppModule;
-import me.mvp.frame.http.ResponseEntity;
+import me.mvp.demo.entity.base.ResponseEntity;
 
 /**
  * 扩展自定义配置 Gson 参数

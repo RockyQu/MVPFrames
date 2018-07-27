@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
@@ -74,7 +75,7 @@ public class AppConfiguration implements ConfigModule {
 
             @Override
             public void attachBaseContext(Context base) {
-
+                MultiDex.install(base);
             }
 
             @Override

@@ -3,7 +3,7 @@ package me.mvp.demo.mvp.login;
 import me.mvp.demo.app.api.service.ApiNetwork;
 import me.mvp.demo.entity.User;
 import me.mvp.frame.frame.IModel;
-import me.mvp.frame.http.ResponseEntity;
+import me.mvp.demo.entity.base.ResponseEntity;
 import me.mvp.frame.integration.IRepositoryManager;
 
 import retrofit2.Call;

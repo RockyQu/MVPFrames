@@ -1,14 +1,14 @@
-package me.mvp.demo.app.utils.gson;
+package me.mvp.demo.app.utils.tool;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import me.mvp.frame.http.ResponseEntity;
 
 import java.lang.reflect.Type;
+
+import me.mvp.demo.entity.base.ResponseEntity;
 
 /**
  * 这里解决因服务器 API 接口缺少规范化，需实现 Gson 的 JsonDeserializer 接口来完成自定义解析
@@ -26,16 +26,6 @@ public class GsonResponseDeserializer implements JsonDeserializer<ResponseEntity
 
     @Override
     public ResponseEntity deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        JsonObject response = json.getAsJsonObject();
-        if (response.get("result").isJsonPrimitive()) {// 是否为基本数据类型
-            int code = response.get("code").getAsInt();
-            String message = response.get("info").getAsString();
-
-            ResponseEntity entity = new ResponseEntity();
-            entity.setCode(code);
-            entity.setMessage(message);
-            return entity;
-        }
         return new Gson().fromJson(json, typeOfT);
     }
 }

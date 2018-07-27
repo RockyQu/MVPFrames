@@ -1,12 +1,11 @@
 package me.mvp.demo.mvp.login;
 
-import me.logg.Logg;
 import me.mvp.demo.entity.User;
 import me.mvp.frame.di.component.AppComponent;
 import me.mvp.frame.frame.BasePresenter;
 import me.mvp.frame.frame.Message;
 import me.mvp.frame.http.ResponseCallback;
-import me.mvp.frame.http.ResponseEntity;
+import me.mvp.demo.entity.base.ResponseEntity;
 
 import retrofit2.Call;
 
