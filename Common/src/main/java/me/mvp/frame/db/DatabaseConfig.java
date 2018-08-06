@@ -11,11 +11,16 @@ public class DatabaseConfig<T extends RoomDatabase> {
 
     private boolean allowMainThreadQueries;
 
+    private boolean fallbackToDestructiveMigration;
+    private int[] fallbackToDestructiveMigrationFromStartVersions;
+
     public DatabaseConfig(Builder<T> builder) {
         this.name = builder.name;
         this.path = builder.path;
         this.databaseClass = builder.databaseClass;
         this.allowMainThreadQueries = builder.allowMainThreadQueries;
+        this.fallbackToDestructiveMigration = builder.fallbackToDestructiveMigration;
+        this.fallbackToDestructiveMigrationFromStartVersions = builder.fallbackToDestructiveMigrationFromStartVersions;
     }
 
     public String getName() {
@@ -34,6 +39,14 @@ public class DatabaseConfig<T extends RoomDatabase> {
         return allowMainThreadQueries;
     }
 
+    public boolean isFallbackToDestructiveMigration() {
+        return fallbackToDestructiveMigration;
+    }
+
+    public int[] getFallbackToDestructiveMigrationFromStartVersions() {
+        return fallbackToDestructiveMigrationFromStartVersions;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -48,8 +61,14 @@ public class DatabaseConfig<T extends RoomDatabase> {
         // 提供给外部模块配置自己的数据库，请传入继承自 RoomDatabase 的类
         private Class<T> databaseClass;
 
-        // 就否允许在主线程访问数据库
+        // 是否允许在主线程访问数据库
         private boolean allowMainThreadQueries = false;
+
+        // 当升级数据库时，允许数据库抛弃旧数据重新创建新的数据库表
+        private boolean fallbackToDestructiveMigration = false;
+
+        // 通知数据库，允许从特定的版本中抛弃旧数据重新创建新的数据库表
+        private int[] fallbackToDestructiveMigrationFromStartVersions;
 
         public Builder<T> name(String name) {
             this.name = name;
@@ -67,7 +86,17 @@ public class DatabaseConfig<T extends RoomDatabase> {
         }
 
         public Builder<T> allowMainThreadQueries() {
-            allowMainThreadQueries = true;
+            this.allowMainThreadQueries = true;
+            return this;
+        }
+
+        public Builder<T> fallbackToDestructiveMigration() {
+            this.fallbackToDestructiveMigration = true;
+            return this;
+        }
+
+        public Builder<T> fallbackToDestructiveMigrationFromStartVersions(int[] startVersions) {
+            this.fallbackToDestructiveMigrationFromStartVersions = startVersions;
             return this;
         }
 

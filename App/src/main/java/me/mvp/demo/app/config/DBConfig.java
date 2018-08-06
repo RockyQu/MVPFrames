@@ -1,5 +1,6 @@
 package me.mvp.demo.app.config;
 
+import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import me.mvp.demo.app.AppConfiguration;
@@ -21,5 +22,10 @@ public class DBConfig implements DBModule.DBConfiguration {
                 .databaseClass(AppDatabase.class)
                 .allowMainThreadQueries()
         ;
+    }
+
+    @Override
+    public void createdDB(Context context, RoomDatabase database) {
+
     }
 }

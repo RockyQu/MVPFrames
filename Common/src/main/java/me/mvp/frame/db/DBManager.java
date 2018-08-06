@@ -13,6 +13,7 @@ import javax.inject.Singleton;
 
 import me.logg.Logg;
 import me.mvp.frame.di.component.AppComponent;
+import me.mvp.frame.di.module.DBModule;
 
 /**
  * 数据库配置
@@ -38,6 +39,9 @@ public class DBManager {
     DatabaseConfig config;
 
     @Inject
+    DBModule.DBConfiguration dbConfiguration;
+
+    @Inject
     public DBManager() {
 
     }
@@ -45,6 +49,10 @@ public class DBManager {
     @Inject
     void init() {
         database = databaseBuilder();
+
+        if (dbConfiguration != null) {
+            dbConfiguration.createdDB(application, database);
+        }
     }
 
     public RoomDatabase database() {
@@ -79,6 +87,15 @@ public class DBManager {
         RoomDatabase.Builder<T> builder = Room.databaseBuilder(application, klass, config.getName());
         if (config.isAllowMainThreadQueries()) {
             builder.allowMainThreadQueries();
+        }
+
+        if (config.isFallbackToDestructiveMigration()) {
+            builder.fallbackToDestructiveMigration();
+        }
+
+        int[] startVersions = config.getFallbackToDestructiveMigrationFromStartVersions();
+        if (startVersions != null && startVersions.length != 0) {
+            builder.fallbackToDestructiveMigrationFrom(startVersions);
         }
 
         return builder.build();

@@ -1,6 +1,7 @@
 package me.mvp.frame.di.module;
 
 import android.app.Application;
+import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import javax.inject.Singleton;
@@ -36,12 +37,25 @@ public class DBModule {
      */
     public interface DBConfiguration {
 
+        /**
+         * 在数据库被创建之前的一些配置
+         */
         void configDB(Context context, DatabaseConfig.Builder builder);
+
+        /**
+         * 在数据库创建成功之后返回数据库实例，你可以再次进行一些格外的配置
+         */
+        void createdDB(Context context, RoomDatabase database);
 
         DBConfiguration EMPTY = new DBConfiguration() {
 
             @Override
             public void configDB(Context context, DatabaseConfig.Builder builder) {
+
+            }
+
+            @Override
+            public void createdDB(Context context, RoomDatabase database) {
 
             }
         };
