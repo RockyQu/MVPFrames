@@ -2,18 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:icon="@drawable/ic_navigation_main_checked"
-        android:title="首页"/>
+        android:title="Home"/>
 
     <item
-        android:icon="@drawable/ic_navigation_rx_checked"
-        android:title="Rx"/>
+        android:icon="@drawable/ic_navigation_demo_checked"
+        android:title="Demo"/>
 
     <item
-        android:icon="@drawable/ic_navigation_tab3_checked"
-        android:title="Tab"/>
-
-    <item
-        android:icon="@drawable/ic_navigation_tab4_checked"
-        android:title="Tab"/>
+        android:icon="@drawable/ic_navigation_user_checked"
+        android:title="User"/>
 
 </menu>

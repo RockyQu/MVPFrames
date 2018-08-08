@@ -5,15 +5,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 
+import me.mvp.demo.mvp.main.fragment.demo.DemoFragment;
 import me.mvp.demo.mvp.main.fragment.main.MainFragment;
-import me.mvp.demo.mvp.main.fragment.tab2.Tab2Fragment;
-import me.mvp.demo.mvp.main.fragment.tab3.Tab3Fragment;
-import me.mvp.demo.mvp.main.fragment.tab4.Tab4Fragment;
+import me.mvp.demo.mvp.main.fragment.user.UserFragment;
 
 import java.util.ArrayList;
 
 /**
- *
+ * 主页面 Fragment 适配器
  */
 public class MainViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -25,9 +24,8 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
 
         fragments.clear();
         fragments.add(MainFragment.create(0));
-        fragments.add(Tab2Fragment.create(1));
-        fragments.add(Tab3Fragment.create(2));
-        fragments.add(Tab4Fragment.create(3));
+        fragments.add(DemoFragment.create(1));
+        fragments.add(UserFragment.create(2));
     }
 
     @Override

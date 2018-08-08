@@ -9,7 +9,7 @@ import me.mvp.frame.base.BaseFragment;
 import me.mvp.frame.frame.IPresenter;
 
 /**
- *
+ * Main
  */
 public class MainFragment extends BaseFragment {
 

@@ -1,4 +1,4 @@
-package me.mvp.demo.mvp.main.fragment.tab3;
+package me.mvp.demo.mvp.main.fragment.user;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,9 +9,9 @@ import me.mvp.frame.base.BaseFragment;
 import me.mvp.frame.frame.IPresenter;
 
 /**
- *
+ * User
  */
-public class Tab3Fragment extends BaseFragment {
+public class UserFragment extends BaseFragment {
 
     /**
      * Create Fragment
@@ -19,7 +19,7 @@ public class Tab3Fragment extends BaseFragment {
      * @return
      */
     public static Fragment create(int index) {
-        Tab3Fragment fragment = new Tab3Fragment();
+        UserFragment fragment = new UserFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
@@ -27,7 +27,7 @@ public class Tab3Fragment extends BaseFragment {
 
     @Override
     public void create(Bundle savedInstanceState) {
-        Logg.e("Tab3Fragment");
+        Logg.e("UserFragment");
     }
 
     @Override

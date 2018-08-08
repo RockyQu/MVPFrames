@@ -59,7 +59,9 @@ public abstract class BaseDialogFragment extends DialogFragment {
 
     private WindowManager.LayoutParams getLayoutParams(Window window) {
         WindowManager.LayoutParams layoutParams = window.getAttributes();
-        layoutParams.dimAmount = builder.dimAmount;// 背景明暗程度
+        layoutParams.dimAmount = builder.dimAmount;
+        layoutParams.x = builder.x;
+        layoutParams.y = builder.y;
         return layoutParams;
     }
 
@@ -125,25 +127,21 @@ public abstract class BaseDialogFragment extends DialogFragment {
         private int width = LinearLayout.LayoutParams.MATCH_PARENT;
         private int height = LinearLayout.LayoutParams.WRAP_CONTENT;
 
-        /**
-         * 窗体相对位置
-         */
+        // 窗体相对位置
         private int gravity = Gravity.TOP;
 
-        /**
-         * 进入退出动画
-         */
+        // 进入退出动画
         private int animation = R.style.DialogEmptyAnimation;
 
-        /**
-         * 点击外部是否关闭对话框，默认关闭
-         */
+        // 点击外部是否关闭对话框，默认关闭
         private boolean canceledOnTouchOutside = false;
 
-        /**
-         * 背景明暗
-         */
+        // 背景明暗
         private float dimAmount = 0.5f;
+
+        // 坐标位置
+        public int x;
+        public int y;
 
         public Builder() {
             ;
@@ -181,6 +179,16 @@ public abstract class BaseDialogFragment extends DialogFragment {
 
         public Builder dimAmount(float dimAmount) {
             this.dimAmount = dimAmount;
+            return this;
+        }
+
+        public Builder x(int x) {
+            this.x = x;
+            return this;
+        }
+
+        public Builder y(int y) {
+            this.y = y;
             return this;
         }
     }
