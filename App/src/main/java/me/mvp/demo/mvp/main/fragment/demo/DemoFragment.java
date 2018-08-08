@@ -58,14 +58,6 @@ public class DemoFragment extends BaseFragment {
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_dialog:
-
-                int[] location = new int[2];
-                v.getLocationOnScreen(location);
-                int x = location[0];
-                int y = location[1];
-                Logg.e(x);
-                Logg.e(y);
-
                 DialogDefault dialogFont = DialogDefault.newInstance();
                 dialogFont.show(getFragmentManager(), DialogDefault.TAG);
                 break;
