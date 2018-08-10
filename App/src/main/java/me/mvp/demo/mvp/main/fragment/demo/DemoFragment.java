@@ -17,6 +17,9 @@ import me.mvp.demo.entity.UserDao;
 import me.mvp.demo.ui.widget.dialog.DialogDefault;
 import me.mvp.frame.base.BaseFragment;
 import me.mvp.frame.frame.IPresenter;
+import me.mvp.frame.utils.ProjectUtils;
+import me.mvp.frame.widget.imageloader.glide.GlideImageConfig;
+import me.mvp.frame.widget.imageloader.glide.ImageScaleType;
 
 /**
  * Demo
@@ -52,6 +55,10 @@ public class DemoFragment extends BaseFragment {
         List<User> users = dao.getAll();
         Logg.e(users);
 
+        component.getImageLoader().clear(component.getApplication(), GlideImageConfig.builder()
+                .isClearDiskCache(true)
+                .isClearMemory(true)
+                .build());
     }
 
     @OnClick({R.id.btn_dialog})

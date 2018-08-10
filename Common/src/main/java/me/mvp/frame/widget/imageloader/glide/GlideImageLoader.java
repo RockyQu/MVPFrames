@@ -22,7 +22,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * GlideImageLoader
+ * 最终的图片加截会执行到这里
  */
 @Singleton
 public class GlideImageLoader implements BaseImageLoader<GlideImageConfig>, GlideAppliesOptions {
