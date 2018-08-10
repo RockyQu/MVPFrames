@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
+import com.google.gson.Gson;
+
 import me.mvp.frame.http.NetworkInterceptorHandler;
 import me.mvp.frame.http.interceptor.NetworkInterceptor;
 import me.mvp.frame.utils.FileUtils;
@@ -28,6 +30,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * HTTP 参数配置
@@ -42,13 +45,14 @@ public class HttpModule {
 
     @Singleton
     @Provides
-    Retrofit provideRetrofit(Application application, HttpModule.RetrofitConfiguration retrofitConfiguration, Retrofit.Builder builder, OkHttpClient client, HttpUrl httpUrl) {
+    Retrofit provideRetrofit(Application application, HttpModule.RetrofitConfiguration retrofitConfiguration, Retrofit.Builder builder, OkHttpClient client, HttpUrl httpUrl, Gson gson) {
         builder
                 .baseUrl(httpUrl)// 域名
                 .client(client);// 设置OkHttpClient
 
         builder
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create());// 支持 RxJava
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())// 支持 RxJava
+                .addConverterFactory(GsonConverterFactory.create(gson));// 支持 Gson
 
         retrofitConfiguration.configRetrofit(application, builder);
 
