@@ -34,7 +34,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        // 注册EventBus
+        // 注册 EventBus
         if (iActivity != null) {
             if (iActivity.useEventBus()) {
                 EventBus.getDefault().register(activity);
@@ -43,7 +43,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
 
         AppComponent component = AppUtils.obtainAppComponentFromContext(activity);
 
-        // 在Base基类实现些方法，为了能够方便的获取到AppComponent
+        // 在 Base 基类实现些方法，为了能够方便的获取到 AppComponent
         if (iActivity != null) {
             iActivity.setComponent(component);
         }
@@ -69,7 +69,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
             e.printStackTrace();
         }
 
-        // 绑定ButterKnife
+        // 绑定 ButterKnife
         unbinder = ButterKnife.bind(activity);
 
         // 初始化方法

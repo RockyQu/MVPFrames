@@ -22,12 +22,23 @@ public class HttpUtils extends BaseUtils {
     }
 
     /**
-     * 用来解析请求参数，将ParameterBody转成RequestBody
+     * 用来解析请求参数，将 ParameterBody 转成 RequestBody
      *
      * @param params
      * @return 返回格式化后的参数集
      */
     public static Map<String, RequestBody> body(Map<String, ParameterBody> params) {
+        return body(params, "image/*");
+    }
+
+    /**
+     * 用来解析请求参数，将 ParameterBody 转成 RequestBody
+     *
+     * @param params
+     * @param value
+     * @return 返回格式化后的参数集
+     */
+    public static Map<String, RequestBody> body(Map<String, ParameterBody> params, String value) {
         Map<String, RequestBody> requestBodyMap = new HashMap<>();
         for (Map.Entry<String, ParameterBody> entry : params.entrySet()) {
             String key = entry.getKey();
@@ -36,7 +47,7 @@ public class HttpUtils extends BaseUtils {
                 requestBodyMap.put(key, RequestBody.create(null, body.getValue()));
             } else if (body.getFile() != null && body.getFile().exists()) {// 文件类型
                 File file = body.getFile();
-                requestBodyMap.put(body.getKey() + "\";filename=\"" + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                requestBodyMap.put(body.getKey() + "\";filename=\"" + file.getName(), RequestBody.create(MediaType.parse(value), file));
             }
         }
 
