@@ -22,6 +22,6 @@
  * 3.完善 BaseDialogFragment 继承 DialogFragment ，可以轻松实现各种对话框
  * 4.为了灵活配置移除了 ResponseEntity ，请在自己的 Module 里定义你自己 ResponseEntity
  * 5.增加数据库扩展接口 createdDB()
- * 6.
+ * 6.修复了一些Bug
  */
 package me.mvp.frame;

@@ -39,8 +39,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IView {
         BottomNavigationAdapter navigationAdapter = new BottomNavigationAdapter(this, R.menu.menu_bottom_navigation);
         navigationAdapter.setupWithBottomNavigation(bottomNavigation);
 
-        bottomNavigation.setDefaultBackgroundColor(ContextCompat.getColor(this, R.color.main_color));
-
         // 隐藏导航栏标题
         bottomNavigation.setTitleState(BottomNavigation.TitleState.ALWAYS_HIDE);
 

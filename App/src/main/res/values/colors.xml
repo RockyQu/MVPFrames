@@ -7,7 +7,7 @@
 
     <color name="colorBottomNavigationPrimary">#3F51B5</color>
     <color name="colorBottomNavigationPrimaryDark">#303F9F</color>
-    <color name="colorBottomNavigationAccent">#FFFFFF</color>
+    <color name="colorBottomNavigationAccent">#26272b</color>
     <color name="colorBottomNavigationInactive">#939395</color>
     <color name="colorBottomNavigationDisable">#3A000000</color>
     <color name="colorBottomNavigationActiveColored">#FFFFFF</color>
