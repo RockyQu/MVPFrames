@@ -5,8 +5,12 @@ import android.support.v4.app.Fragment;
 
 import me.logg.Logg;
 import me.mvp.demo.R;
+import me.mvp.demo.app.utils.downloader.Downloader;
+import me.mvp.demo.app.utils.downloader.DownloaderSampleListener;
+import me.mvp.demo.app.utils.downloader.exception.DownloadException;
 import me.mvp.frame.base.BaseFragment;
 import me.mvp.frame.frame.IPresenter;
+import me.mvp.frame.utils.ProjectUtils;
 
 /**
  * Main
@@ -29,8 +33,8 @@ public class MainFragment extends BaseFragment {
     public void create(Bundle savedInstanceState) {
         Logg.e("MainFragment");
 
-        //        Downloader.getInstance().create("http://download.alicdn.com/wireless/taobao4android/latest/702757.apk")
-////                .setSaveFilePath(ProjectUtils.OTHER + "aaaaa")
+//                Downloader.getInstance().create("http://download.alicdn.com/wireless/taobao4android/latest/702757.apk")
+//                .setSaveFilePath(ProjectUtils.CACHE + "aaaaa")
 //                .setListener(new DownloaderSampleListener() {
 //
 //                    @Override

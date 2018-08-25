@@ -1,4 +1,4 @@
-package me.mvp.frame.http.download.helper;
+package me.mvp.demo.app.utils.downloader.helper;
 
 public class TaskerIdGenerator implements IdGenerator {
 

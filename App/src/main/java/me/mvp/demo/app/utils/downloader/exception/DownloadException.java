@@ -1,4 +1,4 @@
-package me.mvp.frame.http.download.exception;
+package me.mvp.demo.app.utils.downloader.exception;
 
 public class DownloadException extends Exception {
 

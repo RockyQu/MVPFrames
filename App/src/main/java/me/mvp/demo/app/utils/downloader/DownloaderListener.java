@@ -1,8 +1,8 @@
-package me.mvp.frame.http.download;
+package me.mvp.demo.app.utils.downloader;
 
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadListener;
-import me.mvp.frame.http.download.exception.DownloadException;
+import me.mvp.demo.app.utils.downloader.exception.DownloadException;
 
 public abstract class DownloaderListener extends FileDownloadListener {
 

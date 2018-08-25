@@ -1,4 +1,4 @@
-package me.mvp.frame.http.download.helper;
+package me.mvp.demo.app.utils.downloader.helper;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

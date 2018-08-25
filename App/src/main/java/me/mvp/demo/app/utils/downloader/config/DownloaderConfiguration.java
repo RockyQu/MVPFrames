@@ -1,10 +1,10 @@
-package me.mvp.frame.http.download.config;
+package me.mvp.demo.app.utils.downloader.config;
 
 import android.app.Application;
 import android.text.TextUtils;
 
-import me.mvp.frame.http.download.Downloader;
-import me.mvp.frame.http.download.Tasker;
+import me.mvp.demo.app.utils.downloader.Downloader;
+import me.mvp.demo.app.utils.downloader.Tasker;
 
 /**
  * 相关参数配置

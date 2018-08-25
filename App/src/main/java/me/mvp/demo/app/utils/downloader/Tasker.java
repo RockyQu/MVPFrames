@@ -1,12 +1,13 @@
-package me.mvp.frame.http.download;
+package me.mvp.demo.app.utils.downloader;
 
 import android.text.TextUtils;
 
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadListener;
 import com.liulishuo.filedownloader.FileDownloader;
-import me.mvp.frame.http.download.config.DownloaderConfiguration;
-import me.mvp.frame.http.download.helper.TaskerIdGenerator;
+
+import me.mvp.demo.app.utils.downloader.config.DownloaderConfiguration;
+import me.mvp.demo.app.utils.downloader.helper.TaskerIdGenerator;
 
 import java.io.File;
 

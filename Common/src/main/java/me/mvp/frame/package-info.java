@@ -17,11 +17,10 @@
 /**
  * 更新日志
  * <p>
- * 1.完善 FileUtils 工具类
- * 2.修改 Room 为单例模式
- * 3.完善 BaseDialogFragment 继承 DialogFragment ，可以轻松实现各种对话框
- * 4.为了灵活配置移除了 ResponseEntity ，请在自己的 Module 里定义你自己 ResponseEntity
- * 5.增加数据库扩展接口 createdDB()
- * 6.修复了一些Bug
+ * 1.为保存框架的纯净性，去掉了基于 FileDownloader 的 Downloader 模块
+ * 2.
+ * 3.
+ * 4.
+ * 5.
  */
 package me.mvp.frame;

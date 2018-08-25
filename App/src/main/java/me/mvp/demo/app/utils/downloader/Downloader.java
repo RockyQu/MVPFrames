@@ -1,10 +1,11 @@
-package me.mvp.frame.http.download;
+package me.mvp.demo.app.utils.downloader;
 
 import android.app.Application;
 
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.util.FileDownloadLog;
-import me.mvp.frame.http.download.config.DownloaderConfiguration;
+
+import me.mvp.demo.app.utils.downloader.config.DownloaderConfiguration;
 
 /**
  * 基于 FileDownloader 的文件下载模块
