@@ -36,7 +36,7 @@ public class GlideImageLoader implements BaseImageLoader<GlideImageConfig>, Glid
     public void load(Context context, GlideImageConfig config) {
         this.check(context, config);
 
-        // 如果Context是Activity则自动使用Activity的生命周期
+        // 如果 Context 是 Activity 则自动使用 Activity 的生命周期
         GlideRequests requests = GlideFrames.with(context);
 
         GlideRequest<Drawable> glideRequest = requests.load(config.getUrl())
@@ -78,7 +78,8 @@ public class GlideImageLoader implements BaseImageLoader<GlideImageConfig>, Glid
             }
         }
 
-        if (config.getTransformation() != null) {//glide用它来改变图形的形状
+        // Glide 用它来改变图形的形状
+        if (config.getTransformation() != null) {
             glideRequest.transform(config.getTransformation());
         }
 
@@ -92,7 +93,7 @@ public class GlideImageLoader implements BaseImageLoader<GlideImageConfig>, Glid
             glideRequest.error(config.getError());
         }
 
-        // 设置请求 url 为空图片
+        // 设置请求 Url 为空图片
         if (config.getFallback() != 0) {
             glideRequest.fallback(config.getFallback());
         }

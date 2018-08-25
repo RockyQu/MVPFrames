@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import me.logg.Logg;
 import me.logg.config.LoggConstant;
+import me.mvp.frame.di.module.AppConfigModule;
 import me.mvp.frame.http.NetworkInterceptorHandler;
 import me.mvp.frame.utils.ZipUtils;
 
@@ -30,7 +31,9 @@ import okio.BufferedSource;
 import okio.GzipSource;
 
 /**
- * Http 拦截器
+ * 网络拦截器同时解析网络请求响应结果和日志输出
+ * <p>
+ * 使用 {@link AppConfigModule.Builder#httpLogLevel(Level)} 控制日志的开关
  */
 @Singleton
 public class NetworkInterceptor implements Interceptor {
@@ -67,11 +70,14 @@ public class NetworkInterceptor implements Interceptor {
         // 解析 Request 日志
         this.resolveRequestLogger(new StringBuilder(), chain, request);
 
+        // 用来计算请求时间差
+        long startNs = System.nanoTime();
+
         // Response
         Response response = chain.proceed(chain.request());
 
         // 解析 Response 日志
-        this.resolveResponseLogger(new StringBuilder(), chain, response);
+        this.resolveResponseLogger(new StringBuilder(), chain, response, startNs);
 
         // 读取服务器返回结果
         ResponseBody responseBody = response.body();
@@ -187,9 +193,7 @@ public class NetworkInterceptor implements Interceptor {
      * @param builder
      * @param chain
      */
-    private Response resolveResponseLogger(StringBuilder builder, Chain chain, Response response) throws IOException {
-        long startNs = System.nanoTime();
-
+    private Response resolveResponseLogger(StringBuilder builder, Chain chain, Response response, long startNs) throws IOException {
         if (level == Level.NONE) {
             return response;
         }

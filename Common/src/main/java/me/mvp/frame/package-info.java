@@ -18,8 +18,8 @@
  * 更新日志
  * <p>
  * 1.为保存框架的纯净性，去掉了基于 FileDownloader 的 Downloader 模块
- * 2.
- * 3.
+ * 2.修复 NetworkInterceptor 网络请求时间耗时差的错误
+ * 3.升级 Glide 版本至 4.8.0
  * 4.
  * 5.
  */
