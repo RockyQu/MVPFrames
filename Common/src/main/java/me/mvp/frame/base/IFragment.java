@@ -35,8 +35,6 @@ public interface IFragment<P extends IPresenter> {
     @Nullable
     P obtainPresenter();
 
-    void setPresenter(@Nullable P presenter);
-
     /**
      * 布局ID
      *

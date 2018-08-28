@@ -55,8 +55,8 @@ public class WelcomeActivity extends BaseActivity {
      */
     private void startNextActivity() {
         new Handler(msg -> {
-            Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-//                Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
+//            Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+                Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
             WelcomeActivity.this.startActivity(intent);
             WelcomeActivity.this.finish();
             return false;

@@ -1,4 +1,4 @@
-package me.mvp.frame.base.delegate;
+package me.mvp.frame.base.delegate.activity;
 
 import android.app.Activity;
 import android.os.Bundle;

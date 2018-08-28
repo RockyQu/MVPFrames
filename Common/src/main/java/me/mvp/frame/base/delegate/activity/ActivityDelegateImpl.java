@@ -1,4 +1,4 @@
-package me.mvp.frame.base.delegate;
+package me.mvp.frame.base.delegate.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -40,12 +40,6 @@ public class ActivityDelegateImpl implements ActivityDelegate {
         // 在 Base 基类实现些方法，为了能够方便的获取到 AppComponent
         if (iActivity != null) {
             iActivity.setComponent(component);
-        }
-
-        // 依赖注入
-        if (iActivity != null) {
-            this.iPresenter = iActivity.obtainPresenter();
-            iActivity.setPresenter(iPresenter);
         }
     }
 

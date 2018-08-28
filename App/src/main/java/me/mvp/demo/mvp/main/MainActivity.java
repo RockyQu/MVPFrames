@@ -1,13 +1,9 @@
 package me.mvp.demo.mvp.main;
 
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 
-import me.logg.Logg;
 import me.mvp.demo.R;
 import me.mvp.demo.databinding.ActivityMainBinding;
 import me.mvp.demo.ui.adapter.MainViewPagerAdapter;

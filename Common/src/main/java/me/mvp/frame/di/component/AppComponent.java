@@ -1,5 +1,6 @@
 package me.mvp.frame.di.component;
 
+import android.app.Activity;
 import android.app.Application;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
@@ -28,7 +29,7 @@ import dagger.Component;
 import okhttp3.OkHttpClient;
 
 /**
- * 此接口里的实例全部可以直接引用，通过 {@link AppUtils#obtainAppComponentFromContext(Context)} 获取
+ * 此接口里的实例全部可以直接使用，通过 {@link AppUtils#obtainAppComponentFromContext(Context)} 获取
  */
 @Singleton
 @Component(modules = {
@@ -70,10 +71,9 @@ public interface AppComponent {
     AppModule.GlobalErrorHandler getGlobalErrorHandler();
 
     /**
-     * 图片加载管理器, 用于加载图片的管理类, 使用策略者模式, 可在运行时动态替换任何图片加载框架
-     * arms-imageloader-glide 提供 Glide 的策略实现类, 也可以自行实现
-     * 需要在 {@link ConfigModule#applyOptions(Context, AppConfigModule.Builder)} 中
-     * 手动注册 {@link BaseImageLoaderStrategy}, {@link ImageLoader} 才能正常使用
+     * 图片加载管理器, 用于加载图片的管理类, 使用策略者模式, 可在运行时动态替换任何图片加载框架，需要自己实现
+     * {@link BaseImageLoaderStrategy}，在 {@link ConfigModule#applyOptions(Context, AppConfigModule.Builder)} 中
+     * 调用 {@link AppConfigModule#imageLoader} 设置 {@link ImageLoader} 才能正常使用
      *
      * @return
      */
@@ -87,7 +87,11 @@ public interface AppComponent {
      */
     File getCacheFile();
 
-    // 管理所有Activity
+    /**
+     * 用于管理所有 {@link Activity}
+     *
+     * @return {@link AppManager}
+     */
     AppManager appManager();
 
     /**

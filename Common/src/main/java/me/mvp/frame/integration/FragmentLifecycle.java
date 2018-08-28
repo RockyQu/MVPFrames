@@ -7,8 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
-import me.mvp.frame.base.delegate.FragmentDelegate;
-import me.mvp.frame.base.delegate.FragmentDelegateImpl;
+import me.mvp.frame.base.delegate.fragment.FragmentDelegate;
+import me.mvp.frame.base.delegate.fragment.FragmentDelegateImpl;
 import me.mvp.frame.base.IFragment;
 import me.mvp.frame.integration.cache.Cache;
 import me.mvp.frame.utils.Preconditions;
@@ -26,7 +26,7 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate == null || !fragmentDelegate.isAdded()) {
                 Cache<String, Object> cache = getCacheFromFragment((IFragment) f);
-                fragmentDelegate = new FragmentDelegateImpl(fm, f);
+                fragmentDelegate = new FragmentDelegateImpl(f);
                 cache.put(FragmentDelegate.FRAGMENT_DELEGATE, fragmentDelegate);
             }
             fragmentDelegate.onAttach(context);

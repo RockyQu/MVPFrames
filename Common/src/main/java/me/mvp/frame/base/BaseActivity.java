@@ -67,12 +67,11 @@ public abstract class BaseActivity<P extends BasePresenter, B extends ViewDataBi
             e.printStackTrace();
         }
 
-        this.create(savedInstanceState);
-    }
+        if (presenter == null) {
+            presenter = obtainPresenter();
+        }
 
-    @Override
-    public void setPresenter(P presenter) {
-        this.presenter = presenter;
+        this.create(savedInstanceState);
     }
 
     @Override

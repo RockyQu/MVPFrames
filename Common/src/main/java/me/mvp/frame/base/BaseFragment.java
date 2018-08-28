@@ -58,11 +58,6 @@ public abstract class BaseFragment<P extends BasePresenter, B extends ViewDataBi
     }
 
     @Override
-    public void setPresenter(P presenter) {
-        this.presenter = presenter;
-    }
-
-    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()) {
@@ -88,14 +83,6 @@ public abstract class BaseFragment<P extends BasePresenter, B extends ViewDataBi
 
     }
 
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        if (presenter == null) {
-            presenter = obtainPresenter();
-        }
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -114,7 +101,19 @@ public abstract class BaseFragment<P extends BasePresenter, B extends ViewDataBi
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        if (presenter == null) {
+            presenter = obtainPresenter();
+        }
+
         this.create(savedInstanceState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (presenter == null) {
+            presenter = obtainPresenter();
+        }
     }
 
     @Override

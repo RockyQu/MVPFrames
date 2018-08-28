@@ -8,10 +8,10 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
 import me.mvp.frame.base.BaseFragment;
-import me.mvp.frame.base.delegate.ActivityDelegate;
-import me.mvp.frame.base.delegate.ActivityDelegateImpl;
+import me.mvp.frame.base.delegate.activity.ActivityDelegate;
+import me.mvp.frame.base.delegate.activity.ActivityDelegateImpl;
 import me.mvp.frame.base.IActivity;
-import me.mvp.frame.base.delegate.FragmentDelegate;
+import me.mvp.frame.base.delegate.fragment.FragmentDelegate;
 import me.mvp.frame.integration.cache.Cache;
 import me.mvp.frame.utils.Preconditions;
 

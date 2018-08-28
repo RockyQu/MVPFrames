@@ -1,9 +1,8 @@
-package me.mvp.frame.base.delegate;
+package me.mvp.frame.base.delegate.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import me.mvp.frame.base.IFragment;
@@ -18,15 +17,11 @@ import org.simple.eventbus.EventBus;
  */
 public class FragmentDelegateImpl implements FragmentDelegate {
 
-    private FragmentManager fragmentManager;
     private Fragment fragment;
-
     private IFragment iFragment;
-
     private IPresenter iPresenter;
 
-    public FragmentDelegateImpl(FragmentManager fragmentManager, Fragment fragment) {
-        this.fragmentManager = fragmentManager;
+    public FragmentDelegateImpl(Fragment fragment) {
         this.fragment = fragment;
 
         if (fragment instanceof IFragment) {
@@ -53,12 +48,6 @@ public class FragmentDelegateImpl implements FragmentDelegate {
         // 在 Base 基类实现些方法，为了能够方便的获取到AppComponent
         if (iFragment != null) {
             iFragment.setComponent(component);
-        }
-
-        // 依赖注入
-        if (iFragment != null) {
-            this.iPresenter = iFragment.obtainPresenter();
-            iFragment.setPresenter(iPresenter);
         }
     }
 
@@ -110,7 +99,6 @@ public class FragmentDelegateImpl implements FragmentDelegate {
             iPresenter.onDestroy();
         }
 
-        this.fragmentManager = null;
         this.fragment = null;
         this.iFragment = null;
         this.iPresenter = null;

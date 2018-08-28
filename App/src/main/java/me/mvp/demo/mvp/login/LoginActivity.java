@@ -45,6 +45,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBin
                 .subscribe(v -> login());
     }
 
+    /**
+     * 登录
+     */
     public void login() {
         if (inputCheck(R.id.btn_submit)) {
             presenter.login(Message.obtain(this), view.edtAccount.getText().toString().trim(), view.edtPassword.getText().toString().trim());

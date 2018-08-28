@@ -36,8 +36,6 @@ public interface IActivity<P extends IPresenter> {
     @Nullable
     P obtainPresenter();
 
-    void setPresenter(@Nullable P presenter);
-
     /**
      * 如果getLayoutId返回0，框架则不会调用{@link android.app.Activity#setContentView(int)}
      *

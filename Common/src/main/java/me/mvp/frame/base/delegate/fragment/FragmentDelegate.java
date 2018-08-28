@@ -1,4 +1,4 @@
-package me.mvp.frame.base.delegate;
+package me.mvp.frame.base.delegate.fragment;
 
 import android.content.Context;
 import android.os.Bundle;

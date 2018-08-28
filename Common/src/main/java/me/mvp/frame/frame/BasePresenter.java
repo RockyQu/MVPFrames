@@ -18,7 +18,6 @@ public class BasePresenter<M extends IModel> implements IPresenter {
     protected CompositeDisposable compositeDisposable;
 
     public BasePresenter() {
-
         this.onStart();
     }
 
