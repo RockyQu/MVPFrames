@@ -13,8 +13,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import me.mvp.frame.R;
 import me.mvp.frame.base.App;
 import me.mvp.frame.di.component.AppComponent;
@@ -26,9 +24,6 @@ public abstract class BaseDialogFragment extends DialogFragment {
 
     // AppComponent
     protected AppComponent component;
-
-    // 解除绑定
-    private Unbinder unbinder = null;
 
     // 参数配置
     private Builder builder;
@@ -77,9 +72,6 @@ public abstract class BaseDialogFragment extends DialogFragment {
 
         // 获取AppComponent
         component = ((App) getActivity().getApplication()).getAppComponent();
-
-        // 绑定ButterKnife
-        unbinder = ButterKnife.bind(this, view);
 
         // View的初始化可以放到这里执行
         this.create(savedInstanceState);

@@ -27,6 +27,10 @@ android {
         renderscriptSupportModeEnabled rootProject.ext.android["renderscriptSupportModeEnabled"]
     }
 
+    dataBinding {
+        enabled = true
+    }
+
     // 移除lint检查的error，可以避免由于编译条件太过严格而编译不过的问题
     lintOptions {
         // InvalidPackage: Package not included in Android
@@ -103,6 +107,7 @@ dependencies {
 
     // Rx
     api rootProject.ext.dependencies["rxjava2"]
+    api rootProject.ext.dependencies["rxbinding"]
     api(rootProject.ext.dependencies["rxandroid2"]) {
         exclude module: 'rxjava'
     }
@@ -119,16 +124,10 @@ dependencies {
     }
 
     // Tools
-    api(rootProject.ext.dependencies["butterknife"]) {
-        exclude module: 'support-annotations'
-    }
-
     api rootProject.ext.dependencies["dagger2"]
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
     api rootProject.ext.dependencies["androideventbus"]
     api rootProject.ext.dependencies["gson"]
-
-    api rootProject.ext.dependencies["filedownloader"]
 
     // DB
     api rootProject.ext.dependencies["roomRuntime"]

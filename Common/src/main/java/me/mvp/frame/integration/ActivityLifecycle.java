@@ -13,11 +13,10 @@ import me.mvp.frame.base.delegate.ActivityDelegateImpl;
 import me.mvp.frame.base.IActivity;
 import me.mvp.frame.base.delegate.FragmentDelegate;
 import me.mvp.frame.integration.cache.Cache;
-import me.mvp.frame.utils.ExceptionUtils;
+import me.mvp.frame.utils.Preconditions;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -29,19 +28,21 @@ import javax.inject.Singleton;
 @Singleton
 public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks {
 
-    private Application application;
+    @Inject
+    Application application;
 
-    private AppManager appManager;
-    private Cache<String, Object> extras;
+    @Inject
+    AppManager appManager;
+
+    @Inject
+    Cache<String, Object> extras;
 
     private FragmentManager.FragmentLifecycleCallbacks fragmentLifecycle;
     private List<FragmentManager.FragmentLifecycleCallbacks> fragmentLifecycles;
 
     @Inject
-    public ActivityLifecycle(Application application, AppManager appManager, Cache<String, Object> extras) {
-        this.application = application;
-        this.appManager = appManager;
-        this.extras = extras;
+    public ActivityLifecycle() {
+
     }
 
     @Override
@@ -174,7 +175,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
     @NonNull
     private Cache<String, Object> getCacheFromActivity(IActivity activity) {
         Cache<String, Object> cache = activity.provideCache();
-        ExceptionUtils.checkNotNull(cache, "%s cannot be null on Activity", Cache.class.getName());
+        Preconditions.checkNotNull(cache, "%s cannot be null on Activity", Cache.class.getName());
         return cache;
     }
 }

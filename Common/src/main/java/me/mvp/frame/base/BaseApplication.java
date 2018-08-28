@@ -2,14 +2,12 @@ package me.mvp.frame.base;
 
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 
-import me.logg.Logg;
 import me.mvp.frame.base.delegate.ApplicationDelegate;
 import me.mvp.frame.base.delegate.ApplicationLifecycles;
 import me.mvp.frame.di.component.AppComponent;
 import me.mvp.frame.utils.AppUtils;
-import me.mvp.frame.utils.ExceptionUtils;
+import me.mvp.frame.utils.Preconditions;
 
 /**
  * @see <a href="https://github.com/RockyQu/MVPFrames"></a>
@@ -55,8 +53,8 @@ public class BaseApplication extends Application implements App {
      */
     @Override
     public AppComponent getAppComponent() {
-        ExceptionUtils.checkNotNull(delegate, "%s cannot be null", ApplicationLifecycles.class.getName());
-        ExceptionUtils.checkState(delegate instanceof App, "%s must be implements %s", ApplicationLifecycles.class.getName(), App.class.getName());
+        Preconditions.checkNotNull(delegate, "%s cannot be null", ApplicationLifecycles.class.getName());
+        Preconditions.checkState(delegate instanceof App, "%s must be implements %s", ApplicationLifecycles.class.getName(), App.class.getName());
         return ((App) delegate).getAppComponent();
     }
 }

@@ -5,11 +5,11 @@ import android.support.annotation.Nullable;
 import me.mvp.frame.utils.base.BaseUtils;
 
 /**
- * ExceptionUtils
+ * Preconditions
  */
-public final class ExceptionUtils extends BaseUtils {
+public final class Preconditions extends BaseUtils {
 
-    private ExceptionUtils() {
+    private Preconditions() {
         super();
     }
 

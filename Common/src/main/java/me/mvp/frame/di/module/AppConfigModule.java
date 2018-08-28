@@ -15,8 +15,6 @@ import me.mvp.frame.integration.cache.Cache;
 import me.mvp.frame.integration.cache.CacheType;
 import me.mvp.frame.integration.cache.LruCache;
 import me.mvp.frame.utils.FileUtils;
-import me.mvp.frame.widget.imageloader.BaseImageLoader;
-import me.mvp.frame.widget.imageloader.glide.GlideImageLoader;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -26,6 +24,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import me.mvp.frame.widget.imageloader.BaseImageLoaderStrategy;
+import me.mvp.frame.widget.imageloader.glide.GlideImageLoaderStrategy;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -45,7 +45,7 @@ public class AppConfigModule {
     private NetworkInterceptorHandler networkInterceptorHandler;
     private List<Interceptor> interceptors;
 
-    private BaseImageLoader imageLoader;
+    private BaseImageLoaderStrategy imageLoader;
 
     private HttpModule.RetrofitConfiguration retrofitConfiguration;
     private HttpModule.OkHttpConfiguration okHttpConfiguration;
@@ -130,8 +130,8 @@ public class AppConfigModule {
 
     @Singleton
     @Provides
-    BaseImageLoader provideBaseImageLoader() {
-        return imageLoader == null ? new GlideImageLoader() : imageLoader;
+    BaseImageLoaderStrategy provideBaseImageLoaderStrategy() {
+        return imageLoader == null ? new GlideImageLoaderStrategy() : imageLoader;
     }
 
     @Singleton
@@ -218,7 +218,7 @@ public class AppConfigModule {
         private List<Interceptor> interceptors = new ArrayList<>();
 
         // 图片框架，默认为Glide
-        private BaseImageLoader imageLoader;
+        private BaseImageLoaderStrategy imageLoader;
 
         // 提供一个 Retrofit 配置接口，用于对 Retrofit 进行格外的参数配置
         private HttpModule.RetrofitConfiguration retrofitConfiguration;
@@ -287,7 +287,7 @@ public class AppConfigModule {
             return this;
         }
 
-        public Builder imageLoader(BaseImageLoader imageLoader) {
+        public Builder imageLoader(BaseImageLoaderStrategy imageLoader) {
             this.imageLoader = imageLoader;
             return this;
         }

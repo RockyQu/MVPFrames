@@ -1,9 +1,9 @@
 package me.mvp.demo.app.api.service;
 
+import io.reactivex.Observable;
 import me.mvp.demo.entity.User;
 import me.mvp.demo.entity.base.ResponseEntity;
 
-import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

@@ -13,9 +13,6 @@ import me.mvp.frame.utils.AppUtils;
 
 import org.simple.eventbus.EventBus;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * {@link FragmentDelegate} Fragment 生命周期代理实现类
  */
@@ -23,7 +20,6 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     private FragmentManager fragmentManager;
     private Fragment fragment;
-    private Unbinder unbinder;
 
     private IFragment iFragment;
 
@@ -68,16 +64,12 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onCreateView(View view, Bundle savedInstanceState) {
-        if (view != null) {
-            unbinder = ButterKnife.bind(fragment, view);
-        }
+
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        if (iFragment != null) {
-            iFragment.create(savedInstanceState);
-        }
+
     }
 
     @Override
@@ -102,13 +94,7 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onDestroyView() {
-        if (unbinder != null && unbinder != unbinder.EMPTY) {
-            try {
-                unbinder.unbind();
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-            }
-        }
+
     }
 
     @Override
@@ -124,7 +110,6 @@ public class FragmentDelegateImpl implements FragmentDelegate {
             iPresenter.onDestroy();
         }
 
-        this.unbinder = null;
         this.fragmentManager = null;
         this.fragment = null;
         this.iFragment = null;

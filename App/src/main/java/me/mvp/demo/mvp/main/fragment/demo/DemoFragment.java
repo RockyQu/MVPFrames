@@ -1,33 +1,31 @@
 package me.mvp.demo.mvp.main.fragment.demo;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatButton;
-import android.view.View;
+
+import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import me.logg.Logg;
 import me.mvp.demo.R;
+import me.mvp.demo.databinding.FragmentDemoBinding;
 import me.mvp.demo.db.AppDatabase;
 import me.mvp.demo.entity.User;
 import me.mvp.demo.entity.UserDao;
 import me.mvp.demo.ui.widget.dialog.DialogDefault;
 import me.mvp.frame.base.BaseFragment;
-import me.mvp.frame.frame.IPresenter;
-import me.mvp.frame.utils.ProjectUtils;
-import me.mvp.frame.widget.imageloader.glide.GlideImageConfig;
-import me.mvp.frame.widget.imageloader.glide.ImageScaleType;
+import me.mvp.frame.frame.IView;
+import me.mvp.frame.frame.Message;
+import me.mvp.frame.widget.imageloader.glide.GlideConfig;
 
 /**
  * Demo
  */
-public class DemoFragment extends BaseFragment {
-
-    @BindView(R.id.btn_dialog)
-    AppCompatButton btnDialog;
+public class DemoFragment extends BaseFragment<DemoPresenter, FragmentDemoBinding> implements IView {
 
     /**
      * Create Fragment
@@ -41,6 +39,7 @@ public class DemoFragment extends BaseFragment {
         return fragment;
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void create(Bundle savedInstanceState) {
         Logg.e("DemoFragment");
@@ -55,25 +54,39 @@ public class DemoFragment extends BaseFragment {
         List<User> users = dao.getAll();
         Logg.e(users);
 
-        component.getImageLoader().clear(component.getApplication(), GlideImageConfig.builder()
-                .isClearDiskCache(true)
-                .isClearMemory(true)
+        component.getImageLoader().clear(component.getApplication(), GlideConfig.builder()
+                .clearDiskCache(true)
+                .clearMemory(true)
                 .build());
-    }
 
-    @OnClick({R.id.btn_dialog})
-    void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_dialog:
-                DialogDefault dialogFont = DialogDefault.newInstance();
-                dialogFont.show(getFragmentManager(), DialogDefault.TAG);
-                break;
-        }
+        RxView.clicks(view.btnDialog)
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(v -> DialogDefault.newInstance().show(getFragmentManager(), DialogDefault.TAG));
     }
 
     @Override
-    public IPresenter obtainPresenter() {
-        return null;
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showMessage(int type, @NonNull String message) {
+
+    }
+
+    @Override
+    public void handleMessage(@NonNull Message message) {
+
+    }
+
+    @Override
+    public DemoPresenter obtainPresenter() {
+        return new DemoPresenter(component);
     }
 
     @Override

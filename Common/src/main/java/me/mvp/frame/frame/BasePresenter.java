@@ -6,7 +6,7 @@ import org.simple.eventbus.EventBus;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import me.mvp.frame.utils.ExceptionUtils;
+import me.mvp.frame.utils.Preconditions;
 
 /**
  * 基类 Presenter
@@ -23,7 +23,7 @@ public class BasePresenter<M extends IModel> implements IPresenter {
     }
 
     public BasePresenter(M model) {
-        ExceptionUtils.checkNotNull(model, "%s cannot be null", IModel.class.getName());
+        Preconditions.checkNotNull(model, "%s cannot be null", IModel.class.getName());
         this.model = model;
 
         this.onStart();

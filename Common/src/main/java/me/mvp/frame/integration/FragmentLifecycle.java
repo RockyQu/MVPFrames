@@ -11,7 +11,7 @@ import me.mvp.frame.base.delegate.FragmentDelegate;
 import me.mvp.frame.base.delegate.FragmentDelegateImpl;
 import me.mvp.frame.base.IFragment;
 import me.mvp.frame.integration.cache.Cache;
-import me.mvp.frame.utils.ExceptionUtils;
+import me.mvp.frame.utils.Preconditions;
 
 /**
  * {@link FragmentManager.FragmentLifecycleCallbacks} 默认实现类
@@ -140,7 +140,7 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
     @NonNull
     private Cache<String, Object> getCacheFromFragment(IFragment fragment) {
         Cache<String, Object> cache = fragment.provideCache();
-        ExceptionUtils.checkNotNull(cache, "%s cannot be null on Fragment", Cache.class.getName());
+        Preconditions.checkNotNull(cache, "%s cannot be null on Fragment", Cache.class.getName());
         return cache;
     }
 }

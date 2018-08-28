@@ -24,6 +24,7 @@ import me.mvp.frame.di.module.HttpModule;
 import me.mvp.frame.integration.ActivityLifecycle;
 import me.mvp.frame.integration.ConfigModule;
 import me.mvp.frame.integration.ManifestParser;
+import me.mvp.frame.utils.Preconditions;
 
 /**
  * {@link ApplicationLifecycles} Application 生命周期代理实现类
@@ -55,7 +56,10 @@ public class ApplicationDelegate implements App, ApplicationLifecycles {
     private ComponentCallbacks2 componentCallbacks;
 
     public ApplicationDelegate(Context context) {
+
+        // 使用反射, 将 AndroidManifest.xml 中带有 ConfigModule 标签的 class 转成对象集合（List<ConfigModule>）
         modules = new ManifestParser(context).parse();
+
         for (ConfigModule module : modules) {
 
             // 将框架外部，开发者实现的 Application 的生命周期回调 (AppLifecycles) 存入 applicationLifecycles 集合 (此时还未注册回调)
@@ -67,14 +71,15 @@ public class ApplicationDelegate implements App, ApplicationLifecycles {
     }
 
     @Override
-    public void attachBaseContext(Context base) {
+    public void attachBaseContext(@NonNull Context base) {
+        // 遍历 applicationLifecycles，执行所有已注册的 ApplicationLifecycles 的 attachBaseContext() 方法 (框架外部, 开发者扩展的逻辑)
         for (ApplicationLifecycles lifecycle : applicationLifecycles) {
             lifecycle.attachBaseContext(base);
         }
     }
 
     @Override
-    public void onCreate(Application application) {
+    public void onCreate(@NonNull Application application) {
         this.application = application;
         component = DaggerAppComponent
                 .builder()
@@ -101,6 +106,7 @@ public class ApplicationDelegate implements App, ApplicationLifecycles {
 
         // 内存回收管理接口
         componentCallbacks = new AppComponentCallbacks(application, component);
+
         // 内存紧张时释放部分内存
         application.registerComponentCallbacks(componentCallbacks);
 
@@ -111,7 +117,7 @@ public class ApplicationDelegate implements App, ApplicationLifecycles {
     }
 
     @Override
-    public void onTerminate(Application application) {
+    public void onTerminate(@NonNull Application application) {
         if (activityLifecycle != null) {
             application.unregisterActivityLifecycleCallbacks(activityLifecycle);
         }
@@ -158,6 +164,10 @@ public class ApplicationDelegate implements App, ApplicationLifecycles {
     @NonNull
     @Override
     public AppComponent getAppComponent() {
+        Preconditions.checkNotNull(application,
+                "%s cannot be null, first call %s#onCreate(Application) in %s#onCreate()",
+                AppComponent.class.getName(), getClass().getName(), application == null
+                        ? Application.class.getName() : application.getClass().getName());
         return component;
     }
 
@@ -209,7 +219,7 @@ public class ApplicationDelegate implements App, ApplicationLifecycles {
 
             // 系统正运行于低内存状态并且你的进程已经已经接近 LRU 列表的中部位置, 如果系统的内存开始变得更加紧张, 你的进程是有可能被杀死的
             // case TRIM_MEMORY_MODERATE:
-            
+
             // 系统正运行与低内存的状态并且你的进程正处于 LRU 列表中最容易被杀掉的位置, 你应该释放任何不影响你的 App 恢复状态的资源
             // 低于 API 14 的 App 可以使用 onLowMemory 回调
             // case TRIM_MEMORY_COMPLETE:

@@ -9,9 +9,6 @@ import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
-import me.logg.Logg;
-import me.mvp.frame.widget.imageloader.BaseImageLoader;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -20,20 +17,24 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import me.logg.Logg;
+import me.mvp.frame.widget.imageloader.BaseImageLoaderStrategy;
+import me.mvp.frame.widget.imageloader.ImageConfig;
 
 /**
- * 最终的图片加截会执行到这里
+ * 最终的图片加截会执行到这里，此类只是简单的实现了 Glide 加载的策略，方便快速使用，但大部分情况会需
+ * 要应对复杂的场这时可自行实现 {@link BaseImageLoaderStrategy} 和 {@link ImageConfig} 替换现有策略
  */
 @Singleton
-public class GlideImageLoader implements BaseImageLoader<GlideImageConfig>, GlideAppliesOptions {
+public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideConfig>, GlideAppliesOptions {
 
     @Inject
-    public GlideImageLoader() {
+    public GlideImageLoaderStrategy() {
         ;
     }
 
     @Override
-    public void load(Context context, GlideImageConfig config) {
+    public void load(Context context, GlideConfig config) {
         this.check(context, config);
 
         // 如果 Context 是 Activity 则自动使用 Activity 的生命周期
@@ -59,6 +60,9 @@ public class GlideImageLoader implements BaseImageLoader<GlideImageConfig>, Glid
             case 4:
                 glideRequest.diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
                 break;
+            default:
+                glideRequest.diskCacheStrategy(DiskCacheStrategy.ALL);
+                break;
         }
 
         ImageScaleType scaleType = config.getScaleType();
@@ -76,6 +80,11 @@ public class GlideImageLoader implements BaseImageLoader<GlideImageConfig>, Glid
                 default:
                     break;
             }
+        }
+
+        // 是否使用淡入淡出过渡动画
+        if (config.isCrossFade()) {
+            glideRequest.transition(DrawableTransitionOptions.withCrossFade());
         }
 
         // Glide 用它来改变图形的形状
@@ -103,7 +112,7 @@ public class GlideImageLoader implements BaseImageLoader<GlideImageConfig>, Glid
     }
 
     @Override
-    public void clear(final Context context, GlideImageConfig config) {
+    public void clear(final Context context, GlideConfig config) {
         if (context == null) throw new NullPointerException("Context is required");
         if (config == null) throw new NullPointerException("ImageConfigImpl is required");
 
@@ -137,7 +146,7 @@ public class GlideImageLoader implements BaseImageLoader<GlideImageConfig>, Glid
     /**
      * 合法性检查
      */
-    private void check(Context context, GlideImageConfig config) {
+    private void check(Context context, GlideConfig config) {
         if (context == null) {
             throw new IllegalStateException("Context is required");
         }
@@ -154,6 +163,6 @@ public class GlideImageLoader implements BaseImageLoader<GlideImageConfig>, Glid
 
     @Override
     public void applyGlideOptions(Context context, GlideBuilder builder) {
-        Logg.w("applyGlideOptions");
+
     }
 }

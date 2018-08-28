@@ -3,16 +3,17 @@ package me.mvp.frame.widget.imageloader.glide;
 import android.widget.ImageView;
 
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+
 import me.mvp.frame.widget.imageloader.ImageConfig;
 
 /**
  * 图片加载的配置信息，可以根据需要自定义
  */
-public class GlideImageConfig extends ImageConfig {
+public class GlideConfig extends ImageConfig {
 
     // 缓存策略，0=DiskCacheStrategy.all，1=DiskCacheStrategy.NONE，2=DiskCacheStrategy.SOURCE，3=DiskCacheStrategy.RESULT
     private int cacheStrategy;
-    //请求Url为空，则使用此图片作为占位符
+    // 请求 Url 为空，则使用此图片作为占位符
     private int fallback;
     // 改变图形的形状
     private BitmapTransformation transformation;
@@ -20,12 +21,15 @@ public class GlideImageConfig extends ImageConfig {
     // 图像加载模式
     private ImageScaleType scaleType;
 
-    // 清理内存缓存
-    private boolean isClearMemory;
-    // 清理本地缓存
-    private boolean isClearDiskCache;
+    // 是否使用淡入淡出过渡动画
+    private boolean crossFade;
 
-    private GlideImageConfig(Buidler builder) {
+    // 清理内存缓存
+    private boolean clearMemory;
+    // 清理本地缓存
+    private boolean clearDiskCache;
+
+    private GlideConfig(Buidler builder) {
         this.url = builder.url;
         this.imageView = builder.imageView;
         this.placeholder = builder.placeholder;
@@ -37,8 +41,10 @@ public class GlideImageConfig extends ImageConfig {
 
         this.scaleType = builder.scaleType;
 
-        this.isClearMemory = builder.isClearMemory;
-        this.isClearDiskCache = builder.isClearDiskCache;
+        this.crossFade = builder.crossFade;
+
+        this.clearMemory = builder.clearMemory;
+        this.clearDiskCache = builder.clearDiskCache;
     }
 
     public int getCacheStrategy() {
@@ -57,12 +63,16 @@ public class GlideImageConfig extends ImageConfig {
         return scaleType;
     }
 
+    public boolean isCrossFade() {
+        return crossFade;
+    }
+
     public boolean isClearMemory() {
-        return isClearMemory;
+        return clearMemory;
     }
 
     public boolean isClearDiskCache() {
-        return isClearDiskCache;
+        return clearDiskCache;
     }
 
     public static Buidler builder() {
@@ -82,8 +92,10 @@ public class GlideImageConfig extends ImageConfig {
 
         private ImageScaleType scaleType;
 
-        private boolean isClearMemory;
-        private boolean isClearDiskCache;
+        private boolean crossFade;
+
+        private boolean clearMemory;
+        private boolean clearDiskCache;
 
         private Buidler() {
             ;
@@ -129,18 +141,23 @@ public class GlideImageConfig extends ImageConfig {
             return this;
         }
 
-        public Buidler isClearMemory(boolean isClearMemory) {
-            this.isClearMemory = isClearMemory;
+        public Buidler crossFade(boolean crossFade) {
+            this.crossFade = crossFade;
             return this;
         }
 
-        public Buidler isClearDiskCache(boolean isClearDiskCache) {
-            this.isClearDiskCache = isClearDiskCache;
+        public Buidler clearMemory(boolean clearMemory) {
+            this.clearMemory = clearMemory;
             return this;
         }
 
-        public GlideImageConfig build() {
-            return new GlideImageConfig(this);
+        public Buidler clearDiskCache(boolean clearDiskCache) {
+            this.clearDiskCache = clearDiskCache;
+            return this;
+        }
+
+        public GlideConfig build() {
+            return new GlideConfig(this);
         }
     }
 }

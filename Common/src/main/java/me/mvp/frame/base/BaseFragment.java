@@ -1,5 +1,7 @@
 package me.mvp.frame.base;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,9 +17,10 @@ import me.mvp.frame.integration.cache.CacheType;
 import me.mvp.frame.utils.AppUtils;
 
 /**
- * BaseFragment
+ * 因为 Java 只能单继承, 所以如果要用到需要继承特定 @{@link Fragment} 的三方库, 那你就需要自己自定义 @{@link Fragment}
+ * 继承于这个特定的 @{@link Fragment}, 然后再按照 {@link BaseFragment} 的格式, 将代码复制过去, 必须要实现{@link IFragment} 接口
  */
-public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements IFragment<P> {
+public abstract class BaseFragment<P extends BasePresenter, B extends ViewDataBinding> extends Fragment implements IFragment<P> {
 
     // AppComponent
     protected AppComponent component = null;
@@ -27,6 +30,14 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
     // Presenter
     protected P presenter = null;
+
+    /**
+     * 控件引用，使用方法 view.{id}
+     */
+    protected B view;
+
+    // Fragment当前状态是否可见
+    private boolean isVisible;
 
     public BaseFragment() {
         setArguments(new Bundle());
@@ -51,13 +62,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         this.presenter = presenter;
     }
 
-    // Fragment当前状态是否可见
-    private boolean isVisible;
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(getUserVisibleHint()) {
+        if (getUserVisibleHint()) {
             isVisible = true;
             onVisible();
         } else {
@@ -67,14 +75,14 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     }
 
     /**
-     * 当前Fragment是可见的
+     * 当 Fragment 可见时自动调用此方法，你可以在子类中重写此方法来添加自己的逻辑代码
      */
     protected void onVisible() {
 
     }
 
     /**
-     * 当前Fragment是不可见的
+     * 当 Fragment 不可见时自动调用此方法，你可以在子类中重写此方法来添加自己的逻辑代码
      */
     protected void onInvisible() {
 
@@ -88,13 +96,25 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         }
     }
 
-    /**
-     * 创建Fragment中显示的view,其中inflater用来装载布局文件，container表示<fragment>标签的父标签对应的ViewGroup对象，savedInstanceState可以获取Fragment保存的状态
-     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(getLayoutId(), container, false);
+        if (view == null) {
+            view = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
+        }
+
+        if (view == null) {
+            return inflater.inflate(getLayoutId(), container, false);
+        }
+
+        return view.getRoot();
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        this.create(savedInstanceState);
     }
 
     @Override

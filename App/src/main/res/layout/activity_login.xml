@@ -1,42 +1,49 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/root"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:gravity="center_horizontal"
-              android:orientation="vertical"
-              android:paddingBottom="16dp"
-              android:paddingLeft="16dp"
-              android:paddingRight="16dp"
-              android:paddingTop="16dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
 
     <LinearLayout
+        android:id="@+id/root"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp">
 
-        <EditText
-            android:id="@+id/edt_account"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="账号"
-            android:maxLines="1"/>
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/edt_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="密码"
-            android:inputType="textPassword"
-            android:maxLines="1"/>
+            <EditText
+                android:id="@+id/edt_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="账号"
+                android:maxLines="1" />
 
-        <Button
-            android:id="@+id/btn_submit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="登录"
-            android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/edt_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="密码"
+                android:inputType="textPassword"
+                android:maxLines="1" />
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="登录"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</layout>

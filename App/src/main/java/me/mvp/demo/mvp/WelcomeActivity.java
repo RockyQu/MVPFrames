@@ -2,6 +2,7 @@ package me.mvp.demo.mvp;
 
 import android.Manifest;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,7 +11,9 @@ import me.mvp.demo.R;
 import me.mvp.demo.app.AppConfiguration;
 import me.mvp.demo.mvp.login.LoginActivity;
 import me.mvp.demo.mvp.main.MainActivity;
+
 import com.tbruyelle.rxpermissions2.RxPermissions;
+
 import me.mvp.frame.base.BaseActivity;
 import me.mvp.frame.frame.IPresenter;
 import me.mvp.frame.utils.AppUtils;
@@ -51,15 +54,12 @@ public class WelcomeActivity extends BaseActivity {
      * 跳转下一页面
      */
     private void startNextActivity() {
-        new Handler(new Handler.Callback() {
-            @Override
-            public boolean handleMessage(Message msg) {
-//                Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-                Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
-                WelcomeActivity.this.startActivity(intent);
-                WelcomeActivity.this.finish();
-                return false;
-            }
+        new Handler(msg -> {
+            Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+//                Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
+            WelcomeActivity.this.startActivity(intent);
+            WelcomeActivity.this.finish();
+            return false;
         }).sendEmptyMessageDelayed(0, 1000);
     }
 
@@ -74,7 +74,7 @@ public class WelcomeActivity extends BaseActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         rxPermissions = null;
     }

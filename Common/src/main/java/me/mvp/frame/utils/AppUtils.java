@@ -29,7 +29,6 @@ import java.util.List;
 
 import static me.mvp.frame.integration.AppManager.APPMANAGER_MESSAGE;
 import static me.mvp.frame.integration.AppManager.EXIT;
-import static me.mvp.frame.integration.AppManager.KILL;
 import static me.mvp.frame.integration.AppManager.START_ACTIVITY;
 
 /**
@@ -402,12 +401,6 @@ public final class AppUtils extends BaseUtils {
         EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
     }
 
-    public static void kill() {
-        Message message = new Message();
-        message.what = KILL;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
-    }
-
     public static void exit() {
         Message message = new Message();
         message.what = EXIT;
@@ -415,7 +408,7 @@ public final class AppUtils extends BaseUtils {
     }
 
     public static AppComponent obtainAppComponentFromContext(Context context) {
-        ExceptionUtils.checkState(context.getApplicationContext() instanceof App, "Application does not implements App");
+        Preconditions.checkState(context.getApplicationContext() instanceof App, "Application does not implements App");
         return ((App) context.getApplicationContext()).getAppComponent();
     }
 }

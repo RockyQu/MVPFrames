@@ -10,19 +10,13 @@ import me.mvp.frame.utils.AppUtils;
 
 import org.simple.eventbus.EventBus;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * {@link ActivityDelegate} Activity 生命周期代理实现类
  */
 public class ActivityDelegateImpl implements ActivityDelegate {
 
     private Activity activity;
-    private Unbinder unbinder;
-
     private IActivity iActivity;
-
     private IPresenter iPresenter;
 
     public ActivityDelegateImpl(Activity activity) {
@@ -53,29 +47,6 @@ public class ActivityDelegateImpl implements ActivityDelegate {
             this.iPresenter = iActivity.obtainPresenter();
             iActivity.setPresenter(iPresenter);
         }
-
-        try {
-            int layoutResID;
-            if (iActivity != null) {
-                layoutResID = iActivity.getLayoutId();
-            } else {
-                layoutResID = 0;
-            }
-
-            if (layoutResID != 0) {
-                activity.setContentView(layoutResID);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // 绑定 ButterKnife
-        unbinder = ButterKnife.bind(activity);
-
-        // 初始化方法
-        if (iActivity != null) {
-            iActivity.create(savedInstanceState);
-        }
     }
 
     @Override
@@ -105,11 +76,6 @@ public class ActivityDelegateImpl implements ActivityDelegate {
 
     @Override
     public void onDestroy() {
-        // 解除绑定
-        if (unbinder != Unbinder.EMPTY) {
-            unbinder.unbind();
-        }
-
         // 注销EventBus
         if (iActivity != null) {
             if (iActivity.useEventBus()) {
@@ -117,12 +83,6 @@ public class ActivityDelegateImpl implements ActivityDelegate {
             }
         }
 
-        // 释放资源
-        if (iPresenter != null) {
-            iPresenter.onDestroy();
-        }
-
-        this.unbinder = null;
         this.activity = null;
         this.iActivity = null;
     }

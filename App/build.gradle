@@ -10,10 +10,10 @@ android {
     // 解决Android SDK升级至API23，导致原生SDK删除org.apache.http.*类的问题
 //    useLibrary 'org.apache.http.legacy'
 
-//    compileOptions {
-//        targetCompatibility JavaVersion.VERSION_1_8
-//        sourceCompatibility JavaVersion.VERSION_1_8
-//    }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
 
     defaultConfig {
         // 包名
@@ -52,6 +52,11 @@ android {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
+    }
+
+    // 如果你使用 DataBinding 必须开启此项
+    dataBinding {
+        enabled = true
     }
 
 //    sourceSets {
@@ -171,11 +176,10 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
 
     // Tools
-    annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
-        exclude module: 'support-annotations'
-    }
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
     api rootProject.ext.dependencies["multidex"]
+
+    api rootProject.ext.dependencies["filedownloader"]
 
     // DB
     api rootProject.ext.dependencies["roomRuntime"]
@@ -183,7 +187,7 @@ dependencies {
 
     // 引入框架基础共通模块
     api project(':Common')
-//    api 'me.frame:MVPFrames:2.1.4'
+//    api 'me.frame:MVPFrames:2.1.9'
 
     // Test
     testImplementation rootProject.ext.dependencies["junit"]

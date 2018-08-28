@@ -13,20 +13,21 @@ import com.bumptech.glide.load.engine.cache.LruResourceCache;
 import com.bumptech.glide.load.engine.cache.MemorySizeCalculator;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.module.AppGlideModule;
+
+import java.io.File;
+import java.io.InputStream;
+
 import me.mvp.frame.di.component.AppComponent;
 import me.mvp.frame.http.OkHttpUrlLoader;
 import me.mvp.frame.utils.AppUtils;
 import me.mvp.frame.utils.FileUtils;
-import me.mvp.frame.widget.imageloader.BaseImageLoader;
-
-import java.io.File;
-import java.io.InputStream;
+import me.mvp.frame.widget.imageloader.BaseImageLoaderStrategy;
 
 /**
  * Glide 全局配置
  */
 @GlideModule(glideName = "GlideFrames")
-public class GlideConfiguration extends AppGlideModule {
+public class GlideConfigModule extends AppGlideModule {
 
     // 图片缓存文件最大值为100MB
     public static final int IMAGE_DISK_CACHE_MAX_SIZE = 100 * 1024 * 1024;
@@ -57,9 +58,9 @@ public class GlideConfiguration extends AppGlideModule {
 
         // 图片框架最终会走到 GlideImageLoader 的 load 方法中进行处理
         // 如果你想自己自定义图片框架或自己实现 Glide BaseImageLoader 你需要实现 GlideAppliesOptions 接口
-        BaseImageLoader baseImageLoader = component.getImageLoader().getImageLoader();
-        if (baseImageLoader instanceof GlideAppliesOptions) {
-            ((GlideAppliesOptions) baseImageLoader).applyGlideOptions(context, builder);
+        BaseImageLoaderStrategy baseImageLoaderStrategy = component.getImageLoader().getImageLoaderStrategy();
+        if (baseImageLoaderStrategy instanceof GlideAppliesOptions) {
+            ((GlideAppliesOptions) baseImageLoaderStrategy).applyGlideOptions(context, builder);
         }
     }
 

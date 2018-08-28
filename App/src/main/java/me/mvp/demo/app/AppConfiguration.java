@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -73,18 +74,18 @@ public class AppConfiguration implements ConfigModule {
         lifecycleManager.add(new ApplicationLifecycles() {
 
             @Override
-            public void attachBaseContext(Context base) {
+            public void attachBaseContext(@NonNull Context base) {
                 MultiDex.install(base);
             }
 
             @Override
-            public void onCreate(Application application) {
+            public void onCreate(@NonNull Application application) {
                 // LeakCanary内存泄露检查
                 ((App) application).getAppComponent().extras().put(RefWatcher.class.getName(), BuildConfig.DEBUG_FLAG ? LeakCanary.install(application) : RefWatcher.DISABLED);
             }
 
             @Override
-            public void onTerminate(Application application) {
+            public void onTerminate(@NonNull Application application) {
 
             }
         });
@@ -92,12 +93,12 @@ public class AppConfiguration implements ConfigModule {
         lifecycleManager.add(new ApplicationLifecycles() {
 
             @Override
-            public void attachBaseContext(Context base) {
+            public void attachBaseContext(@NonNull Context base) {
 
             }
 
             @Override
-            public void onCreate(Application application) {
+            public void onCreate(@NonNull Application application) {
                 // 读取当前登录用户信息
                 String value = PreferencesUtils.getString(application, LoginActivity.class.getName(), null);
                 if (value != null) {
@@ -107,7 +108,7 @@ public class AppConfiguration implements ConfigModule {
             }
 
             @Override
-            public void onTerminate(Application application) {
+            public void onTerminate(@NonNull Application application) {
 
             }
         });
@@ -115,12 +116,12 @@ public class AppConfiguration implements ConfigModule {
         lifecycleManager.add(new ApplicationLifecycles() {
 
             @Override
-            public void attachBaseContext(Context base) {
+            public void attachBaseContext(@NonNull Context base) {
 
             }
 
             @Override
-            public void onCreate(Application application) {
+            public void onCreate(@NonNull Application application) {
                 DownloaderConfiguration configuration = DownloaderConfiguration.builder()
                         .application(application)
                         .debug(BuildConfig.DEBUG_FLAG)
@@ -129,7 +130,7 @@ public class AppConfiguration implements ConfigModule {
             }
 
             @Override
-            public void onTerminate(Application application) {
+            public void onTerminate(@NonNull Application application) {
 
             }
         });

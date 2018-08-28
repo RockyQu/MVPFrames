@@ -1,41 +1,34 @@
 package me.mvp.demo.mvp.login;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.widget.Button;
-import android.widget.EditText;
+
+import com.jakewharton.rxbinding2.view.RxView;
+
+import java.util.concurrent.TimeUnit;
 
 import me.mvp.demo.R;
+import me.mvp.demo.databinding.ActivityLoginBinding;
 import me.mvp.demo.entity.User;
 import me.mvp.demo.mvp.main.MainActivity;
 import me.mvp.frame.base.BaseActivity;
 import me.mvp.frame.frame.IView;
 import me.mvp.frame.frame.Message;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import me.mvp.frame.utils.StringUtils;
 import me.mvp.frame.widget.Toaster;
 
 /**
  * 登录页面
  */
-public class LoginActivity extends BaseActivity<LoginPresenter> implements IView {
-
-    // 账号
-    @BindView(R.id.edt_account)
-    EditText edtAccount;
-    // 密码
-    @BindView(R.id.edt_password)
-    EditText edtPassword;
-
-    // 提交
-    @BindView(R.id.btn_submit)
-    Button btnSubmit;
+public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBinding> implements IView {
 
     // 当前登录用户信息
     private User user;
 
+    @SuppressLint("CheckResult")
     @Override
     public void create(Bundle savedInstanceState) {
         user = (User) component.extras().get(LoginActivity.class.getName());
@@ -43,16 +36,18 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements IView
 
         }
 
-        edtAccount.setText("18012345678");
-        edtPassword.setText("123456");
+        view.edtAccount.setText("18012345678");
+        view.edtPassword.setText("123456");
+
+        // 登录
+        RxView.clicks(view.btnSubmit)
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(v -> login());
     }
 
-    @OnClick(R.id.btn_submit)
     public void login() {
         if (inputCheck(R.id.btn_submit)) {
-
-            // 登录
-            presenter.login(Message.obtain(this), edtAccount.getText().toString().trim(), edtPassword.getText().toString().trim());
+            presenter.login(Message.obtain(this), view.edtAccount.getText().toString().trim(), view.edtPassword.getText().toString().trim());
         }
     }
 
@@ -65,16 +60,16 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements IView
     private boolean inputCheck(int flag) {
         switch (flag) {
             case R.id.btn_submit:// 登录
-//                // 手机号码
-                if (StringUtils.isEmpty(edtAccount.getText().toString().trim())) {
-//                    ToastBar.create(this, "输入手机号码").show();
-//                    return false;
+
+                if (StringUtils.isEmpty(view.edtAccount.getText().toString().trim())) {
+                    Toaster.with(this).setMessage("输入手机号码").show();
+                    return false;
                 }
-//                // 密码
-//                if (StringUtils.isEmpty(edtPassword.getText().toString().trim())) {
-//                    ToastBar.create(this, "输入密码").show();
-//                    return false;
-//                }
+
+                if (StringUtils.isEmpty(view.edtPassword.getText().toString().trim())) {
+                    Toaster.with(this).setMessage("输入密码").show();
+                    return false;
+                }
 
                 break;
             default:
@@ -97,12 +92,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements IView
 
     @Override
     public void showLoading() {
-        setViewStatus(btnSubmit, false, "加载中");
+        setViewStatus(view.btnSubmit, false, "加载中");
     }
 
     @Override
     public void hideLoading() {
-        setViewStatus(btnSubmit, true, "加载完成");
+        setViewStatus(view.btnSubmit, true, "加载完成");
     }
 
     @Override

@@ -8,8 +8,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import me.mvp.demo.R;
 import me.mvp.frame.widget.dialog.BaseDialogFragment;
 
@@ -20,9 +18,6 @@ public class DialogDefault extends BaseDialogFragment implements DialogInterface
 
     // TAG
     public static final String TAG = DialogDefault.class.getSimpleName();
-
-    @BindView(R.id.btn_default)
-    AppCompatButton btnDefault;
 
     /**
      * Create a new dialog fragment.
@@ -45,14 +40,14 @@ public class DialogDefault extends BaseDialogFragment implements DialogInterface
         getDialog().setOnKeyListener(this);
     }
 
-    @OnClick({R.id.btn_default})
-    void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_default:
-                dismiss();
-                break;
-        }
-    }
+//    @OnClick({R.id.btn_default})
+//    void onClick(View v) {
+//        switch (v.getId()) {
+//            case R.id.btn_default:
+//                dismiss();
+//                break;
+//        }
+//    }
 
     @Override
     public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
