@@ -103,14 +103,11 @@ public class DeviceUtils extends BaseUtils {
      * @return StatusBar Height
      */
     public static int getStatusBarHeight(Context context) {
-        Class<?> c = null;
-        Object obj = null;
-        Field field = null;
         int x = 0;
         try {
-            c = Class.forName("com.android.internal.R$dimen");
-            obj = c.newInstance();
-            field = c.getField("status_bar_height");
+            Class<?> c = Class.forName("com.android.internal.R$dimen");
+            Object obj = c.newInstance();
+            Field field = c.getField("status_bar_height");
             x = Integer.parseInt(field.get(obj).toString());
             return context.getResources().getDimensionPixelSize(x);
         } catch (Exception e) {
