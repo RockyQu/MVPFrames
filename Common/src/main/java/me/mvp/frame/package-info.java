@@ -25,5 +25,6 @@
  * 6.升级 RxJava 版本至 2.2.1
  * 7.移除 ButterKnife
  * 8.修改 Demo
+ * 警告：此版本使用 DataBinding 代替 ButterKnife，改动较大
  */
 package me.mvp.frame;
