@@ -18,7 +18,7 @@ api 'me.frame:MVPFrames:2.1.9'
 * [Gson](https://github.com/google/gson)  
 * [RxPermissions](https://github.com/tbruyelle/RxPermissions)  
 * [LeakCanary](https://github.com/square/leakcanary)  
-* [Room](https://developer.android.com/topic/libraries/architecture/room.html)  2017 Google IO 大会 Architecture Components 架构组件 Room
+* [Room](https://developer.android.com/topic/libraries/architecture/room.html)  2017 Google IO 大会 Architecture Components 架构组件
 * [Logg](https://github.com/RockyQu/Logg)  
 
 ## History
