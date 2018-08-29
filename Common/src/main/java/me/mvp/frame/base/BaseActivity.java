@@ -84,6 +84,9 @@ public abstract class BaseActivity<P extends BasePresenter, B extends ViewDataBi
 
     @Override
     public void onDestroy() {
+        if (view != null) {
+            view.unbind();
+        }
         super.onDestroy();
 
         // 释放资源

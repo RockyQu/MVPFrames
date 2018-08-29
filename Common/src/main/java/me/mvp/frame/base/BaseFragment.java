@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.simple.eventbus.EventBus;
+
 import me.mvp.frame.di.component.AppComponent;
 import me.mvp.frame.frame.BasePresenter;
 import me.mvp.frame.integration.cache.Cache;
@@ -114,6 +116,20 @@ public abstract class BaseFragment<P extends BasePresenter, B extends ViewDataBi
         if (presenter == null) {
             presenter = obtainPresenter();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (view != null) {
+            view.unbind();
+        }
+        super.onDestroy();
+
+        if (presenter != null) {
+            presenter.onDestroy();
+        }
+
+        this.presenter = null;
     }
 
     @Override

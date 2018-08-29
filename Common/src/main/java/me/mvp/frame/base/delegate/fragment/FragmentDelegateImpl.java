@@ -19,7 +19,6 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     private Fragment fragment;
     private IFragment iFragment;
-    private IPresenter iPresenter;
 
     public FragmentDelegateImpl(Fragment fragment) {
         this.fragment = fragment;
@@ -95,13 +94,8 @@ public class FragmentDelegateImpl implements FragmentDelegate {
             }
         }
 
-        if (iPresenter != null) {
-            iPresenter.onDestroy();
-        }
-
         this.fragment = null;
         this.iFragment = null;
-        this.iPresenter = null;
     }
 
     @Override
