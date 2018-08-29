@@ -44,10 +44,6 @@ android {
         checkReleaseBuilds false
     }
 
-    dexOptions {
-        preDexLibraries = false
-    }
-
     buildTypes {
         release {
             minifyEnabled false
