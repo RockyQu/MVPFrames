@@ -44,7 +44,7 @@ import java.util.List;
  */
 public class AppConfiguration implements ConfigModule {
 
-    // 渠道名称，必须与Mainfests渠道配置name相同
+    // 渠道名称，必须与 Mainfests 渠道配置 name 相同
     public static final String CHANNEL = "Channel";
 
     @Override
