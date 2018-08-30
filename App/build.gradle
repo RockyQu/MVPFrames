@@ -164,11 +164,14 @@ android {
             }
         }
     }
-}
 
-buildscript {
-    repositories {
-        jcenter()
+    allprojects {
+        repositories {
+            jcenter()
+            maven { url "https://jitpack.io" }
+            maven { url 'http://dl.bintray.com/dev-fingerlinks/maven' }
+            mavenCentral()
+        }
     }
 }
 
@@ -186,8 +189,8 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["roomCompiler"]
 
     // 引入框架基础共通模块
-    api project(':Common')
-//    api 'me.frame:MVPFrames:2.3.0'
+    //  api project(':Common')
+    api 'me.frame:MVPFrames:2.3.0'
 
     // Test
     testImplementation rootProject.ext.dependencies["junit"]

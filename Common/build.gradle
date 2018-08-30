@@ -50,11 +50,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-}
 
-buildscript {
-    repositories {
-        jcenter()
+    allprojects {
+        repositories {
+            jcenter()
+            maven { url "https://jitpack.io" }
+            maven { url 'http://dl.bintray.com/dev-fingerlinks/maven' }
+            mavenCentral()
+        }
     }
 }
 

@@ -13,21 +13,19 @@ buildscript {
     }
 
     repositories {
+        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        mavenCentral()
+        jcenter()
         google()
-        jcenter {
-            url "http://jcenter.bintray.com/"
-        }
     }
 }
 
 allprojects {
     repositories {
-        google()
-        jcenter()
+        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
         mavenCentral()
-        maven {
-            url "https://jitpack.io"
-        }
+        jcenter()
+        google()
     }
 
     tasks.withType(Javadoc) {
