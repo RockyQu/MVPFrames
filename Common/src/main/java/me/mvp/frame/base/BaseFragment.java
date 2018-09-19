@@ -1,7 +1,5 @@
 package me.mvp.frame.base;
 
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,8 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import org.simple.eventbus.EventBus;
 
 import me.mvp.frame.di.component.AppComponent;
 import me.mvp.frame.frame.BasePresenter;
@@ -22,7 +18,7 @@ import me.mvp.frame.utils.AppUtils;
  * 因为 Java 只能单继承, 所以如果要用到需要继承特定 @{@link Fragment} 的三方库, 那你就需要自己自定义 @{@link Fragment}
  * 继承于这个特定的 @{@link Fragment}, 然后再按照 {@link BaseFragment} 的格式, 将代码复制过去, 必须要实现{@link IFragment} 接口
  */
-public abstract class BaseFragment<P extends BasePresenter, B extends ViewDataBinding> extends Fragment implements IFragment<P> {
+public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements IFragment<P> {
 
     // AppComponent
     protected AppComponent component = null;
@@ -32,11 +28,6 @@ public abstract class BaseFragment<P extends BasePresenter, B extends ViewDataBi
 
     // Presenter
     protected P presenter = null;
-
-    /**
-     * 控件引用，使用方法 view.{id}
-     */
-    protected B view;
 
     // Fragment当前状态是否可见
     private boolean isVisible;
@@ -88,15 +79,7 @@ public abstract class BaseFragment<P extends BasePresenter, B extends ViewDataBi
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (view == null) {
-            view = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
-        }
-
-        if (view == null) {
-            return inflater.inflate(getLayoutId(), container, false);
-        }
-
-        return view.getRoot();
+        return inflater.inflate(getLayoutId(), container, false);
     }
 
     @Override
@@ -120,9 +103,6 @@ public abstract class BaseFragment<P extends BasePresenter, B extends ViewDataBi
 
     @Override
     public void onDestroy() {
-        if (view != null) {
-            view.unbind();
-        }
         super.onDestroy();
 
         if (presenter != null) {

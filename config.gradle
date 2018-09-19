@@ -8,8 +8,8 @@ ext {
                buildToolsVersion             : "27.0.3",
                minSdkVersion                 : 15,
                targetSdkVersion              : 26,
-               versionCode                   : 51,
-               versionName                   : "2.3.0",
+               versionCode                   : 52,
+               versionName                   : "2.3.1",
                renderscriptTargetApi         : 22,
                renderscriptSupportModeEnabled: true
     ]
@@ -76,6 +76,8 @@ ext {
             "dagger-android-processor"     : "com.google.dagger:dagger-android-processor:${version["dagger2Version"]}",
 
             // Tools
+            "butterknife"                  : "com.jakewharton:butterknife:${version["butterknifeVersion"]}",
+            "butterknife-compiler"         : "com.jakewharton:butterknife-compiler:${version["butterknifeVersion"]}",
             "javax.annotation"             : "javax.annotation:jsr250-api:1.0",
             "gson"                         : "com.google.code.gson:gson:2.8.2",
             "androideventbus"              : "org.simple:androideventbus:1.0.5.1",

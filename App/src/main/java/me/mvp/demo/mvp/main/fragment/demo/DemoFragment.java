@@ -4,15 +4,16 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatButton;
 
 import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import butterknife.BindView;
 import me.logg.Logg;
 import me.mvp.demo.R;
-import me.mvp.demo.databinding.FragmentDemoBinding;
 import me.mvp.demo.db.AppDatabase;
 import me.mvp.demo.entity.User;
 import me.mvp.demo.entity.UserDao;
@@ -25,7 +26,10 @@ import me.mvp.frame.widget.imageloader.glide.GlideConfig;
 /**
  * Demo
  */
-public class DemoFragment extends BaseFragment<DemoPresenter, FragmentDemoBinding> implements IView {
+public class DemoFragment extends BaseFragment<DemoPresenter> implements IView {
+
+    @BindView(R.id.btn_dialog)
+    AppCompatButton btnDialog;
 
     /**
      * Create Fragment
@@ -59,7 +63,7 @@ public class DemoFragment extends BaseFragment<DemoPresenter, FragmentDemoBindin
                 .clearMemory(true)
                 .build());
 
-        RxView.clicks(view.btnDialog)
+        RxView.clicks(btnDialog)
                 .throttleFirst(1000, TimeUnit.MILLISECONDS)
                 .subscribe(v -> DialogDefault.newInstance().show(getFragmentManager(), DialogDefault.TAG));
     }

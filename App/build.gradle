@@ -54,11 +54,6 @@ android {
         }
     }
 
-    // 如果你使用 DataBinding 必须开启此项
-    dataBinding {
-        enabled = true
-    }
-
 //    sourceSets {
 //        main {
 //            res.srcDirs =
@@ -181,16 +176,20 @@ dependencies {
     // Tools
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
     api rootProject.ext.dependencies["multidex"]
-
-    api rootProject.ext.dependencies["filedownloader"]
+    annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
+        exclude module: 'support-annotations'
+    }
 
     // DB
     api rootProject.ext.dependencies["roomRuntime"]
     annotationProcessor rootProject.ext.dependencies["roomCompiler"]
 
+    // 如果你不需要下载模块请去掉
+    api rootProject.ext.dependencies["filedownloader"]
+
     // 引入框架基础共通模块
-    //  api project(':Common')
-    api 'me.frame:MVPFrames:2.3.0'
+      api project(':Common')
+//    api 'me.frame:MVPFrames:2.3.1'
 
     // Test
     testImplementation rootProject.ext.dependencies["junit"]

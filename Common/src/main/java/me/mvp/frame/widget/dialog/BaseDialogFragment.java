@@ -13,6 +13,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import me.mvp.frame.R;
 import me.mvp.frame.base.App;
 import me.mvp.frame.di.component.AppComponent;
@@ -24,6 +26,9 @@ public abstract class BaseDialogFragment extends DialogFragment {
 
     // AppComponent
     protected AppComponent component;
+
+    // ButterKnife Unbinder
+    private Unbinder unbinder = null;
 
     // 参数配置
     private Builder builder;
@@ -70,10 +75,13 @@ public abstract class BaseDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutId(), container, false);
 
-        // 获取AppComponent
+        // 获取 AppComponent
         component = ((App) getActivity().getApplication()).getAppComponent();
 
-        // View的初始化可以放到这里执行
+        // 绑定 ButterKnife
+        unbinder = ButterKnife.bind(this, view);
+
+        // View 的初始化可以放到这里执行
         this.create(savedInstanceState);
 
         return view;
@@ -87,6 +95,18 @@ public abstract class BaseDialogFragment extends DialogFragment {
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (unbinder != null && unbinder != Unbinder.EMPTY) {
+            try {
+                unbinder.unbind();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
+        }
+        super.onDestroyView();
     }
 
     /**

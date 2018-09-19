@@ -3,17 +3,12 @@ package me.mvp.demo.mvp;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import me.mvp.demo.R;
 import me.mvp.demo.app.AppConfiguration;
-import me.mvp.demo.mvp.login.LoginActivity;
 import me.mvp.demo.mvp.main.MainActivity;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;

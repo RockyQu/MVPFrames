@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import me.mvp.frame.base.IFragment;
 import me.mvp.frame.di.component.AppComponent;
 import me.mvp.frame.frame.IPresenter;
@@ -19,6 +21,8 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     private Fragment fragment;
     private IFragment iFragment;
+
+    private Unbinder unbinder;
 
     public FragmentDelegateImpl(Fragment fragment) {
         this.fragment = fragment;
@@ -52,7 +56,9 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onCreateView(View view, Bundle savedInstanceState) {
-
+        if (view != null){
+            unbinder = ButterKnife.bind(fragment, view);
+        }
     }
 
     @Override
@@ -82,7 +88,13 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onDestroyView() {
-
+        if (unbinder != null && unbinder != Unbinder.EMPTY) {
+            try {
+                unbinder.unbind();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

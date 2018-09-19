@@ -4,11 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 
+import butterknife.BindView;
 import me.mvp.demo.R;
-import me.mvp.demo.databinding.ActivityMainBinding;
 import me.mvp.demo.ui.adapter.MainViewPagerAdapter;
 import me.mvp.demo.ui.widget.navigation.BottomNavigation;
 import me.mvp.demo.ui.widget.navigation.BottomNavigationAdapter;
+import me.mvp.demo.ui.widget.navigation.BottomNavigationViewPager;
 import me.mvp.frame.base.BaseActivity;
 import me.mvp.frame.frame.IView;
 import me.mvp.frame.frame.Message;
@@ -18,7 +19,12 @@ import me.mvp.frame.widget.Toaster;
 /**
  * 主页面
  */
-public class MainActivity extends BaseActivity<MainPresenter, ActivityMainBinding> implements IView {
+public class MainActivity extends BaseActivity<MainPresenter> implements IView {
+
+    @BindView(R.id.view_pager)
+    BottomNavigationViewPager viewPager;
+    @BindView(R.id.bottom_navigation)
+    BottomNavigation bottomNavigation;
 
     // Adapter
     private MainViewPagerAdapter adapter;
@@ -28,18 +34,18 @@ public class MainActivity extends BaseActivity<MainPresenter, ActivityMainBindin
 
         // 隐藏导航栏Items
         BottomNavigationAdapter navigationAdapter = new BottomNavigationAdapter(this, R.menu.menu_bottom_navigation);
-        navigationAdapter.setupWithBottomNavigation(view.bottomNavigation);
+        navigationAdapter.setupWithBottomNavigation(bottomNavigation);
 
         // 隐藏导航栏标题
-        view.bottomNavigation.setTitleState(BottomNavigation.TitleState.ALWAYS_HIDE);
+        bottomNavigation.setTitleState(BottomNavigation.TitleState.ALWAYS_HIDE);
 
         // 导航点击事件
-        view.bottomNavigation.setOnTabSelectedListener(new BottomNavigation.OnTabSelectedListener() {
+        bottomNavigation.setOnTabSelectedListener(new BottomNavigation.OnTabSelectedListener() {
 
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
 
-                view.viewPager.setCurrentItem(position, false);
+                viewPager.setCurrentItem(position, false);
 
                 Snacker.with(MainActivity.this).setMessage("警告").warning().show();
 
@@ -48,7 +54,7 @@ public class MainActivity extends BaseActivity<MainPresenter, ActivityMainBindin
             }
         });
 
-        view.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -57,7 +63,7 @@ public class MainActivity extends BaseActivity<MainPresenter, ActivityMainBindin
 
             @Override
             public void onPageSelected(int position) {
-                view.bottomNavigation.setCurrentItem(position, false);
+                bottomNavigation.setCurrentItem(position, false);
             }
 
             @Override
@@ -66,9 +72,9 @@ public class MainActivity extends BaseActivity<MainPresenter, ActivityMainBindin
             }
         });
 
-        view.viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(3);
         adapter = new MainViewPagerAdapter(getSupportFragmentManager());
-        view.viewPager.setAdapter(adapter);
+        viewPager.setAdapter(adapter);
     }
 
     @Override

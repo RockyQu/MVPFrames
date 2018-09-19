@@ -1,20 +1,13 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <data>
-
-    </data>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_dialog"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_margin="20dp"
+        android:text="dialog" />
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_dialog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="dialog" />
-
-    </LinearLayout>
-</layout>
+</LinearLayout>
