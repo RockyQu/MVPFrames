@@ -11,7 +11,7 @@ api 'me.frame:MVPFrames:2.1.9'
 * [Dagger2](https://google.github.io/dagger)  
 * [RxJava2](https://github.com/ReactiveX/RxJava)  
 * [RxLifecycle](https://github.com/trello/RxLifecycle)  
-* [DataBinding](https://developer.android.google.cn/reference/android/databinding/package-summary)  2015 Google IO 大会 DataBinding 架构组件
+* [Butterknife](https://github.com/JakeWharton/butterknife)  
 * [Retrofit2](https://github.com/square/retrofit)  
 * [Okhttp](https://github.com/square/okhttp)  
 * [Glide](https://github.com/bumptech/glide)  
