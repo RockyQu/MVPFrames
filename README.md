@@ -37,7 +37,7 @@ api 'me.frame:MVPFrames:2.3.1'
 * Project  [Submit Bug or Idea](https://github.com/RockyQu/MVPFrames/issues)
 
 ## Thanks
-[MVPArms](https://github.com/JessYanCoding/MVPArms)
+[MVPArms](https://github.com/JessYanCoding/MVPArms)  
 [Architecture Components](https://github.com/googlesamples/android-architecture-components)
 
 ## About Me
