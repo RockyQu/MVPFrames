@@ -38,6 +38,7 @@ api 'me.frame:MVPFrames:2.3.1'
 
 ## Thanks
 [MVPArms](https://github.com/JessYanCoding/MVPArms)
+[Architecture Components](https://github.com/googlesamples/android-architecture-components)
 
 ## About Me
 * Email [250533855@qq.com](250533855@qq.com)  
