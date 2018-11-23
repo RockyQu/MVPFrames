@@ -17,10 +17,10 @@
 /**
  * 更新日志
  * <p>
- * 1.为保证框架的纯净性，去掉了基于 FileDownloader 的 Downloader 模块
- * 2.修复 NetworkInterceptor 网络请求时间耗时差的错误
- * 3.升级 Glide 版本至 4.8.0
- * 4.升级 Dagger 版本至 2.17
- * 5.升级 RxJava 版本至 2.2.1
+ * 1.完善 BaseDialogFragment 的 create(Bundle savedInstanceState, View view) 增加 View 参数
+ * 2.
+ * 3.
+ * 4.
+ * 5.
  */
 package me.mvp.frame;

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -72,17 +73,19 @@ public abstract class BaseDialogFragment extends DialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutId(), container, false);
 
         // 获取 AppComponent
-        component = ((App) getActivity().getApplication()).getAppComponent();
+        if (getActivity() != null) {
+            component = ((App) getActivity().getApplication()).getAppComponent();
+        }
 
         // 绑定 ButterKnife
         unbinder = ButterKnife.bind(this, view);
 
         // View 的初始化可以放到这里执行
-        this.create(savedInstanceState);
+        this.create(savedInstanceState, view);
 
         return view;
     }
@@ -112,7 +115,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
     /**
      * 拆分onCreateView，提供一个create方法，View的初始化可以放到这里执行，必须在子类中实现此方法
      */
-    public abstract void create(Bundle savedInstanceState);
+    public abstract void create(Bundle savedInstanceState, View view);
 
     /**
      * 获取布局文件，必须在子类中实现此方法
