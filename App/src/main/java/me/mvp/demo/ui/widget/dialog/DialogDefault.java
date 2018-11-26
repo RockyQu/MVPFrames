@@ -30,7 +30,7 @@ public class DialogDefault extends BaseDialogFragment implements DialogInterface
     }
 
     @Override
-    public void create(Bundle savedInstanceState) {
+    public void create(Bundle savedInstanceState, View view) {
         Bundle bundle = getArguments();
         if (bundle != null) {
 

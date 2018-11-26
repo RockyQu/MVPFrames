@@ -18,8 +18,8 @@
  * 更新日志
  * <p>
  * 1.完善 BaseDialogFragment 的 create(Bundle savedInstanceState, View view) 增加 View 参数
- * 2.
- * 3.
+ * 2.提升 buildToolsVersion 28.0.3
+ * 3.提升 androidSupportVersion 28.0.0
  * 4.
  * 5.
  */

@@ -4,12 +4,12 @@ buildscript {
 
     // 基础依赖
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath 'com.android.tools.build:gradle:3.2.1'
         // Gradle Android Maven plugin
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
 
         // 以下这段功能是用来上传至代码库，其他项目不用复制这段代码
-        classpath 'com.novoda:bintray-release:0.8.1'
+        classpath 'com.novoda:bintray-release:0.9'
     }
 
     repositories {
