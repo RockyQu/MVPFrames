@@ -84,7 +84,7 @@ public class DBManager {
                     + ".inMemoryDatabaseBuilder");
         }
 
-        RoomDatabase.Builder<T> builder = Room.databaseBuilder(application, klass, config.getName());
+        RoomDatabase.Builder<T> builder = Room.databaseBuilder(application, klass, config.getPath() + config.getName());
         if (config.isAllowMainThreadQueries()) {
             builder.allowMainThreadQueries();
         }
@@ -96,6 +96,10 @@ public class DBManager {
         int[] startVersions = config.getFallbackToDestructiveMigrationFromStartVersions();
         if (startVersions != null && startVersions.length != 0) {
             builder.fallbackToDestructiveMigrationFrom(startVersions);
+        }
+
+        if (config.getJournalMode() != null) {
+            builder.setJournalMode(config.getJournalMode());
         }
 
         return builder.build();

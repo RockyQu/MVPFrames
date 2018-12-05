@@ -2,6 +2,8 @@ package me.mvp.frame.db;
 
 import android.arch.persistence.room.RoomDatabase;
 
+import java.util.ArrayList;
+
 public class DatabaseConfig<T extends RoomDatabase> {
 
     private String name;
@@ -14,6 +16,8 @@ public class DatabaseConfig<T extends RoomDatabase> {
     private boolean fallbackToDestructiveMigration;
     private int[] fallbackToDestructiveMigrationFromStartVersions;
 
+    private RoomDatabase.JournalMode journalMode;
+
     public DatabaseConfig(Builder<T> builder) {
         this.name = builder.name;
         this.path = builder.path;
@@ -21,6 +25,7 @@ public class DatabaseConfig<T extends RoomDatabase> {
         this.allowMainThreadQueries = builder.allowMainThreadQueries;
         this.fallbackToDestructiveMigration = builder.fallbackToDestructiveMigration;
         this.fallbackToDestructiveMigrationFromStartVersions = builder.fallbackToDestructiveMigrationFromStartVersions;
+        this.journalMode = builder.journalMode;
     }
 
     public String getName() {
@@ -47,6 +52,10 @@ public class DatabaseConfig<T extends RoomDatabase> {
         return fallbackToDestructiveMigrationFromStartVersions;
     }
 
+    public RoomDatabase.JournalMode getJournalMode() {
+        return journalMode;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -54,9 +63,9 @@ public class DatabaseConfig<T extends RoomDatabase> {
     public static class Builder<T extends RoomDatabase> {
 
         // 名称
-        private String name;
+        private String name = "";
         // 路径
-        private String path;
+        private String path = "";
 
         // 提供给外部模块配置自己的数据库，请传入继承自 RoomDatabase 的类
         private Class<T> databaseClass;
@@ -69,6 +78,9 @@ public class DatabaseConfig<T extends RoomDatabase> {
 
         // 通知数据库，允许从特定的版本中抛弃旧数据重新创建新的数据库表
         private int[] fallbackToDestructiveMigrationFromStartVersions;
+
+        // 设置数据库的日志模式
+        private RoomDatabase.JournalMode journalMode;
 
         public Builder<T> name(String name) {
             this.name = name;
@@ -97,6 +109,11 @@ public class DatabaseConfig<T extends RoomDatabase> {
 
         public Builder<T> fallbackToDestructiveMigrationFromStartVersions(int[] startVersions) {
             this.fallbackToDestructiveMigrationFromStartVersions = startVersions;
+            return this;
+        }
+
+        public Builder<T> setJournalMode(RoomDatabase.JournalMode journalMode) {
+            this.journalMode = journalMode;
             return this;
         }
 

@@ -20,7 +20,7 @@
  * 1.完善 BaseDialogFragment 的 create(Bundle savedInstanceState, View view) 增加 View 参数
  * 2.提升 buildToolsVersion 28.0.3
  * 3.提升 androidSupportVersion 28.0.0
- * 4.
- * 5.
+ * 4.增加 Room 数据库自定义 DB 路径设置
+ * 5.增加 Room 数据库日志模式设置
  */
 package me.mvp.frame;
