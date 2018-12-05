@@ -31,7 +31,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     private Unbinder unbinder;
 
     // Presenter
-    @Nullable
     protected P presenter;
 
     @NonNull
