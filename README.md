@@ -1,5 +1,5 @@
 # MVPFrames
-这是一个整合了大量主流开源项目并且可高度配置化的 Android MVP 快速集成框架
+整合大量主流开源项目并且可高度配置化的 Android MVP 快速集成框架
 
 ## Download
 Gradle:
