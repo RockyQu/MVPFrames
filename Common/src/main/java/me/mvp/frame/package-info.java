@@ -22,5 +22,9 @@
  * 3.提升 androidSupportVersion 28.0.0
  * 4.增加 Room 数据库自定义 DB 路径设置
  * 5.增加 Room 数据库日志模式设置
+ * 6.提升 rxcache-jolyglot-gson 0.0.3 → 0.0.4
+ * 7.提升 Retrofit 2.3.0 → 2.5.0
+ * 8.提升 Glide 4.8.0 → 4.9.0
+ * 9.提升 Dagger2 2.18 → 2.19
  */
 package me.mvp.frame;

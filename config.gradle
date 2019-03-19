@@ -8,17 +8,17 @@ ext {
                buildToolsVersion             : "28.0.3",
                minSdkVersion                 : 15,
                targetSdkVersion              : 28,
-               versionCode                   : 53,
-               versionName                   : "2.3.2",
+               versionCode                   : 54,
+               versionName                   : "2.3.3",
                renderscriptTargetApi         : 22,
                renderscriptSupportModeEnabled: true
     ]
 
     version = [
             androidSupportVersion: "28.0.0",
-            retrofitVersion      : "2.3.0",
-            dagger2Version       : "2.17",
-            glideVersion         : "4.8.0",
+            retrofitVersion      : "2.5.0",
+            dagger2Version       : "2.19",
+            glideVersion         : "4.9.0",
             butterknifeVersion   : "8.8.1",
             rxlifecycleVersion   : "1.0",
             rxlifecycle2Version  : "2.2.1",
@@ -29,7 +29,7 @@ ext {
     ]
 
     dependencies = [
-            // Support
+            // Support https://developer.android.google.cn/jetpack/androidx/migrate
             "support-v4"                   : "com.android.support:support-v4:${version["androidSupportVersion"]}",
             "appcompat-v7"                 : "com.android.support:appcompat-v7:${version["androidSupportVersion"]}",
             "recyclerview-v7"              : "com.android.support:recyclerview-v7:${version["androidSupportVersion"]}",
@@ -66,7 +66,7 @@ ext {
             "rxlifecycle2"                 : "com.trello.rxlifecycle2:rxlifecycle:${version["rxlifecycle2Version"]}",
             "rxlifecycle2-android"         : "com.trello.rxlifecycle2:rxlifecycle-android:${version["rxlifecycle2Version"]}",
             "rxlifecycle2-components"      : "com.trello.rxlifecycle2:rxlifecycle-components:${version["rxlifecycle2Version"]}",
-            "rxcache-jolyglot-gson"        : "com.github.VictorAlbertos.Jolyglot:gson:0.0.3",
+            "rxcache-jolyglot-gson"        : "com.github.VictorAlbertos.Jolyglot:gson:0.0.4",
             "rxpermissions2"               : "com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar",
 
             // Dagger
@@ -79,7 +79,7 @@ ext {
             "butterknife"                  : "com.jakewharton:butterknife:${version["butterknifeVersion"]}",
             "butterknife-compiler"         : "com.jakewharton:butterknife-compiler:${version["butterknifeVersion"]}",
             "javax.annotation"             : "javax.annotation:jsr250-api:1.0",
-            "gson"                         : "com.google.code.gson:gson:2.8.2",
+            "gson"                         : "com.google.code.gson:gson:2.8.5",
             "androideventbus"              : "org.simple:androideventbus:1.0.5.1",
             "otto"                         : "com.squareup:otto:1.3.8",
             "multidex"                     : "com.android.support:multidex:1.0.3",
@@ -114,8 +114,5 @@ ext {
             // Views
             "flexbox"                      : "com.google.android:flexbox:0.3.1",// 流式布局
             "BaseRecyclerViewAdapterHelper": "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.18",// Recyclerview
-
-            // Other
-            "filedownloader"               : "com.liulishuo.filedownloader:library:1.6.4"
     ]
 }

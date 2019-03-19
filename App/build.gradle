@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+    apply plugin: 'com.android.application'
 
 // 配置Android构建参数
 android {
@@ -184,12 +184,9 @@ dependencies {
     api rootProject.ext.dependencies["roomRuntime"]
     annotationProcessor rootProject.ext.dependencies["roomCompiler"]
 
-    // 如果你不需要下载模块请去掉
-    api rootProject.ext.dependencies["filedownloader"]
-
     // 引入框架基础共通模块
-      api project(':Common')
-//    api 'me.frame:MVPFrames:2.3.2'
+    api project(':Common')
+//    api 'me.frame:MVPFrames:2.3.3'
 
     // Test
     testImplementation rootProject.ext.dependencies["junit"]

@@ -28,8 +28,6 @@ import com.squareup.leakcanary.RefWatcher;
 import me.mvp.frame.base.App;
 import me.mvp.frame.base.delegate.ApplicationLifecycles;
 import me.mvp.frame.di.module.AppConfigModule;
-import me.mvp.demo.app.utils.downloader.Downloader;
-import me.mvp.demo.app.utils.downloader.config.DownloaderConfiguration;
 import me.mvp.frame.http.interceptor.NetworkInterceptor;
 import me.mvp.frame.integration.ConfigModule;
 import me.mvp.frame.utils.GsonUtils;
@@ -105,28 +103,6 @@ public class AppConfiguration implements ConfigModule {
                     User user = GsonUtils.getEntity(value, User.class);
                     ((App) application).getAppComponent().extras().put(LoginActivity.class.getName(), user);
                 }
-            }
-
-            @Override
-            public void onTerminate(@NonNull Application application) {
-
-            }
-        });
-
-        lifecycleManager.add(new ApplicationLifecycles() {
-
-            @Override
-            public void attachBaseContext(@NonNull Context base) {
-
-            }
-
-            @Override
-            public void onCreate(@NonNull Application application) {
-                DownloaderConfiguration configuration = DownloaderConfiguration.builder()
-                        .application(application)
-                        .debug(BuildConfig.DEBUG_FLAG)
-                        .build();
-                Downloader.getInstance().init(configuration);
             }
 
             @Override
