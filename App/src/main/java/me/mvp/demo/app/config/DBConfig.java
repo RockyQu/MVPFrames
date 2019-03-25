@@ -1,8 +1,8 @@
 package me.mvp.demo.app.config;
 
-import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
+import androidx.room.RoomDatabase;
 import me.logg.Logg;
 import me.mvp.demo.app.AppConfiguration;
 import me.mvp.demo.db.AppDatabase;

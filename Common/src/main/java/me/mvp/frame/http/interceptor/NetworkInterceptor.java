@@ -1,8 +1,8 @@
 package me.mvp.frame.http.interceptor;
 
 import android.app.Application;
-import android.support.annotation.Nullable;
 
+import androidx.annotation.Nullable;
 import me.logg.Logg;
 import me.logg.config.LoggConstant;
 import me.mvp.frame.di.module.AppConfigModule;

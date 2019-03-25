@@ -1,14 +1,13 @@
 package me.mvp.frame.di.module;
 
 import android.app.Application;
-import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import javax.inject.Singleton;
 
+import androidx.room.RoomDatabase;
 import dagger.Module;
 import dagger.Provides;
-import me.logg.Logg;
 import me.mvp.frame.db.DatabaseConfig;
 
 /**

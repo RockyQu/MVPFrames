@@ -2,14 +2,11 @@ package me.mvp.frame.di.module;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.v4.util.ArrayMap;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.mvp.frame.integration.IRepositoryManager;
 import me.mvp.frame.integration.RepositoryManager;
-
-import java.util.Map;
 
 import javax.inject.Singleton;
 

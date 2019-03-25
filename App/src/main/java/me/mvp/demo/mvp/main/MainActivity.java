@@ -1,9 +1,9 @@
 package me.mvp.demo.mvp.main;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.view.ViewPager;
 
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import me.mvp.demo.R;
 import me.mvp.demo.ui.adapter.MainViewPagerAdapter;

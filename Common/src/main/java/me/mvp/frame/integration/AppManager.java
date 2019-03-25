@@ -8,8 +8,8 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
-import android.support.annotation.Nullable;
 
+import androidx.annotation.Nullable;
 import me.mvp.frame.di.component.AppComponent;
 import me.mvp.frame.widget.Snacker;
 import me.mvp.frame.widget.Toaster;

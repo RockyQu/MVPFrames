@@ -2,10 +2,10 @@ package me.mvp.frame.base;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import me.mvp.frame.base.BaseFragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 import me.mvp.frame.di.component.AppComponent;
 import me.mvp.frame.frame.IPresenter;
 import me.mvp.frame.integration.cache.Cache;
@@ -49,7 +49,7 @@ public interface IActivity<P extends IPresenter> {
     void create(@Nullable Bundle savedInstanceState);
 
     /**
-     * 这个Activity是否会使用Fragment，框架会根据这个属性判断是否注册{@link android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks}
+     * 这个Activity是否会使用Fragment，框架会根据这个属性判断是否注册{@link FragmentManager.FragmentLifecycleCallbacks}
      * 如果返回false，那意味着这个Activity不需要绑定Fragment，那你再在这个Activity中绑定继承于{@link BaseFragment}的Fragment将不起任何作用
      *
      * @return 是否使用Fragment

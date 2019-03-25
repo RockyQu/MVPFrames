@@ -2,15 +2,15 @@ package me.mvp.demo.mvp.main.fragment.demo;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatButton;
 
-import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding3.view.RxView;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import me.logg.Logg;
 import me.mvp.demo.R;
@@ -31,11 +31,6 @@ public class DemoFragment extends BaseFragment<DemoPresenter> implements IView {
     @BindView(R.id.btn_dialog)
     AppCompatButton btnDialog;
 
-    /**
-     * Create Fragment
-     *
-     * @return
-     */
     public static Fragment create(int index) {
         DemoFragment fragment = new DemoFragment();
         Bundle bundle = new Bundle();

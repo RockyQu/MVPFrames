@@ -2,14 +2,13 @@ package me.mvp.frame.base.delegate.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.View;
 
+import androidx.fragment.app.Fragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.mvp.frame.base.IFragment;
 import me.mvp.frame.di.component.AppComponent;
-import me.mvp.frame.frame.IPresenter;
 import me.mvp.frame.utils.AppUtils;
 
 import org.simple.eventbus.EventBus;

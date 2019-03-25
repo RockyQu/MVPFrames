@@ -2,9 +2,10 @@ package me.mvp.frame.base.delegate.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 /**
  * {@link Fragment} 生命周期代理接口

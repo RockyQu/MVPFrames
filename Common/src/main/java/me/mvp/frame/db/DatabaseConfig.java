@@ -1,8 +1,6 @@
 package me.mvp.frame.db;
 
-import android.arch.persistence.room.RoomDatabase;
-
-import java.util.ArrayList;
+import androidx.room.RoomDatabase;
 
 public class DatabaseConfig<T extends RoomDatabase> {
 

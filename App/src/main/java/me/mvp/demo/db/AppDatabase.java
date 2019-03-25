@@ -1,9 +1,7 @@
 package me.mvp.demo.db;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.RoomDatabase;
-
-import me.logg.Logg;
+import androidx.room.Database;
+import androidx.room.RoomDatabase;
 import me.mvp.demo.entity.User;
 import me.mvp.demo.entity.UserDao;
 import me.mvp.frame.di.component.AppComponent;

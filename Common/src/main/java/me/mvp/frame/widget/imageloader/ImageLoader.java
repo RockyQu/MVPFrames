@@ -1,11 +1,11 @@
 package me.mvp.frame.widget.imageloader;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import androidx.annotation.Nullable;
 import me.mvp.frame.utils.Preconditions;
 
 /**

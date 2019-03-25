@@ -2,10 +2,10 @@ package me.mvp.frame.di.module;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
 
+import androidx.annotation.Nullable;
 import me.mvp.frame.http.NetworkInterceptorHandler;
 import me.mvp.frame.http.interceptor.NetworkInterceptor;
 import me.mvp.frame.utils.FileUtils;

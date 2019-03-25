@@ -59,19 +59,19 @@ android {
 
 dependencies {
     // Support
-    api(rootProject.ext.dependencies["support-v4"]) {
-        exclude module: 'support-annotations'
+    api(rootProject.ext.dependencies["appcompat"]) {
+        exclude module: 'annotation'
+        exclude module: 'legacy-support-v4'
     }
-    api(rootProject.ext.dependencies["appcompat-v7"]) {
-        exclude module: 'support-annotations'
-        exclude module: 'support-v4'
+    api(rootProject.ext.dependencies["legacy-support-v4"]) {
+        exclude module: 'annotation'
     }
-    api(rootProject.ext.dependencies["design"]) {
-        exclude module: 'support-annotations'
-        exclude module: 'appcompat-v7'
-        exclude module: 'support-v4'
+    api(rootProject.ext.dependencies["material"]) {
+        exclude module: 'annotation'
+        exclude module: 'appcompat'
+        exclude module: 'legacy-support-v4'
     }
-    api rootProject.ext.dependencies["annotations"]
+    api rootProject.ext.dependencies["annotation"]
 
     // Network
     api(rootProject.ext.dependencies["retrofit"]) {
@@ -94,7 +94,7 @@ dependencies {
 
     // Image
     api(rootProject.ext.dependencies["glide"]) {
-        exclude module: 'support-v4'
+        exclude module: 'legacy-support-v4'
     }
     annotationProcessor(rootProject.ext.dependencies["glide-compiler"]) {
         exclude module: 'jsr305'
@@ -115,13 +115,13 @@ dependencies {
     }
     api(rootProject.ext.dependencies["rxpermissions2"]) {
         exclude module: 'rxjava'
-        exclude module: 'support-annotations'
+        exclude module: 'annotation'
     }
 
     // Tools
     api(rootProject.ext.dependencies["butterknife"]) {
-        exclude module: 'support-annotations'
-        exclude module: 'support-compat'
+        exclude module: 'annotation'
+        exclude module: 'core'
     }
     api rootProject.ext.dependencies["dagger2"]
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
@@ -129,8 +129,9 @@ dependencies {
     api rootProject.ext.dependencies["gson"]
 
     // DB
-    api rootProject.ext.dependencies["roomRuntime"]
-    annotationProcessor rootProject.ext.dependencies["roomCompiler"]
+    api rootProject.ext.dependencies["room-runtime"]
+    api rootProject.ext.dependencies["room-rxjava2"]
+    annotationProcessor rootProject.ext.dependencies["room-compiler"]
 
     // Log
     api rootProject.ext.dependencies["logg"]

@@ -2,11 +2,11 @@ package me.mvp.frame.integration;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import me.mvp.frame.base.delegate.fragment.FragmentDelegate;
 import me.mvp.frame.base.delegate.fragment.FragmentDelegateImpl;
 import me.mvp.frame.base.IFragment;

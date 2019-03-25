@@ -17,14 +17,14 @@
 /**
  * 更新日志
  * <p>
- * 1.完善 BaseDialogFragment 的 create(Bundle savedInstanceState, View view) 增加 View 参数
- * 2.提升 buildToolsVersion 28.0.3
- * 3.提升 androidSupportVersion 28.0.0
- * 4.增加 Room 数据库自定义 DB 路径设置
- * 5.增加 Room 数据库日志模式设置
- * 6.提升 rxcache-jolyglot-gson 0.0.3 → 0.0.4
- * 7.提升 Retrofit 2.3.0 → 2.5.0
- * 8.提升 Glide 4.8.0 → 4.9.0
- * 9.提升 Dagger2 2.18 → 2.19
+ * 1.重要更新 → 整体引入 AndroidX 改动较大，修改前必须先阅读 AndroidX 相关文档，各种包的替换参考 config.gradle
+ * 2.
+ * 3.
+ * 4.
+ * 5.
+ * 6.
+ * 7.
+ * 8.
+ * 9.
  */
 package me.mvp.frame;

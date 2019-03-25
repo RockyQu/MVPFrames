@@ -2,11 +2,11 @@ package me.mvp.frame.di.component;
 
 import android.app.Activity;
 import android.app.Application;
-import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import com.google.gson.Gson;
 
+import androidx.room.RoomDatabase;
 import me.mvp.frame.base.delegate.ApplicationDelegate;
 import me.mvp.frame.db.DBManager;
 import me.mvp.frame.di.module.AppConfigModule;

@@ -177,12 +177,12 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
     api rootProject.ext.dependencies["multidex"]
     annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
-        exclude module: 'support-annotations'
+        exclude module: 'annotation'
     }
 
     // DB
-    api rootProject.ext.dependencies["roomRuntime"]
-    annotationProcessor rootProject.ext.dependencies["roomCompiler"]
+    api rootProject.ext.dependencies["room-runtime"]
+    annotationProcessor rootProject.ext.dependencies["room-compiler"]
 
     // 引入框架基础共通模块
     api project(':Common')

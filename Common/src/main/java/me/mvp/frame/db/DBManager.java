@@ -1,17 +1,16 @@
 package me.mvp.frame.db;
 
 import android.app.Application;
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.Room;
-import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import me.logg.Logg;
+import androidx.annotation.NonNull;
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
 import me.mvp.frame.di.component.AppComponent;
 import me.mvp.frame.di.module.DBModule;
 

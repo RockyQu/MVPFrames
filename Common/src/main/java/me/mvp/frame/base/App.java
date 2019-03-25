@@ -1,7 +1,6 @@
 package me.mvp.frame.base;
 
-import android.support.annotation.NonNull;
-
+import androidx.annotation.NonNull;
 import me.mvp.frame.di.component.AppComponent;
 
 /**

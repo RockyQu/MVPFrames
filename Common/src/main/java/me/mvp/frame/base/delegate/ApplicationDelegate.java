@@ -7,14 +7,14 @@ import android.content.ComponentCallbacks2;
 import android.content.ContentProvider;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import me.mvp.frame.base.App;
 import me.mvp.frame.di.component.AppComponent;
 import me.mvp.frame.di.component.DaggerAppComponent;

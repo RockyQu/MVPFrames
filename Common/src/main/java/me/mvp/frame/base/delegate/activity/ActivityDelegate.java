@@ -2,7 +2,8 @@ package me.mvp.frame.base.delegate.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 /**
  * {@link Activity} 生命周期代理接口

@@ -1,10 +1,10 @@
 package me.mvp.demo.ui.adapter;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import me.mvp.demo.mvp.main.fragment.demo.DemoFragment;
 import me.mvp.demo.mvp.main.fragment.main.MainFragment;
 import me.mvp.demo.mvp.main.fragment.user.UserFragment;

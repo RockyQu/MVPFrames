@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.multidex.MultiDex;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.multidex.MultiDex;
 import me.mvp.demo.BuildConfig;
 import me.mvp.demo.app.api.Api;
 import me.mvp.demo.app.config.DBConfig;

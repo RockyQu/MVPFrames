@@ -1,7 +1,6 @@
 package me.mvp.frame.utils;
 
-import android.support.annotation.Nullable;
-
+import androidx.annotation.Nullable;
 import me.mvp.frame.utils.base.BaseUtils;
 
 /**

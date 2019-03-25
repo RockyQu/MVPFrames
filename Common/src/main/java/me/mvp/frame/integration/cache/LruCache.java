@@ -1,12 +1,12 @@
 package me.mvp.frame.integration.cache;
 
 import android.app.Application;
-import android.support.annotation.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import androidx.annotation.Nullable;
 import me.mvp.frame.di.module.AppConfigModule;
 
 /**

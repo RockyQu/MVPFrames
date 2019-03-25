@@ -1,10 +1,10 @@
 package me.mvp.frame.di.module;
 
 import android.app.Application;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import me.logg.Logg;
 import me.logg.config.LoggConfiguration;
 import me.mvp.frame.http.BaseUrl;
