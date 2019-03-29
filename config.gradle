@@ -111,6 +111,11 @@ ext {
             "crashreport"                  : "com.tencent.bugly:crashreport:latest.release",
             "nativecrashreport"            : "com.tencent.bugly:nativecrashreport:latest.release",
 
+            // https://github.com/lingochamp/okdownload
+            "okdownload"                   : "com.liulishuo.okdownload:okdownload:1.0.4-SNAPSHOT",
+            "okdownload-sqlite"            : "com.liulishuo.okdownload:sqlite:1.0.4-SNAPSHOT",
+            "okdownload-okhttp"            : "com.liulishuo.okdownload:okhttp:1.0.4-SNAPSHOT",
+
             // Views
             "flexbox"                      : "com.google.android:flexbox:0.3.1",// 流式布局
             "BaseRecyclerViewAdapterHelper": "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.18",// Recyclerview
