@@ -1,5 +1,6 @@
 package me.mvp.frame.widget.imageloader.glide;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
@@ -33,6 +34,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideCo
         ;
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void load(Context context, GlideConfig config) {
         this.check(context, config);
@@ -40,8 +42,8 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideCo
         // 如果 Context 是 Activity 则自动使用 Activity 的生命周期
         GlideRequests requests = GlideFrames.with(context);
 
-        GlideRequest<Drawable> glideRequest = requests.load(config.getUrl())
-                .transition(DrawableTransitionOptions.withCrossFade());
+        // Url
+        GlideRequest<Drawable> glideRequest = requests.load(config.getUrl());
 
         // 缓存策略
         switch (config.getCacheStrategy()) {
@@ -87,6 +89,11 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideCo
             glideRequest.transition(DrawableTransitionOptions.withCrossFade());
         }
 
+        // 是否移动所有加载动画，注意如果加载 Gif 会导致加载失败
+        if (config.isDontAnimate()) {
+            glideRequest.dontAnimate();
+        }
+
         // Glide 用它来改变图形的形状
         if (config.getTransformation() != null) {
             glideRequest.transform(config.getTransformation());
@@ -111,6 +118,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideCo
                 .into(config.getImageView());
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void clear(final Context context, GlideConfig config) {
         if (context == null) throw new NullPointerException("Context is required");

@@ -23,6 +23,8 @@ public class GlideConfig extends ImageConfig {
 
     // 是否使用淡入淡出过渡动画
     private boolean crossFade;
+    // 是否移动所有加载动画，注意如果加载 Gif 会导致加载失败
+    private boolean dontAnimate;
 
     // 清理内存缓存
     private boolean clearMemory;
@@ -42,6 +44,7 @@ public class GlideConfig extends ImageConfig {
         this.scaleType = builder.scaleType;
 
         this.crossFade = builder.crossFade;
+        this.dontAnimate = builder.dontAnimate;
 
         this.clearMemory = builder.clearMemory;
         this.clearDiskCache = builder.clearDiskCache;
@@ -65,6 +68,10 @@ public class GlideConfig extends ImageConfig {
 
     public boolean isCrossFade() {
         return crossFade;
+    }
+
+    public boolean isDontAnimate() {
+        return dontAnimate;
     }
 
     public boolean isClearMemory() {
@@ -93,6 +100,7 @@ public class GlideConfig extends ImageConfig {
         private ImageScaleType scaleType;
 
         private boolean crossFade;
+        private boolean dontAnimate = false;
 
         private boolean clearMemory;
         private boolean clearDiskCache;
@@ -143,6 +151,11 @@ public class GlideConfig extends ImageConfig {
 
         public Buidler crossFade(boolean crossFade) {
             this.crossFade = crossFade;
+            return this;
+        }
+
+        public Buidler dontAnimate() {
+            this.dontAnimate = true;
             return this;
         }
 

@@ -5,6 +5,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@Deprecated
 public abstract class ResponseCallback<T> implements Callback<T> {
 
     private AppComponent component;

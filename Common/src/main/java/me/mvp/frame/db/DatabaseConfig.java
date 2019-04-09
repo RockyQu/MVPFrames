@@ -1,7 +1,18 @@
 package me.mvp.frame.db;
 
-import androidx.room.RoomDatabase;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Executor;
 
+import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteOpenHelper;
+
+/**
+ * https://developer.android.google.cn/jetpack/androidx/releases/room
+ *
+ * @param <T>
+ */
 public class DatabaseConfig<T extends RoomDatabase> {
 
     private String name;
@@ -16,6 +27,16 @@ public class DatabaseConfig<T extends RoomDatabase> {
 
     private RoomDatabase.JournalMode journalMode;
 
+    private boolean fallbackToDestructiveMigrationOnDowngrade;
+
+    private Executor executor;
+
+    private SupportSQLiteOpenHelper.Factory factory;
+
+    private List<RoomDatabase.Callback> callbacks;
+
+    private Migration[] migrations;
+
     public DatabaseConfig(Builder<T> builder) {
         this.name = builder.name;
         this.path = builder.path;
@@ -24,6 +45,11 @@ public class DatabaseConfig<T extends RoomDatabase> {
         this.fallbackToDestructiveMigration = builder.fallbackToDestructiveMigration;
         this.fallbackToDestructiveMigrationFromStartVersions = builder.fallbackToDestructiveMigrationFromStartVersions;
         this.journalMode = builder.journalMode;
+        this.fallbackToDestructiveMigrationOnDowngrade = builder.fallbackToDestructiveMigrationOnDowngrade;
+        this.executor = builder.executor;
+        this.factory = builder.factory;
+        this.callbacks = builder.callbacks;
+        this.migrations = builder.migrations;
     }
 
     public String getName() {
@@ -54,6 +80,26 @@ public class DatabaseConfig<T extends RoomDatabase> {
         return journalMode;
     }
 
+    public boolean isFallbackToDestructiveMigrationOnDowngrade() {
+        return fallbackToDestructiveMigrationOnDowngrade;
+    }
+
+    public Executor getExecutor() {
+        return executor;
+    }
+
+    public SupportSQLiteOpenHelper.Factory getFactory() {
+        return factory;
+    }
+
+    public List<RoomDatabase.Callback> getCallbacks() {
+        return callbacks;
+    }
+
+    public Migration[] getMigrations() {
+        return migrations;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -79,6 +125,24 @@ public class DatabaseConfig<T extends RoomDatabase> {
 
         // 设置数据库的日志模式
         private RoomDatabase.JournalMode journalMode;
+
+        // 如果发生降级，是否会自动重新创建数据库
+        private boolean fallbackToDestructiveMigrationOnDowngrade = false;
+
+        // 设置自定义线程池
+        private Executor executor;
+
+        // 设置数据库工厂
+        private SupportSQLiteOpenHelper.Factory factory;
+
+        // 数据库状态监听
+        private List<RoomDatabase.Callback> callbacks;
+
+        // 版本迁移构建器
+        // 每个迁移都有一个开始和结束版本，Room运行这些迁移以将数据库带到最新版本。
+        // 如果当前版本和最新版本之间缺少迁移项目，Room将清除数据库并重新创建，即使两个版本之间没有更改，您仍应向构建器提供迁移对象。
+        // 迁移可以处理多个版本（例如，如果在没有转到版本4的情况下，在执行版本3到5时有更快的路径可供选择）。如果Room打开版本3的数据库且最新版本> = 5，则Room将使用可以从3迁移到5而不是3到4和4到5的迁移对象。
+        private Migration[] migrations;
 
         public Builder<T> name(String name) {
             this.name = name;
@@ -114,6 +178,35 @@ public class DatabaseConfig<T extends RoomDatabase> {
             this.journalMode = journalMode;
             return this;
         }
+
+        public Builder<T> fallbackToDestructiveMigrationOnDowngrade() {
+            this.fallbackToDestructiveMigrationOnDowngrade = true;
+            return this;
+        }
+
+        public Builder<T> setQueryExecutor(Executor executor) {
+            this.executor = executor;
+            return this;
+        }
+
+        public Builder<T> openHelperFactory(SupportSQLiteOpenHelper.Factory factory) {
+            this.factory = factory;
+            return this;
+        }
+
+        public Builder<T> addCallback(RoomDatabase.Callback callback) {
+            if (callbacks == null) {
+                callbacks = new ArrayList<>();
+            }
+            callbacks.add(callback);
+            return this;
+        }
+
+        public Builder<T> addCallback(Migration... migrations) {
+            this.migrations = migrations;
+            return this;
+        }
+
 
         public DatabaseConfig build() {
             return new DatabaseConfig(this);

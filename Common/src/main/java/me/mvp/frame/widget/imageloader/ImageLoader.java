@@ -25,6 +25,8 @@ public class ImageLoader {
 
     /**
      * 加载图片
+     * <p>
+     * eg:component.getImageLoader().load(component.getApplication(), GlideConfig.builder().build());
      *
      * @param context
      * @param config
@@ -37,6 +39,8 @@ public class ImageLoader {
 
     /**
      * 停止加载或清理缓存
+     * <p>
+     * eg:component.getImageLoader().clear(component.getApplication(), GlideConfig.builder().build());
      *
      * @param context
      * @param config

@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.text.TextUtils;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -99,6 +101,29 @@ public class DBManager {
 
         if (config.getJournalMode() != null) {
             builder.setJournalMode(config.getJournalMode());
+        }
+
+        if (config.isFallbackToDestructiveMigrationOnDowngrade()) {
+            builder.fallbackToDestructiveMigrationOnDowngrade();
+        }
+
+        if (config.getExecutor() != null) {
+            builder.setQueryExecutor(config.getExecutor());
+        }
+
+        if (config.getFactory() != null) {
+            builder.openHelperFactory(config.getFactory());
+        }
+
+        List<RoomDatabase.Callback> callbacks = config.getCallbacks();
+        if (callbacks != null) {
+            for (RoomDatabase.Callback callback : callbacks) {
+                builder.addCallback(callback);
+            }
+        }
+
+        if (config.getMigrations() != null) {
+            builder.addMigrations(config.getMigrations());
         }
 
         return builder.build();

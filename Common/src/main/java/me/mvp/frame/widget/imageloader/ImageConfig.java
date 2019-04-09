@@ -7,7 +7,7 @@ import android.widget.ImageView;
  */
 public class ImageConfig {
 
-    // 加截URL
+    // 加截 URL
     protected String url;
     // ImageView
     protected ImageView imageView;

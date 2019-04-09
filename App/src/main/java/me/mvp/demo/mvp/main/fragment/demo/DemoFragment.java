@@ -53,6 +53,9 @@ public class DemoFragment extends BaseFragment<DemoPresenter> implements IView {
         List<User> users = dao.getAll();
         Logg.e(users);
 
+//        component.getImageLoader().load(component.getApplication(), GlideConfig.builder()
+//                .build());
+
         component.getImageLoader().clear(component.getApplication(), GlideConfig.builder()
                 .clearDiskCache(true)
                 .clearMemory(true)

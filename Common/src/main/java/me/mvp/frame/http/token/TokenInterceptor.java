@@ -34,7 +34,7 @@ public class TokenInterceptor implements Interceptor {
         ResponseBody responseBody = originalResponse.body();
         BufferedSource source = responseBody.source();
         source.request(Long.MAX_VALUE); // Buffer the entire body.
-        Buffer buffer = source.buffer();
+        Buffer buffer = source.getBuffer();
         Charset charset = UTF8;
         MediaType contentType = responseBody.contentType();
         if (contentType != null) {
