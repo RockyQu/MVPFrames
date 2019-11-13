@@ -34,7 +34,7 @@ public class GlideConfigModule extends AppGlideModule {
 
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
-        final AppComponent component = AppUtils.obtainAppComponentFromContext(context);
+        final AppComponent component = AppUtils.Companion.obtainAppComponentFromContext(context);
         builder.setDiskCache(new DiskCache.Factory() {
 
             @Override
@@ -67,7 +67,7 @@ public class GlideConfigModule extends AppGlideModule {
     @Override
     public void registerComponents(Context context, Glide glide, Registry registry) {
         // Glide 默认使用 HttpURLConnection 做网络请求，在这切换成 Okhttp 请求
-        AppComponent appComponent = AppUtils.obtainAppComponentFromContext(context);
+        AppComponent appComponent = AppUtils.Companion.obtainAppComponentFromContext(context);
         registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(appComponent.getOkHttpClient()));
     }
 

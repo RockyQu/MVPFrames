@@ -37,7 +37,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     public synchronized Cache<String, Object> provideCache() {
         if (cache == null) {
-            cache = AppUtils.obtainAppComponentFromContext(this).cacheFactory().build(CacheType.ACTIVITY_CACHE);
+            cache = AppUtils.Companion.obtainAppComponentFromContext(this).cacheFactory().build(CacheType.ACTIVITY_CACHE);
         }
         return cache;
     }

@@ -21,7 +21,7 @@ public class DBConfig implements DBModule.DBConfiguration {
     public void configDB(Context context, DatabaseConfig.Builder builder) {
         builder
                 .path(ProjectUtils.ROOT_PATH)
-                .name(AppUtils.getAppChannel(context, AppConfiguration.CHANNEL) + ".db")
+                .name(AppUtils.Companion.getAppChannel(context, AppConfiguration.CHANNEL) + ".db")
                 .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
                 .databaseClass(AppDatabase.class)
                 .allowMainThreadQueries()

@@ -45,7 +45,7 @@ public class FragmentDelegateImpl implements FragmentDelegate {
             }
         }
 
-        AppComponent component = AppUtils.obtainAppComponentFromContext(fragment.getActivity());
+        AppComponent component = AppUtils.Companion.obtainAppComponentFromContext(fragment.getActivity());
 
         // 在 Base 基类实现些方法，为了能够方便的获取到AppComponent
         if (iFragment != null) {

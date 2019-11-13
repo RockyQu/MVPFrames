@@ -40,7 +40,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     @Override
     public synchronized Cache<String, Object> provideCache() {
         if (cache == null) {
-            cache = AppUtils.obtainAppComponentFromContext(getActivity()).cacheFactory().build(CacheType.FRAGMENT_CACHE);
+            cache = AppUtils.Companion.obtainAppComponentFromContext(getActivity()).cacheFactory().build(CacheType.FRAGMENT_CACHE);
         }
         return cache;
     }

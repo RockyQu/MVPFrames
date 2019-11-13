@@ -36,7 +36,7 @@ public class WelcomeActivity extends BaseActivity {
                                                @Override
                                                public void onRequestPermissionSuccess() {
                                                    // 创建一些文件夹
-                                                   ProjectUtils.init(AppUtils.getAppChannel(WelcomeActivity.this, AppConfiguration.CHANNEL));
+                                                   ProjectUtils.init(AppUtils.Companion.getAppChannel(WelcomeActivity.this, AppConfiguration.CHANNEL));
 
                                                    startNextActivity();
                                                }
@@ -44,7 +44,7 @@ public class WelcomeActivity extends BaseActivity {
                                                @Override
                                                public void onRequestPermissionFailure() {
                                                    // 如果失败跳到到应用设置页面
-                                                   AppUtils.applicationDetailsSettings(WelcomeActivity.this);
+                                                   AppUtils.Companion.applicationDetailsSettings(WelcomeActivity.this);
                                                    finish();
                                                }
                                            }, rxPermissions,

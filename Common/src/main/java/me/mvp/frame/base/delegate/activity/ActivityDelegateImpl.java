@@ -35,7 +35,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
             }
         }
 
-        AppComponent component = AppUtils.obtainAppComponentFromContext(activity);
+        AppComponent component = AppUtils.Companion.obtainAppComponentFromContext(activity);
 
         // 在 Base 基类实现些方法，为了能够方便的获取到 AppComponent
         if (iActivity != null) {
