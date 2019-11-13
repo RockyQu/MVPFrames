@@ -100,7 +100,7 @@ public class AppConfiguration implements ConfigModule {
                 // 读取当前登录用户信息
                 String value = PreferencesUtils.getString(application, LoginActivity.class.getName(), null);
                 if (value != null) {
-                    User user = GsonUtils.getEntity(value, User.class);
+                    User user = GsonUtils.Companion.getEntity(value, User.class);
                     ((App) application).getAppComponent().extras().put(LoginActivity.class.getName(), user);
                 }
             }

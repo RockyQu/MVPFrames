@@ -5,7 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
+import me.logg.Logg;
 import me.mvp.demo.R;
+import me.mvp.demo.entity.User;
 import me.mvp.demo.ui.adapter.MainViewPagerAdapter;
 import me.mvp.demo.ui.widget.navigation.BottomNavigation;
 import me.mvp.demo.ui.widget.navigation.BottomNavigationAdapter;
@@ -13,6 +15,7 @@ import me.mvp.demo.ui.widget.navigation.BottomNavigationViewPager;
 import me.mvp.frame.base.BaseActivity;
 import me.mvp.frame.frame.IView;
 import me.mvp.frame.frame.Message;
+import me.mvp.frame.utils.GsonUtils;
 import me.mvp.frame.widget.Snacker;
 import me.mvp.frame.widget.Toaster;
 

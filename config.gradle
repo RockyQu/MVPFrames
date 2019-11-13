@@ -26,6 +26,9 @@ ext {
     // AndroidX https://developer.android.google.cn/jetpack/androidx/migrate
 
     dependencies = [
+            // 官方 Kotlin 扩展库 KTX
+            "core-ktx"                     : "androidx.core:core-ktx:1.1.0",
+
             // Support
             "appcompat"                    : "androidx.appcompat:appcompat:${version["supportVersion"]}",
             "legacy-support-v4"            : "androidx.legacy:legacy-support-v4:${version["supportVersion"]}",
