@@ -4,6 +4,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
+import me.mvp.frame.widget.imageloader.CacheStrategy;
 import me.mvp.frame.widget.imageloader.ImageConfig;
 
 /**
@@ -11,20 +12,25 @@ import me.mvp.frame.widget.imageloader.ImageConfig;
  */
 public class GlideConfig extends ImageConfig {
 
-    // 缓存策略，0=DiskCacheStrategy.all，1=DiskCacheStrategy.NONE，2=DiskCacheStrategy.SOURCE，3=DiskCacheStrategy.RESULT
+    // 图片的缓存策略
+    @CacheStrategy.Strategy
     private int cacheStrategy;
-    // 请求 Url 为空，则使用此图片作为占位符
-    private int fallback;
-    // 改变图形的形状
-    private BitmapTransformation transformation;
 
-    // 图像加载模式
-    private ImageScaleType scaleType;
+    // 请求 Url 为空时使用此图片作为占位符
+    private int fallback;
+
+    // 圆角的大小
+    private int radius;
+
+    // 同时加载多个 ImageView
+    private ImageView[] imageViews;
 
     // 是否使用淡入淡出过渡动画
     private boolean crossFade;
-    // 是否移动所有加载动画，注意如果加载 Gif 会导致加载失败
-    private boolean dontAnimate;
+    // 是否将图片剪切为 CenterCrop
+    private boolean centerCrop;
+    // 是否将图片剪切为圆形
+    private boolean circle;
 
     // 清理内存缓存
     private boolean clearMemory;
@@ -38,13 +44,12 @@ public class GlideConfig extends ImageConfig {
         this.error = builder.error;
 
         this.cacheStrategy = builder.cacheStrategy;
-        this.transformation = builder.transformation;
         this.fallback = builder.fallback;
-
-        this.scaleType = builder.scaleType;
-
+        this.radius = builder.radius;
+        this.imageViews = builder.imageViews;
         this.crossFade = builder.crossFade;
-        this.dontAnimate = builder.dontAnimate;
+        this.centerCrop = builder.centerCrop;
+        this.circle = builder.circle;
 
         this.clearMemory = builder.clearMemory;
         this.clearDiskCache = builder.clearDiskCache;
@@ -58,20 +63,24 @@ public class GlideConfig extends ImageConfig {
         return fallback;
     }
 
-    public BitmapTransformation getTransformation() {
-        return transformation;
+    public int getRadius() {
+        return radius;
     }
 
-    public ImageScaleType getScaleType() {
-        return scaleType;
+    public ImageView[] getImageViews() {
+        return imageViews;
     }
 
     public boolean isCrossFade() {
         return crossFade;
     }
 
-    public boolean isDontAnimate() {
-        return dontAnimate;
+    public boolean isCenterCrop() {
+        return centerCrop;
+    }
+
+    public boolean isCircle() {
+        return circle;
     }
 
     public boolean isClearMemory() {
@@ -94,13 +103,16 @@ public class GlideConfig extends ImageConfig {
         private int error;
 
         private int cacheStrategy;
-        private int fallback;
-        private BitmapTransformation transformation;
 
-        private ImageScaleType scaleType;
+        private int fallback;
+
+        private int radius;
+
+        private ImageView[] imageViews;
 
         private boolean crossFade;
-        private boolean dontAnimate = false;
+        private boolean centerCrop;
+        private boolean circle;
 
         private boolean clearMemory;
         private boolean clearDiskCache;
@@ -129,7 +141,7 @@ public class GlideConfig extends ImageConfig {
             return this;
         }
 
-        public Buidler cacheStrategy(int cacheStrategy) {
+        public Buidler cacheStrategy(@CacheStrategy.Strategy int cacheStrategy) {
             this.cacheStrategy = cacheStrategy;
             return this;
         }
@@ -139,13 +151,13 @@ public class GlideConfig extends ImageConfig {
             return this;
         }
 
-        public Buidler transformation(BitmapTransformation transformation) {
-            this.transformation = transformation;
+        public Buidler radius(int radius) {
+            this.radius = radius;
             return this;
         }
 
-        public Buidler scaleType(ImageScaleType scaleType) {
-            this.scaleType = scaleType;
+        public Buidler imageViews(ImageView... imageViews) {
+            this.imageViews = imageViews;
             return this;
         }
 
@@ -154,8 +166,13 @@ public class GlideConfig extends ImageConfig {
             return this;
         }
 
-        public Buidler dontAnimate() {
-            this.dontAnimate = true;
+        public Buidler centerCrop(boolean centerCrop) {
+            this.centerCrop = centerCrop;
+            return this;
+        }
+
+        public Buidler circle(boolean circle) {
+            this.circle = circle;
             return this;
         }
 

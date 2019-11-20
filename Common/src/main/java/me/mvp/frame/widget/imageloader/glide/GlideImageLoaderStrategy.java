@@ -7,7 +7,10 @@ import android.text.TextUtils;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
+import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import javax.inject.Inject;
@@ -18,8 +21,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import me.logg.Logg;
 import me.mvp.frame.widget.imageloader.BaseImageLoaderStrategy;
+import me.mvp.frame.widget.imageloader.CacheStrategy;
 import me.mvp.frame.widget.imageloader.ImageConfig;
 
 /**
@@ -47,19 +50,19 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideCo
 
         // 缓存策略
         switch (config.getCacheStrategy()) {
-            case 0:
+            case CacheStrategy.ALL:
                 glideRequest.diskCacheStrategy(DiskCacheStrategy.ALL);
                 break;
-            case 1:
+            case CacheStrategy.NONE:
                 glideRequest.diskCacheStrategy(DiskCacheStrategy.NONE);
                 break;
-            case 2:
+            case CacheStrategy.RESOURCE:
                 glideRequest.diskCacheStrategy(DiskCacheStrategy.RESOURCE);
                 break;
-            case 3:
+            case CacheStrategy.DATA:
                 glideRequest.diskCacheStrategy(DiskCacheStrategy.DATA);
                 break;
-            case 4:
+            case CacheStrategy.AUTOMATIC:
                 glideRequest.diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
                 break;
             default:
@@ -67,36 +70,27 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideCo
                 break;
         }
 
-        ImageScaleType scaleType = config.getScaleType();
-        if (scaleType != null) {
-            switch (scaleType) {
-                case CENTER_CROP:
-                    glideRequest.centerCrop();
-                    break;
-                case CENTER_INSIDE:
-                    glideRequest.centerInside();
-                    break;
-                case FIT_CENTER:
-                    glideRequest.fitCenter();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        // 是否使用淡入淡出过渡动画
         if (config.isCrossFade()) {
             glideRequest.transition(DrawableTransitionOptions.withCrossFade());
         }
 
-        // 是否移动所有加载动画，注意如果加载 Gif 会导致加载失败
-        if (config.isDontAnimate()) {
-            glideRequest.dontAnimate();
+        if (config.isCenterCrop()) {
+            glideRequest.centerCrop();
         }
 
-        // Glide 用它来改变图形的形状
-        if (config.getTransformation() != null) {
-            glideRequest.transform(config.getTransformation());
+        // 圆形
+        if (config.isCircle()) {
+            glideRequest.circleCrop();
+        }
+
+        // 圆角
+        if (config.getRadius() > 0) {
+            if (config.isCenterCrop()) {
+                // 这里是为了解决圆角和 CenterCrop 属同时设置的冲突问题
+                glideRequest.transform(new MultiTransformation<>(new CenterCrop(), new RoundedCorners(config.getRadius())));
+            } else {
+                glideRequest.transform(new RoundedCorners(config.getRadius()));
+            }
         }
 
         // 设置占位符

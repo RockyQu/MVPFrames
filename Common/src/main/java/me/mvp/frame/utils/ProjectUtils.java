@@ -13,7 +13,7 @@ import me.mvp.frame.utils.base.BaseUtils;
 public class ProjectUtils extends BaseUtils {
 
     // 目录名称
-    public static String PROJECT_NAME = "MVP";
+    public static String PROJECT_NAME = "MVPFrames";
     // 项目目录
     public static String ROOT_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + PROJECT_NAME + File.separator;
     // 日志路径

@@ -10,7 +10,9 @@ import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
+
 import butterknife.BindView;
 import me.logg.Logg;
 import me.mvp.demo.R;
@@ -22,6 +24,7 @@ import me.mvp.frame.base.BaseFragment;
 import me.mvp.frame.frame.IView;
 import me.mvp.frame.frame.Message;
 import me.mvp.frame.widget.imageloader.glide.GlideConfig;
+import me.mvp.frame.widget.imageloader.glide.ImageScaleType;
 
 /**
  * Demo
@@ -30,6 +33,8 @@ public class DemoFragment extends BaseFragment<DemoPresenter> implements IView {
 
     @BindView(R.id.btn_dialog)
     AppCompatButton btnDialog;
+    @BindView(R.id.img)
+    AppCompatImageView img;
 
     public static Fragment create(int index) {
         DemoFragment fragment = new DemoFragment();
@@ -53,13 +58,16 @@ public class DemoFragment extends BaseFragment<DemoPresenter> implements IView {
         List<User> users = dao.getAll();
         Logg.e(users);
 
-//        component.getImageLoader().load(component.getApplication(), GlideConfig.builder()
-//                .build());
-
-        component.getImageLoader().clear(component.getApplication(), GlideConfig.builder()
-                .clearDiskCache(true)
-                .clearMemory(true)
+        // 演示使用框架提供的图片加载器加载图片
+        component.getImageLoader().load(component.getApplication(), GlideConfig.builder()
+                .url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574138006631&di=0177e2d5ff26c99c0703f4c507cbeeca&imgtype=0&src=http%3A%2F%2Fwww.weyou360.com%2Fxueyuan%2Fuploads%2Fallimg%2F120517%2F1-12051GH63U09.jpg")
+                .imageView(img)
                 .build());
+
+//        component.getImageLoader().clear(component.getApplication(), GlideConfig.builder()
+//                .clearDiskCache(true)
+//                .clearMemory(true)
+//                .build());
 
         RxView.clicks(btnDialog)
                 .throttleFirst(1000, TimeUnit.MILLISECONDS)

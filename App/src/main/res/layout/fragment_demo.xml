@@ -10,4 +10,9 @@
         android:layout_margin="20dp"
         android:text="dialog" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img"
+        android:layout_width="150dp"
+        android:layout_height="150dp" />
+
 </LinearLayout>
